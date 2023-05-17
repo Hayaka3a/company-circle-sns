@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export default function islandForum(){
+export default function IslandForum(){
     return(
         <>
        

@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export default function islandDetail(){
+export default function EventDetail(){
     return(
         <>
        
