@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export default function eventEdit(){
+export default function EventEdit(){
     return(
         <>
        

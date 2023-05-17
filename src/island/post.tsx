@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export default function islandPost(){
+export default function IslandPost(){
     return(
         <>
        
