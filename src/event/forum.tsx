@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export default function eventForum(){
+export default function EventForum(){
     return(
         <>
        

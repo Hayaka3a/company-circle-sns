@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export default function islandCreate(){
+export default function IslandCreate(){
     return(
         <>
        

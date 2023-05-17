@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export default function islandMenbers(){
+export default function IslandMenbers(){
     return(
         <>
        
