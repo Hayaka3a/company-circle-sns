@@ -1,4 +1,5 @@
 import OwnerDisplay from "./OwnerDisplay";
+import ParticipantDisplay from "./ParticipantDisplay";
 
 export default function ParticipantList(props: { table: string }) {
   //DB作成後置き換え
@@ -37,7 +38,35 @@ export default function ParticipantList(props: { table: string }) {
   function buttonSwitching() {
     //ログインしているユーザーがオーナーだった場合の表示
     if (island.ownerID === loginUser.id) {
-      return <OwnerDisplay loginUser={loginUser} />;
+      return (
+        <>
+          <tr key={loginUser.id}>
+            <td>
+              <img src={loginUser.icon} />
+              {loginUser.family_name}
+              {loginUser.first_name}
+              (オーナー)
+            </td>
+            <td></td>
+          </tr>
+          {newEntryUsers.map((user) => {
+            return (
+              <tr key={user.id}>
+                {anotherUser(user)}
+                <td>
+                  <button>島主権限を譲渡</button>
+                  <button>島追放</button>
+                </td>
+              </tr>
+            );
+          })}
+        </>
+        // <OwnerDisplay
+        //   loginUser={loginUser}
+        //   newEntryUsers={newEntryUsers}
+        //   anotherUser={anotherUser}
+        // />
+      );
     } else if (entryUsers !== newEntryUsers) {
       //ログインしているユーザーが住民・参加者だった場合の表示
       return (
@@ -61,7 +90,14 @@ export default function ParticipantList(props: { table: string }) {
             );
           })}
         </>
+        // <ParticipantDisplay
+        //   loginUser={loginUser}
+        //   newEntryUsers={newEntryUsers}
+        //   anotherUser={anotherUser}
+        // />
       );
+    } else {
+      //未参加者用画面
     }
   }
 

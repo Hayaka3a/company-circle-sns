@@ -51,7 +51,7 @@ model Events {
 eventID Int @id @default(autoincrement())
 eventName String  @unique @db.VarChar(100)
 thumbnail String?
-detail String @db.VarChar(300)
+detail String
 startDate DateTime
 enddate DateTime
 status Boolean @default(false)
