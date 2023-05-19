@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+// ヘッダー
+import Header from './components/Header';
 // userフォルダ
 import UserDetail from './user';
 import UserPost from './user/post';
@@ -25,10 +27,12 @@ import IslandPost from './island/post';
 // searchフォルダ
 import Search from './search';
 
+
 function App() {
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
+      <Header />
         <Routes>
           {/* userフォルダ */}
           <Route path="/user" element={<UserDetail />} />
