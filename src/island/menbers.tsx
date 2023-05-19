@@ -1,11 +1,9 @@
-import React from "react";
+import ParticipantList from "../components/participantList/ParticipantList";
 
-
-
-export default function IslandMenbers(){
-    return(
-        <>
-       
-        </>
-    )
+export default function IslandMenbers() {
+  return (
+    <>
+      <ParticipantList table={"island"} />
+    </>
+  );
 }
