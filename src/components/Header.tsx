@@ -54,11 +54,6 @@ const Header = () => {
                 </a>
               </li>
               <li className={styles.menuGroupItem}>
-                <a className={styles.menuGroupItemLink} href="/island/create">
-                  新規サークル作成
-                </a>
-              </li>
-              <li className={styles.menuGroupItem}>
                 <a className={styles.menuGroupItemLink} href="/user/index">
                   アカウント情報
                 </a>
