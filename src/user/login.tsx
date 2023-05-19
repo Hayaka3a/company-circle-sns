@@ -9,27 +9,26 @@ export default function Login(){
 
     }
     return(
-        <div className={styles.all}>
-        <div className={styles.main}>
-            <div>
-                <img src='/public/login/loginCounter.png' alt='Login Counter'/>
+        <>
+            <div className={styles.box}>
+            <img src='/login/loginCounter.png' alt='Login Counter' className={styles.img}/>
             <div className={styles.board}>
-            <div>
-            <label htmlFor='email' className={styles.label}>メールアドレス：</label>
-            <input type="email" id='email'/>
+                <h4 className={styles.boardTitle}>ログイン申請書</h4>
+                <div>
+                    <input type="email" id='email' placeholder="ログインID（登録メールアドレス）" className={styles.inputA}/>
+                </div>
+
+                <div>
+                    <input type="password" id='pass' placeholder="パスワード" className={styles.inputB}/>
+                </div>
             </div>
 
-            <div>
-            <label htmlFor='pass' className={styles.label}>パスワード：</label>
-            <input type="password" id='pass'/>
+            <button onClick={loginHandler} className={styles.button}>ログイン</button>
             </div>
-            </div>
+            {/* </div> */}
 
-            </div>
-
-
-            <button onClick={loginHandler}>ログイン</button>
-        </div>
-        </div>
+        
+        </>
+        
     )
 }
