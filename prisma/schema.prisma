@@ -133,16 +133,4 @@ islandID Int
 events   Events    @relation(fields: [eventID], references: [eventID])
 eventID Int
 status  Boolean @default(false)
-chat Chats[]
-}
-
-model Chats{
-chatID Int @id @default(autoincrement())
-text String @db.VarChar(100)
-postedAt DateTime?
-postedBy String
-icon String
-threads   Threads    @relation(fields: [threadID], references: [threadID])
-threadID Int
-status  Boolean @default(false)
 }
