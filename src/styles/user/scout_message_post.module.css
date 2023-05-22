@@ -1,0 +1,54 @@
+.back {
+    background-color: rgb(204, 244, 230);
+    padding-bottom: 50px;
+}
+
+.close_btn {
+    width: 20px;
+    height: 20px;
+    margin: 10px 0 0 100px;
+}
+
+.receive {
+    background-color: white;
+    padding-bottom: 50px;
+    margin-bottom: 20px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.from {
+    font-size: 30px;
+    margin-left: 150px;
+}
+
+.flex img {
+    width: 55px;
+    height: 55px;
+    padding-top:20px;
+    margin: 0 0 0 40px;
+}
+
+.islandName {
+    margin: 0 0 0 50px;
+    padding-top: 35px;
+    font-size: 20px;
+}
+
+.receiving_time {
+    padding-top: 35px;
+    margin: 0 0 0 300px;
+}
+
+.scoutMessage {
+    text-align: center;
+}
+
+.island_detail {
+    padding-top: 30px;
+}
