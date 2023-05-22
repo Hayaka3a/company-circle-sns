@@ -1,0 +1,36 @@
+.display {
+  display: flex;
+}
+.main {
+  width: 70%;
+  margin-left: 2%;
+}
+
+/* Background styles */
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 75%;
+}
+.tbody {
+  width: 100%;
+  margin: auto;
+}
+.tr {
+  border-bottom: solid 1px #eee;
+  cursor: pointer;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.td {
+  padding: 15px 0;
+  vertical-align: middle;
+}
+
+.icon {
+  background-size: 35px;
+  background-position: left 5px center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+}

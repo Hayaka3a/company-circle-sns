@@ -19,6 +19,7 @@ import EventCreate from "./event/create";
 import EventEdit from "./event/edit";
 import EventForum from "./event/forum";
 import EventPost from "./event/post";
+import EventMenbers from "./event/menbers";
 
 // islandフォルダ
 import IslandDetail from "./island/[id]";
@@ -81,7 +82,8 @@ function App() {
           <Route path="/event/edit" element={<EventEdit />} />
           <Route path="/event/forum" element={<EventForum />} />
           <Route path="/event/post" element={<EventPost />} />
-
+          <Route path="/event/menbers" element={<EventMenbers />} />
+          
           {/* chat */}
           <Route path="/chat" element={<Chat />} />
         </Routes>
