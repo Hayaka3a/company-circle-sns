@@ -1,1 +1,1 @@
-# company-circle-sns
+# 社内コミュニティSNS
