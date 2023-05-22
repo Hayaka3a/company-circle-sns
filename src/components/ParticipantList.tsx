@@ -36,7 +36,6 @@ export default function ParticipantList(props: { table: string }) {
     if (island.ownerID === loginUser.userID) {
       return (
         <>
-          <div className={styles.table}>
             <tr key={loginUser.userID} className={styles.tr}>
               <td className={styles.td}>
                 <img src={loginUser.icon} className={styles.icon} />
@@ -57,7 +56,6 @@ export default function ParticipantList(props: { table: string }) {
                 </tr>
               );
             })}
-          </div>
         </>
       );
     } else if (entryUsers.some((user) => user.userID === loginUser.userID)) {
