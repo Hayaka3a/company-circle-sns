@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  userID        Int      @id @default(autoincrement())
+  familyName   String @db.VarChar(12)
+  firstName String @db.VarChar(12)
+  familyName_kana String @db.VarChar(12)
+  firstName_kana String @db.VarChar(12)
+  mailAddress String  @unique @db.VarChar(250)
+  password String @db.VarChar(16)
+  icon String
+  employeeCode Int  @unique
+  department String
+  status Boolean @default(false)
+  createdAt DateTime @default(now())
+  createdBy String
+  updatedAt DateTime?
+  updatedBy String?
+  userEntryStatus UserEntryStatus[]
+  post Posts[]
+}
+
+model Islands {
+islandID Int @id @default(autoincrement())
+islandName String @unique @db.VarChar(100)
+thumbnail String?
+detail String @db.VarChar(300)
+ownerID Int
+status Boolean @default(false)
+createdAt DateTime @default(now())
+createdBy String
+updatedAt DateTime?
+updatedBy String?
+userEntryStatus UserEntryStatus[]
+post Posts[]
+tagStatus TagStatus[]
+thread Threads[]
+}
+
+model Events {
+eventID Int @id @default(autoincrement())
+eventName String  @unique @db.VarChar(100)
+thumbnail String?
+detail String
+startDate DateTime
+enddate DateTime
+status Boolean @default(false)
+createdAt DateTime @default(now())
+createdBy String
+updatedAt DateTime?
+updatedBy String?
+userEntryStatus UserEntryStatus[]
+post Posts[]
+thread Threads[]
+}
+
+model UserEntryStatus{
+userEntryStatusID Int @id @default(autoincrement())
+users   Users    @relation(fields: [userID], references: [userID])
+userID Int
+islands   Islands    @relation(fields: [islandID], references: [islandID])
+islandID Int
+events   Events    @relation(fields: [eventID], references: [eventID])
+eventID Int
+status Boolean @default(false)
+}
+
+model Posts{
+postID Int @id @default(autoincrement())
+users   Users    @relation(fields: [userID], references: [userID])
+userID Int
+islands   Islands    @relation(fields: [islandID], references: [islandID])
+islandID Int
+events   Events    @relation(fields: [eventID], references: [eventID])
+eventID Int
+status Boolean @default(false)
+message Messages[]
+}
+
+model Messages{
+messageID Int @id @default(autoincrement())
+message String?  @db.VarChar(200)
+posredBy String
+posts   Posts    @relation(fields: [postID], references: [postID])
+postID Int
+scout  Boolean @default(false)
+isRead  Boolean @default(false)
+isAnswered  Boolean @default(false)
+status  Boolean @default(false)
+application Applications[]
+}
+
+model Applications{
+applicationID Int @id @default(autoincrement())
+message String?  @db.VarChar(200)
+messages   Messages    @relation(fields: [messageID], references: [messageID])
+messageID Int
+status  Boolean @default(false)
+}
+
+model Tags{
+tagID Int @id @default(autoincrement())
+tagName String @db.VarChar(22)
+tagNameKana String
+status  Boolean @default(false)
+tagStatus TagStatus[]
+}
+
+model TagStatus{
+tagStatusID Int @id @default(autoincrement())
+tags   Tags    @relation(fields: [tagID], references: [tagID])
+tagID Int
+islands   Islands    @relation(fields: [islandID], references: [islandID])
+islandID Int
+status  Boolean @default(false)
+}
+
+model Threads{
+threadID Int @id @default(autoincrement())
+threadTitle String @db.VarChar(22)
+islands   Islands    @relation(fields: [islandID], references: [islandID])
+islandID Int
+events   Events    @relation(fields: [eventID], references: [eventID])
+eventID Int
+status  Boolean @default(false)
+}
