@@ -5,7 +5,7 @@ import { chat } from "../types/chat";
 import SendMessages from "./SendMessages";
 
 const Chat = () => {
-  // sessionに保存されてるユーザーネーム
+  // session?に保存されてるユーザーネーム
   // threadIDはpropsから渡される予定
   const userName = "シャチ";
   const threadID = 1;
