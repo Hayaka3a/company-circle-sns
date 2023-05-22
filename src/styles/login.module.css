@@ -1,67 +1,68 @@
-
 .box {
-    /* position: relative; */
-    background-color: rgb(0, 163, 0);
-    padding: 1%;
-    height: 800px;
-    margin-right: 10%;
-    margin-left: 10%;
+  /* position: relative; */
+  background-color: rgb(0, 163, 0);
+  padding: 1%;
+  height: 800px;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
-.board{
-    position: absolute;
-    top: 75%;
-    left: 32%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.9);
-    padding-right: 3%;
-    padding-left: 3%;
-    padding-bottom: 4%;
-    border-radius: 1%;
-    width: 300px;
-    height: 200px;
+.board {
+  position: absolute;
+  top: 75%;
+  left: 32%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding-right: 3%;
+  padding-left: 3%;
+  padding-bottom: 4%;
+  border-radius: 1%;
+  width: 300px;
+  height: 200px;
 }
 
-.boardTitle{
-    margin-top: 20%;
+.boardTitle {
+  margin-top: 20%;
 }
 
-.img{
-    width: 90%;
-    position: relative;
+/* .imgCovered {
+  background-color: pink;
+  display: flex;
+} */
+
+.img {
+  width: 90%;
+  position: relative;
 }
 
-.button{
-    position: absolute;
-    top: 80%;
-    left: 73%;
-    transform: translate(-50%, -50%);
+.button {
+  position: absolute;
+  top: 80%;
+  left: 73%;
+  transform: translate(-50%, -50%);
 }
 
-.inputA{
-    margin-top: 10%;
-    margin-bottom: 10%;
-    border:2px solid #3aeb26;
-    width: 100%;
+.inputA {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  border: 2px solid #3aeb26;
+  width: 100%;
 }
 
-.inputA:focus{
-    outline:rgb(101, 240, 97) 2px solid;
-    box-shadow:0 0 10px 0 #66a342;
-    border:3px solid #fef6fb;
-    transition:
-    left .2s ease, 
-    top .2s ease, 
-    
+.inputA:focus {
+  outline: rgb(101, 240, 97) 2px solid;
+  box-shadow: 0 0 10px 0 #66a342;
+  border: 3px solid #fef6fb;
+  transition: left 0.2s ease, top 0.2s ease;
 }
 
-.inputB{
-    border:2px solid #3aeb26;
-    width: 100%;
+.inputB {
+  border: 2px solid #3aeb26;
+  width: 100%;
 }
 
-.inputB:focus{
-    outline:rgb(101, 240, 97) 2px solid;
-    box-shadow:0 0 10px 0 #66a342;
-    border:3px solid #fef6fb;
+.inputB:focus {
+  outline: rgb(101, 240, 97) 2px solid;
+  box-shadow: 0 0 10px 0 #66a342;
+  border: 3px solid #fef6fb;
 }
