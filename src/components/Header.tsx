@@ -45,7 +45,6 @@ const Header = () => {
                 <span className={styles.menuGroupItemLink}>参加サークル</span>
               </li>
               <li className={styles.menuGroupItem}>
-                {" "}
                 <span className={styles.menuGroupItemLink}>参加イベント</span>
               </li>
               <li className={styles.menuGroupItem}>
