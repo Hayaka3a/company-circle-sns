@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import styles from "../styles/islandCreate.module.css";
+import styles from "../styles/createIsland.module.css";
 import ComboBox from "../components/comboBox";
 
 export default function IslandCreate() {
@@ -35,50 +35,66 @@ export default function IslandCreate() {
   return (
     <div className={styles.background}>
       <div className={styles.box}>
-        <h1>島作成</h1>
-        <div className={styles.inputs}>
-          <div>
-            <label htmlFor="islandName">
-              島名<span>【必須】</span>
-            </label>
-            <input type="text" id="islandName" className={styles.inputA} />
+        <div className={styles.allContents}>
+          <h1>島作成</h1>
+          <div className={styles.tableCovered}>
+            <table>
+              <tr>
+                <th>
+                  島名<span>【必須】</span>
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    id="islandName"
+                    className={styles.inputA}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  活動内容<span>【必須】</span>
+                </th>
+                <td>
+                  <input type="text" id="detail" className={styles.inputA} />
+                </td>
+              </tr>
+              <tr>
+                <th>メンバー</th>
+                <td>
+                  <ComboBox Options={userOptions} htmlFor="user" />
+                </td>
+              </tr>
+              <tr>
+                <th>サムネイル</th>
+                <td className={styles.imgSide}>
+                  <p className={styles.icon} id="img"></p>
+                  <div className={styles.faileCenter}>
+                    <input
+                      type="file"
+                      id="thumbnail"
+                      className={styles.inputA}
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>タグ</th>
+                <td>
+                  <ComboBox Options={tagOptions} htmlFor="tag" />
+                </td>
+              </tr>
+              <tr>
+                <th>タグ追加</th>
+                <td>
+                  <input type="text" id="addTag" className={styles.inputA} />
+                  <button onClick={addHandler}>追加</button>
+                </td>
+              </tr>
+            </table>
           </div>
 
-          <div>
-            <label htmlFor="detail">
-              活動内容<span>【必須】</span>
-            </label>
-            <input type="text" id="detail" className={styles.inputA} />
-          </div>
-
-          <div>
-            <label htmlFor="user">メンバー</label>
-            <div className={styles.displaySide}>
-              <ComboBox Options={userOptions} htmlFor="user" />
-            </div>
-          </div>
-
-          <div>
-            <p className={styles.icon} id="img"></p>
-            <label htmlFor="thumbnail">サムネイル</label>
-            <input
-              type="file"
-              id="thumbnail"
-              className={styles.inputA}
-              onChange={handleFileChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="tag">タグ</label>
-            <ComboBox Options={tagOptions} htmlFor="tag" />
-          </div>
-
-          <div>
-            <label htmlFor="addTag">タグ追加</label>
-            <input type="text" id="addTag" className={styles.inputA} />
-            <button onClick={addHandler}>追加</button>
-          </div>
           <button onClick={createHandler}>新しい島生活を始める</button>
         </div>
       </div>

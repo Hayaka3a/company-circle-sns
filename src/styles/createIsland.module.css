@@ -1,0 +1,85 @@
+.background {
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.box {
+  background-color: rgb(231, 231, 231);
+  padding-top: 1%;
+  height: 900px;
+  margin-right: 27%;
+  margin-left: 27%;
+  text-align: center;
+  border-radius: 1%;
+  padding-bottom: 3%;
+}
+
+.icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /*サムネイル円型*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+span {
+  color: red; /*必須文字*/
+}
+
+.tableCovered {
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  flex-direction: column; /* 縦方向に並べる */
+  height: auto;
+}
+
+table {
+  width: 85%;
+  border-collapse: collapse;
+  border-spacing: 0 6vh; /* 行間幅 */
+  border-top: 1px solid rgb(149, 149, 149);
+  margin-bottom: 6%;
+}
+
+th,
+td {
+  border-bottom: 1px solid rgb(180, 180, 180);
+  text-align: left;
+}
+
+th:last-child,
+td:last-child {
+  border-right: none; /* 最後の列の縦線を非表示*/
+}
+
+tr {
+  height: 10vh; /* 行の高さ */
+}
+
+td {
+  width: 100%;
+}
+
+th {
+  font-size: 1.3em;
+  width: 50%;
+}
+
+input {
+  height: 35px;
+}
+
+.allContents {
+  height: 100%;
+  padding: 5%;
+}
+
+.imgSide {
+  display: flex;
+}
+
+.faileCenter {
+  display: flex;
+  align-items: center;
+}
