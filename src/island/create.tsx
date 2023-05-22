@@ -71,7 +71,7 @@ export default function IslandCreate() {
 
           <div>
             <label htmlFor="tag">タグ</label>
-            <ComboBox Options={tagOptions} id="tag" />
+            <ComboBox Options={tagOptions} htmlFor="tag" />
           </div>
 
           <div>
