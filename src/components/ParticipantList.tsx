@@ -37,28 +37,26 @@ export default function ParticipantList(props: { table: string }) {
     if (island.ownerID === loginUser.userID) {
       return (
         <>
-          <tbody className={styles.tbody}>
-            <tr key={loginUser.userID} className={styles.tr}>
-              <td className={styles.td}>
-                <img src={loginUser.icon} className={styles.icon} />
-                {loginUser.familyName}
-                {loginUser.firstName}
-                (オーナー)
-              </td>
-              <td className={styles.td}></td>
-            </tr>
-            {newEntryUsers.map((user) => {
-              return (
-                <tr key={user.userID}>
-                  {anotherUser(user)}
-                  <td>
-                    <button>島主権限を譲渡</button>
-                    <button>島追放</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+          <tr key={loginUser.userID} className={styles.tr}>
+            <td className={styles.td}>
+              <img src={loginUser.icon} className={styles.icon} />
+              {loginUser.familyName}
+              {loginUser.firstName}
+              (オーナー)
+            </td>
+            <td className={styles.td}></td>
+          </tr>
+          {newEntryUsers.map((user) => {
+            return (
+              <tr key={user.userID}>
+                {anotherUser(user)}
+                <td>
+                  <button>島主権限を譲渡</button>
+                  <button>島追放</button>
+                </td>
+              </tr>
+            );
+          })}
         </>
       );
     } else if (entryUsers.some((user) => user.userID === loginUser.userID)) {

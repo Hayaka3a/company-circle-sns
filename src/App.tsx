@@ -34,6 +34,9 @@ import UserMessage from "./island/message/user_message";
 // searchフォルダ
 import Search from "./search";
 
+// chat
+import Chat from "./components/Chat";
+
 function App() {
   return (
     <div>
@@ -80,6 +83,9 @@ function App() {
           <Route path="/event/forum" element={<EventForum />} />
           <Route path="/event/post" element={<EventPost />} />
           <Route path="/event/menbers" element={<EventMenbers />} />
+          
+          {/* chat */}
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </BrowserRouter>
     </div>
