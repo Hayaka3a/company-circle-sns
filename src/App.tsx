@@ -1,38 +1,38 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
+import "./App.css";
 // ヘッダー
-import Header from './components/Header';
+import Header from "./components/Header";
 // userフォルダ
-import UserDetail from './user';
-import UserPost from './user/post';
-import Login from './user/login';
+import UserDetail from "./user";
+import UserPost from "./user/post";
+import Login from "./user/login";
 
 // eventフォルダ
-import EventDetail from './event/[id]';
-import EventCreate from './event/create';
-import EventEdit from './event/edit';
-import EventForum from './event/forum';
-import EventPost from './event/post';
+import EventDetail from "./event/[id]";
+import EventCreate from "./event/create";
+import EventEdit from "./event/edit";
+import EventForum from "./event/forum";
+import EventPost from "./event/post";
+import EventMenbers from "./event/menbers";
 
 // islandフォルダ
-import IslandDetail from './island/[id]';
-import IslandEdit from './island/edit';
-import EventAll from './island/eventAll';
-import IslandForum from './island/forum';
-import IslandCreate from './island/create';
-import IslandMenbers from './island/menbers';
-import IslandPost from './island/post';
+import IslandDetail from "./island/[id]";
+import IslandEdit from "./island/edit";
+import EventAll from "./island/eventAll";
+import IslandForum from "./island/forum";
+import IslandCreate from "./island/create";
+import IslandMenbers from "./island/menbers";
+import IslandPost from "./island/post";
 
 // searchフォルダ
-import Search from './search';
-
+import Search from "./search";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-      <Header />
+        <Header />
         <Routes>
           {/* userフォルダ */}
           <Route path="/user" element={<UserDetail />} />
@@ -57,12 +57,11 @@ function App() {
           <Route path="/event/edit" element={<EventEdit />} />
           <Route path="/event/forum" element={<EventForum />} />
           <Route path="/event/post" element={<EventPost />} />
-          
+          <Route path="/event/menbers" element={<EventMenbers />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
-
 
 export default App;
