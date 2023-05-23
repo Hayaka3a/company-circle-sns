@@ -17,7 +17,7 @@ import OperationMessage from "./user/message/operation_message";
 import EventDetail from "./event/[id]";
 import EventCreate from "./event/create";
 import EventEdit from "./event/edit";
-import EventForum from "./event/forum";
+import EventThread from "./event/thread";
 import EventPost from "./event/post";
 import EventMenbers from "./event/menbers";
 
@@ -25,7 +25,7 @@ import EventMenbers from "./event/menbers";
 import IslandDetail from "./island/[id]";
 import IslandEdit from "./island/edit";
 import EventAll from "./island/eventAll";
-import IslandForum from "./island/forum";
+import IslandThread from "./island/thread";
 import IslandCreate from "./island/create";
 import IslandMenbers from "./island/menbers";
 import IslandPost from "./island/post";
@@ -68,7 +68,7 @@ function App() {
           <Route path="/island/create" element={<IslandCreate />} />
           <Route path="/island/edit" element={<IslandEdit />} />
           <Route path="/island/eventAll" element={<EventAll />} />
-          <Route path="/island/forum" element={<IslandForum />} />
+          <Route path="/island/thread" element={<IslandThread />} />
           <Route path="/island/menbers" element={<IslandMenbers />} />
           <Route path="/island/post" element={<IslandPost />} />
           <Route
@@ -80,10 +80,10 @@ function App() {
           <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/event/create" element={<EventCreate />} />
           <Route path="/event/edit" element={<EventEdit />} />
-          <Route path="/event/forum" element={<EventForum />} />
+          <Route path="/event/thread" element={<EventThread />} />
           <Route path="/event/post" element={<EventPost />} />
           <Route path="/event/menbers" element={<EventMenbers />} />
-          
+
           {/* chat */}
           <Route path="/chat" element={<Chat />} />
         </Routes>
