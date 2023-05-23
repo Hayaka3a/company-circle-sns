@@ -5,7 +5,6 @@ export default function ParticipantList(props: { table: string }) {
   const entryUsers = [
     { userID: 1, familyName: "田中", firstName: "太郎", icon: "/image1" },
     { userID: 2, familyName: "佐藤", firstName: "良子", icon: "/image2" },
-    { userID: 3, familyName: "佐藤", firstName: "良子", icon: "/image2" },
   ];
   const loginUser = {
     userID: 1,
