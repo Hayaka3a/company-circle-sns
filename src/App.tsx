@@ -81,7 +81,7 @@ function App() {
           <Route path="/event/post" element={<EventPost />} />
           <Route path="/event/menbers" element={<EventMenbers />} />
           {/* chat */}
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat/:id" element={<Chat />} />
         </Routes>
       </BrowserRouter>
     </div>
