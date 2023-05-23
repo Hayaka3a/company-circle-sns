@@ -1,11 +1,12 @@
 import styles from "../styles/participantList.module.css";
+import { useEffect } from "react";
+import { PrismaClient } from "@prisma/client";
 
 export default function ParticipantList(props: { table: string }) {
   //DB作成後置き換え
   const entryUsers = [
     { userID: 1, familyName: "田中", firstName: "太郎", icon: "/image1" },
     { userID: 2, familyName: "佐藤", firstName: "良子", icon: "/image2" },
-    { userID: 3, familyName: "佐藤", firstName: "良子", icon: "/image2" },
   ];
   const loginUser = {
     userID: 1,
@@ -37,28 +38,26 @@ export default function ParticipantList(props: { table: string }) {
     if (island.ownerID === loginUser.userID) {
       return (
         <>
-          <tbody className={styles.tbody}>
-            <tr key={loginUser.userID} className={styles.tr}>
-              <td className={styles.td}>
-                <img src={loginUser.icon} className={styles.icon} />
-                {loginUser.familyName}
-                {loginUser.firstName}
-                (オーナー)
-              </td>
-              <td className={styles.td}></td>
-            </tr>
-            {newEntryUsers.map((user) => {
-              return (
-                <tr key={user.userID}>
-                  {anotherUser(user)}
-                  <td>
-                    <button>島主権限を譲渡</button>
-                    <button>島追放</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+          <tr key={loginUser.userID} className={styles.tr}>
+            <td className={styles.td}>
+              <img src={loginUser.icon} className={styles.icon} />
+              {loginUser.familyName}
+              {loginUser.firstName}
+              (オーナー)
+            </td>
+            <td className={styles.td}></td>
+          </tr>
+          {newEntryUsers.map((user) => {
+            return (
+              <tr key={user.userID}>
+                {anotherUser(user)}
+                <td>
+                  <button>島主権限を譲渡</button>
+                  <button>島追放</button>
+                </td>
+              </tr>
+            );
+          })}
         </>
       );
     } else if (entryUsers.some((user) => user.userID === loginUser.userID)) {
@@ -83,7 +82,7 @@ export default function ParticipantList(props: { table: string }) {
                   <td></td>
                 </tr>
               );
-            })}
+            })}{" "}
           </tbody>
         </>
       );
