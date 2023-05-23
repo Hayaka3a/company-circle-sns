@@ -59,10 +59,8 @@ function App() {
             path="/user/message/operation_message"
             element={<OperationMessage />}
           />
-
           {/* searchフォルダ */}
           <Route path="/search" element={<Search />} />
-
           {/* islandフォルダ */}
           <Route path="/island/:id" element={<IslandDetail />} />
           <Route path="/island/create" element={<IslandCreate />} />
@@ -75,7 +73,6 @@ function App() {
             path="/island/message/user_message"
             element={<UserMessage />}
           />
-
           {/* eventフォルダ */}
           <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/event/create" element={<EventCreate />} />
@@ -83,7 +80,6 @@ function App() {
           <Route path="/event/thread" element={<EventThread />} />
           <Route path="/event/post" element={<EventPost />} />
           <Route path="/event/menbers" element={<EventMenbers />} />
-
           {/* chat */}
           <Route path="/chat" element={<Chat />} />
         </Routes>
