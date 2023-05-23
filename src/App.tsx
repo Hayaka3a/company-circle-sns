@@ -67,7 +67,6 @@ function App() {
           <Route path="/island/edit" element={<IslandEdit />} />
           <Route path="/island/eventAll" element={<EventAll />} />
           <Route path="/island/forum" element={<IslandForum />} />
-          @ts-expect-error Server Component
           <Route path="/island/menbers" element={<IslandMenbers />} />
           <Route path="/island/post" element={<IslandPost />} />
           <Route
