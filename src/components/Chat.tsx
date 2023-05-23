@@ -7,10 +7,10 @@ import SendMessages from "./SendMessages";
 
 const Chat = () => {
   const { id } = useParams();
-  // session?に保存されてるユーザーネーム
-  // threadIDはpropsから渡される予定
-  const userName = "シャチ";
   const threadID = Number(id);
+  // session?に保存されてるユーザーネーム
+  const userName = "シャチ";
+
   const threadTitle = "サンプル";
 
   const [messages, setMessages] = useState<chat[]>([]);
@@ -46,7 +46,7 @@ const Chat = () => {
         setMessages(snapShots as chat[]);
       });
   }, []);
-  console.log(messages);
+
 
   return (
     <main className={styles.content}>
