@@ -67,3 +67,7 @@
   box-shadow: 0 0 10px 0 #66a342;
   border: 3px solid #fef6fb;
 }
+
+.link {
+  color: red;
+}

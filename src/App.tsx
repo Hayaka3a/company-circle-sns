@@ -12,6 +12,7 @@ import Login from "./user/login";
 import IslandMessage from "./user/message/island_message";
 import ScoutMessage from "./user/message/scout_message";
 import OperationMessage from "./user/message/operation_message";
+import NewUser from "./user/newUser";
 
 // eventフォルダ
 import EventDetail from "./event/[id]";
@@ -59,6 +60,7 @@ function App() {
             path="/user/message/operation_message"
             element={<OperationMessage />}
           />
+          <Route path="/user/newUser" element={<NewUser />} />
 
           {/* searchフォルダ */}
           <Route path="/search" element={<Search />} />
