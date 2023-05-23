@@ -20,7 +20,7 @@ export default function MenubarEvent({ thumbnail }: { thumbnail: string }) {
       <h4>イベント名</h4>
       <div className={styles.menuContents}>
         <div>
-          <Link to={`/event/forum`}>掲示板</Link>
+          <Link to={`/event/thread`}>掲示板</Link>
         </div>
         <div>
           <Link to={`/event/post`}>ポスト</Link>

@@ -26,7 +26,7 @@ export default function MenubarIsland({
 
         <div className={styles.menuContents}>
           <div>
-            <Link to={`/island/forum`}>掲示板</Link>
+            <Link to={`/island/thread`}>掲示板</Link>
           </div>
           <div>
             <Link to={`/event/[id]`}>イベント</Link>
