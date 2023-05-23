@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import styles from "../styles/menubar.module.css";
 import { Link } from "react-router-dom";
 
-export default function MenubarIsland({ thumbnail }: { thumbnail: string }) {
+export default function MenubarIsland({
+  thumbnail,
+}: {
+  thumbnail: string | null;
+}) {
   useEffect(() => {
     let imageUrl = thumbnail;
     let circleElement = document.getElementById("img");
