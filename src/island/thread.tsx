@@ -29,7 +29,11 @@ export default function IslandThread() {
         <div className={styles.threadWrapper}>
           <button onClick={openModal}>スレッドを作成する</button>
           {isOpen && (
-            <CreateThread closeModal={closeModal} islandID={islandID} />
+            <CreateThread
+              closeModal={closeModal}
+              islandID={islandID}
+              eventID={null}
+            />
           )}
           <Thread thread={thread} />
         </div>
