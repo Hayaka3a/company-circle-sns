@@ -1,6 +1,5 @@
 import styles from "../styles/participantList.module.css";
 import { useEffect } from "react";
-import { PrismaClient } from "@prisma/client";
 
 export default function ParticipantList(props: { table: string }) {
   //DB作成後置き換え
