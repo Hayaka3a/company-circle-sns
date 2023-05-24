@@ -1,7 +1,16 @@
 import React from "react";
 import styles from "../styles/Header.module.css";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  // ログアウト処理
+  const logOutHandler = () => {
+    if (document.cookie !== "") {
+      let expirationDate = new Date("1999-12-31T23:59:59Z");
+      document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
+      alert("ログアウトしました");
+    }
+  };
   return (
     <header>
       {/* 検索箇所 */}
@@ -24,12 +33,14 @@ const Header = () => {
           <img src="" alt="ユーザーアイコン" />
           <span>ユーザー名</span>
         </div>
-        <div className={styles.imgWrapper}>
-          <img
-            src="/images/logout.png"
-            alt="ログアウト"
-            className={styles.logout}
-          />
+        <div className={styles.imgWrapper} onClick={logOutHandler}>
+          <Link to={`/user/login`}>
+            <img
+              src="/images/logout.png"
+              alt="ログアウト"
+              className={styles.logout}
+            />
+          </Link>
         </div>
         {/* ハンバーガーメニュー */}
         <div className={styles.hambuger}>
