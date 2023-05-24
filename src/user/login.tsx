@@ -1,21 +1,50 @@
 import React, { useState } from "react";
-import Menubar from "../components/menubarIsland";
 import styles from "../styles/user/login.module.css";
 import { Link } from "react-router-dom";
+import { supabase } from "../createClient";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate(); // useNavigateフックで画面遷移
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-  const data = {
-    mailAddress: email,
-    password: password,
-  };
+  const loginHandler = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
 
-  const loginHandler = async () => {
-    // let { data } = await supabase.from('users').select()eq('email', email)
-    // .eq('password', password);
+    try {
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("mailAddress", email)
+        .eq("password", password);
+
+      if (error) {
+        console.log("データベースエラー:", error.message);
+        return null;
+      }
+      if (data && data.length > 0) {
+        // ユーザーが見つかった場合
+        const id = data[0].id;
+        const userId = id;
+
+        // Cookieの有効期限1日
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 1);
+
+        // Cookie設定
+        document.cookie = `id=${userId}; expires=${expirationDate.toUTCString()}; path=/`;
+
+        navigate("/index");
+      } else {
+        // ユーザーが見つからなかった場合
+        console.log("ユーザーが見つかりません");
+        setVisible(true);
+      }
+    } catch (error) {
+      console.log("エラー:", error);
+    }
   };
   return (
     <>
@@ -37,7 +66,7 @@ export default function Login() {
               className={styles.inputA}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setError(false);
+                setVisible(false);
               }}
             />
           </div>
@@ -50,7 +79,7 @@ export default function Login() {
               className={styles.inputB}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setError(false);
+                setVisible(false);
               }}
               required
               pattern=".{8,16}"
@@ -70,7 +99,7 @@ export default function Login() {
           </Link>
         </div>
 
-        <h3 style={{ display: error ? "block" : "none" }}>
+        <h3 style={{ display: visible ? "block" : "none" }}>
           ユーザーが見つかりません。もう一度入力してください。
         </h3>
       </div>
