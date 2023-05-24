@@ -3,6 +3,7 @@ import styles from "../styles/user/login.module.css";
 import { Link } from "react-router-dom";
 import { supabase } from "../createClient";
 import { useNavigate } from "react-router-dom";
+// import { enc, AES } from "crypto-js";
 
 export default function Login() {
   const navigate = useNavigate(); // useNavigateフックで画面遷移
@@ -26,17 +27,26 @@ export default function Login() {
       }
       if (data && data.length > 0) {
         // ユーザーが見つかった場合
-        const id = data[0].id;
-        const userId = id;
+        const userId = data[0].id;
+        // const fName = data[0].firstName;
+        // const lName = data[0].familyName;
+        // const icon = data[0].icon;
+
+        // 暗号化
+        // const encryptedFname = AES.encrypt(fName, "encryptionKey").toString();
+        // const encryptedLname = AES.encrypt(lName, "encryptionKey").toString();
+        // const encryptedIcon = AES.encrypt(icon, "encryptionKey").toString();
+        // console.log(encryptedFname, encryptedLname, encryptedIcon);
 
         // Cookieの有効期限1日
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
 
         // Cookie設定
-        document.cookie = `id=${userId}; expires=${expirationDate.toUTCString()}; path=/`;
+        document.cookie = `id=${userId};  expires=${expirationDate.toUTCString()}; path=/`;
+        // document.cookie = `id=${userId}; fName="${encryptedFname}"; lName="${encryptedLname}"; icon="${encryptedIcon}"; expires=${expirationDate.toUTCString()}; path=/`;
 
-        navigate("/index");
+        navigate("/");
       } else {
         // ユーザーが見つからなかった場合
         console.log("ユーザーが見つかりません");
