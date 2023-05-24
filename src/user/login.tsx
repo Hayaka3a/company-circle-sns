@@ -47,6 +47,7 @@ export default function Login() {
         // document.cookie = `id=${userId}; fName="${encryptedFname}"; lName="${encryptedLname}"; icon="${encryptedIcon}"; expires=${expirationDate.toUTCString()}; path=/`;
 
         navigate("/");
+        window.location.reload();
       } else {
         // ユーザーが見つからなかった場合
         console.log("ユーザーが見つかりません");
