@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import MenubarEvent from "../components/menubarEvent";
 import styles from "../styles/eventDetail.module.css";
+import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
 
 export default function EventDetail() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    // メッセージを送るを押した際の小窓画面（モーダルウィンドウ）の開閉
+    // isOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
+
+    const openModal = () => {
+      setIsOpen(true);
+    };
+
+    const closeModal = () => {
+      setIsOpen(false);
+    };
+
   return (
     <div className={styles.flex}>
         <MenubarEvent thumbnail="/login/loginCounter.png" />
@@ -40,7 +54,8 @@ export default function EventDetail() {
 
             <div className={styles.btn}>
               <button>参加申請</button>
-              <button>メッセージを送る</button>
+              <button onClick={openModal}>メッセージを送る</button>
+              {isOpen && <CreateSendingMessage closeModal={closeModal} />}
             </div>
             <button id={styles.edit_btn}>編集・削除</button>
           </div>
