@@ -20,7 +20,8 @@ export default function IslandMembers() {
     const { data, error } = await supabase
       .from("islands")
       .select("*")
-      .eq(`id`, paramsID);
+      .eq(`id`, paramsID)
+      .eq(`status`, false);
 
     // データ取得時のエラー処理
     if (!data) return;

@@ -32,7 +32,7 @@ export default function MenubarIsland({
             <Link to={`/island/thread/${paramsID}`}>掲示板</Link>
           </div>
           <div>
-            <Link to={`/event/${params}`}>イベント</Link>
+            <Link to={`/event/${paramsID}`}>イベント</Link>
           </div>
           <div>
             <Link to={`/island/post/${paramsID}`}>ポスト</Link>

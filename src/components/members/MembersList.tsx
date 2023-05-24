@@ -2,6 +2,9 @@ import styles from "../../styles/membersList.module.css";
 import { useEffect, useState } from "react";
 import { Event, Island, Entryusers } from "../../types/members";
 import { supabase } from "../../createClient.js";
+import ExileButton from "./ExileButton";
+import OwnerTransferButton from "./OwnerTransferButton";
+import LeaveButton from "./LeaveButton";
 
 export default function MembersList({
   table,
@@ -12,6 +15,7 @@ export default function MembersList({
 }) {
   const [entryUsers, setEntryUsers] = useState<Entryusers[]>();
   const [newEntryUsers, setNewEntryUsers] = useState<Entryusers[]>();
+  const [reload, setReload] = useState(false);
 
   //仮置きのデータ
   const loginUser = {
@@ -19,6 +23,11 @@ export default function MembersList({
     familyName: "山田",
     firstName: "一郎",
     icon: "/image1",
+  };
+
+  //画面更新用関数
+  const handleRefresh = () => {
+    setReload(true);
   };
 
   // DBからデータを取得
@@ -31,7 +40,8 @@ export default function MembersList({
     const { data: entryData, error: entryError } = await supabase
       .from("userEntryStatus")
       .select(`*,users(*)`)
-      .eq(`${table}ID`, displayData.id);
+      .eq(`${table}ID`, displayData.id)
+      .eq(`status`, false);
     if (!entryData) return;
     if (entryError) {
       console.log(entryError);
@@ -85,8 +95,19 @@ export default function MembersList({
               <tr key={user.id} className={styles.tr}>
                 {anotherUser(user)}
                 <td className={styles.td}>
-                  <button>島主権限を譲渡</button>
-                  <button>島追放</button>
+                  <OwnerTransferButton
+                    text={"島主権限を譲渡"}
+                    table={table}
+                    params={displayData.id}
+                    user={user.users.id}
+                    onclick={handleRefresh}
+                  />
+                  <ExileButton
+                    text={"島を追放"}
+                    table={table}
+                    params={displayData.id}
+                    user={user.users.id}
+                  />
                 </td>
               </tr>
             );
@@ -107,7 +128,12 @@ export default function MembersList({
               {loginUser.firstName}
             </td>
             <td className={styles.td}>
-              <button>島を抜ける</button>
+              <LeaveButton
+                text={"島を抜ける"}
+                table={table}
+                params={displayData.id}
+                user={loginUser.id}
+              />
             </td>
           </tr>
           {newEntryUsers?.map((user) => {
