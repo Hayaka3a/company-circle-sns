@@ -1,5 +1,7 @@
 import Thread from "../components/Thread";
 import FetchEventThreads from "../components/hooks/FetchEventThreads";
+import styles from "../styles/thread.module.css";
+import MenubarEvent from "../components/menubarEvent";
 
 export default function EventThread() {
   // イベントID仮置き
@@ -9,7 +11,12 @@ export default function EventThread() {
 
   return (
     <>
-      <Thread thread={thread} />
+      <div className={styles.flex}>
+        <MenubarEvent thumbnail={""} />
+        <div className={styles.threadWrapper}>
+          <Thread thread={thread} />
+        </div>
+      </div>
     </>
   );
 }

@@ -47,15 +47,40 @@ const Chat = () => {
       });
   }, []);
 
-
   return (
     <main className={styles.content}>
-      <div className={styles.titleWrapper}>
-        <p className={styles.title}>{threadTitle}</p>
-      </div>
-      {messages.map((chat: chat) => (
-        <div className={styles.msgs} key={chat.chatID}>
-          <div>
+      <div>
+        <div className={styles.titleWrapper}>
+          <p className={styles.title}>{threadTitle}</p>
+        </div>
+        {messages.map((chat: chat) => (
+          <div className={styles.msgs} key={chat.chatID}>
+            <div>
+              <p
+                className={`${styles.userInfo} ${
+                  chat.postedBy === userName
+                    ? `${styles.sentUser}`
+                    : `${styles.receivedUser}`
+                }`}
+              >
+                {chat.postedBy}
+              </p>
+              <div
+                key={chat.postedBy}
+                className={`${styles.msg} ${
+                  chat.postedBy === userName
+                    ? `${styles.sent}`
+                    : `${styles.received}`
+                }`}
+              >
+                <img
+                  src={chat.icon}
+                  alt="ユーザーアイコン"
+                  className={styles.icon}
+                />
+                <p className={styles.text}>{chat.text}</p>
+              </div>
+            </div>
             <p
               className={`${styles.userInfo} ${
                 chat.postedBy === userName
@@ -63,36 +88,12 @@ const Chat = () => {
                   : `${styles.receivedUser}`
               }`}
             >
-              {chat.postedBy}
+              {chat.postedAt}
             </p>
-            <div
-              key={chat.postedBy}
-              className={`${styles.msg} ${
-                chat.postedBy === userName
-                  ? `${styles.sent}`
-                  : `${styles.received}`
-              }`}
-            >
-              <img
-                src={chat.icon}
-                alt="ユーザーアイコン"
-                className={styles.icon}
-              />
-              <p className={styles.text}>{chat.text}</p>
-            </div>
           </div>
-          <p
-            className={`${styles.userInfo} ${
-              chat.postedBy === userName
-                ? `${styles.sentUser}`
-                : `${styles.receivedUser}`
-            }`}
-          >
-            {chat.postedAt}
-          </p>
-        </div>
-      ))}
-      <SendMessages threadID={threadID} />
+        ))}
+        <SendMessages threadID={threadID} />
+      </div>
     </main>
   );
 };
