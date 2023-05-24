@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { thread } from "../types/thread";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/thread.module.css";
+import { changeFormat } from "../common/changeFormat";
 
 function Thread({ thread }: { thread: thread[] }) {
   const navigate = useNavigate();
@@ -16,6 +17,9 @@ function Thread({ thread }: { thread: thread[] }) {
           }}
           className={styles.thread}
         >
+          <div className={styles.imgWrapper}>
+            <img src={thread.events?.thumbnail} alt="アイコン" />
+          </div>
           <p className={styles.title}>{thread.threadTitle}</p>
         </div>
       ))}
