@@ -29,16 +29,16 @@ export default function MenubarIsland({
 
         <div className={styles.menuContents}>
           <div>
-            <Link to={`/island/thread`}>掲示板</Link>
+            <Link to={`/island/thread/${paramsID}`}>掲示板</Link>
           </div>
           <div>
             <Link to={`/event/${params}`}>イベント</Link>
           </div>
           <div>
-            <Link to={`/island/post`}>ポスト</Link>
+            <Link to={`/island/post/${paramsID}`}>ポスト</Link>
           </div>
           <div>
-            <Link to={`/island/menbers/${paramsID}`}>島民一覧</Link>
+            <Link to={`/island/members/${paramsID}`}>島民一覧</Link>
           </div>
           <div>
             <Link to={`/island/${paramsID}`}>島詳細</Link>
@@ -59,7 +59,7 @@ export default function MenubarIsland({
 //      <Link to={`/event/[id]`}>イベント</Link>
 //      </div>
 //      <div>
-//      <Link to={`/island/menbers`}>島民一覧</Link>
+//      <Link to={`/island/members`}>島民一覧</Link>
 //      </div>
 //      <div>
 //      <Link to={`/island/[id]`}>島詳細</Link>

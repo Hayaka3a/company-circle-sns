@@ -1,9 +1,9 @@
-import styles from "../styles/participantList.module.css";
+import styles from "../../styles/membersList.module.css";
 import { useEffect, useState } from "react";
-import { Event, Island, User, Entryusers } from "../types/menbers";
-import { supabase } from "../createClient.js";
+import { Event, Island, Entryusers } from "../../types/members";
+import { supabase } from "../../createClient.js";
 
-export default function ParticipantList({
+export default function MembersList({
   table,
   displayData,
 }: {

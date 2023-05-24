@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import ParticipantList from "../components/ParticipantList";
+import MembersList from "../components/members/MembersList";
 import MenubarIsland from "../components/menubarIsland";
-import styles from "../styles/participantList.module.css";
+import styles from "../styles/membersList.module.css";
 import { supabase } from "../createClient.js";
-import { Island } from "../types/menbers";
+import { Island } from "../types/members";
 import { useParams } from "react-router-dom";
 
-export default function IslandMenbers() {
+export default function IslandMembers() {
   const [displayData, setDisplayData] = useState<Island>();
 
   // DBからデータを取得
@@ -33,12 +33,12 @@ export default function IslandMenbers() {
   }
   return (
     <>
-      <div className={styles.display}>
-        <MenubarIsland thumbnail={"a"} />
-        {displayData && (
-          <ParticipantList table="island" displayData={displayData} />
-        )}
-      </div>
+      {displayData && (
+        <div className={styles.display}>
+          <MenubarIsland thumbnail={displayData.thumbnail} />
+          <MembersList table="island" displayData={displayData} />
+        </div>
+      )}
     </>
   );
 }

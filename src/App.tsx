@@ -19,7 +19,7 @@ import EventCreate from "./event/create";
 import EventEdit from "./event/edit";
 import EventThread from "./event/thread";
 import EventPost from "./event/post";
-import EventMenbers from "./event/menbers";
+import EventMembers from "./event/members";
 
 // islandフォルダ
 import IslandDetail from "./island/[id]";
@@ -27,7 +27,7 @@ import IslandEdit from "./island/edit";
 import EventAll from "./island/eventAll";
 import IslandThread from "./island/thread";
 import IslandCreate from "./island/create";
-import IslandMenbers from "./island/menbers";
+import IslandMembers from "./island/members";
 import IslandPost from "./island/post";
 import UserMessage from "./island/message/user_message";
 
@@ -67,7 +67,7 @@ function App() {
           <Route path="/island/edit" element={<IslandEdit />} />
           <Route path="/island/eventAll" element={<EventAll />} />
           <Route path="/island/thread" element={<IslandThread />} />
-          <Route path="/island/menbers/:id" element={<IslandMenbers />} />
+          <Route path="/island/members/:id" element={<IslandMembers />} />
           <Route path="/island/post" element={<IslandPost />} />
           <Route
             path="/island/message/user_message"
@@ -79,7 +79,7 @@ function App() {
           <Route path="/event/edit" element={<EventEdit />} />
           <Route path="/event/thread" element={<EventThread />} />
           <Route path="/event/post" element={<EventPost />} />
-          <Route path="/event/menbers/:id" element={<EventMenbers />} />
+          <Route path="/event/members/:id" element={<EventMembers />} />
           {/* chat */}
           <Route path="/chat" element={<Chat />} />
         </Routes>

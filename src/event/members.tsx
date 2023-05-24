@@ -1,19 +1,18 @@
-import ParticipantList from "../components/ParticipantList";
+import MembersList from "../components/members/MembersList";
 import MenubarEvent from "../components/menubarEvent";
 import { useEffect, useState } from "react";
-import styles from "../styles/participantList.module.css";
+import styles from "../styles/membersList.module.css";
 import { supabase } from "../createClient.js";
-import { Event } from "../types/menbers";
+import { Event } from "../types/members";
 import { useParams } from "react-router-dom";
 
-export default function EventMenbers() {
+export default function EventMembers() {
   const [displayData, setDisplayData] = useState<Event>();
 
   //島情報のデータを取得
   const params = useParams();
   const paramsID = parseInt(params.id);
   useEffect(() => {
-    console.log("useEffect");
     fetchData();
   }, [paramsID]);
 
@@ -29,16 +28,18 @@ export default function EventMenbers() {
       console.log(error);
     }
 
-    const island = data[0] as Event;
-    setDisplayData(island);
+    const event = data[0] as Event;
+    setDisplayData(event);
   }
 
   return (
     <>
-      <div className={styles.display}>
-        {/* <MenubarEvent thumbnail={eventData.thumbnail} /> */}
-        <ParticipantList table={"event"} displayData={displayData} />
-      </div>
+      {displayData && (
+        <div className={styles.display}>
+          <MenubarEvent thumbnail={displayData.thumbnail} />
+          <MembersList table="event" displayData={displayData} />
+        </div>
+      )}
     </>
   );
 }
