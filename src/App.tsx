@@ -39,10 +39,13 @@ import Search from "./search";
 import Chat from "./components/Chat";
 
 function App() {
+  // ログインページのみヘッダーを非表示
+  const showHeader = window.location.pathname !== "/user/login";
+
   return (
     <div>
       <BrowserRouter>
-        <Header />
+        {showHeader && <Header />}
         <Routes>
           {/* userフォルダ */}
           <Route path="/user" element={<UserDetail />} />

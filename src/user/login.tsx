@@ -87,11 +87,12 @@ export default function Login() {
               autoComplete="off"
             />
           </div>
+          <div>
+            <button onClick={loginHandler} className={styles.button}>
+              ログイン
+            </button>
+          </div>
         </div>
-
-        <button onClick={loginHandler} className={styles.button}>
-          ログイン
-        </button>
 
         <div>
           <Link to="/users/newUser" className={styles.link}>
