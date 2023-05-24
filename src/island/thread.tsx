@@ -28,7 +28,9 @@ export default function IslandThread() {
         <MenubarIsland thumbnail={null} />
         <div className={styles.threadWrapper}>
           <button onClick={openModal}>スレッドを作成する</button>
-          {isOpen && <CreateThread closeModal={closeModal} />}
+          {isOpen && (
+            <CreateThread closeModal={closeModal} islandID={islandID} />
+          )}
           <Thread thread={thread} />
         </div>
       </div>
