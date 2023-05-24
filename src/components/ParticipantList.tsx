@@ -1,57 +1,90 @@
 import styles from "../styles/participantList.module.css";
-import { useEffect } from "react";
-import { PrismaClient } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { Event, Island, User, Entryusers } from "../types/menbers";
+import { supabase } from "../createClient.js";
 
-export default function ParticipantList(props: { table: string }) {
-  //DB作成後置き換え
-  const entryUsers = [
-    { userID: 1, familyName: "田中", firstName: "太郎", icon: "/image1" },
-    { userID: 2, familyName: "佐藤", firstName: "良子", icon: "/image2" },
-  ];
+export default function ParticipantList({
+  table,
+  displayData,
+}: {
+  table: string;
+  displayData: Island | Event;
+}) {
+  const [entryUsers, setEntryUsers] = useState<Entryusers[]>();
+  const [newEntryUsers, setNewEntryUsers] = useState<Entryusers[]>();
+
+  //仮置きのデータ
   const loginUser = {
-    userID: 1,
-    familyName: "田中",
-    firstName: "太郎",
+    id: 1,
+    familyName: "山田",
+    firstName: "一郎",
     icon: "/image1",
   };
-  const island = { ownerID: 1 };
 
-  //ログインユーザーが参加者の場合、EntryUsersからログインユーザーのデータを抜き出す
-  const newEntryUsers = entryUsers.filter(
-    (user) => user.userID !== loginUser.userID,
-  );
+  // DBからデータを取得
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  //自分以外のユーザーの一覧表示
-  const anotherUser = (user: any) => {
-    return (
-      <td className={styles.td}>
-        <img src={user.icon} className={styles.icon} />
-        {user.familyName}
-        {user.firstName}
-        {}
-      </td>
+  async function fetchData() {
+    //参加者全員のデータを取得
+    const { data: entryData, error: entryError } = await supabase
+      .from("userEntryStatus")
+      .select(`*,users(*)`)
+      .eq(`${table}ID`, displayData.id);
+    if (!entryData) return;
+    if (entryError) {
+      console.log(entryError);
+    }
+
+    const userData = entryData as Entryusers[];
+    setEntryUsers(userData);
+
+    // ログインユーザーが参加者の場合、ログインユーザーを抜いた配列を新たに作る
+    const filteredUsers = userData.filter(
+      (user) => user.users.id !== loginUser.id,
     );
+    setNewEntryUsers(filteredUsers.length > 0 ? filteredUsers : []);
+  }
+
+  // 自分以外のユーザーの一覧表示
+  const anotherUser = (user: Entryusers) => {
+    if (anotherUser === undefined) {
+      return;
+    } else {
+      return (
+        <td className={styles.td}>
+          <img src={user.users.icon} className={styles.icon} alt="アイコン" />
+          {user.users.familyName}
+          {user.users.firstName}
+        </td>
+      );
+    }
   };
 
   function buttonSwitching() {
-    //ログインしているユーザーがオーナーだった場合の表示
-    if (island.ownerID === loginUser.userID) {
+    if (displayData.ownerID === loginUser.id) {
+      //オーナーの場合のデータ表示
       return (
         <>
-          <tr key={loginUser.userID} className={styles.tr}>
+          <tr key={loginUser.id} className={styles.tr}>
             <td className={styles.td}>
-              <img src={loginUser.icon} className={styles.icon} />
+              <img
+                src={loginUser.icon}
+                className={styles.icon}
+                alt="アイコン"
+              />
               {loginUser.familyName}
               {loginUser.firstName}
               (オーナー)
             </td>
             <td className={styles.td}></td>
           </tr>
-          {newEntryUsers.map((user) => {
+          {newEntryUsers?.map((user) => {
             return (
-              <tr key={user.userID}>
+              <tr key={user.id} className={styles.tr}>
                 {anotherUser(user)}
-                <td>
+                <td className={styles.td}>
                   <button>島主権限を譲渡</button>
                   <button>島追放</button>
                 </td>
@@ -60,56 +93,55 @@ export default function ParticipantList(props: { table: string }) {
           })}
         </>
       );
-    } else if (entryUsers.some((user) => user.userID === loginUser.userID)) {
-      //ログインしているユーザーが住民・参加者だった場合の表示
+    } else if (entryUsers?.some((user) => user.users.id === loginUser.id)) {
       return (
         <>
-          <tbody className={styles.tbody}>
-            <tr key={loginUser.userID}>
-              <td>
-                <img src={loginUser.icon} />
-                {loginUser.familyName}
-                {loginUser.firstName}
-              </td>
-              <td>
-                <button>島を抜ける</button>
-              </td>
-            </tr>
-            {newEntryUsers.map((user) => {
-              return (
-                <tr key={user.userID}>
-                  {anotherUser(user)}
-                  <td></td>
-                </tr>
-              );
-            })}{" "}
-          </tbody>
+          <tr key={loginUser.id} className={styles.tr}>
+            <td className={styles.td}>
+              <img
+                src={loginUser.icon}
+                className={styles.icon}
+                alt="アイコン"
+              />
+              {loginUser.familyName}
+              {loginUser.firstName}
+            </td>
+            <td className={styles.td}>
+              <button>島を抜ける</button>
+            </td>
+          </tr>
+          {newEntryUsers?.map((user) => {
+            return (
+              <tr key={user.id}>
+                {anotherUser(user)}
+                <td className={styles.td}></td>
+              </tr>
+            );
+          })}
         </>
       );
     } else {
-      //未参加ユーザーへの表示
       return (
         <>
-          <tbody className={styles.tbody}>
-            {entryUsers.map((user) => {
-              return (
-                <tr key={user.userID}>
-                  {anotherUser(user)}
-                  <td></td>
-                </tr>
-              );
-            })}
-          </tbody>
+          {entryUsers?.map((user) => {
+            return (
+              <tr key={user.id} className={styles.tr}>
+                {anotherUser(user)}
+                <td className={styles.td}></td>
+              </tr>
+            );
+          })}
         </>
       );
     }
   }
+
   return (
-    <>
-      <div className={styles.main}>
-        <h2>{props.table === "island" ? "島民" : "参加者"}一覧</h2>
-        <table className={styles.table}>{buttonSwitching()}</table>
-      </div>
-    </>
+    <div className={styles.main}>
+      <h2>{table === "island" ? "島民" : "参加者"}一覧</h2>
+      <table className={styles.table}>
+        <tbody className={styles.tbody}>{buttonSwitching()}</tbody>
+      </table>
+    </div>
   );
 }

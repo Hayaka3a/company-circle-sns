@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import styles from "../styles/menubar.module.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function MenubarIsland({
   thumbnail,
 }: {
   thumbnail: string | null;
 }) {
+  const params = useParams();
+  const paramsID = parseInt(params.id);
+
   useEffect(() => {
     let imageUrl = thumbnail;
     let circleElement = document.getElementById("img");
@@ -29,16 +32,16 @@ export default function MenubarIsland({
             <Link to={`/island/thread`}>掲示板</Link>
           </div>
           <div>
-            <Link to={`/event/[id]`}>イベント</Link>
+            <Link to={`/event/${params}`}>イベント</Link>
           </div>
           <div>
             <Link to={`/island/post`}>ポスト</Link>
           </div>
           <div>
-            <Link to={`/island/menbers`}>島民一覧</Link>
+            <Link to={`/island/menbers/${paramsID}`}>島民一覧</Link>
           </div>
           <div>
-            <Link to={`/island/[id]`}>島詳細</Link>
+            <Link to={`/island/${paramsID}`}>島詳細</Link>
           </div>
         </div>
       </div>

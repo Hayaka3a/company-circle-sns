@@ -67,7 +67,7 @@ function App() {
           <Route path="/island/edit" element={<IslandEdit />} />
           <Route path="/island/eventAll" element={<EventAll />} />
           <Route path="/island/thread" element={<IslandThread />} />
-          <Route path="/island/menbers" element={<IslandMenbers />} />
+          <Route path="/island/menbers/:id" element={<IslandMenbers />} />
           <Route path="/island/post" element={<IslandPost />} />
           <Route
             path="/island/message/user_message"
@@ -79,7 +79,7 @@ function App() {
           <Route path="/event/edit" element={<EventEdit />} />
           <Route path="/event/thread" element={<EventThread />} />
           <Route path="/event/post" element={<EventPost />} />
-          <Route path="/event/menbers" element={<EventMenbers />} />
+          <Route path="/event/menbers/:id" element={<EventMenbers />} />
           {/* chat */}
           <Route path="/chat" element={<Chat />} />
         </Routes>

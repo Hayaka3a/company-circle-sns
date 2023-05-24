@@ -9,28 +9,18 @@
 /* Background styles */
 .table {
   border-collapse: collapse;
-  border-spacing: 0;
-  width: 75%;
+  width: 80%;
+  border-bottom: solid 1px #eee;
 }
 .tbody {
-  width: 100%;
-  margin: auto;
 }
-.tr {
-  border-bottom: solid 1px #eee;
-  cursor: pointer;
-  width: 100%;
-  vertical-align: middle;
-}
-
 .td {
-  padding: 15px 0;
-  vertical-align: middle;
+  width: 40%;
+  height: 15%;
+  text-align: center;
 }
 
 .icon {
   background-size: 35px;
   background-position: left 5px center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
 }

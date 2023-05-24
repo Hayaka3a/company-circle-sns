@@ -1,18 +1,18 @@
 export type Island = {
-  islandID: number;
+  id: number;
   islandName: string;
   thumbnail: string;
   detail: string;
   ownerID: number;
   createdAt: number;
   creratedBy: string;
-  updatedAt: number;
-  updatedBy: string;
+  updatedAt?: number;
+  updatedBy?: string;
   status: boolean;
 };
 
-export type Person = {
-  userID: number;
+export type User = {
+  id: number;
   familyName: string;
   firstName: string;
   familyNameKana: string;
@@ -24,20 +24,20 @@ export type Person = {
   department: string;
   createdAt: number;
   creratedBy: string;
-  updatedAt: number;
-  updatedBy: string;
+  updatedAt?: number;
+  updatedBy?: string;
   status: boolean;
 };
 
 export type LoginUser = {
-  userID: number;
+  id: number;
   familyName: string;
   firstName: string;
   icon: string;
 };
 
 export type Event = {
-  eventID: string;
+  id: string;
   eventName: string;
   detail: string;
   startDate: Date;
@@ -45,7 +45,16 @@ export type Event = {
   thumbnail: string;
   createdAt: number;
   creratedBy: string;
-  updatedAt: number;
-  updatedBy: string;
+  updatedAt?: number;
+  updatedBy?: string;
   status: boolean;
+  ownerID: number;
+};
+
+export type Entryusers = {
+  id: number;
+  islandID: number;
+  userID: number;
+  eventID: number;
+  users: User;
 };
