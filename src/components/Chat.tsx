@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { firestore } from "../firebase";
 import styles from "../styles/Chat.module.css";
 import { chat } from "../types/chat";
 import SendMessages from "./SendMessages";
 
 const Chat = () => {
+  const { id } = useParams();
+  const threadID = Number(id);
   // session?に保存されてるユーザーネーム
-  // threadIDはpropsから渡される予定
   const userName = "シャチ";
-  const threadID = 1;
+
   const threadTitle = "サンプル";
 
   const [messages, setMessages] = useState<chat[]>([]);
@@ -44,6 +46,7 @@ const Chat = () => {
         setMessages(snapShots as chat[]);
       });
   }, []);
+
 
   return (
     <main className={styles.content}>
@@ -89,7 +92,7 @@ const Chat = () => {
           </p>
         </div>
       ))}
-      <SendMessages />
+      <SendMessages threadID={threadID} />
     </main>
   );
 };
