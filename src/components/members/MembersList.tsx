@@ -2,9 +2,7 @@ import styles from "../../styles/membersList.module.css";
 import { useEffect, useState } from "react";
 import { Event, Island, Entryusers } from "../../types/members";
 import { supabase } from "../../createClient.js";
-import ExileButton from "./ExileButton";
-import OwnerTransferButton from "./OwnerTransferButton";
-import LeaveButton from "./LeaveButton";
+import DeleteComfirmation from "../modalWindows/deleteConfirmation";
 
 export default function MembersList({
   table,
@@ -15,7 +13,8 @@ export default function MembersList({
 }) {
   const [entryUsers, setEntryUsers] = useState<Entryusers[]>();
   const [newEntryUsers, setNewEntryUsers] = useState<Entryusers[]>();
-  const [reload, setReload] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [subModal, setSubModal] = useState(false);
 
   //仮置きのデータ
   const loginUser = {
@@ -25,16 +24,10 @@ export default function MembersList({
     icon: "/image1",
   };
 
-  //画面更新用関数
-  const handleRefresh = () => {
-    setReload(true);
-  };
-
   // DBからデータを取得
   useEffect(() => {
     fetchData();
   }, []);
-
   async function fetchData() {
     //参加者全員のデータを取得
     const { data: entryData, error: entryError } = await supabase
@@ -46,7 +39,6 @@ export default function MembersList({
     if (entryError) {
       console.log(entryError);
     }
-
     const userData = entryData as Entryusers[];
     setEntryUsers(userData);
 
@@ -72,6 +64,10 @@ export default function MembersList({
     }
   };
 
+  // 小窓の切り替え
+  const switchingModal = () => setModal(!modal);
+  const switchingSubModal = () => setSubModal(!subModal);
+
   function buttonSwitching() {
     if (displayData.ownerID === loginUser.id) {
       //オーナーの場合のデータ表示
@@ -95,19 +91,30 @@ export default function MembersList({
               <tr key={user.id} className={styles.tr}>
                 {anotherUser(user)}
                 <td className={styles.td}>
-                  <OwnerTransferButton
-                    text={"島主権限を譲渡"}
-                    table={table}
-                    params={displayData.id}
-                    user={user.users.id}
-                    onclick={handleRefresh}
-                  />
-                  <ExileButton
-                    text={"島を追放"}
-                    table={table}
-                    params={displayData.id}
-                    user={user.users.id}
-                  />
+                  <button onClick={switchingModal}>島主権限を譲渡</button>
+                  {modal && (
+                    <DeleteComfirmation
+                      closeModal={switchingModal}
+                      category={"譲渡"}
+                      text={`本当に権限を譲渡しますか？`}
+                      islandName={`displayData.${table}Name`}
+                      table={table}
+                      params={displayData.id}
+                      user={user.users.id}
+                    />
+                  )}
+                  <button onClick={switchingSubModal}>島追放</button>
+                  {subModal && (
+                    <DeleteComfirmation
+                      closeModal={switchingSubModal}
+                      category={"追放"}
+                      text={`本当に追放しますか？`}
+                      islandName={`displayData.${table}Name`}
+                      table={table}
+                      params={displayData.id}
+                      user={user.users.id}
+                    />
+                  )}
                 </td>
               </tr>
             );
@@ -128,12 +135,18 @@ export default function MembersList({
               {loginUser.firstName}
             </td>
             <td className={styles.td}>
-              <LeaveButton
-                text={"島を抜ける"}
-                table={table}
-                params={displayData.id}
-                user={loginUser.id}
-              />
+              <button onClick={switchingModal}>島を抜ける</button>
+              {modal && (
+                <DeleteComfirmation
+                  closeModal={switchingModal}
+                  category={"脱退する"}
+                  text={`本当に島を抜けますか？`}
+                  islandName={`displayData.${table}Name`}
+                  table={table}
+                  params={displayData.id}
+                  user={loginUser.id}
+                />
+              )}
             </td>
           </tr>
           {newEntryUsers?.map((user) => {

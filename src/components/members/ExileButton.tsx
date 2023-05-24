@@ -1,6 +1,16 @@
 import { supabase } from "../../createClient.js";
 
-const ExileButton = ({ table, params, text, user }) => {
+const ExileButton = ({
+  table,
+  params,
+  user,
+  close,
+}: {
+  close: () => void;
+  table: string;
+  params: number | string;
+  user: number;
+}) => {
   async function onClick() {
     //メンバーを削除
     const { data, error } = await supabase
@@ -13,9 +23,10 @@ const ExileButton = ({ table, params, text, user }) => {
     if (error) {
       console.log("エラーです", error);
     }
+    close();
   }
 
-  return <button onClick={onClick}>{text}</button>;
+  return <button onClick={onClick}>はい</button>;
 };
 
 export default ExileButton;
