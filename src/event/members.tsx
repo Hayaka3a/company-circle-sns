@@ -8,14 +8,28 @@ import { useParams } from "react-router-dom";
 
 export default function EventMembers() {
   const [displayData, setDisplayData] = useState<Event>();
+  const [modal, setModal] = useState(false);
+  const [modal2, setModal2] = useState(false);
 
-  //島情報のデータを取得
+  // DBからデータを取得
   const params = useParams();
   const paramsID = parseInt(params.id);
   useEffect(() => {
     fetchData();
   }, [paramsID]);
 
+  const openModal = () => {
+    setModal(true);
+  };
+  const closeModal = () => {
+    setModal(false);
+  };
+  const openModal2 = () => {
+    setModal2(true);
+  };
+  const closeModal2 = () => {
+    setModal2(false);
+  };
   async function fetchData() {
     const { data, error } = await supabase
       .from("events")
@@ -38,7 +52,16 @@ export default function EventMembers() {
       {displayData && (
         <div className={styles.display}>
           <MenubarEvent thumbnail={displayData.thumbnail} />
-          {/* <MembersList table="event" displayData={displayData} /> */}
+          <MembersList
+            table="event"
+            displayData={displayData}
+            open={openModal}
+            close={closeModal}
+            close2={closeModal2}
+            open2={openModal2}
+            modal={modal}
+            modal2={modal2}
+          />
         </div>
       )}
     </>
