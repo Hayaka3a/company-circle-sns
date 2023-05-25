@@ -31,6 +31,7 @@ import IslandCreate from "./island/create";
 import IslandMembers from "./island/members";
 import IslandPost from "./island/post";
 import UserMessage from "./island/message/user_message";
+import EntryPermitPage from "./island/post/entryPermitPage";
 
 // searchフォルダ
 import Search from "./search";
@@ -70,11 +71,15 @@ function App() {
           {/* islandフォルダ */}
           <Route path="/island/:id" element={<IslandDetail />} />
           <Route path="/island/create:id" element={<IslandCreate />} />
-          <Route path="/island/edit:id" element={<IslandEdit />} />
+          <Route path="/island/edit" element={<IslandEdit />} />
           <Route path="/island/eventAll:id" element={<EventAll />} />
           <Route path="/island/thread:id" element={<IslandThread />} />
           <Route path="/island/members/:id" element={<IslandMembers />} />
           <Route path="/island/post:id" element={<IslandPost />} />
+          <Route
+            path="/island/post/entryPermit/:id"
+            element={<EntryPermitPage />}
+          />
           <Route
             path="/island/message/user_message"
             element={<UserMessage />}

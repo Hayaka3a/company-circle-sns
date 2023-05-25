@@ -1,0 +1,68 @@
+.display {
+  display: flex;
+  background-color: rgba(255, 245, 217, 0.5);
+}
+.main {
+  width: 70%;
+  margin-left: 2%;
+}
+.box {
+  background-color: white;
+  display: flex;
+  margin-bottom: 3%;
+  margin-left: 5%;
+}
+.left {
+  width: 200px;
+}
+.icon {
+}
+
+.right {
+  width: 80%;
+}
+.first {
+  display: flex;
+}
+.OK {
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  position: relative;
+  width: 120px;
+  padding: 1rem 1rem;
+  margin-top: 3px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(255, 182, 112, 1);
+  box-shadow: 5px 5px rgba(255, 182, 112, 1);
+  transition: 0.3s ease-in-out;
+}
+.NG {
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  position: relative;
+  width: 120px;
+  margin-left: 20px;
+  margin-top: 3px;
+  padding: 1rem 1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid #27acd9;
+  box-shadow: 5px 5px #27acd9;
+  transition: 0.3s ease-in-out;
+}
+.name {
+  width: 200px;
+}
+
+.second {
+  background-color: rgba(255, 245, 217, 0.5);
+  width: 640px;
+  font-size: 12.5px;
+}
