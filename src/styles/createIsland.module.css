@@ -83,3 +83,20 @@ input {
   display: flex;
   align-items: center;
 }
+
+/* コンボボックス */
+
+.selectedValuesContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selectedValue {
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(100, 207, 6);
+}
+
+.row {
+  display: flex;
+}

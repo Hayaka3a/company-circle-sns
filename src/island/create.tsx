@@ -3,37 +3,64 @@ import styles from "../styles/createIsland.module.css";
 import ComboBox from "../components/comboBox";
 import { createClient } from "@supabase/supabase-js";
 import { supabase } from "../createClient";
+import ConvertKanaJ from "../components/changeKana";
 
 export default function IslandCreate() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [userOptions, setUserOptions] =
-    useState<{ id: number; Name: string }[]>();
+    useState<
+      { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
+    >();
+  const [tagOptions, setTagOptions] =
+    useState<{ id: number; Name: string; NameKana: string }[]>();
 
-  // データベースのデータを取ってくる
-  // const userOptions = ["山田", "山本", "佐藤", "鈴木", "田中"];
-  const tagOptions = ["サッカー", "大人数", "野外", "野球"];
-
+  // データベースから全ユーザー名前取得
   useEffect(() => {
     const fetchUsers = async () => {
       let { data, error } = await supabase.from("users").select();
       if (error) {
         console.error("Error fetching users:", error.message);
       } else {
-        const users: { id: number; Name: string }[] = data?.map((user) => ({
+        const users: {
+          id: number;
+          Name: string;
+          NameKana: string;
+          NameKanaJ: string;
+        }[] = data?.map((user) => ({
           id: user.id,
           Name: `${user.familyName} ${user.firstName}`,
+          NameKana: `${user.familyNameKana} ${user.firstNameKana}`,
+          NameKanaJ: `${ConvertKanaJ(user.familyNameKana)} ${ConvertKanaJ(
+            user.firstNameKana,
+          )}`,
         }));
         setUserOptions(users);
-        console.log("users:", users);
       }
     };
 
     fetchUsers();
   }, []);
 
+  // データベースから全タグ名取得
   useEffect(() => {
-    console.log("userOptions:", userOptions);
-  }, [userOptions]);
+    const fetchUsers = async () => {
+      let { data, error } = await supabase.from("tags").select();
+      if (error) {
+        console.error("Error fetching tags:", error.message);
+      } else {
+        const tags: { id: number; Name: string; NameKana: string }[] =
+          data?.map((tag) => ({
+            id: tag.id,
+            Name: tag.tagName,
+            NameKana: tag.tagNameKana,
+          }));
+        setTagOptions(tags);
+        console.log(data);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
@@ -90,7 +117,7 @@ export default function IslandCreate() {
                 <td>
                   <ComboBox
                     nameOptions={userOptions}
-                    Options={null}
+                    tagOptions={null}
                     htmlFor="user"
                   />
                 </td>
@@ -113,7 +140,7 @@ export default function IslandCreate() {
                 <th>タグ</th>
                 <td>
                   <ComboBox
-                    Options={tagOptions}
+                    tagOptions={tagOptions}
                     nameOptions={null}
                     htmlFor="tag"
                   />

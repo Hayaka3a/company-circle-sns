@@ -3,11 +3,14 @@ import styles from "../styles/islandEdit.module.css";
 import ComboBox from "../components/comboBox";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
+import { supabase } from "../createClient";
 
 export default function IslandEdit() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleteCheckOpen, setIsDleteCheckOpen] = useState(false);
+  const [tagOptions, setTagOptions] =
+    useState<{ id: number; Name: string; NameKana: string }[]>();
 
   // 削除を押した際の小窓画面（モーダルウィンドウ）の開閉
   // isDeleteOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
@@ -29,8 +32,26 @@ export default function IslandEdit() {
     setIsDleteCheckOpen(false);
   };
 
-  // データベースのデータを取ってくる
-  const tagOptions = ["サッカー", "大人数", "野外", "野球"];
+  // データベースからタグの名前一覧を取得
+  useEffect(() => {
+    const fetchUsers = async () => {
+      let { data, error } = await supabase.from("tags").select();
+      if (error) {
+        console.error("Error fetching tags:", error.message);
+      } else {
+        const tags: { id: number; Name: string; NameKana: string }[] =
+          data?.map((tag) => ({
+            id: tag.id,
+            Name: tag.tagName,
+            NameKana: tag.tagNameKana,
+          }));
+        setTagOptions(tags);
+        console.log(data);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
@@ -82,7 +103,7 @@ export default function IslandEdit() {
 
         <div className={styles.tag}>
           <label htmlFor="tag">タグ</label>
-          <ComboBox Options={tagOptions} nameOptions={null} htmlFor="tag" />
+          <ComboBox tagOptions={tagOptions} nameOptions={null} htmlFor="tag" />
           <br />
         </div>
 
