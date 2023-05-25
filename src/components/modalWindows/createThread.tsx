@@ -57,6 +57,7 @@ export default function CreateThread({
     } else {
       console.log("スレッド作成成功");
       closeModal();
+      window.location.reload();
     }
   };
 
