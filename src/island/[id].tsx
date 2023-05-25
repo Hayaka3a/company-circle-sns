@@ -4,11 +4,13 @@ import MenubarIsland from "../components/menubarIsland";
 import styles from "../styles/island/islandDetail.module.css";
 import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
 import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 
 export default function IslandDetail() {
     const [ isOpen, setIsOpen ] = useState(false);
     const [ isResidentOpen, setIsResidentOpen ] = useState(false);
+    const navigate = useNavigate();
+
 
     // 住民申請を押した際の小窓画面（モーダルウィンドウ）の開閉
     // isResidentOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
@@ -30,6 +32,10 @@ export default function IslandDetail() {
       setIsOpen(false);
     };
 
+    const Handler = () => {
+      navigate("/island/edit");
+      window.location.reload();
+    }
   return (
       <div className={styles.flex}>
         <MenubarIsland thumbnail="/login/loginCounter.png" />
@@ -49,9 +55,8 @@ export default function IslandDetail() {
               <button onClick={openModal}>メッセージを送る</button>
               {isOpen && <CreateSendingMessage closeModal={closeModal} />}
             </div>
-            <Link to= {`/island/edit`}>
-              <button id={styles.edit_btn}>編集・削除</button>
-            </Link>
+            
+              <button id={styles.edit_btn} onClick={Handler}>編集・削除</button>
         </div>
       </div>    
   );
