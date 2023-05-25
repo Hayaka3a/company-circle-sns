@@ -5,7 +5,7 @@ export default function EntryPermitPage() {
   return (
     <div className={styles.display}>
       <MenubarIsland thumbnail="a" />
-      <EntryPermit />
+      <EntryPermit table={"island"} />
     </div>
   );
 }
