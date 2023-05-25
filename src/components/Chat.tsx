@@ -4,14 +4,29 @@ import { firestore } from "../firebase";
 import styles from "../styles/Chat.module.css";
 import { chat } from "../types/chat";
 import SendMessages from "./SendMessages";
+import { supabase } from "../createClient";
 
 const Chat = () => {
+  const [threadTitle, setThreadTitle] = useState("");
   const { id } = useParams();
   const threadID = Number(id);
   // session?に保存されてるユーザーネーム
   const userName = "シャチ";
 
-  const threadTitle = "サンプル";
+  // threadTitleを取得
+  useEffect(() => {
+    const fetchThread = async () => {
+      let { data: threads, error } = await supabase
+        .from("threads")
+        .select(`id, threadTitle`)
+        .eq("id", id);
+      if (threads) {
+        setThreadTitle(threads[0].threadTitle);
+      }
+    };
+
+    fetchThread();
+  }, []);
 
   const [messages, setMessages] = useState<chat[]>([]);
 

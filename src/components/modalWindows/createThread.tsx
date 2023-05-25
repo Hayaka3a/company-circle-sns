@@ -1,12 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/createThread.module.css";
+import { supabase } from "../../createClient";
 
 export default function CreateThread({
   closeModal,
+  islandID,
+  eventID,
 }: {
   closeModal: () => void;
+  islandID: number | null;
+  eventID: number | null;
 }) {
-  const addHandler = () => {};
+  const [threadTitle, setThreadTitle] = useState("");
+  const [islandName, setIslandName] = useState("");
+  const [eventName, setEventName] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // サークル（島）のスレッド作成の場合
+      if (islandID) {
+        const { data } = await supabase
+          .from("islands")
+          .select("islandName")
+          .eq("id", islandID)
+          .single();
+        if (data) {
+          setIslandName(data.islandName);
+        }
+        // イベントのスレッド作成の場合
+      } else if (eventID) {
+        const { data } = await supabase
+          .from("events")
+          .select("eventName")
+          .eq("id", eventID)
+          .single();
+        if (data) {
+          setEventName(data.eventName);
+        }
+      }
+    };
+
+    fetchData();
+  }, [islandID, eventID]);
+
+  // スレッド作成送信
+  // insert()メソッドはPromiseを返す非同期関数だからasync/awaitが必要
+  const addHandler = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    const { data, error } = await supabase
+      .from("threads")
+      .insert({ threadTitle, islandID, eventID, status: true });
+    if (error) {
+      console.error("Failed to create thread:", error.message);
+    } else {
+      console.log("スレッド作成成功");
+      closeModal();
+      window.location.reload();
+    }
+  };
+
   return (
     <>
       <div className={styles.overlay}>
@@ -20,12 +73,20 @@ export default function CreateThread({
             />
             <div className={styles.main}>
               <div className={styles.title}>
-                <h3 className={styles.h3}>○○島</h3>
+                {/* サークル（島）のスレッド作成の場合 */}
+                {islandID && <h3 className={styles.h3}>{islandName}島</h3>}
+                {/* イベントのスレッド作詞の場合 */}
+                {eventID && <h3 className={styles.h3}>{eventName}</h3>}
                 <p className={styles.p}>新規スレッド作成</p>
               </div>
               <div className={styles.input}>
                 <label htmlFor="threadName">スレッド名</label>
-                <input type="text"></input>
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setThreadTitle(e.target.value);
+                  }}
+                ></input>
               </div>
             </div>
             <div>

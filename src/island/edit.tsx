@@ -1,10 +1,22 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import styles from "../styles/islandEdit.module.css";
 import ComboBox from "../components/comboBox";
+import CreateDeletePage from "../components/modalWindows/createDeletePage";
 
 
 export default function IslandEdit(){
     const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+    const [ isDeleteOpen, setIsDeleteOpen ] = useState(false);
+
+    // 削除を押した際の小窓画面（モーダルウィンドウ）の開閉
+    // isDeleteOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
+    const openDeleteModal = () => {
+        setIsDeleteOpen(true);
+    };
+
+    const closeDeleteModal = () => {
+        setIsDeleteOpen(false);
+    };
 
     // データベースのデータを取ってくる
     const tagOptions = ["サッカー", "大人数", "野外", "野球"];
@@ -66,7 +78,8 @@ export default function IslandEdit(){
                     <button onClick={addHandler} className={styles.plus_btn}>追加</button>
                 </div>
                 <button className={styles.edit_btn}>編集</button>
-                <button id={styles.delete_btn}>削除</button>
+                <button onClick={openDeleteModal} id={styles.delete_btn}>削除</button>
+                {isDeleteOpen && <CreateDeletePage closeDeleteModal={closeDeleteModal} />}
             </div>
        </div>
     )
