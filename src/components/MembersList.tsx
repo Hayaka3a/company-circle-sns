@@ -1,4 +1,4 @@
-import styles from "../../styles/membersList.module.css";
+import styles from "../styles/membersList.module.css";
 import { useEffect, useState } from "react";
 import { Event, Island, Entryusers } from "../types/members";
 import { supabase } from "../createClient.js";
