@@ -47,6 +47,11 @@
   transition: 0.3s ease-in-out;
   height: 50px;
 }
+.OK:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
+}
 .NG {
   float: right;
   display: block;
@@ -65,6 +70,11 @@
   box-shadow: 5px 5px #27acd9;
   transition: 0.3s ease-in-out;
   height: 50px;
+}
+.NG:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
 }
 .name {
   width: 200px;

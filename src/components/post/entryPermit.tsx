@@ -1,8 +1,30 @@
+import { useEffect, useState } from "react";
 import { supabase } from "../../createClient";
 import styles from "../../styles/entryPermit.module.css";
+import { useParams } from "react-router-dom";
+import { Message } from "../../types/entryPermit";
 
-export default function EntryPermit() {
+export default function EntryPermit({ table }: { table: string }) {
+  const [message, setMessage] = useState();
+
+  const params = useParams();
+  const paramsID = parseInt(params.id);
+
   //  データを取得
+  useEffect(() => {
+    fetchData();
+  }, []);
+  async function fetchData() {
+    const { data, error } = await supabase
+      .from("posts")
+      .select(`*,messages(*,applications(*))`)
+      .eq(`${table}ID`, paramsID);
+
+    // const selectApp = data[0].filter((application) => applications.id === true);
+    console.log(data, "あ");
+    setMessage(data[0].messages);
+  }
+  console.log(message);
   const entryDesired = [
     {
       id: 1,
@@ -26,7 +48,7 @@ export default function EntryPermit() {
       <h2>許可待ちの住民申請</h2>
       {entryDesired.map((message) => {
         return (
-          <div className={styles.box}>
+          <div className={styles.box} key={message.id}>
             <div className={styles.left}>
               <img src={message.icon} className={styles.icon} alt="アイコン" />
             </div>

@@ -70,12 +70,12 @@ function App() {
           <Route path="/search" element={<Search />} />
           {/* islandフォルダ */}
           <Route path="/island/:id" element={<IslandDetail />} />
-          <Route path="/island/create:id" element={<IslandCreate />} />
+          <Route path="/island/create/:id" element={<IslandCreate />} />
           <Route path="/island/edit" element={<IslandEdit />} />
-          <Route path="/island/eventAll:id" element={<EventAll />} />
-          <Route path="/island/thread:id" element={<IslandThread />} />
+          <Route path="/island/eventAll/:id" element={<EventAll />} />
+          <Route path="/island/thread/:id" element={<IslandThread />} />
           <Route path="/island/members/:id" element={<IslandMembers />} />
-          <Route path="/island/post:id" element={<IslandPost />} />
+          <Route path="/island/post/:id" element={<IslandPost />} />
           <Route
             path="/island/post/entryPermit/:id"
             element={<EntryPermitPage />}
@@ -86,10 +86,10 @@ function App() {
           />
           {/* eventフォルダ */}
           <Route path="/event/:id" element={<EventDetail />} />
-          <Route path="/event/create:id" element={<EventCreate />} />
-          <Route path="/event/edit:id" element={<EventEdit />} />
-          <Route path="/event/thread:id" element={<EventThread />} />
-          <Route path="/event/post:id" element={<EventPost />} />
+          <Route path="/event/create/:id" element={<EventCreate />} />
+          <Route path="/event/edit/:id" element={<EventEdit />} />
+          <Route path="/event/thread/:id" element={<EventThread />} />
+          <Route path="/event/post/:id" element={<EventPost />} />
           <Route path="/event/members/:id" element={<EventMembers />} />
           {/* chat */}
           <Route path="/chat/:id" element={<Chat />} />
