@@ -1,9 +1,33 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import styles from "../styles/islandEdit.module.css";
 import ComboBox from "../components/comboBox";
+import CreateDeletePage from "../components/modalWindows/createDeletePage";
+import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 
 export default function IslandEdit() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isDeleteCheckOpen, setIsDleteCheckOpen] = useState(false);
+
+  // 削除を押した際の小窓画面（モーダルウィンドウ）の開閉
+  // isDeleteOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
+  const openDeleteModal = () => {
+    setIsDeleteOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteOpen(false);
+  };
+
+  // 島を沈没（削除）させるを押した際の小窓画面（モーダルウィンドウ）の開閉
+  // isDeleteCheckOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
+  const openDeleteCheckModal = () => {
+    setIsDleteCheckOpen(true);
+  };
+
+  const closeDeleteCheckModal = () => {
+    setIsDleteCheckOpen(false);
+  };
 
   // データベースのデータを取ってくる
   const tagOptions = ["サッカー", "大人数", "野外", "野球"];
@@ -70,7 +94,14 @@ export default function IslandEdit() {
           </button>
         </div>
         <button className={styles.edit_btn}>編集</button>
-        <button id={styles.delete_btn}>削除</button>
+        {/* <button onClick={openDeleteModal} id={styles.delete_btn}>削除</button> */}
+        {/* {isDeleteOpen && <CreateDeletePage closeDeleteModal={closeDeleteModal} />} */}
+        <button onClick={openDeleteCheckModal} id={styles.delete_btn}>
+          削除
+        </button>
+        {isDeleteCheckOpen && (
+          <CreateDeleteCheck closeDeleteCheckModal={closeDeleteCheckModal} />
+        )}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ import EventCreate from "./event/create";
 import EventEdit from "./event/edit";
 import EventThread from "./event/thread";
 import EventPost from "./event/post";
-import EventMenbers from "./event/menbers";
+import EventMembers from "./event/members";
 
 // islandフォルダ
 import IslandDetail from "./island/[id]";
@@ -28,7 +28,7 @@ import IslandEdit from "./island/edit";
 import EventAll from "./island/eventAll";
 import IslandThread from "./island/thread";
 import IslandCreate from "./island/create";
-import IslandMenbers from "./island/menbers";
+import IslandMembers from "./island/members";
 import IslandPost from "./island/post";
 import UserMessage from "./island/message/user_message";
 
@@ -69,23 +69,23 @@ function App() {
           <Route path="/search" element={<Search />} />
           {/* islandフォルダ */}
           <Route path="/island/:id" element={<IslandDetail />} />
-          <Route path="/island/create" element={<IslandCreate />} />
-          <Route path="/island/edit" element={<IslandEdit />} />
-          <Route path="/island/eventAll" element={<EventAll />} />
-          <Route path="/island/thread" element={<IslandThread />} />
-          <Route path="/island/menbers" element={<IslandMenbers />} />
-          <Route path="/island/post" element={<IslandPost />} />
+          <Route path="/island/create:id" element={<IslandCreate />} />
+          <Route path="/island/edit:id" element={<IslandEdit />} />
+          <Route path="/island/eventAll:id" element={<EventAll />} />
+          <Route path="/island/thread:id" element={<IslandThread />} />
+          <Route path="/island/members/:id" element={<IslandMembers />} />
+          <Route path="/island/post:id" element={<IslandPost />} />
           <Route
             path="/island/message/user_message"
             element={<UserMessage />}
           />
           {/* eventフォルダ */}
           <Route path="/event/:id" element={<EventDetail />} />
-          <Route path="/event/create" element={<EventCreate />} />
-          <Route path="/event/edit" element={<EventEdit />} />
-          <Route path="/event/thread" element={<EventThread />} />
-          <Route path="/event/post" element={<EventPost />} />
-          <Route path="/event/menbers" element={<EventMenbers />} />
+          <Route path="/event/create:id" element={<EventCreate />} />
+          <Route path="/event/edit:id" element={<EventEdit />} />
+          <Route path="/event/thread:id" element={<EventThread />} />
+          <Route path="/event/post:id" element={<EventPost />} />
+          <Route path="/event/members/:id" element={<EventMembers />} />
           {/* chat */}
           <Route path="/chat/:id" element={<Chat />} />
         </Routes>

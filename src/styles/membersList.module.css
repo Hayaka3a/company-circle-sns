@@ -1,0 +1,26 @@
+.display {
+  display: flex;
+}
+.main {
+  width: 70%;
+  margin-left: 2%;
+}
+
+/* Background styles */
+.table {
+  border-collapse: collapse;
+  width: 80%;
+  border-bottom: solid 1px #eee;
+}
+.tbody {
+}
+.td {
+  width: 40%;
+  height: 15%;
+  text-align: center;
+}
+
+.icon {
+  background-size: 35px;
+  background-position: left 5px center;
+}

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { thread } from "../types/thread";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/thread.module.css";
-import { changeFormat } from "../common/changeFormat";
 
 function Thread({ thread }: { thread: thread[] }) {
   const navigate = useNavigate();
