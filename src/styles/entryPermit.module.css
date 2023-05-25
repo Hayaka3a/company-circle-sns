@@ -3,7 +3,7 @@
   background-color: rgba(255, 245, 217, 0.5);
 }
 .main {
-  width: 70%;
+  width: 75%;
   margin-left: 2%;
 }
 .box {
@@ -23,14 +23,20 @@
 }
 .first {
   display: flex;
+  justify-content: space-between;
+}
+.button {
+  display: flex;
+  margin-right: 15%;
 }
 .OK {
+  float: right;
   display: block;
   text-align: center;
   vertical-align: middle;
   text-decoration: none;
   position: relative;
-  width: 120px;
+  width: 90px;
   padding: 1rem 1rem;
   margin-top: 3px;
   font-weight: bold;
@@ -39,14 +45,16 @@
   border: 3px solid rgba(255, 182, 112, 1);
   box-shadow: 5px 5px rgba(255, 182, 112, 1);
   transition: 0.3s ease-in-out;
+  height: 50px;
 }
 .NG {
+  float: right;
   display: block;
   text-align: center;
   vertical-align: middle;
   text-decoration: none;
   position: relative;
-  width: 120px;
+  width: 90px;
   margin-left: 20px;
   margin-top: 3px;
   padding: 1rem 1rem;
@@ -56,6 +64,7 @@
   border: 3px solid #27acd9;
   box-shadow: 5px 5px #27acd9;
   transition: 0.3s ease-in-out;
+  height: 50px;
 }
 .name {
   width: 200px;
@@ -63,6 +72,6 @@
 
 .second {
   background-color: rgba(255, 245, 217, 0.5);
-  width: 640px;
+  width: 90%;
   font-size: 12.5px;
 }

@@ -35,8 +35,10 @@ export default function EntryPermit() {
                 <p className={styles.name}>
                   {message.famiryName + message.firstName}
                 </p>
-                <button className={styles.OK}>許可</button>
-                <button className={styles.NG}>却下</button>
+                <div className={styles.button}>
+                  <button className={styles.OK}>許可</button>
+                  <button className={styles.NG}>却下</button>
+                </div>
               </div>
               <div className={styles.second}>
                 <p>{message.message}</p>
