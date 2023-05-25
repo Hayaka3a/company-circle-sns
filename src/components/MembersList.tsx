@@ -1,20 +1,30 @@
 import styles from "../../styles/membersList.module.css";
 import { useEffect, useState } from "react";
-import { Event, Island, Entryusers } from "../../types/members";
-import { supabase } from "../../createClient.js";
-import DeleteComfirmation from "../modalWindows/deleteConfirmation";
+import { Event, Island, Entryusers } from "../types/members";
+import { supabase } from "../createClient.js";
+import DeleteComfirmation from "./modalWindows/deleteConfirmation";
 
 export default function MembersList({
   table,
   displayData,
+  open,
+  close,
+  modal,
+  open2,
+  close2,
+  modal2,
 }: {
   table: string;
   displayData: Island | Event;
+  open: () => void;
+  close: () => void;
+  modal: boolean;
+  open2: () => void;
+  close2: () => void;
+  modal2: boolean;
 }) {
   const [entryUsers, setEntryUsers] = useState<Entryusers[]>();
   const [newEntryUsers, setNewEntryUsers] = useState<Entryusers[]>();
-  const [modal, setModal] = useState(false);
-  const [subModal, setSubModal] = useState(false);
 
   //仮置きのデータ
   const loginUser = {
@@ -64,10 +74,6 @@ export default function MembersList({
     }
   };
 
-  // 小窓の切り替え
-  const switchingModal = () => setModal(!modal);
-  const switchingSubModal = () => setSubModal(!subModal);
-
   function buttonSwitching() {
     if (displayData.ownerID === loginUser.id) {
       //オーナーの場合のデータ表示
@@ -91,10 +97,10 @@ export default function MembersList({
               <tr key={user.id} className={styles.tr}>
                 {anotherUser(user)}
                 <td className={styles.td}>
-                  <button onClick={switchingModal}>島主権限を譲渡</button>
+                  <button onClick={open}>島主権限を譲渡</button>
                   {modal && (
                     <DeleteComfirmation
-                      closeModal={switchingModal}
+                      closeModal={close}
                       category={"譲渡"}
                       text={`本当に権限を譲渡しますか？`}
                       islandName={`displayData.${table}Name`}
@@ -103,10 +109,10 @@ export default function MembersList({
                       user={user.users.id}
                     />
                   )}
-                  <button onClick={switchingSubModal}>島追放</button>
-                  {subModal && (
+                  <button onClick={open2}>島追放</button>
+                  {modal2 && (
                     <DeleteComfirmation
-                      closeModal={switchingSubModal}
+                      closeModal={close2}
                       category={"追放"}
                       text={`本当に追放しますか？`}
                       islandName={`displayData.${table}Name`}
@@ -135,10 +141,10 @@ export default function MembersList({
               {loginUser.firstName}
             </td>
             <td className={styles.td}>
-              <button onClick={switchingModal}>島を抜ける</button>
+              <button onClick={open}>島を抜ける</button>
               {modal && (
                 <DeleteComfirmation
-                  closeModal={switchingModal}
+                  closeModal={close}
                   category={"脱退する"}
                   text={`本当に島を抜けますか？`}
                   islandName={`displayData.${table}Name`}

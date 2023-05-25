@@ -1,7 +1,5 @@
 import styles from "../../styles/createSendingMessage.module.css";
-import ExileButton from "../members/ExileButton";
-import LeaveButton from "../members/LeaveButton";
-import OwnerTransferButton from "../members/OwnerTransferButton";
+import { supabase } from "../../createClient.js";
 
 export default function DeleteComfirmation({
   closeModal,
@@ -22,34 +20,56 @@ export default function DeleteComfirmation({
 }) {
   const addHandler = (category: string) => {
     if (category === "脱退する") {
-      return (
-        <LeaveButton
-          table={table}
-          params={params}
-          user={user}
-          close={closeModal}
-        />
-      );
+      const handler = async () => {
+        // 自分が脱退する;
+        const { data, error } = await supabase
+          .from("userEntryStatus")
+          .update({ status: true })
+          .eq(`userID`, user)
+          .eq(`${table}ID`, params);
+        if (error) {
+          console.error(error.message);
+        } else {
+          closeModal();
+          window.location.reload();
+        }
+      };
+      return <button onClick={handler}>はい</button>;
+      // return <LeaveButton table={table} params={params} user={user} />;
     } else if (category === "追放") {
-      return (
-        <ExileButton
-          table={table}
-          params={params}
-          user={user}
-          close={closeModal}
-        />
-      );
+      const handler = async () => {
+        //メンバーを削除
+        const { data, error } = await supabase
+          .from("userEntryStatus")
+          .update({ status: true })
+          .eq(`userID`, user)
+          .eq(`${table}ID`, params);
+
+        if (!data) return;
+        if (error) {
+          console.error(error.message);
+        } else {
+          closeModal();
+          window.location.reload();
+        }
+      };
+      return <button onClick={handler}>はい</button>;
     } else if (category === "譲渡") {
-      return (
-        <OwnerTransferButton
-          table={table}
-          params={params}
-          user={user}
-          close={closeModal}
-        />
-      );
-    } else {
-      window.alert("ERROR");
+      //オーナー権限を譲渡する
+      const handler = async () => {
+        const { data, error } = await supabase
+          .from(`${table}s`)
+          .update({ ownerID: user })
+          .eq("id", params);
+        if (error) {
+          console.error(error.message);
+        } else {
+          closeModal();
+          window.location.reload();
+        }
+      };
+
+      return <button onClick={handler}>はい</button>;
     }
   };
 

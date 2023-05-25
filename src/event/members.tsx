@@ -1,4 +1,4 @@
-import MembersList from "../components/members/MembersList";
+import MembersList from "../components/MembersList";
 import MenubarEvent from "../components/menubarEvent";
 import { useEffect, useState } from "react";
 import styles from "../styles/membersList.module.css";
@@ -38,7 +38,7 @@ export default function EventMembers() {
       {displayData && (
         <div className={styles.display}>
           <MenubarEvent thumbnail={displayData.thumbnail} />
-          <MembersList table="event" displayData={displayData} />
+          {/* <MembersList table="event" displayData={displayData} /> */}
         </div>
       )}
     </>
