@@ -3,9 +3,11 @@ import React, { useState } from "react";
 // Optionsには選択項目、htmlForには<label>のhtmlFor属性の値
 export default function ComboBox({
   Options,
+  nameOptions,
   htmlFor,
 }: {
-  Options: string[];
+  Options: string[] | null;
+  nameOptions: { id: number; Name: string }[] | null;
   htmlFor: string;
 }) {
   const [inputValue, setInputValue] = useState("");
@@ -16,10 +18,18 @@ export default function ComboBox({
     setInputValue(value);
 
     // ユーザーの入力に基づいて選択肢をフィルタリングする
-    const filteredOptions = Options.filter((ops: string | string[]) =>
-      ops.includes(value),
-    );
-    setOptions(filteredOptions);
+    if (nameOptions) {
+      // const filteredOptions = nameOptions.filter((option) =>
+      //   option.Name.includes(value),
+      // );
+      // setOptions(filteredOptions);
+      // console.log(filteredOptions);
+    } else if (Options) {
+      const filteredOptions = Options.filter((ops: string | string[]) =>
+        ops.includes(value),
+      );
+      setOptions(filteredOptions);
+    }
   };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

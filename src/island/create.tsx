@@ -1,13 +1,37 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styles from "../styles/createIsland.module.css";
 import ComboBox from "../components/comboBox";
+import { createClient } from "@supabase/supabase-js";
+import { supabase } from "../createClient";
 
 export default function IslandCreate() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+  const [userOptions, setUserOptions] = useState<
+    { id: number; Name: string }[]
+  >([]);
 
   // データベースのデータを取ってくる
-  const userOptions = ["山田", "山本", "佐藤", "鈴木", "田中"];
+  // const userOptions = ["山田", "山本", "佐藤", "鈴木", "田中"];
   const tagOptions = ["サッカー", "大人数", "野外", "野球"];
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      let { data, error } = await supabase.from("users").select();
+      if (error) {
+        console.error("Error fetching users:", error.message);
+      } else {
+        const users: { id: number; Name: string }[] =
+          data?.map((user) => ({
+            id: user.id,
+            Name: `${user.familyName} ${user.firstName}`,
+          })) || [];
+        setUserOptions(users);
+        console.log(userOptions);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
@@ -62,7 +86,11 @@ export default function IslandCreate() {
               <tr>
                 <th>メンバー</th>
                 <td>
-                  <ComboBox Options={userOptions} htmlFor="user" />
+                  <ComboBox
+                    nameOptions={userOptions}
+                    Options={null}
+                    htmlFor="user"
+                  />
                 </td>
               </tr>
               <tr>
@@ -82,7 +110,11 @@ export default function IslandCreate() {
               <tr>
                 <th>タグ</th>
                 <td>
-                  <ComboBox Options={tagOptions} htmlFor="tag" />
+                  <ComboBox
+                    Options={tagOptions}
+                    nameOptions={null}
+                    htmlFor="tag"
+                  />
                 </td>
               </tr>
               <tr>
@@ -100,5 +132,4 @@ export default function IslandCreate() {
       </div>
     </div>
   );
-
 }
