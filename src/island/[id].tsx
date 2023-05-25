@@ -4,6 +4,7 @@ import MenubarIsland from "../components/menubarIsland";
 import styles from "../styles/island/islandDetail.module.css";
 import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
 import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
+import { Link } from "react-router-dom";
 
 export default function IslandDetail() {
     const [ isOpen, setIsOpen ] = useState(false);
@@ -48,7 +49,9 @@ export default function IslandDetail() {
               <button onClick={openModal}>メッセージを送る</button>
               {isOpen && <CreateSendingMessage closeModal={closeModal} />}
             </div>
-            <button id={styles.edit_btn}>編集・削除</button>
+            <Link to= {`/island/edit`}>
+              <button id={styles.edit_btn}>編集・削除</button>
+            </Link>
         </div>
       </div>    
   );
