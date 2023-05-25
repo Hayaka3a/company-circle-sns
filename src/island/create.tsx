@@ -6,9 +6,8 @@ import { supabase } from "../createClient";
 
 export default function IslandCreate() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
-  const [userOptions, setUserOptions] = useState<
-    { id: number; Name: string }[]
-  >([]);
+  const [userOptions, setUserOptions] =
+    useState<{ id: number; Name: string }[]>();
 
   // データベースのデータを取ってくる
   // const userOptions = ["山田", "山本", "佐藤", "鈴木", "田中"];
@@ -20,18 +19,21 @@ export default function IslandCreate() {
       if (error) {
         console.error("Error fetching users:", error.message);
       } else {
-        const users: { id: number; Name: string }[] =
-          data?.map((user) => ({
-            id: user.id,
-            Name: `${user.familyName} ${user.firstName}`,
-          })) || [];
+        const users: { id: number; Name: string }[] = data?.map((user) => ({
+          id: user.id,
+          Name: `${user.familyName} ${user.firstName}`,
+        }));
         setUserOptions(users);
-        console.log(userOptions);
+        console.log("users:", users);
       }
     };
 
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    console.log("userOptions:", userOptions);
+  }, [userOptions]);
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {

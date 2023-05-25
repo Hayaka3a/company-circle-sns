@@ -19,10 +19,11 @@ export default function ComboBox({
 
     // ユーザーの入力に基づいて選択肢をフィルタリングする
     if (nameOptions) {
-      // const filteredOptions = nameOptions.filter((option) =>
-      //   option.Name.includes(value),
-      // );
-      // setOptions(filteredOptions);
+      const filteredOptions = nameOptions.filter((option) =>
+        option.Name.includes(value),
+      );
+      const names = filteredOptions.map((option) => option.Name);
+      setOptions(names);
       // console.log(filteredOptions);
     } else if (Options) {
       const filteredOptions = Options.filter((ops: string | string[]) =>
