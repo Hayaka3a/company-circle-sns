@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Message } from "../../types/entryPermit";
 
 export default function EntryPermit({ table }: { table: string }) {
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState<Message>();
 
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -17,58 +17,51 @@ export default function EntryPermit({ table }: { table: string }) {
   async function fetchData() {
     const { data, error } = await supabase
       .from("posts")
-      .select(`*,messages(*,applications(*))`)
-      .eq(`${table}ID`, paramsID);
+      .select(`*,messages(*,applications(*),users(*))`)
+      .eq(`${table}ID`, paramsID)
+      .eq("status", false);
+    if (error) {
+      console.log(error);
+    }
 
-    // const selectApp = data[0].filter((application) => applications.id === true);
-    console.log(data, "あ");
-    setMessage(data[0].messages);
+    //applicationsが取得できたものだけで新たな配列を作成
+    const selectApp = data[0].messages.filter(
+      (message) => message.applications.length > 0,
+    );
+    setMessage(selectApp);
   }
-  console.log(message);
-  const entryDesired = [
-    {
-      id: 1,
-      famiryName: "田中",
-      firstName: "太郎",
-      icon: "a",
-      message:
-        "これは住民申請用の５０文字の文章ですテキストテキストテキストテキストテキストテキストテキストテキスト",
-    },
-    {
-      id: 2,
-      famiryName: "田無川",
-      firstName: "一",
-      icon: "a",
-      message: "aaaaa",
-    },
-  ];
 
   return (
     <div className={styles.main}>
       <h2>許可待ちの住民申請</h2>
-      {entryDesired.map((message) => {
-        return (
-          <div className={styles.box} key={message.id}>
-            <div className={styles.left}>
-              <img src={message.icon} className={styles.icon} alt="アイコン" />
-            </div>
-            <div className={styles.right}>
-              <div className={styles.first}>
-                <p className={styles.name}>
-                  {message.famiryName + message.firstName}
-                </p>
-                <div className={styles.button}>
-                  <button className={styles.OK}>許可</button>
-                  <button className={styles.NG}>却下</button>
+      {message &&
+        message.map((message) => {
+          return (
+            <div className={styles.box} key={message.id}>
+              <div className={styles.left}>
+                <img
+                  src={message.users.icon}
+                  className={styles.icon}
+                  alt="アイコン"
+                />
+              </div>
+              <div className={styles.right}>
+                <div className={styles.first}>
+                  <p className={styles.name}>
+                    {message.users.familyName + message.users.firstName}
+                  </p>
+                  <div className={styles.button}>
+                    <button className={styles.OK}>許可</button>
+                    <button className={styles.NG}>却下</button>
+                  </div>
+                </div>
+                <div className={styles.second}>
+                  <p>{message.message}</p>
                 </div>
               </div>
-              <div className={styles.second}>
-                <p>{message.message}</p>
-              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 }

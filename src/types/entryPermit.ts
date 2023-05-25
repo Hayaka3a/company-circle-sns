@@ -13,4 +13,5 @@ export type Message = {
     messageID: number;
     status: boolean;
   }[];
-};
+  users: { id: number; icon: string; familyName: string; firstName: string };
+}[];
