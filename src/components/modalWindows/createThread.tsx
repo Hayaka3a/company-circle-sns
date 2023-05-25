@@ -36,7 +36,6 @@ export default function CreateThread({
           .single();
         if (data) {
           setEventName(data.eventName);
-          console.log(data);
         }
       }
     };
