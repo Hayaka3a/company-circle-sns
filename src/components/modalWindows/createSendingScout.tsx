@@ -15,7 +15,7 @@ export default function CreateSendingScout({
 }) {
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState<newUsersData>();
-  const [post, setPost] = useState(0);
+  const [post, setPost] = useState(4);
   const [postedID, setPostedID] = useState(0);
 
   const params = useParams();
@@ -86,7 +86,10 @@ export default function CreateSendingScout({
       postID: post,
       message: message,
       scout: true,
+      isRead: false,
+      isAnswered: false,
       postedBy: postedID,
+      status: false,
     });
     if (error) {
       console.log(error, "エラー");
