@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../createClient";
 import styles from "../styles/entryPermit.module.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Message } from "../types/entryPermit";
 
 export default function EntryPermit({ table }: { table: string }) {
