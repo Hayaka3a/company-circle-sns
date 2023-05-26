@@ -19,7 +19,7 @@ export default function IslandPost() {
           <button>許可待ちの住民申請</button>
         </Link>
         <button onClick={openModal}>島に招待する</button>
-        {modal && <CreateSendingScout closeModal={closeModal} />}
+        {modal && <CreateSendingScout closeModal={closeModal} table="island" />}
         <div className={styles.postMessageBack}>
           <h2>受け取ったメッセージ</h2>
           <div className={styles.message}>
