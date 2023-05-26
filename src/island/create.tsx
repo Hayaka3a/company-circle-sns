@@ -100,12 +100,8 @@ export default function IslandCreate() {
       alert("島の名前を入力してください。");
       return;
     }
-    // 現在のタイムスタンプを取得
-    const createdAt = new Date().toISOString();
 
     console.log(islandMembers);
-
-    console.log(createdAt);
     console.log(islandName);
     console.log(detail);
     console.log(tagName);
