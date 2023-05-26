@@ -1,9 +1,8 @@
 import styles from "../../styles/createSendingScout.module.css";
 import ComboBox from "../comboBox";
 import { supabase } from "../../createClient";
-import { User } from "../../types/members";
 import { useEffect, useState } from "react";
-import { Message, newUsersData } from "../../types/sendScout";
+import { newUsersData } from "../../types/sendScout";
 import { useParams } from "react-router-dom";
 
 export default function CreateSendingScout({
