@@ -16,19 +16,22 @@ export default function CreateSendingScout({
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState<newUsersData>();
   const [post, setPost] = useState(0);
+  const [postedID, setPostedID] = useState(0);
 
   const params = useParams();
   const paramsID = parseInt(params.id);
 
   useEffect(() => {
     comboBoxData();
+    fetchPost();
   }, []);
   const comboBoxData = async () => {
     //島またはイベントに既に参加している人のIDを取得
     const { data: entryUser, error: entryError } = await supabase
       .from("userEntryStatus")
       .select(`userID`)
-      .eq(`${table}ID`, paramsID);
+      .eq(`${table}ID`, paramsID)
+      .eq("status", false);
     if (entryError) {
       console.log(entryError, "エラー");
     }
@@ -37,7 +40,8 @@ export default function CreateSendingScout({
     //コンボボックス用の全ユーザデータ取得
     const { data: users, error: usersError } = await supabase
       .from("users")
-      .select(`id,familyName,firstName,familyNameKana,firstNameKana`);
+      .select(`id,familyName,firstName,familyNameKana,firstNameKana`)
+      .eq("status", false);
     if (usersError) {
       console.log(usersError, "エラー");
     }
@@ -52,23 +56,38 @@ export default function CreateSendingScout({
     setUsers(newUsersData);
   };
 
-  //コンボボックスから返されたUserIDからPostIDを割り出す
   const fetchPost = async () => {
+    //コンボボックスから返されたUserIDからPostIDを割り出す
     const { data: posts, error: postError } = await supabase
       .from("posts")
       .select("id")
-      .eq("userID", 1);
+      .eq("userID", 1)
+      .eq("status", false);
     if (postError) {
       console.log(postError, "エラー");
     }
     setPost(posts[0].id);
+
+    //スカウトを送る際のPostedByに入れる為、送信する側のPostIDを取得する
+    const { data: postedBy, error: postedByError } = await supabase
+      .from("posts")
+      .select("id")
+      .eq(`${table}ID`, paramsID)
+      .eq("status", false);
+    if (postedByError) {
+      console.log(postError, "エラー");
+    }
+    setPostedID(postedBy[0].id);
   };
 
   //スカウトを送る
   const addHandler = async () => {
-    const { data, error } = await supabase
-      .from("messages")
-      .insert({ postID: post, message: message, scout: true });
+    const { data, error } = await supabase.from("messages").insert({
+      postID: post,
+      message: message,
+      scout: true,
+      postedBy: postedID,
+    });
     if (error) {
       console.log(error, "エラー");
     } else {
