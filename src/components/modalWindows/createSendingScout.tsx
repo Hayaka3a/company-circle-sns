@@ -57,7 +57,7 @@ export default function CreateSendingScout({
   };
 
   const fetchPost = async () => {
-    //コンボボックスから返されたUserIDからPostIDを割り出す
+    //コンボボックスから返されたUserIDから該当のPostIDを割り出す
     const { data: posts, error: postError } = await supabase
       .from("posts")
       .select("id")
