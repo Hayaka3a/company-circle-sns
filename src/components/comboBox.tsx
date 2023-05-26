@@ -14,7 +14,6 @@ export default function ComboBox({
   htmlFor: string;
 }) {
   const [inputValue, setInputValue] = useState("");
-  const [options, setOptions] = useState<string[]>([]);
   const [selectedValue, setSelectedValue] = useState<string[]>([]);
   const [suggestedOptions, setSuggestedOptions] = useState<string[]>([]);
 
@@ -32,7 +31,7 @@ export default function ComboBox({
           ops.NameKanaJ.includes(value),
       );
       const names = filteredOptions.map((ops) => ops.Name);
-      setOptions(names);
+
       setSuggestedOptions(names); // サジェストオプションを更新
       // タグ選択
     } else if (tagOptions) {
@@ -40,7 +39,7 @@ export default function ComboBox({
         (ops) => ops.Name.includes(value) || ops.NameKana.includes(value),
       );
       const names = filteredOptions.map((option) => option.Name);
-      setOptions(names);
+
       setSuggestedOptions(names); // サジェストオプションを更新
     }
   };
