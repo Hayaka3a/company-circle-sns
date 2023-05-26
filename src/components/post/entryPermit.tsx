@@ -87,7 +87,7 @@ export default function EntryPermit({ table }: { table: string }) {
 
   return (
     <div className={styles.main}>
-      <h2>許可待ちの住民申請</h2>
+      <h2 className={styles.title}>許可待ちの住民申請</h2>
       {message && message.length > 0 ? (
         message.map((data) => {
           return (

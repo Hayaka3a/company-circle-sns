@@ -6,6 +6,9 @@
   width: 75%;
   margin-left: 2%;
 }
+.title {
+  margin-left: 5%;
+}
 .box {
   background-color: white;
   display: flex;
@@ -75,6 +78,7 @@
 
 .second {
   background-color: rgba(255, 245, 217, 0.5);
-  width: 88%;
+  width: 637px;
   font-size: 12.5px;
+  padding-left: 10px;
 }
