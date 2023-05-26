@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles/createIsland.module.css";
 
-// Optionsには選択項目、htmlForには<label>のhtmlFor属性の値
+// tagOptionsにはタグ配列、nameOptiosにはメンバー配列、htmlForには<label>のhtmlFor属性の値
 export default function ComboBox({
   tagOptions,
   nameOptions,
@@ -44,12 +44,6 @@ export default function ComboBox({
       setSuggestedOptions(names); // サジェストオプションを更新
     }
   };
-
-  // // 選択されてた値をinputタグに追加していく
-  // const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const selectedOption = event.target.value;
-  //   setInputValue(selectedOption);
-  // };
 
   // タグをどんどん追加していく
   const addHandler = () => {
