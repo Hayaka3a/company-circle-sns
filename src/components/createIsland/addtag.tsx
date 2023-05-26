@@ -2,7 +2,6 @@ import { useState } from "react";
 import styles from "../../styles/createIsland.module.css";
 
 export default function AddTag() {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState<string[]>([]);
 
@@ -10,7 +9,6 @@ export default function AddTag() {
   const addHandler = () => {
     if (inputValue !== "") {
       setSelectedValue((value) => [...value, inputValue]);
-      setSelectedTags((tags) => [...tags, inputValue]);
       setInputValue("");
     }
   };
