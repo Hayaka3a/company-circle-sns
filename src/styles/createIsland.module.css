@@ -22,8 +22,17 @@
   margin-right: auto;
 }
 
-span {
+.span {
   color: red; /*必須文字*/
+}
+
+/* 未入力時に背景色を変更 */
+.errorInput {
+  background-color: rgb(243, 187, 187);
+}
+
+/*　各入力項目 */
+.islandName {
 }
 
 .tableCovered {
@@ -98,5 +107,52 @@ input {
 }
 
 .row {
+  display: flex;
+}
+
+.nameFlex {
+  display: flex;
+  align-items: center;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.suggestionList {
+  background-color: white;
+  margin-bottom: 3%;
+}
+
+.li {
+  list-style: none;
+  margin-left: 2%;
+  margin-right: 2%;
+  padding: 2.5%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.li:hover {
+  background-color: rgb(211, 211, 211);
+  border-radius: 5%;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.addButton {
+  height: 39px;
+}
+
+.buttonSide {
   display: flex;
 }

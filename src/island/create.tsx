@@ -4,6 +4,9 @@ import ComboBox from "../components/comboBox";
 import { createClient } from "@supabase/supabase-js";
 import { supabase } from "../createClient";
 import ConvertKanaJ from "../components/changeKana";
+import AddTag from "../components/createIsland/addtag";
+import IslandName from "../components/createIsland/islandName";
+import Detail from "../components/createIsland/detail";
 
 export default function IslandCreate() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
@@ -13,6 +16,8 @@ export default function IslandCreate() {
     >();
   const [tagOptions, setTagOptions] =
     useState<{ id: number; Name: string; NameKana: string }[]>();
+  // 各入力項目state
+  const [islandName, setIslandName] = useState("");
 
   // データベースから全ユーザー名前取得
   useEffect(() => {
@@ -79,11 +84,32 @@ export default function IslandCreate() {
     }
   };
 
-  // タグ追加
-  const addHandler = () => {};
-
   // 島作成する
-  const createHandler = () => {};
+  const createHandler = async () => {
+    // islandNameが空でないかチェック
+    if (islandName.trim() === "") {
+      alert("島の名前を入力してください。");
+      return;
+    }
+
+    console.log(islandName);
+
+    // try {
+    //   // POST
+    //   const { data, error } = await supabase
+    //     .from("islands")
+    //     .insert([{ islandName }]);
+    //   if (error) {
+    //     console.error("島の作成エラー:", error.message);
+    //   } else {
+    //     console.log("島が正常に作成されました:", data);
+    //     // islandNameの入力フィールドをリセットします
+    //     setIslandName("");
+    //   }
+    // } catch (error) {
+    //   console.error("島の作成エラー:", error.message);
+    // }
+  };
 
   return (
     <div className={styles.background}>
@@ -94,22 +120,21 @@ export default function IslandCreate() {
             <table>
               <tr>
                 <th>
-                  島名<span>【必須】</span>
+                  島名<span className={styles.span}>【必須】</span>
                 </th>
                 <td>
-                  <input
-                    type="text"
-                    id="islandName"
-                    className={styles.inputA}
+                  <IslandName
+                    islandName={islandName}
+                    setIslandName={setIslandName}
                   />
                 </td>
               </tr>
               <tr>
                 <th>
-                  活動内容<span>【必須】</span>
+                  活動内容<span className={styles.span}>【必須】</span>
                 </th>
                 <td>
-                  <input type="text" id="detail" className={styles.inputA} />
+                  <Detail />
                 </td>
               </tr>
               <tr>
@@ -149,8 +174,7 @@ export default function IslandCreate() {
               <tr>
                 <th>タグ追加</th>
                 <td>
-                  <input type="text" id="addTag" className={styles.inputA} />
-                  <button onClick={addHandler}>追加</button>
+                  <AddTag />
                 </td>
               </tr>
             </table>
