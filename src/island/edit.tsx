@@ -3,24 +3,16 @@ import styles from "../styles/islandEdit.module.css";
 import ComboBox from "../components/comboBox";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
+import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 import { supabase } from "../createClient";
 
 export default function IslandEdit() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleteCheckOpen, setIsDleteCheckOpen] = useState(false);
+  const [isAfterDeleteOpen, setIsAfterDeleteOpen] = useState(false);
   const [tagOptions, setTagOptions] =
     useState<{ id: number; Name: string; NameKana: string }[]>();
-
-  // 削除を押した際の小窓画面（モーダルウィンドウ）の開閉
-  // isDeleteOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
-  const openDeleteModal = () => {
-    setIsDeleteOpen(true);
-  };
-
-  const closeDeleteModal = () => {
-    setIsDeleteOpen(false);
-  };
 
   // 島を沈没（削除）させるを押した際の小窓画面（モーダルウィンドウ）の開閉
   // isDeleteCheckOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
@@ -30,6 +22,16 @@ export default function IslandEdit() {
 
   const closeDeleteCheckModal = () => {
     setIsDleteCheckOpen(false);
+  };
+
+  // 削除後の小窓画面（モーダルウィンドウ）の開閉
+  // isAfterDeleteOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
+  const openAfterDeleteModal = () => {
+    setIsAfterDeleteOpen(true);
+  };
+
+  const closeAfterDeleteModal = () => {
+    setIsAfterDeleteOpen(false);
   };
 
   // データベースからタグの名前一覧を取得
@@ -117,11 +119,13 @@ export default function IslandEdit() {
         <button className={styles.edit_btn}>編集</button>
         {/* <button onClick={openDeleteModal} id={styles.delete_btn}>削除</button> */}
         {/* {isDeleteOpen && <CreateDeletePage closeDeleteModal={closeDeleteModal} />} */}
-        <button onClick={openDeleteCheckModal} id={styles.delete_btn}>
+        {/* <button onClick={openDeleteCheckModal} id={styles.delete_btn}>削除</button>
+                {isDeleteCheckOpen && <CreateDeleteCheck closeDeleteCheckModal={closeDeleteCheckModal} />} */}
+        <button onClick={openAfterDeleteModal} id={styles.delete_btn}>
           削除
         </button>
-        {isDeleteCheckOpen && (
-          <CreateDeleteCheck closeDeleteCheckModal={closeDeleteCheckModal} />
+        {isAfterDeleteOpen && (
+          <CreateAfterDelete closeAfterDeleteModal={closeAfterDeleteModal} />
         )}
       </div>
     </div>
