@@ -21,6 +21,7 @@ import EventEdit from "./event/edit";
 import EventThread from "./event/thread";
 import EventPost from "./event/post";
 import EventMembers from "./event/members";
+import EventEntryPermitPage from "./event/post/entryPermitPage";
 
 // islandフォルダ
 import IslandDetail from "./island/[id]";
@@ -31,7 +32,7 @@ import IslandCreate from "./island/create";
 import IslandMembers from "./island/members";
 import IslandPost from "./island/post";
 import UserMessage from "./island/message/user_message";
-import EntryPermitPage from "./island/post/entryPermitPage";
+import IslandEntryPermitPage from "./island/post/entryPermitPage";
 
 // searchフォルダ
 import Search from "./search";
@@ -78,7 +79,7 @@ function App() {
           <Route path="/island/post/:id" element={<IslandPost />} />
           <Route
             path="/island/post/entryPermit/:id"
-            element={<EntryPermitPage />}
+            element={<IslandEntryPermitPage />}
           />
           <Route
             path="/island/message/user_message"
@@ -91,6 +92,10 @@ function App() {
           <Route path="/event/thread/:id" element={<EventThread />} />
           <Route path="/event/post/:id" element={<EventPost />} />
           <Route path="/event/members/:id" element={<EventMembers />} />
+          <Route
+            path="/event/post/entryPermit/:id"
+            element={<EventEntryPermitPage />}
+          />
           {/* chat */}
           <Route path="/chat/:id" element={<Chat />} />
         </Routes>

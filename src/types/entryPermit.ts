@@ -1,7 +1,7 @@
 export type Message = {
   id: number;
   message: string;
-  postedBy: string;
+  postedBy: number;
   postID: string;
   scout: boolean;
   isRead: boolean;
@@ -13,4 +13,5 @@ export type Message = {
     messageID: number;
     status: boolean;
   }[];
-};
+  users: { id: number; icon: string; familyName: string; firstName: string };
+}[];
