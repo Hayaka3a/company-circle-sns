@@ -13,8 +13,9 @@ export default function CreateSendingScout({
   closeModal: () => void;
   table: string;
 }) {
-  const [message, setMessage] = useState<Message[]>();
+  const [message, setMessage] = useState("");
   const [users, setUsers] = useState<newUsersData>();
+  const [post, setPost] = useState(0);
 
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -24,37 +25,57 @@ export default function CreateSendingScout({
   }, []);
   const comboBoxData = async () => {
     //島またはイベントに既に参加している人のIDを取得
-    const { data: entryUser } = await supabase
+    const { data: entryUser, error: entryError } = await supabase
       .from("userEntryStatus")
       .select(`userID`)
       .eq(`${table}ID`, paramsID);
+    if (entryError) {
+      console.log(entryError, "エラー");
+    }
     const entryArray = entryUser.map((user) => user.userID);
 
     //コンボボックス用の全ユーザデータ取得
-    const { data: users } = await supabase
+    const { data: users, error: usersError } = await supabase
       .from("users")
-      .select(`id,familyName,firstName`);
-
+      .select(`id,familyName,firstName,familyNameKana,firstNameKana`);
+    if (usersError) {
+      console.log(usersError, "エラー");
+    }
     //全ユーザデータからすでに参加している人は抜き出して新たな配列を作る
     const newUsersData = users
       .map((user) => ({
         id: user.id,
-        name: user.familyName + user.firstName,
+        Name: user.familyName + user.firstName,
+        NameKana: user.familyNameKana + user.firstNameKana,
       }))
       .filter((user) => !entryArray.includes(user.id));
     setUsers(newUsersData);
   };
 
+  //コンボボックスから返されたUserIDからPostIDを割り出す
+  const fetchPost = async () => {
+    const { data: posts, error: postError } = await supabase
+      .from("posts")
+      .select("id")
+      .eq("userID", 1);
+    if (postError) {
+      console.log(postError, "エラー");
+    }
+    setPost(posts[0].id);
+  };
+
+  //スカウトを送る
   const addHandler = async () => {
     const { data, error } = await supabase
       .from("messages")
-      .insert({ postID: 1, message: "", status: false });
+      .insert({ postID: post, message: message, scout: true });
     if (error) {
       console.log(error, "エラー");
     } else {
       closeModal();
     }
   };
+
   return (
     <>
       <div className={styles.overlay}>
@@ -81,7 +102,12 @@ export default function CreateSendingScout({
                 <label htmlFor="text" className="label">
                   コメント
                 </label>
-                <textarea name="text" className={styles.textSending}></textarea>
+                <textarea
+                  name="text"
+                  className={styles.textSending}
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
+                ></textarea>
               </div>
             </div>
             <div className={styles.btn}>

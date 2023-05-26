@@ -38,6 +38,7 @@ export type Message = {
 }[];
 
 export type newUsersData = {
-  id: any;
-  name: any;
+  id: number;
+  Name: string;
+  NameKana: string;
 }[];
