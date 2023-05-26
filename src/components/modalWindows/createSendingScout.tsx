@@ -15,7 +15,7 @@ export default function CreateSendingScout({
 }) {
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState<newUsersData>();
-  const [post, setPost] = useState(4);
+  const [post, setPost] = useState(0);
   const [postedID, setPostedID] = useState(0);
 
   const params = useParams();
