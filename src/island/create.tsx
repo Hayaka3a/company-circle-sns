@@ -18,6 +18,7 @@ export default function IslandCreate() {
     useState<{ id: number; Name: string; NameKana: string }[]>();
   // 各入力項目state
   const [islandName, setIslandName] = useState("");
+  const [detail, setDetail] = useState("");
 
   // データベースから全ユーザー名前取得
   useEffect(() => {
@@ -87,12 +88,20 @@ export default function IslandCreate() {
   // 島作成する
   const createHandler = async () => {
     // islandNameが空でないかチェック
-    if (islandName.trim() === "") {
-      alert("島の名前を入力してください。");
-      return;
-    }
+    // if (islandName.trim() === "") {
+    //   alert("島の名前を入力してください。");
+    //   return;
+    // }
 
+    // 現在のタイムスタンプを取得
+    const createdAt = new Date().toISOString();
+
+    console.log(createdAt);
     console.log(islandName);
+    console.log(detail);
+    // 他情報ownerID。
+    // tagStatusテーブルにはislandIDとtagIDを入れていき、tagsテーブルにはtagNameを入れる
+    // (tagStatusテーブルのtagIDとtagsテーブルのidが同じ)
 
     // try {
     //   // POST
@@ -134,7 +143,7 @@ export default function IslandCreate() {
                   活動内容<span className={styles.span}>【必須】</span>
                 </th>
                 <td>
-                  <Detail />
+                  <Detail detail={detail} setDetail={setDetail} />
                 </td>
               </tr>
               <tr>

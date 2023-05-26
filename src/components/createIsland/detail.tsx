@@ -1,40 +1,43 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../styles/createIsland.module.css";
 
-export default function Detail() {
-  const [islandName, setIslandName] = useState("");
-  const [islandNameError, setIslandNameError] = useState("");
+export default function Detail({
+  detail,
+  setDetail,
+}: {
+  detail: string;
+  setDetail: Dispatch<SetStateAction<string>>;
+}) {
+  const [error, setError] = useState("");
 
   const handleIslandNameChange = (e) => {
-    setIslandName(e.target.value);
+    setDetail(e.target.value);
     // 一文字でも入力されたらエラー削除
-    if (islandNameError) {
-      setIslandNameError("");
+    if (error) {
+      setError("");
     }
   };
 
   const handleIslandNameBlur = () => {
-    if (islandName.trim() === "") {
-      setIslandNameError("※活動内容は入力必須項目です");
+    if (detail.trim() === "") {
+      setError("※活動内容は入力必須項目です");
     } else {
-      setIslandNameError("");
+      setError("");
     }
   };
   return (
     <>
       <input
         type="text"
-        className={`${styles.inputA} ${
-          islandNameError ? styles.errorInput : ""
-        }`}
+        className={`${styles.inputA} ${error ? styles.errorInput : ""}`}
         maxLength={300}
-        value={islandName}
+        value={detail}
         onChange={handleIslandNameChange}
         onBlur={handleIslandNameBlur}
       />
-      {islandNameError && (
+      {error && (
         <div>
-          <span className={styles.span}>{islandNameError}</span>
+          <span className={styles.span}>{error}</span>
         </div>
       )}
     </>

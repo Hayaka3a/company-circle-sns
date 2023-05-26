@@ -8,7 +8,6 @@ export default function IslandName({
   islandName: string;
   setIslandName: Dispatch<SetStateAction<string>>;
 }) {
-  // const [islandName, setIslandName] = useState("");
   const [islandNameError, setIslandNameError] = useState("");
 
   const handleIslandNameChange = (e) => {
