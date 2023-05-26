@@ -19,6 +19,7 @@ export default function IslandCreate() {
   // 各入力項目state
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
+  const [tagName, setTagName] = useState<string[]>([]);
 
   // データベースから全ユーザー名前取得
   useEffect(() => {
@@ -99,6 +100,7 @@ export default function IslandCreate() {
     console.log(createdAt);
     console.log(islandName);
     console.log(detail);
+    console.log(tagName);
     // 他情報ownerID。
     // tagStatusテーブルにはislandIDとtagIDを入れていき、tagsテーブルにはtagNameを入れる
     // (tagStatusテーブルのtagIDとtagsテーブルのidが同じ)
@@ -183,7 +185,10 @@ export default function IslandCreate() {
               <tr>
                 <th>タグ追加</th>
                 <td>
-                  <AddTag />
+                  <AddTag
+                    selectedValue={tagName}
+                    setSelectedValue={setTagName}
+                  />
                 </td>
               </tr>
             </table>

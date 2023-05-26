@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../styles/createIsland.module.css";
 
-export default function AddTag() {
+export default function AddTag({
+  selectedValue,
+  setSelectedValue,
+}: {
+  selectedValue: string[];
+  setSelectedValue: Dispatch<SetStateAction<string[]>>;
+}) {
   const [inputValue, setInputValue] = useState("");
-  const [selectedValue, setSelectedValue] = useState<string[]>([]);
 
   //タグをどんどん追加していく
   const addHandler = () => {
