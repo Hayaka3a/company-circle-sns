@@ -1,7 +1,7 @@
 export type Message = {
   id: number;
   message: string;
-  postedBy: string;
+  postedBy: number;
   postID: string;
   scout: boolean;
   isRead: boolean;
