@@ -1,5 +1,5 @@
 import MenubarIsland from "../../components/menubarIsland";
-import EntryPermit from "../../components/post/entryPermit";
+import EntryPermit from "../../components/entryPermit";
 import styles from "../../styles/entryPermit.module.css";
 export default function EventEntryPermitPage() {
   return (
