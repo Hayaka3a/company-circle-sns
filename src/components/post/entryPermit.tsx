@@ -20,6 +20,7 @@ export default function EntryPermit({ table }: { table: string }) {
       .select(`*,messages(*,applications(*),users(*))`)
       .eq(`${table}ID`, paramsID)
       .eq(`messages.isRead`, false)
+      .eq(`messages.isAnswered`, false)
       .eq("status", false);
     if (error) {
       console.log(error, "エラー");
