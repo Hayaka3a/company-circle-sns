@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styles from "../styles/createIsland.module.css";
-import { createClient } from "@supabase/supabase-js";
 import { supabase } from "../createClient";
 import ConvertKanaJ from "../components/changeKana";
 import AddTag from "../components/createIsland/addtag";
@@ -8,10 +7,12 @@ import IslandName from "../components/createIsland/islandName";
 import Detail from "../components/createIsland/detail";
 import ComboBoxUser from "../components/comboBoxUser";
 import ComboBoxTag from "../components/comboBoxTag";
-import { useCookies } from "react-cookie";
 import GetCookieID from "../components/cookie/getCookieId";
+import { useNavigate } from "react-router-dom";
 
 export default function IslandCreate() {
+  const navigate = useNavigate();
+
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [userOptions, setUserOptions] =
     useState<
@@ -173,6 +174,7 @@ export default function IslandCreate() {
     } catch (error) {
       console.error("島の作成エラー:", error.message);
     }
+    navigate("/island/[id]");
   };
 
   return (
@@ -244,7 +246,12 @@ export default function IslandCreate() {
             </table>
           </div>
 
-          <button onClick={createHandler}>新しい島生活を始める</button>
+          <button
+            onClick={createHandler}
+            disabled={!islandName.trim() || !detail.trim()}
+          >
+            新しい島生活を始める
+          </button>
         </div>
       </div>
     </div>

@@ -37,7 +37,6 @@ export default function IslandName({
       if (error) {
         console.error("クエリエラー:", error.message);
       } else {
-        console.log(data);
         if (data.length > 0) {
           setNameAlreadyError("※島名が既に存在します");
         }
