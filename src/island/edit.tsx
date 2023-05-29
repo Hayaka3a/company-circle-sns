@@ -1,10 +1,11 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import styles from "../styles/islandEdit.module.css";
-import ComboBox from "../components/comboBox";
+import ComboBox from "../components/comboBoxUser";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 import { supabase } from "../createClient";
+import ComboBoxTag from "../components/comboBoxTag";
 
 export default function IslandEdit() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
@@ -13,6 +14,9 @@ export default function IslandEdit() {
   const [isAfterDeleteOpen, setIsAfterDeleteOpen] = useState(false);
   const [tagOptions, setTagOptions] =
     useState<{ id: number; Name: string; NameKana: string }[]>();
+  const [islandTags, setIslandTags] = useState<
+    { id: number; Name: string; NameKana: string }[]
+  >([]);
 
   // 島を沈没（削除）させるを押した際の小窓画面（モーダルウィンドウ）の開閉
   // isDeleteCheckOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
@@ -105,7 +109,11 @@ export default function IslandEdit() {
 
         <div className={styles.tag}>
           <label htmlFor="tag">タグ</label>
-          <ComboBox tagOptions={tagOptions} nameOptions={null} htmlFor="tag" />
+          <ComboBoxTag
+            tagOptions={tagOptions}
+            htmlFor="tag"
+            setIslandTags={setIslandTags}
+          />
           <br />
         </div>
 

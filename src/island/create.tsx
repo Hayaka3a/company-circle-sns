@@ -1,12 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styles from "../styles/createIsland.module.css";
-import ComboBox from "../components/comboBox";
+import ComboBox from "../components/comboBoxUser";
 import { createClient } from "@supabase/supabase-js";
 import { supabase } from "../createClient";
 import ConvertKanaJ from "../components/changeKana";
 import AddTag from "../components/createIsland/addtag";
 import IslandName from "../components/createIsland/islandName";
 import Detail from "../components/createIsland/detail";
+import ComboBoxUser from "../components/comboBoxUser";
+import ComboBoxTag from "../components/comboBoxTag";
 
 export default function IslandCreate() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
@@ -20,6 +22,12 @@ export default function IslandCreate() {
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
   const [tagName, setTagName] = useState<string[]>([]);
+  const [islandMembers, setIslandMembers] = useState<
+    { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
+  >([]);
+  const [islandTags, setIslandTags] = useState<
+    { id: number; Name: string; NameKana: string }[]
+  >([]);
 
   // データベースから全ユーザー名前取得
   useEffect(() => {
@@ -88,19 +96,16 @@ export default function IslandCreate() {
 
   // 島作成する
   const createHandler = async () => {
-    // islandNameが空でないかチェック
-    // if (islandName.trim() === "") {
-    //   alert("島の名前を入力してください。");
-    //   return;
-    // }
+    if (islandName.trim() === "" || detail.trim() === "") {
+      alert("島の名前を入力してください。");
+      return;
+    }
 
-    // 現在のタイムスタンプを取得
-    const createdAt = new Date().toISOString();
-
-    console.log(createdAt);
+    console.log(islandMembers);
     console.log(islandName);
     console.log(detail);
     console.log(tagName);
+    console.log(islandTags);
     // 他情報ownerID。
     // tagStatusテーブルにはislandIDとtagIDを入れていき、tagsテーブルにはtagNameを入れる
     // (tagStatusテーブルのtagIDとtagsテーブルのidが同じ)
@@ -151,10 +156,10 @@ export default function IslandCreate() {
               <tr>
                 <th>メンバー</th>
                 <td>
-                  <ComboBox
+                  <ComboBoxUser
                     nameOptions={userOptions}
-                    tagOptions={null}
                     htmlFor="user"
+                    setIslandMembers={setIslandMembers}
                   />
                 </td>
               </tr>
@@ -175,10 +180,10 @@ export default function IslandCreate() {
               <tr>
                 <th>タグ</th>
                 <td>
-                  <ComboBox
+                  <ComboBoxTag
                     tagOptions={tagOptions}
-                    nameOptions={null}
                     htmlFor="tag"
+                    setIslandTags={setIslandTags}
                   />
                 </td>
               </tr>
