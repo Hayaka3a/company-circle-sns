@@ -1,9 +1,15 @@
 import React from "react";
 import styles from "../styles/Header.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import FetchJoindIslandEvent from "./hooks/FetchJoindIslandEvent";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  // 参加してる島、イベントの取得
+  const result = FetchJoindIslandEvent();
+
   // ログアウト処理
   const logOutHandler = () => {
     if (document.cookie !== "") {
@@ -55,9 +61,27 @@ const Header = () => {
             <ul className={styles.menuGroup}>
               <li className={styles.menuGroupItem}>
                 <span className={styles.menuGroupItemLink}>参加サークル</span>
+                <ul>
+                  {result.islands.map((island) => (
+                    <div key={island.id} className={styles.listItem}>
+                      <a href={`/island/${island.id}`}>
+                        <li>{island.islandName}</li>
+                      </a>
+                    </div>
+                  ))}
+                </ul>
               </li>
               <li className={styles.menuGroupItem}>
                 <span className={styles.menuGroupItemLink}>参加イベント</span>
+                <ul>
+                  {result.events.map((event) => (
+                    <div key={event.id} className={styles.listItem}>
+                      <a href={`/event/${event.id}`}>
+                        <li>{event.eventName}</li>
+                      </a>
+                    </div>
+                  ))}
+                </ul>
               </li>
               <li className={styles.menuGroupItem}>
                 <a className={styles.menuGroupItemLink} href="/island/create">

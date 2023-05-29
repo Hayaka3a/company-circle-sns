@@ -9,10 +9,6 @@ header {
   align-items: flex-end;
 }
 
-.headerItem div {
-  margin-right: 10px;
-}
-
 .headerItem .hambuger {
   margin-right: 0;
 }
@@ -22,13 +18,29 @@ header {
   height: 50px;
 }
 
+.listItem {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.listItem a {
+  text-decoration: none;
+  color: #000;
+}
+.listItem a:hover {
+  text-decoration: underline;
+}
+
+.menu ul{
+  padding-inline-start: 0px;
+}
+
 /* ハンバーガーメニューの関する記述 */
 .hambuger {
   justify-items: baseline;
 }
 
 .menu {
-  position: fixed;
+  position: absolute;
   right: -30vw;
   width: 25vw;
   height: 70vh;
@@ -50,13 +62,12 @@ header {
   width: 100%;
   flex: auto;
   padding: 4px;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 .menuGroupItemLink {
   padding: 0.5em 0.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  text-align: center;
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.02em;
