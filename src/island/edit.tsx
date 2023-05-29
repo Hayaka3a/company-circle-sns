@@ -6,6 +6,7 @@ import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 import { supabase } from "../createClient";
 import ComboBoxTag from "../components/comboBoxTag";
+import ConvertKanaJ from "../components/changeKana";
 
 export default function IslandEdit() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
@@ -13,9 +14,11 @@ export default function IslandEdit() {
   const [isDeleteCheckOpen, setIsDleteCheckOpen] = useState(false);
   const [isAfterDeleteOpen, setIsAfterDeleteOpen] = useState(false);
   const [tagOptions, setTagOptions] =
-    useState<{ id: number; Name: string; NameKana: string }[]>();
+    useState<
+      { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
+    >();
   const [islandTags, setIslandTags] = useState<
-    { id: number; Name: string; NameKana: string }[]
+    { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
   >([]);
 
   // 島を沈没（削除）させるを押した際の小窓画面（モーダルウィンドウ）の開閉
@@ -45,12 +48,17 @@ export default function IslandEdit() {
       if (error) {
         console.error("Error fetching tags:", error.message);
       } else {
-        const tags: { id: number; Name: string; NameKana: string }[] =
-          data?.map((tag) => ({
-            id: tag.id,
-            Name: tag.tagName,
-            NameKana: tag.tagNameKana,
-          }));
+        const tags: {
+          id: number;
+          Name: string;
+          NameKana: string;
+          NameKanaJ: string;
+        }[] = data?.map((tag) => ({
+          id: tag.id,
+          Name: tag.tagName,
+          NameKana: tag.tagNameKana,
+          NameKanaJ: `${ConvertKanaJ(tag.tagNameKana)}`,
+        }));
         setTagOptions(tags);
         console.log(data);
       }

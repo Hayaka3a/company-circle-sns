@@ -52,7 +52,7 @@ export default function ComboBoxTag({
         const tags = [...newOptions, existingOption];
         setIslandTags(tags);
 
-        setInputValue(""); // setInputValueをここで呼ぶ
+        setInputValue("");
         return setIslandTags;
       }
     }
