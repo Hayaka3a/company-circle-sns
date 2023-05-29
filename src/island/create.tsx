@@ -158,7 +158,6 @@ export default function IslandCreate() {
                   for (let tg of tgNameData) {
                     await supabase.from("tags").insert(tg);
                   }
-                  console.log("島が正常に作成されました");
                 } catch (error) {
                   console.log("tags挿入エラー");
                 }
@@ -170,11 +169,11 @@ export default function IslandCreate() {
         } catch (error) {
           console.log("userEnryStatus挿入エラー");
         }
+        navigate("/island/[id]");
       }
     } catch (error) {
       console.error("島の作成エラー:", error.message);
     }
-    navigate("/island/[id]");
   };
 
   return (
