@@ -1,5 +1,5 @@
 import styles from "../../styles/createSendingScout.module.css";
-import ComboBox from "../comboBox";
+// import ComboBox from "../comboBox";
 import { supabase } from "../../createClient";
 import { useEffect, useState } from "react";
 import { newUsersData } from "../../types/sendScout";
