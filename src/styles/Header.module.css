@@ -21,12 +21,10 @@ header {
 .listItem {
   list-style: none;
   margin-bottom: 10px;
+  cursor: pointer;
 }
-.listItem a {
-  text-decoration: none;
-  color: #000;
-}
-.listItem a:hover {
+
+.listItem:hover {
   text-decoration: underline;
 }
 

@@ -63,10 +63,12 @@ const Header = () => {
                 <span className={styles.menuGroupItemLink}>参加サークル</span>
                 <ul>
                   {result.islands.map((island) => (
-                    <div key={island.id} className={styles.listItem}>
-                      <a href={`/island/${island.id}`}>
-                        <li>{island.islandName}</li>
-                      </a>
+                    <div
+                      key={island.id}
+                      className={styles.listItem}
+                      onClick={() => navigate(`/island/${island.id}`)}
+                    >
+                      <li>{island.islandName}</li>
                     </div>
                   ))}
                 </ul>
@@ -75,10 +77,12 @@ const Header = () => {
                 <span className={styles.menuGroupItemLink}>参加イベント</span>
                 <ul>
                   {result.events.map((event) => (
-                    <div key={event.id} className={styles.listItem}>
-                      <a href={`/event/${event.id}`}>
-                        <li>{event.eventName}</li>
-                      </a>
+                    <div
+                      key={event.id}
+                      className={styles.listItem}
+                      onClick={() => navigate(`/event/${event.id}`)}
+                    >
+                      <li>{event.eventName}</li>
                     </div>
                   ))}
                 </ul>
