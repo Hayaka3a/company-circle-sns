@@ -4061,12 +4061,6 @@ css-blank-pseudo@^3.0.3:
   dependencies:
     "postcss-selector-parser" "^6.0.9"
 
-<<<<<<< HEAD
-"css-loader@^6.5.1":
-  "integrity" "sha512-qhOH1KlBMnZP8FzRO6YCH9UHXQhVMcEGLyNdb7Hv2cpcmJbW0YrddO+tG1ab5nT41KpHIYGsbeHqxB9xPu1pKQ=="
-  "resolved" "https://registry.npmjs.org/css-loader/-/css-loader-6.7.3.tgz"
-  "version" "6.7.3"
-=======
 css-in-js-utils@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/css-in-js-utils/-/css-in-js-utils-3.1.0.tgz"
@@ -4078,7 +4072,6 @@ css-loader@^6.5.1:
   version "6.7.3"
   resolved "https://registry.npmjs.org/css-loader/-/css-loader-6.7.3.tgz"
   integrity sha512-qhOH1KlBMnZP8FzRO6YCH9UHXQhVMcEGLyNdb7Hv2cpcmJbW0YrddO+tG1ab5nT41KpHIYGsbeHqxB9xPu1pKQ==
->>>>>>> main
   dependencies:
     "icss-utils" "^5.1.0"
     "postcss" "^8.4.19"
