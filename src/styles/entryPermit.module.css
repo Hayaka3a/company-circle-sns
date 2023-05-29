@@ -6,6 +6,13 @@
   width: 75%;
   margin-left: 2%;
 }
+.pageBack {
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+}
+.title {
+  margin-left: 5%;
+}
 .box {
   background-color: white;
   display: flex;
@@ -13,9 +20,13 @@
   margin-left: 5%;
 }
 .left {
-  width: 200px;
+  width: 140px;
 }
 .icon {
+  border-radius: 50%;
+  height: 120px;
+  border: 1px solid orange;
+  margin: auto;
 }
 
 .right {
@@ -30,48 +41,48 @@
   margin-right: 15%;
 }
 .OK {
-  float: right;
-  display: block;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: none;
-  position: relative;
-  width: 90px;
-  padding: 1rem 1rem;
-  margin-top: 3px;
+  width: 80px;
+  margin-top: 15px;
   font-weight: bold;
   border-radius: 10px;
   color: rgba(94, 70, 44, 1);
   border: 3px solid rgba(255, 182, 112, 1);
   box-shadow: 5px 5px rgba(255, 182, 112, 1);
   transition: 0.3s ease-in-out;
-  height: 50px;
+  height: 40px;
+}
+.OK:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
 }
 .NG {
-  float: right;
-  display: block;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: none;
-  position: relative;
-  width: 90px;
+  width: 80px;
   margin-left: 20px;
-  margin-top: 3px;
-  padding: 1rem 1rem;
+  margin-top: 15px;
   font-weight: bold;
   border-radius: 10px;
   color: rgba(94, 70, 44, 1);
   border: 3px solid #27acd9;
   box-shadow: 5px 5px #27acd9;
   transition: 0.3s ease-in-out;
-  height: 50px;
+  height: 40px;
+}
+.NG:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
 }
 .name {
   width: 200px;
+  font-size: 18px;
+  margin-top: 25px;
+  font-weight: bold;
 }
 
 .second {
   background-color: rgba(255, 245, 217, 0.5);
-  width: 90%;
+  width: 637px;
   font-size: 12.5px;
+  padding-left: 10px;
 }
