@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect} from "react";
 import styles from "../styles/islandEdit.module.css";
 import ComboBox from "../components/comboBoxUser";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
@@ -141,9 +141,13 @@ export default function IslandEdit() {
           削除
         </button>
         {isAfterDeleteOpen && (
-          <CreateAfterDelete closeAfterDeleteModal={closeAfterDeleteModal} />
+          <CreateAfterDelete closeAfterDModal={closeAfterDeleteModal} />
         )}
       </div>
     </div>
   );
 }
+function setIslands(data: { [x: string]: any; }[]) {
+    throw new Error("Function not implemented.");
+}
+

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../createClient";
-import styles from "../../styles/entryPermit.module.css";
-import { useParams } from "react-router-dom";
-import { Message } from "../../types/entryPermit";
+import { supabase } from "../createClient";
+import styles from "../styles/entryPermit.module.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { Message } from "../types/entryPermit";
 
 export default function EntryPermit({ table }: { table: string }) {
   const [message, setMessage] = useState<Message>();
 
   const params = useParams();
   const paramsID = parseInt(params.id);
+
+  const navi = useNavigate();
+
+  //ひとつ前のページに戻る
+  const pageBack = () => {
+    navi(-1);
+  };
 
   //  データを取得
   useEffect(() => {
@@ -87,6 +94,9 @@ export default function EntryPermit({ table }: { table: string }) {
 
   return (
     <div className={styles.main}>
+      <button onClick={pageBack} className={styles.pageBack}>
+        ←戻る
+      </button>
       <h2 className={styles.title}>許可待ちの住民申請</h2>
       {message && message.length > 0 ? (
         message.map((data) => {
