@@ -71,7 +71,7 @@ function App() {
           {/* islandフォルダ */}
           <Route path="/island/:id" element={<IslandDetail />} />
           <Route path="/island/create:id" element={<IslandCreate />} />
-          <Route path="/island/edit" element={<IslandEdit />} />
+          <Route path="/island/edit:id" element={<IslandEdit />} />
           <Route path="/island/eventAll:id" element={<EventAll />} />
           <Route path="/island/thread:id" element={<IslandThread />} />
           <Route path="/island/members/:id" element={<IslandMembers />} />
