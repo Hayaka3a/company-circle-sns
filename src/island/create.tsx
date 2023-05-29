@@ -126,7 +126,16 @@ export default function IslandCreate() {
           .select("id")
           .eq("islandName", islandName);
         const createdIslandId = data[0].id;
-        console.log(createdIslandId);
+
+        // postテーブルに島用ポスト作成
+        const post = {
+          islandID: createdIslandId,
+          status: "true",
+        };
+        const { error } = await supabase.from("posts").insert(post);
+        if (error) {
+          console.log("ポスト作成に失敗しました");
+        }
 
         // userEntryStatusテーブルへ挿入
         try {
@@ -169,6 +178,7 @@ export default function IslandCreate() {
         } catch (error) {
           console.log("userEnryStatus挿入エラー");
         }
+
         navigate("/island/[id]");
       }
     } catch (error) {
