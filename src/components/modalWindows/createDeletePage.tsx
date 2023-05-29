@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/createDeletePage.module.css";
+import CreateDeleteCheck from "./createDeletingCheck";
 
 export default function CreateDeletePage({
   closeDeleteModal,
+
 }: {
   closeDeleteModal: () => void;
 }) {
-  const deleteHandler = () => {};
+
+  const [ isDeleteCheckOpen, setIsDeleteCheckOpen ] = useState(false);
+
+  // 島を沈没（削除）させるを押した際の小窓画面（モーダルウィンドウ）の開閉
+  // isDeleteCheckOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
+  const openDeleteCheckModal = () => {
+      setIsDeleteCheckOpen(true);
+  };
+
+  const closeDeleteCheckModal = () => {
+      setIsDeleteCheckOpen(false);
+  };
+
   return (
     <>
       <div className={styles.overlay}>
@@ -30,8 +44,10 @@ export default function CreateDeletePage({
               </div>
             </div>
             <div>
-              <button onClick={deleteHandler}>島を沈没（削除）させる</button>
+              <button onClick={openDeleteCheckModal} id={styles.delete_btn}>島を沈没（削除）させる</button>
+              {isDeleteCheckOpen && <CreateDeleteCheck closeDeleteCheckModal={closeDeleteCheckModal} />}
             </div>
+
           </div>
         </div>
       </div>
