@@ -28,8 +28,35 @@ header {
   text-decoration: underline;
 }
 
-.menu ul{
+.menu ul {
   padding-inline-start: 0px;
+}
+
+.menuGroupItemLinkWrapper {
+  cursor: pointer;
+}
+
+/* 参加してる島、イベントの表示・非表示 */
+.open {
+  display: block;
+}
+
+.close {
+  display: none;
+}
+
+/* メッセージアイコン */
+.msgIcon {
+  display: inline-block;
+  margin-left: 1rem;
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  color: #fff;
+  border: 1px solid #172a22;
+  background-color: #172a22;
+  border-radius: 50%;
+  text-align: center;
 }
 
 /* ハンバーガーメニューの関する記述 */
