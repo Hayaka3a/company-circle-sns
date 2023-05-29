@@ -9,6 +9,7 @@ import IslandName from "../components/createIsland/islandName";
 import Detail from "../components/createIsland/detail";
 import ComboBoxUser from "../components/comboBoxUser";
 import ComboBoxTag from "../components/comboBoxTag";
+import { useCookies } from "react-cookie";
 
 export default function IslandCreate() {
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
@@ -28,6 +29,13 @@ export default function IslandCreate() {
   const [islandTags, setIslandTags] = useState<
     { id: number; Name: string; NameKana: string }[]
   >([]);
+
+  // cookie取得
+  // const docCookie = document.cookie
+  const cookies = useCookies(["id"]);
+
+  console.log(cookies[0].id);
+  // console.log(document.cookie);
 
   // データベースから全ユーザー名前取得
   useEffect(() => {
@@ -70,7 +78,6 @@ export default function IslandCreate() {
             NameKana: tag.tagNameKana,
           }));
         setTagOptions(tags);
-        console.log(data);
       }
     };
 
