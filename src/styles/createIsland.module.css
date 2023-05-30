@@ -171,3 +171,8 @@ input {
 .errorInputTg {
   background-color: rgb(247, 177, 140);
 }
+
+/* islandName */
+.islandNameText {
+  font-size: 20px;
+}

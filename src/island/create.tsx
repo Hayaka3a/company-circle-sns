@@ -9,8 +9,10 @@ import ComboBoxUser from "../components/comboBoxUser";
 import ComboBoxTag from "../components/comboBoxTag";
 import GetCookieID from "../components/cookie/getCookieId";
 import { useNavigate } from "react-router-dom";
+import LogSt from "../components/cookie/logSt";
 
 export default function IslandCreate() {
+  LogSt();
   const navigate = useNavigate();
 
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
@@ -103,7 +105,7 @@ export default function IslandCreate() {
   // 島作成する
   const createHandler = async () => {
     if (islandName.trim() === "" || detail.trim() === "") {
-      alert("島の名前を入力してください。");
+      alert("島の名前と活動内容は入力必須項目です。");
       return;
     }
 

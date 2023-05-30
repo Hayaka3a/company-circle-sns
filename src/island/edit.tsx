@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/islandEdit.module.css";
 import ComboBox from "../components/comboBoxUser";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
@@ -7,8 +7,10 @@ import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 import { supabase } from "../createClient";
 import ComboBoxTag from "../components/comboBoxTag";
 import ConvertKanaJ from "../components/changeKana";
+import LogSt from "../components/cookie/logSt";
 
 export default function IslandEdit() {
+  LogSt();
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleteCheckOpen, setIsDleteCheckOpen] = useState(false);
@@ -147,7 +149,6 @@ export default function IslandEdit() {
     </div>
   );
 }
-function setIslands(data: { [x: string]: any; }[]) {
-    throw new Error("Function not implemented.");
+function setIslands(data: { [x: string]: any }[]) {
+  throw new Error("Function not implemented.");
 }
-

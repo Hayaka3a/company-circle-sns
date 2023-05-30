@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/user/login.module.css";
 import { Link } from "react-router-dom";
 import { supabase } from "../createClient";
 import { useNavigate } from "react-router-dom";
-// import { enc, AES } from "crypto-js";
+import { useCookies } from "react-cookie";
 
 export default function Login() {
   const navigate = useNavigate(); // useNavigateフックで画面遷移
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
+  const [loginStatus] = useCookies(["loginSt"]);
+
+  // ログイン済みの場合、トップページにリダイレクト
+  useEffect(() => {
+    const status = loginStatus.loginSt;
+    if (status == "true") {
+      navigate("/");
+      window.location.reload();
+    }
+  }, []);
 
   const loginHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -25,18 +35,9 @@ export default function Login() {
         console.log("データベースエラー:", error.message);
         return null;
       }
+      // ユーザーが見つかった場合
       if (data && data.length > 0) {
-        // ユーザーが見つかった場合
         const userId = data[0].id;
-        // const fName = data[0].firstName;
-        // const lName = data[0].familyName;
-        // const icon = data[0].icon;
-
-        // 暗号化
-        // const encryptedFname = AES.encrypt(fName, "encryptionKey").toString();
-        // const encryptedLname = AES.encrypt(lName, "encryptionKey").toString();
-        // const encryptedIcon = AES.encrypt(icon, "encryptionKey").toString();
-        // console.log(encryptedFname, encryptedLname, encryptedIcon);
 
         // Cookieの有効期限1日
         const expirationDate = new Date();
@@ -44,14 +45,16 @@ export default function Login() {
 
         // Cookie設定
         document.cookie = `id=${userId};  expires=${expirationDate.toUTCString()}; path=/`;
-        // document.cookie = `id=${userId}; fName="${encryptedFname}"; lName="${encryptedLname}"; icon="${encryptedIcon}"; expires=${expirationDate.toUTCString()}; path=/`;
+        document.cookie = `loginSt=true;  expires=${expirationDate.toUTCString()}; path=/`;
 
         navigate("/");
         window.location.reload();
-      } else {
+
         // ユーザーが見つからなかった場合
-        console.log("ユーザーが見つかりません");
+      } else {
         setVisible(true);
+        document.cookie =
+          "loginSt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       }
     } catch (error) {
       console.log("エラー:", error);
