@@ -3,7 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import CreateSendingScout from "../components/modalWindows/createSendingScout";
 import { useState } from "react";
 import MenubarIsland from "../components/menubarIsland";
+import LogSt from "../components/cookie/logSt";
+
 export default function IslandPost() {
+  LogSt();
   const params = useParams();
   const paramsID = parseInt(params.id);
 

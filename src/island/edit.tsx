@@ -1,18 +1,27 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/islandEdit.module.css";
-import ComboBox from "../components/comboBox";
+import ComboBox from "../components/comboBoxUser";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 import { supabase } from "../createClient";
+import ComboBoxTag from "../components/comboBoxTag";
+import ConvertKanaJ from "../components/changeKana";
+import LogSt from "../components/cookie/logSt";
 
 export default function IslandEdit() {
+  LogSt();
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleteCheckOpen, setIsDleteCheckOpen] = useState(false);
   const [isAfterDeleteOpen, setIsAfterDeleteOpen] = useState(false);
   const [tagOptions, setTagOptions] =
-    useState<{ id: number; Name: string; NameKana: string }[]>();
+    useState<
+      { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
+    >();
+  const [islandTags, setIslandTags] = useState<
+    { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
+  >([]);
 
   // 島を沈没（削除）させるを押した際の小窓画面（モーダルウィンドウ）の開閉
   // isDeleteCheckOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
@@ -41,12 +50,17 @@ export default function IslandEdit() {
       if (error) {
         console.error("Error fetching tags:", error.message);
       } else {
-        const tags: { id: number; Name: string; NameKana: string }[] =
-          data?.map((tag) => ({
-            id: tag.id,
-            Name: tag.tagName,
-            NameKana: tag.tagNameKana,
-          }));
+        const tags: {
+          id: number;
+          Name: string;
+          NameKana: string;
+          NameKanaJ: string;
+        }[] = data?.map((tag) => ({
+          id: tag.id,
+          Name: tag.tagName,
+          NameKana: tag.tagNameKana,
+          NameKanaJ: `${ConvertKanaJ(tag.tagNameKana)}`,
+        }));
         setTagOptions(tags);
         console.log(data);
       }
@@ -105,7 +119,11 @@ export default function IslandEdit() {
 
         <div className={styles.tag}>
           <label htmlFor="tag">タグ</label>
-          <ComboBox tagOptions={tagOptions} nameOptions={null} htmlFor="tag" />
+          <ComboBoxTag
+            tagOptions={tagOptions}
+            htmlFor="tag"
+            setIslandTags={setIslandTags}
+          />
           <br />
         </div>
 
@@ -125,9 +143,12 @@ export default function IslandEdit() {
           削除
         </button>
         {isAfterDeleteOpen && (
-          <CreateAfterDelete closeAfterDeleteModal={closeAfterDeleteModal} />
+          <CreateAfterDelete closeAfterDModal={closeAfterDeleteModal} />
         )}
       </div>
     </div>
   );
+}
+function setIslands(data: { [x: string]: any }[]) {
+  throw new Error("Function not implemented.");
 }

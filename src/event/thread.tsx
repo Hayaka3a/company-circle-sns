@@ -4,12 +4,15 @@ import styles from "../styles/thread.module.css";
 import MenubarEvent from "../components/menubarEvent";
 import CreateThread from "../components/modalWindows/createThread";
 import { useState } from "react";
+import LogSt from "../components/cookie/logSt";
+import { useParams } from "react-router-dom";
 
 export default function EventThread() {
+  LogSt();
   const [isOpen, setIsOpen] = useState(false);
+  const { id } = useParams();
+  const eventID = Number(id);
 
-  // イベントID仮置き
-  const eventID = 2;
   // スレッドデータの取得
   const thread = FetchEventThreads(eventID, "eventID");
 
@@ -36,7 +39,11 @@ export default function EventThread() {
               eventID={eventID}
             />
           )}
-          <Thread thread={thread} />
+          {thread.length ? (
+            <Thread thread={thread} />
+          ) : (
+            <p>現在スレッドは追加されていません</p>
+          )}
         </div>
       </div>
     </>

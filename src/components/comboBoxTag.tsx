@@ -1,21 +1,25 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import styles from "../styles/createIsland.module.css";
 
 // tagOptionsにはタグ配列、nameOptiosにはメンバー配列、htmlForには<label>のhtmlFor属性の値
-export default function ComboBox({
+export default function ComboBoxTag({
   tagOptions,
-  nameOptions,
   htmlFor,
+
+  setIslandTags,
 }: {
   tagOptions: { id: number; Name: string; NameKana: string }[] | null;
-  nameOptions:
-    | { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
-    | null;
   htmlFor: string;
+  setIslandTags: Dispatch<
+    SetStateAction<{ id: number; Name: string; NameKana: string }[]>
+  >;
 }) {
   const [inputValue, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState<string[]>([]);
   const [suggestedOptions, setSuggestedOptions] = useState<string[]>([]);
+  const [newOptions, setNewOptions] = useState<
+    { id: number; Name: string; NameKana: string }[]
+  >([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -23,20 +27,12 @@ export default function ComboBox({
 
     // ユーザーの入力に基づいて選択肢をフィルタリングする
     // ユーザー選択
-    if (nameOptions) {
-      const filteredOptions = nameOptions.filter(
-        (ops) =>
-          ops.Name.includes(value) ||
-          ops.NameKana.includes(value) ||
-          ops.NameKanaJ.includes(value),
-      );
-      const names = filteredOptions.map((ops) => ops.Name);
-
-      setSuggestedOptions(names); // サジェストオプションを更新
-      // タグ選択
-    } else if (tagOptions) {
+    if (tagOptions) {
       const filteredOptions = tagOptions.filter(
-        (ops) => ops.Name.includes(value) || ops.NameKana.includes(value),
+        (ops) =>
+          (ops.Name.includes(value) || ops.NameKana.includes(value)) &&
+          !newOptions.some((option) => option.Name === ops.Name) &&
+          !selectedValue.includes(ops.Name),
       );
       const names = filteredOptions.map((option) => option.Name);
 
@@ -47,11 +43,25 @@ export default function ComboBox({
   // タグをどんどん追加していく
   const addHandler = () => {
     if (inputValue !== "") {
-      console.log(selectedValue);
-      // スプレッド演算子を用いてコピー作成し、配列作成
-      // reactではstate更新する際、コピー作成しそれを更新することで、変更を検出して再レンダリングする
-      setSelectedValue((value) => [...value, inputValue]);
-      setInputValue("");
+      // タグに追加された名前と一致するnameOptionsのオブジェクトを探して、配列に追加していく
+      const existingOption = tagOptions?.find((ops) => ops.Name === inputValue);
+      if (existingOption) {
+        // options[]にexistingOption{}を追加していく
+        setSelectedValue((value) => [...value, inputValue]);
+        setNewOptions((options) => [...options, existingOption]);
+        const tags = [...newOptions, existingOption];
+        setIslandTags(tags);
+
+        setInputValue("");
+        return setIslandTags;
+      }
+    }
+  };
+
+  // 追加ボタンだけでなく、enterキーでもaddHandlerを発動させる
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      addHandler();
     }
   };
 
@@ -62,11 +72,30 @@ export default function ComboBox({
       updatedValues.splice(index, 1);
       return updatedValues;
     });
+
+    // 削除されたタグは再びサジェストオプションから選択できるようにする
+    setNewOptions((options) => {
+      const updatedOptions = [...options];
+      updatedOptions.splice(index, 1);
+      return updatedOptions;
+    });
   };
 
   const handleSuggestionSelect = (option: string) => {
     setInputValue(option);
     setSuggestedOptions([]); // サジェストオプションをリセット
+
+    // 入力値がサジェストオプションの候補に含まれている場合のみaddHandlerを実行する
+    if (
+      tagOptions.some(
+        (ops) =>
+          ops.Name === option &&
+          !newOptions.some((option) => option.Name === ops.Name) &&
+          !selectedValue.includes(ops.Name),
+      )
+    ) {
+      addHandler();
+    }
   };
 
   return (
@@ -77,6 +106,7 @@ export default function ComboBox({
             type="text"
             value={inputValue}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             id={htmlFor}
           />
           {/* サジェストオプションを表示 */}

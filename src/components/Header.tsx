@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import styles from "../styles/Header.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import FetchJoindIslandEvent from "./hooks/FetchJoindIslandEvent";
 
 const Header = () => {
   const [selectedRadio, setSelectedRadio] = useState("all");
   const [searchWord, setSearchWord] = useState("");
 
+  const [isOpenIslandList, setIsOpenIslandList] = useState(false);
+  const [isOpenEventList, setIsOpenEventList] = useState(false);
   const navigate = useNavigate();
+
+  // 参加してる島、イベントのメッセージの取得
+  const result = FetchJoindIslandEvent();
+
   // ログアウト処理
   const logOutHandler = () => {
     if (document.cookie !== "") {
       let expirationDate = new Date("1999-12-31T23:59:59Z");
       document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
+      document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
       alert("ログアウトしました");
     }
     navigate("/user/login");
@@ -87,11 +96,70 @@ const Header = () => {
           </label>
           <nav className={styles.menu}>
             <ul className={styles.menuGroup}>
-              <li className={styles.menuGroupItem}>
-                <span className={styles.menuGroupItemLink}>参加サークル</span>
+              <li className={`${styles.menuGroupItem}`}>
+                <div
+                  className={styles.menuGroupItemLinkWrapper}
+                  onClick={() => setIsOpenIslandList(!isOpenIslandList)}
+                >
+                  <span className={styles.menuGroupItemLink}>参加サークル</span>
+                </div>
+                <ul
+                  className={
+                    isOpenIslandList ? `${styles.open}` : `${styles.close}`
+                  }
+                >
+                  {result.islands.map((island) => (
+                    <div
+                      key={island.id}
+                      className={styles.listItem}
+                      onClick={() => navigate(`/island/${island.id}`)}
+                    >
+                      <li>
+                        {island.islandName}
+                        {island.msgLength > 0 && (
+                          <span className={styles.msgIcon}>
+                            {island.msgLength}
+                          </span>
+                        )}
+                      </li>
+                    </div>
+                  ))}
+                </ul>
               </li>
+              <input
+                className={styles.checkbox}
+                type="checkbox"
+                id="checkbox"
+              />
               <li className={styles.menuGroupItem}>
-                <span className={styles.menuGroupItemLink}>参加イベント</span>
+                <div
+                  className={styles.menuGroupItemLinkWrapper}
+                  onClick={() => setIsOpenEventList(!isOpenEventList)}
+                >
+                  <span className={styles.menuGroupItemLink}>参加イベント</span>
+                </div>
+                <ul
+                  className={
+                    isOpenEventList ? `${styles.open}` : `${styles.close}`
+                  }
+                >
+                  {result.events.map((event) => (
+                    <div
+                      key={event.id}
+                      className={styles.listItem}
+                      onClick={() => navigate(`/event/${event.id}`)}
+                    >
+                      <li>
+                        {event.eventName}
+                        {event.msgLength > 0 && (
+                          <span className={styles.msgIcon}>
+                            {event.msgLength}
+                          </span>
+                        )}
+                      </li>
+                    </div>
+                  ))}
+                </ul>
               </li>
               <li className={styles.menuGroupItem}>
                 <a className={styles.menuGroupItemLink} href="/island/create">

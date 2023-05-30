@@ -4,11 +4,15 @@ import FetchIslandThreads from "../components/hooks/FetchIslandThreads";
 import Thread from "../components/Thread";
 import MenubarIsland from "../components/menubarIsland";
 import styles from "../styles/thread.module.css";
+import LogSt from "../components/cookie/logSt";
+import { useParams } from "react-router-dom";
 
 export default function IslandThread() {
+  LogSt();
   const [isOpen, setIsOpen] = useState(false);
-  // 仮置き
-  const islandID = 1;
+  const { id } = useParams();
+  const islandID = Number(id);
+
   // スレッドデータの取得
   const thread = FetchIslandThreads(islandID, "islandID");
 
@@ -35,7 +39,11 @@ export default function IslandThread() {
               eventID={null}
             />
           )}
-          <Thread thread={thread} />
+          {thread.length ? (
+            <Thread thread={thread} />
+          ) : (
+            <p>現在スレッドは追加されていません</p>
+          )}
         </div>
       </div>
     </>
