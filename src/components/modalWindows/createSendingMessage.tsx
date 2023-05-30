@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
-import { table } from "node:console";
 
 
 export default function CreateSendingMessage({
