@@ -1,14 +1,13 @@
 import { supabase } from "../../createClient";
 import { Tags } from "../../types/search";
 
-//すべての島の情報を取得
+//島・タグ情報を取得・成形する関数
 export const islandFetch = async (setIsland) => {
   const { data: island } = await supabase
     .from("islands")
     .select("id, islandName, thumbnail, detail")
     .eq("status", false);
 
-  //すべてのタグの情報を取得
   const { data: tags } = await supabase
     .from("tagStatus")
     .select("*, tags(*)")
@@ -30,7 +29,7 @@ export const islandFetch = async (setIsland) => {
   setIsland(islandWithTag);
 };
 
-//すべてのイベント情報を取得
+//イベント情報を取得・成形する関数
 export const eventFetch = async (setEve) => {
   const { data: event } = await supabase
     .from("events")

@@ -46,7 +46,6 @@ export default function SearchDisplay({ word, radio }) {
       eventData,
       setCom,
     });
-    console.log(eventData, "こむ");
   }, [word, radio, islandData, eventData]);
 
   return (
