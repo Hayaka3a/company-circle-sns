@@ -156,3 +156,18 @@ input {
 .buttonSide {
   display: flex;
 }
+
+/* addTag.tsx */
+.tagInputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.spanTg {
+  color: rgb(255, 115, 0);
+}
+
+/* 未入力時に背景色を変更 */
+.errorInputTg {
+  background-color: rgb(247, 177, 140);
+}

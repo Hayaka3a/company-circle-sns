@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styles from "../styles/createIsland.module.css";
-import ComboBox from "../components/comboBoxUser";
-import { createClient } from "@supabase/supabase-js";
 import { supabase } from "../createClient";
 import ConvertKanaJ from "../components/changeKana";
 import AddTag from "../components/createIsland/addtag";
@@ -9,8 +7,12 @@ import IslandName from "../components/createIsland/islandName";
 import Detail from "../components/createIsland/detail";
 import ComboBoxUser from "../components/comboBoxUser";
 import ComboBoxTag from "../components/comboBoxTag";
+import GetCookieID from "../components/cookie/getCookieId";
+import { useNavigate } from "react-router-dom";
 
 export default function IslandCreate() {
+  const navigate = useNavigate();
+
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [userOptions, setUserOptions] =
     useState<
@@ -21,13 +23,18 @@ export default function IslandCreate() {
   // 各入力項目state
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
-  const [tagName, setTagName] = useState<string[]>([]);
+  const [tagNames, setTagNames] = useState<
+    { Name: string; NameKana: string }[]
+  >([]);
   const [islandMembers, setIslandMembers] = useState<
     { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
   >([]);
   const [islandTags, setIslandTags] = useState<
     { id: number; Name: string; NameKana: string }[]
   >([]);
+
+  // cookie取得(コンポーネント内実施)
+  const ownerID = GetCookieID();
 
   // データベースから全ユーザー名前取得
   useEffect(() => {
@@ -70,7 +77,6 @@ export default function IslandCreate() {
             NameKana: tag.tagNameKana,
           }));
         setTagOptions(tags);
-        console.log(data);
       }
     };
 
@@ -101,30 +107,83 @@ export default function IslandCreate() {
       return;
     }
 
-    console.log(islandMembers);
-    console.log(islandName);
-    console.log(detail);
-    console.log(tagName);
-    console.log(islandTags);
-    // 他情報ownerID。
-    // tagStatusテーブルにはislandIDとtagIDを入れていき、tagsテーブルにはtagNameを入れる
-    // (tagStatusテーブルのtagIDとtagsテーブルのidが同じ)
+    const islandData = {
+      islandName: islandName,
+      detail: detail,
+      ownerID: ownerID,
+      status: "false",
+    };
 
-    // try {
-    //   // POST
-    //   const { data, error } = await supabase
-    //     .from("islands")
-    //     .insert([{ islandName }]);
-    //   if (error) {
-    //     console.error("島の作成エラー:", error.message);
-    //   } else {
-    //     console.log("島が正常に作成されました:", data);
-    //     // islandNameの入力フィールドをリセットします
-    //     setIslandName("");
-    //   }
-    // } catch (error) {
-    //   console.error("島の作成エラー:", error.message);
-    // }
+    try {
+      // POST
+      const { error } = await supabase.from("islands").insert(islandData);
+      if (error) {
+        console.error("島の作成エラー:", error.message);
+      } else {
+        // 作成された島のIDを取得
+        const { data } = await supabase
+          .from("islands")
+          .select("id")
+          .eq("islandName", islandName);
+        const createdIslandId = data[0].id;
+
+        // postテーブルに島用ポスト作成
+        const post = {
+          islandID: createdIslandId,
+          status: "false",
+        };
+        const { error } = await supabase.from("posts").insert(post);
+        if (error) {
+          console.log("ポスト作成に失敗しました");
+        }
+
+        // userEntryStatusテーブルへ挿入
+        try {
+          const enStatusData = islandMembers.map((user) => ({
+            userID: user.id,
+            islandID: createdIslandId,
+            status: "false",
+          }));
+          for (let entry of enStatusData) {
+            await supabase.from("userEntryStatus").insert(entry);
+            console.log("userEntryStatusが正常に作成されました");
+            try {
+              // tagStatusテーブルへ挿入
+              const tgStatusData = islandTags.map((tag) => ({
+                tagID: tag.id,
+                islandID: createdIslandId,
+                status: "false",
+              }));
+              for (let tgS of tgStatusData) {
+                await supabase.from("tagStatus").insert(tgS);
+                console.log("tagStatusが正常に作成されました");
+                // tagsテーブルへ挿入
+                try {
+                  const tgNameData = tagNames.map((tagName) => ({
+                    tagName: tagName.Name,
+                    tagNameKana: tagName.NameKana,
+                    status: "false",
+                  }));
+                  for (let tg of tgNameData) {
+                    await supabase.from("tags").insert(tg);
+                  }
+                } catch (error) {
+                  console.log("tags挿入エラー");
+                }
+              }
+            } catch (error) {
+              console.log("tagStatus挿入エラー");
+            }
+          }
+        } catch (error) {
+          console.log("userEnryStatus挿入エラー");
+        }
+
+        navigate("/island/[id]");
+      }
+    } catch (error) {
+      console.error("島の作成エラー:", error.message);
+    }
   };
 
   return (
@@ -190,16 +249,18 @@ export default function IslandCreate() {
               <tr>
                 <th>タグ追加</th>
                 <td>
-                  <AddTag
-                    selectedValue={tagName}
-                    setSelectedValue={setTagName}
-                  />
+                  <AddTag setTagNames={setTagNames} />
                 </td>
               </tr>
             </table>
           </div>
 
-          <button onClick={createHandler}>新しい島生活を始める</button>
+          <button
+            onClick={createHandler}
+            disabled={!islandName.trim() || !detail.trim()}
+          >
+            新しい島生活を始める
+          </button>
         </div>
       </div>
     </div>

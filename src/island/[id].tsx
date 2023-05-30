@@ -15,7 +15,7 @@ export default function IslandDetail() {
 
     useEffect(() => {
       fetchIslandDetail();
-    }, []);
+    }, [islandId]);
   
     const fetchIslandDetail = async () => {
       const { data, error } = await supabase

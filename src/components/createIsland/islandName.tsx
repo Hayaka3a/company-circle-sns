@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../styles/createIsland.module.css";
+import { supabase } from "../../createClient";
 
 export default function IslandName({
   islandName,
@@ -9,6 +10,7 @@ export default function IslandName({
   setIslandName: Dispatch<SetStateAction<string>>;
 }) {
   const [islandNameError, setIslandNameError] = useState("");
+  const [nameAlreadyError, setNameAlreadyError] = useState("");
 
   const handleIslandNameChange = (e) => {
     setIslandName(e.target.value);
@@ -16,13 +18,29 @@ export default function IslandName({
     if (islandNameError) {
       setIslandNameError("");
     }
+    // 重複エラーも非表示にする
+    if (nameAlreadyError) {
+      setNameAlreadyError("");
+    }
   };
 
-  const handleIslandNameBlur = () => {
+  const handleIslandNameBlur = async () => {
     if (islandName.trim() === "") {
       setIslandNameError("※島名は入力必須項目です");
     } else {
       setIslandNameError("");
+      // クエリを実行してislandNameの重複チェック
+      const { data, error } = await supabase
+        .from("islands")
+        .select("*")
+        .eq("islandName", islandName);
+      if (error) {
+        console.error("クエリエラー:", error.message);
+      } else {
+        if (data.length > 0) {
+          setNameAlreadyError("※島名が既に存在します");
+        }
+      }
     }
   };
   return (
@@ -40,6 +58,11 @@ export default function IslandName({
       {islandNameError && (
         <div>
           <span className={styles.span}>{islandNameError}</span>
+        </div>
+      )}
+      {nameAlreadyError && (
+        <div>
+          <span className={styles.span}>{nameAlreadyError}</span>
         </div>
       )}
     </>
