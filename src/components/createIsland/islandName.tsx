@@ -55,6 +55,7 @@ export default function IslandName({
         onChange={handleIslandNameChange}
         onBlur={handleIslandNameBlur}
       />
+      <span className={styles.islandNameText}>&nbsp;島</span>
       {islandNameError && (
         <div>
           <span className={styles.span}>{islandNameError}</span>
