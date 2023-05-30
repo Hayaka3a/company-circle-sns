@@ -9,8 +9,10 @@ import ComboBoxUser from "../components/comboBoxUser";
 import ComboBoxTag from "../components/comboBoxTag";
 import GetCookieID from "../components/cookie/getCookieId";
 import { useNavigate } from "react-router-dom";
+import LogSt from "../components/cookie/logSt";
 
 export default function IslandCreate() {
+  LogSt();
   const navigate = useNavigate();
 
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");

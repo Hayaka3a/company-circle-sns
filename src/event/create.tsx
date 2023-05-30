@@ -1,11 +1,7 @@
 import React from "react";
+import LogSt from "../components/cookie/logSt";
 
-
-
-export default function EventCreate(){
-    return(
-        <>
-       
-        </>
-    )
+export default function EventCreate() {
+  LogSt();
+  return <></>;
 }

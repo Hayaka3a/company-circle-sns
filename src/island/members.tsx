@@ -5,8 +5,10 @@ import styles from "../styles/membersList.module.css";
 import { supabase } from "../createClient.js";
 import { Island } from "../types/members";
 import { useParams } from "react-router-dom";
+import LogSt from "../components/cookie/logSt";
 
 export default function IslandMembers() {
+  LogSt();
   const [displayData, setDisplayData] = useState<Island>();
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
