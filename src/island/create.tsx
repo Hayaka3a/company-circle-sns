@@ -105,7 +105,7 @@ export default function IslandCreate() {
   // 島作成する
   const createHandler = async () => {
     if (islandName.trim() === "" || detail.trim() === "") {
-      alert("島の名前を入力してください。");
+      alert("島の名前と活動内容は入力必須項目です。");
       return;
     }
 
