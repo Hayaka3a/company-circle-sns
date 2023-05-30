@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
+import { useParams } from "react-router-dom";
+import { table } from "node:console";
+
 
 export default function CreateSendingMessage({
     closeModal,
+    table,
 }: {
     closeModal: () => void;
+    table: string;
 }) {
   const [message, setMessage] = useState("");
   const [postedID, setPostedID] = useState(null);
+  const params = useParams();
+  console.log(params);
+  const paramsID = parseInt(params.id);
+  
 
   useEffect(() => {
     fetchPost();
@@ -19,6 +28,7 @@ export default function CreateSendingMessage({
     const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
+      .eq(`${table}ID`, paramsID)
       .eq("status", false);
     if (postedByError) {
       console.log(postedByError, "エラー");

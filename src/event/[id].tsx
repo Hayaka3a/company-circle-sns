@@ -55,7 +55,7 @@ export default function EventDetail() {
             <div className={styles.btn}>
               <button>参加申請</button>
               <button onClick={openModal}>メッセージを送る</button>
-              {isOpen && <CreateSendingMessage closeModal={closeModal} />}
+              {isOpen && <CreateSendingMessage closeModal={closeModal} table="island"/>}
             </div>
             <button id={styles.edit_btn}>編集・削除</button>
           </div>

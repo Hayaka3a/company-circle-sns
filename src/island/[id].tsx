@@ -76,7 +76,7 @@ export default function IslandDetail() {
               <button onClick={openResindentModal}>住民申請</button>
               {isResidentOpen && <CreateResidentApplication closeResidentModal={closeResidentModal} table="island" />}
               <button onClick={openModal}>メッセージを送る</button>
-              {isOpen && <CreateSendingMessage closeModal={closeModal} />}
+              {isOpen && <CreateSendingMessage closeModal={closeModal} table="island"/>}
             </div>
             
               <button id={styles.edit_btn} onClick={Handler}>編集・削除</button>
