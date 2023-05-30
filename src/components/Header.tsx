@@ -17,6 +17,7 @@ const Header = () => {
     if (document.cookie !== "") {
       let expirationDate = new Date("1999-12-31T23:59:59Z");
       document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
+      document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
       alert("ログアウトしました");
     }
     navigate("/user/login");

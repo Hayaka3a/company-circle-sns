@@ -4,8 +4,10 @@ import styles from "../styles/thread.module.css";
 import MenubarEvent from "../components/menubarEvent";
 import CreateThread from "../components/modalWindows/createThread";
 import { useState } from "react";
+import LogSt from "../components/cookie/logSt";
 
 export default function EventThread() {
+  LogSt();
   const [isOpen, setIsOpen] = useState(false);
 
   // イベントID仮置き

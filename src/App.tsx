@@ -39,6 +39,8 @@ import Search from "./search";
 
 // chat
 import Chat from "./components/Chat";
+import LogSt from "./components/cookie/logSt";
+import Index from ".";
 
 function App() {
   // ログインページのみヘッダーを非表示
@@ -49,6 +51,7 @@ function App() {
       <BrowserRouter>
         {showHeader && <Header />}
         <Routes>
+          <Route path="/" element={<Index />} />
           {/* userフォルダ */}
           <Route path="/user" element={<UserDetail />} />
           <Route path="/user/post" element={<UserPost />} />

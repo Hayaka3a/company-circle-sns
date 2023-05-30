@@ -4,8 +4,10 @@ import FetchIslandThreads from "../components/hooks/FetchIslandThreads";
 import Thread from "../components/Thread";
 import MenubarIsland from "../components/menubarIsland";
 import styles from "../styles/thread.module.css";
+import LogSt from "../components/cookie/logSt";
 
 export default function IslandThread() {
+  LogSt();
   const [isOpen, setIsOpen] = useState(false);
   // 仮置き
   const islandID = 1;
