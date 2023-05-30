@@ -41,6 +41,12 @@ export default function IslandDetail() {
     setIslandDetail(islandDetail); // 島の詳細情報を状態変数にセット
   };
 
+  // 住民申請を押した際の小窓画面（モーダルウィンドウ）の開閉
+  // isResidentOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
+  const openResindentModal = () => {
+    setIsResidentOpen(true);
+  };
+
   const closeResidentModal = () => {
     setIsResidentOpen(false);
   };
