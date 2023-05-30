@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
+import GetCookieID from "../cookie/getCookieId";
 
 
 export default function CreateSendingMessage({
@@ -12,9 +13,10 @@ export default function CreateSendingMessage({
     table: string;
 }) {
   const [message, setMessage] = useState("");
-  const [postedID, setPostedID] = useState(null);
+  const [postedID, setPostedID] = useState(0);
+  const [posts, setPosts] = useState(0);
   const params = useParams();
-  console.log(params);
+  // console.log(params);
   const paramsID = parseInt(params.id);
   
 
@@ -22,7 +24,20 @@ export default function CreateSendingMessage({
     fetchPost();
   }, []);
 
+  const userID = GetCookieID();
+
   const fetchPost = async () => {
+
+    const { data: posts, error: postError } = await supabase
+    .from("posts")
+    .select("id")
+    .eq("userID", 1)
+    .eq("status", false);
+    if (postError) {
+      console.log(postError, "エラー");
+    }
+    setPosts(posts[0].id);
+
     // PostedByに入れるため、送信する側のPostIDを取得する
     const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
@@ -41,7 +56,7 @@ export default function CreateSendingMessage({
       .from("messages")
       .insert([
         {
-          postID: postedID,
+          postID: posts,
           message: message,
           scout: true,
           isRead: false,
