@@ -32,6 +32,7 @@ const Header = () => {
             name="select"
             id="all"
             value="all"
+            checked
             onChange={onRadioBtnChanged}
           />
           <label htmlFor="all">すべて検索</label>
