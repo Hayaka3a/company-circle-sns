@@ -63,9 +63,17 @@ export default function SearchDisplay({ word, radio }) {
                 alt="アイコン"
               />
               <div className={styles.left}>
-                <Link to={`/${searchData.table}/${searchData.id}`}>
-                  {searchData.name}
-                </Link>
+                <div className={styles.title}>
+                  {searchData.table === "island" ? (
+                    <div className={styles.typeIs}>{searchData.table}</div>
+                  ) : (
+                    <div className={styles.typeEve}>{searchData.table}</div>
+                  )}
+
+                  <Link to={`/${searchData.table}/${searchData.id}`}>
+                    {searchData.name}
+                  </Link>
+                </div>
                 <p className={styles.detail}>{searchData.detail}</p>
               </div>
             </div>

@@ -24,3 +24,27 @@
 }
 .detail {
 }
+.title {
+  display: flex;
+}
+.left {
+  width: 90%;
+}
+.typeIs {
+  margin-right: 1%;
+  width: 10%;
+  height: 10%;
+  background-color: rgba(217, 159, 28, 0.9);
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+.typeEve {
+  margin-right: 1%;
+  width: 10%;
+  height: 10%;
+  background-color: rgba(199, 197, 26, 1);
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
