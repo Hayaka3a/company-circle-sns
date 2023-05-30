@@ -29,17 +29,6 @@ export default function IslandDetail() {
       console.error("島の詳細情報の取得に失敗しました:", error);
       return;
     }
-
-<<<<<<< HEAD
-            <div className={styles.btn}>
-              <button onClick={openResindentModal}>住民申請</button>
-              {isResidentOpen && <CreateResidentApplication closeResidentModal={closeResidentModal} table="island" />}
-              <button onClick={openModal}>メッセージを送る</button>
-              {isOpen && <CreateSendingMessage closeModal={closeModal} table="island"/>}
-            </div>
-            
-              <button id={styles.edit_btn} onClick={Handler}>編集・削除</button>
-=======
     if (data.length === 0) {
       console.warn("該当する島の詳細情報が見つかりませんでした。");
       return;
@@ -84,24 +73,16 @@ export default function IslandDetail() {
         <p className={styles.textDetail}>
           {islandDetail && islandDetail.detail}
         </p>
-
-        <div className={styles.btn}>
-          <button onClick={openResindentModal}>住民申請</button>
-          {isResidentOpen && (
-            <CreateResidentApplication
-              closeResidentModal={closeResidentModal}
-              table="island"
-            />
-          )}
-          <button onClick={openModal}>メッセージを送る</button>
-          {isOpen && <CreateSendingMessage closeModal={closeModal} />}
->>>>>>> main
-        </div>
-
+            <div className={styles.btn}>
+              <button onClick={openResindentModal}>住民申請</button>
+              {isResidentOpen && <CreateResidentApplication closeResidentModal={closeResidentModal} table="island" />}
+              <button onClick={openModal}>メッセージを送る</button>
+              {isOpen && <CreateSendingMessage closeModal={closeModal} table="island"/>}
+            </div>
+      </div>
         <button id={styles.edit_btn} onClick={Handler}>
           編集・削除
         </button>
-      </div>
     </div>
   );
 }
