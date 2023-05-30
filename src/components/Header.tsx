@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/Header.module.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import FetchJoindIslandEvent from "./hooks/FetchJoindIslandEvent";
 
@@ -63,7 +63,6 @@ const Header = () => {
           <label htmlFor="event">イベントのみ</label>
           <br />
           <input type="text" maxLength={22} onChange={onInputChanged} />
-
           <Link
             to={`/search?word=${encodeURIComponent(
               searchWord,

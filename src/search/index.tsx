@@ -8,7 +8,9 @@ export default function Search() {
   const queryParams = new URLSearchParams(location.search);
   const word = queryParams.get("word");
   const radio = queryParams.get("radio");
+
   LogSt();
+
   return (
     <div className={styles.display}>
       <div className={styles.main}>
