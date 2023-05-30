@@ -15,26 +15,28 @@ export default function CreateSendingMessage({
   const [message, setMessage] = useState("");
   const [postedID, setPostedID] = useState(0);
   const [posts, setPosts] = useState(0);
+  const [ islandName, setIslandName ] = useState("");
   const params = useParams();
-  // console.log(params);
   const paramsID = parseInt(params.id);
-  
+  const userID = GetCookieID();
+
 
   useEffect(() => {
     fetchPost();
+    fetchIslandName();
   }, []);
 
-  const userID = GetCookieID();
 
   const fetchPost = async () => {
-
+    // userIDから該当のPostIDを割り出す
     const { data: posts, error: postError } = await supabase
     .from("posts")
     .select("id")
-    .eq("userID", 1)
+    .eq("userID", userID)
     .eq("status", false);
     if (postError) {
-      console.log(postError, "エラー");
+      console.log(userID);
+      console.log(postError, "ポストエラー");
     }
     setPosts(posts[0].id);
 
@@ -45,10 +47,25 @@ export default function CreateSendingMessage({
       .eq(`${table}ID`, paramsID)
       .eq("status", false);
     if (postedByError) {
-      console.log(postedByError, "エラー");
+      console.log(postedByError, "ポストバイエラー");
     }
     setPostedID(postedBy[0].id);
   };
+
+  const fetchIslandName = async () => {
+      const { data: island, error: islandError } = await supabase
+        .from("islands")
+        .select("islandName")
+        .eq("id", paramsID)
+        .eq("status", false);
+  
+      if (islandError) {
+        console.log(islandError, "アイランドエラー");
+      } else if (island && island.length > 0) {
+        setIslandName(island[0].islandName);
+      }
+  };
+  
 
   // messagesテーブルにメッセージを保存
   const sendMessage = async () => {
@@ -58,7 +75,7 @@ export default function CreateSendingMessage({
         {
           postID: posts,
           message: message,
-          scout: true,
+          scout: false,
           isRead: false,
           isAnswered: false,
           postedBy: postedID,
@@ -79,6 +96,7 @@ export default function CreateSendingMessage({
 
   return (
     <>
+    {islandName && 
       <div className={styles.overlay}>
         <div className={styles.modal}>
           <div className={styles.allContents}>
@@ -90,7 +108,7 @@ export default function CreateSendingMessage({
             />
             <div className={styles.main}>
               <div className={styles.title}>
-                <h3 className={styles.h3}>○○島</h3>
+                <h3 className={styles.h3}>{islandName}</h3>
                 <p className={styles.messageName}>メッセージ</p>
               </div>
               <div className={styles.input}>
@@ -109,6 +127,7 @@ export default function CreateSendingMessage({
           </div>
         </div>
       </div>
+      }
     </>
   );
 }
