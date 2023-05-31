@@ -22,7 +22,7 @@ export const islandFetch = async (setIsland) => {
       ...islandItem,
       name: islandItem.islandName,
       tags: matchingTags,
-      table: "island",
+      table: "島",
     };
   });
 
@@ -39,7 +39,7 @@ export const eventFetch = async (setEve) => {
   const compEvent = event.map((eve) => ({
     ...eve,
     name: eve.eventName,
-    table: "event",
+    table: "イベント",
   }));
   setEve(compEvent);
 };
