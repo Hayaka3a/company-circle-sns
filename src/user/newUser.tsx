@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddressCheck from "../components/userRegistration/AddressCheck";
 import styles from "../styles/newUser.module.css";
 import NameCheck from "../components/userRegistration/NameCheck";
@@ -6,8 +6,22 @@ import NameKanaCheck from "../components/userRegistration/NameKanaCheck";
 import PwCheck from "../components/userRegistration/PwCheck";
 import RadioChange from "../components/userRegistration/RadioChange";
 import { useForm } from "react-hook-form";
+import LogSt from "../components/cookie/logSt";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function NewUser() {
+  const navigate = useNavigate();
+  const [loginStatus] = useCookies(["loginSt"]);
+
+  // ログイン済みの場合、トップページにリダイレクト
+  useEffect(() => {
+    const status = loginStatus.loginSt;
+    if (status == "true") {
+      navigate("/");
+      window.location.reload();
+    }
+  }, []);
   const [email, setEmail] = useState("");
   // const [familyName, setFamilyName] = useState("");
   // const [firstName, setFirstName] = useState("");
