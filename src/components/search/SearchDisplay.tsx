@@ -63,7 +63,7 @@ export default function SearchDisplay({ word, radio }) {
               />
               <div className={styles.left}>
                 <div className={styles.title}>
-                  {searchData.table === "island" ? (
+                  {searchData.table === "島" ? (
                     <div className={styles.typeIs}>{searchData.table}</div>
                   ) : (
                     <div className={styles.typeEve}>{searchData.table}</div>
