@@ -1,81 +1,84 @@
-import { supabase } from "../../createClient";
-import { Tags } from "../../types/search";
+import { useEffect, useState } from "react";
+import {
+  eventFetch,
+  filterData,
+  islandFetch,
+} from "../search/SearchResultFetch";
+import styles from "../../styles/search.module.css";
+import { Link } from "react-router-dom";
+import { EventData, IslandSearch, ResultState } from "../../types/search";
 
-//島・タグ情報を取得・成形する関数
-export const islandFetch = async (setIsland) => {
-  const { data: island } = await supabase
-    .from("islands")
-    .select("id, islandName, thumbnail, detail")
-    .eq("status", false);
+export default function SearchDisplay({ word, radio }) {
+  const [islandData, setIslandData] = useState<IslandSearch[]>([]);
+  const [eventData, setEventData] = useState<EventData[]>([]);
+  const [completion, setCompletion] = useState([]);
 
-  const { data: tags } = await supabase
-    .from("tagStatus")
-    .select("*, tags(*)")
-    .eq("status", false);
-  const tag = tags as Tags[];
+  //データ取得時に使用するstate
+  const setIsland = (data: IslandSearch[]) => {
+    setIslandData(data);
+  };
+  const setEve = (data: EventData[]) => {
+    setEventData(data);
+  };
+  const setCom = (data: ResultState[]) => {
+    setCompletion(data);
+  };
 
-  //島とタグの配列を合併
-  const islandWithTag = island.map((islandItem) => {
-    const islandID = islandItem.id;
-    const matchingTags = tag.filter((tagItem) => tagItem.islandID === islandID);
-    return {
-      ...islandItem,
-      name: islandItem.islandName,
-      tags: matchingTags,
-      table: "島",
-    };
-  });
+  useEffect(() => {
+    fetchData();
+  }, [word, radio]);
 
-  setIsland(islandWithTag);
-};
-
-//イベント情報を取得・成形する関数
-export const eventFetch = async (setEve) => {
-  const { data: event } = await supabase
-    .from("events")
-    .select("eventName, thumbnail, detail,id")
-    .eq("status", false);
-
-  const compEvent = event.map((eve) => ({
-    ...eve,
-    name: eve.eventName,
-    table: "イベント",
-  }));
-  setEve(compEvent);
-};
-
-//検索ワードで絞り込む関数
-export const filterData = ({ word, radio, islandData, eventData, setCom }) => {
-  if (radio === "all") {
-    const filteredIslandData = islandData.filter((item) => {
-      const { islandName, tags } = item;
-      const tagNames = tags.map((tag) => tag.tags.tagName);
-      return (
-        islandName.includes(word) ||
-        tagNames.some((tagName) => tagName.includes(word))
-      );
+  const fetchData = async () => {
+    //ラジオボタンに応じてデータを取得
+    if (radio === "all") {
+      await Promise.all([islandFetch(setIsland), eventFetch(setEve)]);
+    } else if (radio === "island") {
+      await islandFetch(setIsland);
+    } else {
+      await eventFetch(setEve);
+    }
+  };
+  useEffect(() => {
+    filterData({
+      word,
+      radio,
+      islandData,
+      eventData,
+      setCom,
     });
-    const filteredEventData = eventData.filter((item) =>
-      item.eventName.includes(word),
-    );
-    const combinedData = [...filteredIslandData, ...filteredEventData];
-    setCom(combinedData);
-  } else if (radio === "island") {
-    const filteredData = islandData.filter((item) => {
-      const { islandName, tags } = item;
-      const tagNames = tags.map((tag) => tag.tags.tagName);
-      const tagNamesKana = tags.map((tag) => tag.tags.tagNameKana);
-      return (
-        islandName.includes(word) ||
-        tagNames.some((tagName) => tagName.includes(word)) ||
-        tagNamesKana.some((tagNameKana) => tagNameKana.includes(word))
-      );
-    });
-    setCom(filteredData);
-  } else {
-    const filteredEventData = eventData.filter((item) =>
-      item.eventName.includes(word),
-    );
-    setCom(filteredEventData);
-  }
-};
+  }, [word, radio, islandData, eventData]);
+
+  return (
+    <div>
+      {completion && completion.length === 0 ? (
+        <p>検索結果は0件です</p>
+      ) : (
+        completion.map((searchData) => {
+          return (
+            <div className={styles.result} key={searchData.id}>
+              <img
+                src={searchData.thumbnail}
+                className={styles.icon}
+                alt="アイコン"
+              />
+              <div className={styles.left}>
+                <div className={styles.title}>
+                  {searchData.table === "島" ? (
+                    <div className={styles.typeIs}>{searchData.table}</div>
+                  ) : (
+                    <div className={styles.typeEve}>{searchData.table}</div>
+                  )}
+
+                  <Link to={`/${searchData.table}/${searchData.id}`}>
+                    {searchData.name}
+                  </Link>
+                </div>
+                <p className={styles.detail}>{searchData.detail}</p>
+              </div>
+            </div>
+          );
+        })
+      )}
+    </div>
+  );
+}
