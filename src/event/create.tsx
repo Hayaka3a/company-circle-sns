@@ -79,7 +79,7 @@ export default function EventCreate() {
         console.log("userEntryStatus挿入エラー");
       }
 
-      navigate("/island/[id]");
+      navigate("/event/[id]");
       window.location.reload();
     } catch (error) {
       console.log("イベント作成エラー");
