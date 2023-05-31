@@ -24,9 +24,9 @@
 }
 .icon {
   border-radius: 50%;
-  height: 120px;
+  height: 100px;
   border: 1px solid orange;
-  margin: auto;
+  margin: 0 5%;
 }
 
 .right {

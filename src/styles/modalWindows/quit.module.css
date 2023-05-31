@@ -1,0 +1,43 @@
+.overlay {
+  z-index: 1; /* 重ねた時の順番 */
+
+  /* 画面全体を覆う */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  /* 画面の中央に要素を表示 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  z-index: 2;
+  width: 50%;
+  padding: 1em;
+  background: #fff;
+  text-align: center;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  flex-direction: column; /* 縦方向に並べる */
+  height: 50%;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.span {
+  color: red;
+}
+
+.spanB {
+  color: blue;
+}
