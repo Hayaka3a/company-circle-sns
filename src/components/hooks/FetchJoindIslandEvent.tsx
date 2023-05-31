@@ -69,7 +69,7 @@ function FetchJoindIslandEvent() {
       setIsland(tmpIsland);
       setEvents(tmpEvents);
     };
-    fetchUserInfo();
+    // fetchUserInfo();
   }, []);
 
   return { islands: island, events: events };
