@@ -1,0 +1,187 @@
+.background {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  font-size: 12px;
+}
+
+.box {
+  background-color: rgb(231, 231, 231);
+  padding-top: 1%;
+  height: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  border-radius: 1%;
+  padding-bottom: 3%;
+  width: 70%;
+}
+
+.icon {
+  height: 100px;
+  border-radius: 50%; /*サムネイル円型*/
+}
+
+.span {
+  color: red; /*必須文字*/
+  font-size: 12px;
+}
+
+/* 未入力時に背景色を変更 */
+.error {
+  color: red;
+}
+
+/*　各入力項目 */
+.address {
+  width: 100%;
+  height: 20px;
+}
+
+.tableCovered {
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  flex-direction: column; /* 縦方向に並べる */
+  height: auto;
+}
+
+.table {
+  width: 85%;
+  border-collapse: collapse;
+  border-spacing: 0 6vh; /* 行間幅 */
+  border-top: 1px solid rgb(149, 149, 149);
+  margin-bottom: 6%;
+}
+
+.th,
+.td {
+  border-bottom: 1px solid rgb(180, 180, 180);
+  text-align: left;
+}
+
+.th:last-child,
+.td:last-child {
+  border-right: none; /* 最後の列の縦線を非表示*/
+}
+
+.tr {
+  height: 13vh; /* 行の高さ */
+  width: 90%;
+}
+
+.td {
+  width: 100%;
+}
+
+.th {
+  width: 30%;
+}
+
+.inputA {
+  height: 20px;
+  width: 45%;
+}
+.inputB {
+  height: 20px;
+  width: 45%;
+  margin-left: 4%;
+}
+
+.allContents {
+  height: 100%;
+  padding: 5%;
+}
+
+.imgSide {
+  display: flex;
+}
+
+.faileCenter {
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* コンボボックス */
+
+.selectedValuesContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selectedValue {
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(100, 207, 6);
+}
+
+.row {
+  display: flex;
+}
+
+.nameFlex {
+  display: flex;
+  align-items: center;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.suggestionList {
+  background-color: white;
+  margin-bottom: 3%;
+}
+
+.li {
+  list-style: none;
+  margin-left: 2%;
+  margin-right: 2%;
+  padding: 2.5%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.li:hover {
+  background-color: rgb(211, 211, 211);
+  border-radius: 5%;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.addButton {
+  height: 39px;
+}
+
+.buttonSide {
+  display: flex;
+}
+
+/* addTag.tsx */
+.tagInputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.spanTg {
+  color: rgb(255, 115, 0);
+}
+
+/* 未入力時に背景色を変更 */
+.errorInputTg {
+  background-color: rgb(247, 177, 140);
+}
+
+.radio {
+  display: flex;
+}
