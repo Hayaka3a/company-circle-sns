@@ -144,13 +144,13 @@ export default function ComboBoxUser({
             rows.push([]);
           }
           rows[rows.length - 1].push(
-            <p key={index} className={styles.selectedValue}>
+            <div key={index} className={styles.selectedValue}>
               <div className={styles.nameFlex}>
                 <span className={styles.nowrap}>{value}</span>
                 &nbsp;&nbsp;
                 <button onClick={() => deleteNameHandler(index)}>×</button>
               </div>
-            </p>,
+            </div>,
           );
           return rows;
         }, [])
