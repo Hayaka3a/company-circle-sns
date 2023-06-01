@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import LogSt from "../components/cookie/logSt";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import UserRegistration from "../components/UserRegistration";
 
 export default function NewUser() {
   const navigate = useNavigate();
@@ -15,5 +15,9 @@ export default function NewUser() {
       window.location.reload();
     }
   }, []);
-  return <></>;
+  return (
+    <>
+      <UserRegistration />
+    </>
+  );
 }

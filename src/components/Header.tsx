@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -11,6 +11,17 @@ const Header = () => {
   const [isOpenIslandList, setIsOpenIslandList] = useState(false);
   const [isOpenEventList, setIsOpenEventList] = useState(false);
   const navigate = useNavigate();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // メニューが開かれたときにスクロールバーを非表示にする
+    if (!isMenuOpen) {
+      document.body.style.overflowX = "hidden";
+    } else {
+      document.body.style.overflowX = "auto";
+    }
+  }, [isMenuOpen]);
 
   // 参加してる島、イベントのメッセージの取得
   const result = FetchJoindIslandEvent();

@@ -46,11 +46,12 @@ import Index from ".";
 function App() {
   // ログインページのみヘッダーを非表示
   const showHeader = window.location.pathname !== "/user/login";
+  const showNewUser = window.location.pathname !== "/user/newUser";
 
   return (
     <div>
       <BrowserRouter>
-        {showHeader && <Header />}
+        {showHeader && showNewUser && <Header />}
         <Routes>
           <Route path="/" element={<Index />} />
           {/* userフォルダ */}
