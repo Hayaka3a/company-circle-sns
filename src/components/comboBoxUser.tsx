@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import styles from "../styles/createIsland.module.css";
+import styles from "../styles/island/createIsland.module.css";
 
 // tagOptionsにはタグ配列、nameOptiosにはメンバー配列、htmlForには<label>のhtmlFor属性の値
 export default function ComboBoxUser({
@@ -144,13 +144,13 @@ export default function ComboBoxUser({
             rows.push([]);
           }
           rows[rows.length - 1].push(
-            <p key={index} className={styles.selectedValue}>
+            <div key={index} className={styles.selectedValue}>
               <div className={styles.nameFlex}>
                 <span className={styles.nowrap}>{value}</span>
                 &nbsp;&nbsp;
                 <button onClick={() => deleteNameHandler(index)}>×</button>
               </div>
-            </p>,
+            </div>,
           );
           return rows;
         }, [])

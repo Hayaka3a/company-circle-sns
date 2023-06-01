@@ -13,6 +13,7 @@ import IslandMessage from "./user/message/island_message";
 import ScoutMessage from "./user/message/scout_message";
 import OperationMessage from "./user/message/operation_message";
 import NewUser from "./user/newUser";
+import UserEdit from "./user/edit";
 
 // eventフォルダ
 import EventDetail from "./event/[id]";
@@ -45,11 +46,12 @@ import Index from ".";
 function App() {
   // ログインページのみヘッダーを非表示
   const showHeader = window.location.pathname !== "/user/login";
+  const showNewUser = window.location.pathname !== "/user/newUser";
 
   return (
     <div>
       <BrowserRouter>
-        {showHeader && <Header />}
+        {showHeader && showNewUser && <Header />}
         <Routes>
           <Route path="/" element={<Index />} />
           {/* userフォルダ */}
@@ -69,6 +71,7 @@ function App() {
             element={<OperationMessage />}
           />
           <Route path="/user/newUser" element={<NewUser />} />
+          <Route path="/user/edit" element={<UserEdit />} />
 
           {/* searchフォルダ */}
           <Route path="/search" element={<Search />} />
