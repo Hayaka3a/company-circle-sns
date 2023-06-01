@@ -11,6 +11,7 @@ export default function EventAll() {
   const params = useParams();
   const [events, setEvents] = useState([]);
   const paramsID = params.id;
+  const currentDateTime = new Date(); // 現在の日時取得
 
   const createHandler = () => {
     navigate("/event/create/[id]");
@@ -63,34 +64,36 @@ export default function EventAll() {
           新しいイベントを始める
         </button>
         <div className={styles.eventAll}>
-          {events.map((event) => (
-            <div key={event.id} className={styles.event1}>
-              <div className={styles.imgSide}>
-                <img
-                  className={styles.icon}
-                  src={event.thumbnail || "/event_icon.png"}
-                  alt="Event Thumbnail"
-                ></img>
-                <div className={styles.eventInfo}>
-                  <h2 className={styles.eventName}>{event.eventName}</h2>
-                  <h3>
-                    開催時期 ：
-                    {new Date(event.startDate).toLocaleDateString("ja-JP", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}{" "}
-                    ～{" "}
-                    {new Date(event.endDate).toLocaleDateString("ja-JP", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </h3>
+          {events
+            .filter((event) => new Date(event.endDate) > currentDateTime)
+            .map((event) => (
+              <div key={event.id} className={styles.event1}>
+                <div className={styles.imgSide}>
+                  <img
+                    className={styles.icon}
+                    src={event.thumbnail || "/event_icon.png"}
+                    alt="Event Thumbnail"
+                  ></img>
+                  <div className={styles.eventInfo}>
+                    <h2 className={styles.eventName}>{event.eventName}</h2>
+                    <h3>
+                      開催時期 ：
+                      {new Date(event.startDate).toLocaleDateString("ja-JP", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}{" "}
+                      ～{" "}
+                      {new Date(event.endDate).toLocaleDateString("ja-JP", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </h3>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>
