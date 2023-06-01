@@ -20,7 +20,7 @@ function FetchJoindIslandEvent() {
 
       data.map(
         async (join: { events: Event | null; islands: Island | null }) => {
-          if (join.events === null) {
+          if (join.islands !== null) {
             // 参加サークルのidを取得
             const islandId = join.islands.id;
 
@@ -42,7 +42,7 @@ function FetchJoindIslandEvent() {
             };
             // 配列に追加
             tmpIsland.push(modifiedIsland);
-          } else if (join.islands === null) {
+          } else if (join.events !== null) {
             // 参加イベントのidを取得
             const eventId = join.events.id;
 

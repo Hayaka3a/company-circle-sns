@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "../../styles/createIsland.module.css";
+import styles from "../../styles/island/createIsland.module.css";
 import { supabase } from "../../createClient";
 
 export default function IslandName({
