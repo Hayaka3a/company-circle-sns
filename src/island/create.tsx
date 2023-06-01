@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import styles from "../styles/createIsland.module.css";
+import styles from "../styles/island/createIsland.module.css";
 import { supabase } from "../createClient";
 import ConvertKanaJ from "../components/changeKana";
 import AddTag from "../components/createIsland/addtag";
@@ -14,15 +14,13 @@ import LogSt from "../components/cookie/logSt";
 export default function IslandCreate() {
   LogSt();
   const navigate = useNavigate();
-
-  const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [userOptions, setUserOptions] =
     useState<
       { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
     >();
   const [tagOptions, setTagOptions] =
     useState<{ id: number; Name: string; NameKana: string }[]>();
-  // 各入力項目state
+  const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
   const [tagNames, setTagNames] = useState<
@@ -117,7 +115,6 @@ export default function IslandCreate() {
     };
 
     try {
-      // POST
       const { error } = await supabase.from("islands").insert(islandData);
       if (error) {
         console.error("島の作成エラー:", error.message);
@@ -149,8 +146,8 @@ export default function IslandCreate() {
           for (let entry of enStatusData) {
             await supabase.from("userEntryStatus").insert(entry);
             console.log("userEntryStatusが正常に作成されました");
+            // tagStatusテーブルへ挿入
             try {
-              // tagStatusテーブルへ挿入
               const tgStatusData = islandTags.map((tag) => ({
                 tagID: tag.id,
                 islandID: createdIslandId,
@@ -182,6 +179,7 @@ export default function IslandCreate() {
         }
 
         navigate("/island/[id]");
+        window.location.reload();
       }
     } catch (error) {
       console.error("島の作成エラー:", error.message);

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../styles/island/createIsland.module.css";
 
-export default function Detail({
+export default function EventDetail({
   detail,
   setDetail,
 }: {
@@ -20,7 +20,7 @@ export default function Detail({
 
   const handleIslandNameBlur = () => {
     if (detail.trim() === "") {
-      setError("※活動内容は入力必須項目です");
+      setError("※詳細内容は入力必須項目です");
     } else {
       setError("");
     }
