@@ -101,17 +101,19 @@ export default function UserEdit() {
 
   return (
     <>
-      <button onClick={openModal}>退会</button>
-      {isOpen && <QuitUser closeModal={closeModal} nextOpen={nextOpen} />}
-      {confOpen && (
-        <QuitConf
-          close2Modal={close2Modal}
-          nextOpen2={nextOpen2}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-        />
-      )}
-      {lastOpen && <QuitDone done={done} />}
+      <div>
+        <button onClick={openModal}>退会</button>
+        {isOpen && <QuitUser closeModal={closeModal} nextOpen={nextOpen} />}
+        {confOpen && (
+          <QuitConf
+            close2Modal={close2Modal}
+            nextOpen2={nextOpen2}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+          />
+        )}
+        {lastOpen && <QuitDone done={done} />}
+      </div>
     </>
   );
 }

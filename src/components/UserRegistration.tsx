@@ -1,14 +1,13 @@
 import { useState, useEffect, ReactNode } from "react";
 import styles from "../styles/newUser.module.css";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../createClient";
 
 export default function UserRegistration() {
   const navigate = useNavigate();
 
   const [imageUrl, setImageUrl] = useState("/user/tanukiti.png");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [usersMail, setUsersMail] = useState([]);
   const [empCode, setEmpCode] = useState([]);
 
@@ -50,6 +49,7 @@ export default function UserRegistration() {
     delete sendData.conPw;
     sendData.department = sendData.department[0];
     sendData.creratedBy = "システム";
+    sendData.icon = imageUrl;
 
     //usersテーブルに追加
     const { error: usersError } = await supabase.from("users").insert(sendData);
@@ -83,13 +83,28 @@ export default function UserRegistration() {
   };
 
   // 画像ファイル選択したら、表示画像に反映
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!event.target.files || event.target.files.length == 0) {
+      // 画像が選択されていないのでreturn
+      return;
     }
+
+    const file = event.target.files?.[0];
+
+    const random = Math.floor(Math.random() * 10000);
+
+    const filePath = `${file.name}${random}`; // 画像の保存先のpathを指定
+    const { error } = await supabase.storage
+      .from("userIcon")
+      .upload(filePath, file);
+    if (error) {
+      console.log(error, "画像追加エラー", filePath);
+    }
+
+    const { data } = supabase.storage.from("userIcon").getPublicUrl(filePath);
+    setImageUrl(data.publicUrl);
   };
 
   //職種選択用データ
@@ -106,6 +121,11 @@ export default function UserRegistration() {
 
   return (
     <div className={styles.background}>
+      <div className="loginPageButton">
+        <Link to={"/user/login"}>
+          <button>ログインページへ戻る</button>
+        </Link>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.box}>
           <div className={styles.allContents}>
@@ -267,7 +287,6 @@ export default function UserRegistration() {
                 <tr className={styles.tr}>
                   <th className={styles.th}>アイコン</th>
                   <td className={styles.imgSide}>
-                    <p className={styles.icon} id="img"></p>
                     <div className={styles.faileCenter}>
                       <img
                         src={imageUrl}
