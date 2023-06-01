@@ -18,6 +18,7 @@ export default function CreateSendingScout({
   const [users, setUsers] = useState<newUsersData>();
   const [post, setPost] = useState(0);
   const [postBy, setPostBy] = useState(0);
+  const [islandName, setIslandName] = useState("");
   const [islandMembers, setIslandMembers] = useState<newUsersData>();
 
   const params = useParams();
@@ -27,20 +28,21 @@ export default function CreateSendingScout({
     getPost();
     comboBoxData();
     fetchPost();
-    console.log("ゆず");
   }, [islandMembers]);
 
   //island(event)のポストIDを取得
   const getPost = async () => {
     const { data: post, error: postError } = await supabase
       .from("posts")
-      .select(`id`)
+      .select(`id,islands(islandName)`)
       .eq(`${table}ID`, paramsID)
       .eq("status", false);
     if (postError) {
       console.log(postError, "エラー");
     }
     setPostBy(post[0].id);
+    const islandN = post[0].islands as { islandName: string };
+    setIslandName(islandN.islandName);
   };
 
   const comboBoxData = async () => {
@@ -96,7 +98,6 @@ export default function CreateSendingScout({
 
   //スカウトを送る
   const addHandler = async () => {
-    console.log(typeof message);
     const { data, error } = await supabase.from("messages").insert({
       postID: post,
       message: message,
@@ -124,7 +125,7 @@ export default function CreateSendingScout({
               onClick={closeModal}
               className={styles.close}
             />
-            <h3 className={styles.title}>○○島へ招待する</h3>
+            <h3 className={styles.title}>{islandName}島へ招待する</h3>
             <div className={styles.input}>
               <div>
                 <label htmlFor="sendUser" className="label">
