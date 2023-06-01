@@ -27,8 +27,8 @@
 }
 
 /* 未入力時に背景色を変更 */
-.errorInput {
-  background-color: rgb(243, 187, 187);
+.error {
+  color: red;
 }
 
 /*　各入力項目 */

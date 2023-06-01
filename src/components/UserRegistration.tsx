@@ -135,7 +135,7 @@ export default function UserRegistration() {
                         required: "氏名(名)は必須項目です。",
                       })}
                     />
-                    <p>
+                    <p className={styles.error}>
                       {errors.familyName?.message as ReactNode}
                       {errors.firstName?.message as ReactNode}
                     </p>
@@ -164,7 +164,7 @@ export default function UserRegistration() {
                         required: "カナ(名)は必須項目です。",
                       })}
                     />
-                    <p>
+                    <p className={styles.error}>
                       {errors.familyNameKana?.message as ReactNode}
                       {errors.firstNameKana?.message as ReactNode}
                     </p>
@@ -200,7 +200,9 @@ export default function UserRegistration() {
                         },
                       })}
                     />
-                    <p>{errors.mailAddress?.message as ReactNode}</p>
+                    <p className={styles.error}>
+                      {errors.mailAddress?.message as ReactNode}
+                    </p>
                   </td>
                 </tr>
                 <tr className={styles.tr}>
@@ -231,7 +233,9 @@ export default function UserRegistration() {
                         },
                       })}
                     />
-                    <p>{errors.password?.message as ReactNode}</p>
+                    <p className={styles.error}>
+                      {errors.password?.message as ReactNode}
+                    </p>
                   </td>
                 </tr>
                 <tr className={styles.tr}>
@@ -255,7 +259,9 @@ export default function UserRegistration() {
                         required: "確認パスワードは必須項目です。",
                       })}
                     />
-                    <p>{errors.conPw?.message as ReactNode}</p>
+                    <p className={styles.error}>
+                      {errors.conPw?.message as ReactNode}
+                    </p>
                   </td>
                 </tr>
                 <tr className={styles.tr}>
@@ -309,7 +315,9 @@ export default function UserRegistration() {
                         },
                       })}
                     />
-                    <p>{errors.employeeCode?.message as ReactNode}</p>
+                    <p className={styles.error}>
+                      {errors.employeeCode?.message as ReactNode}
+                    </p>
                   </td>
                 </tr>
                 <tr className={styles.tr}>
@@ -340,7 +348,9 @@ export default function UserRegistration() {
                         );
                       })}
                     </div>
-                    <p>{errors.department?.message as ReactNode}</p>
+                    <p className={styles.error}>
+                      {errors.department?.message as ReactNode}
+                    </p>
                   </td>
                 </tr>
               </table>
