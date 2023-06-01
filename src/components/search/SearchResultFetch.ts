@@ -23,6 +23,7 @@ export const islandFetch = async (setIsland) => {
       name: islandItem.islandName,
       tags: matchingTags,
       table: "島",
+      tableQuery: "island",
     };
   });
 
@@ -40,6 +41,7 @@ export const eventFetch = async (setEve) => {
     ...eve,
     name: eve.eventName,
     table: "イベント",
+    tableQuery: "event",
   }));
   setEve(compEvent);
 };

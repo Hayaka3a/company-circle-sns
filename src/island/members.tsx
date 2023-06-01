@@ -32,7 +32,9 @@ export default function IslandMembers() {
   const closeModal2 = () => {
     setModal2(false);
   };
-
+  useEffect(() => {
+    fetchData();
+  }, []);
   async function fetchData() {
     const { data, error } = await supabase
       .from("islands")

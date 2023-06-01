@@ -21,6 +21,8 @@
 }
 
 .icon {
+  height: 70px;
+  width: 70px;
   background-size: 35px;
   background-position: left 5px center;
 }

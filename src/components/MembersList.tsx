@@ -1,8 +1,9 @@
 import styles from "../styles/membersList.module.css";
 import { useEffect, useState } from "react";
-import { Event, Island, Entryusers } from "../types/members";
+import { Event, Island, Entryusers, User } from "../types/members";
 import { supabase } from "../createClient.js";
 import DeleteComfirmation from "./modalWindows/deleteConfirmation";
+import GetCookieID from "./cookie/getCookieId";
 
 export default function MembersList({
   table,
@@ -25,14 +26,9 @@ export default function MembersList({
 }) {
   const [entryUsers, setEntryUsers] = useState<Entryusers[]>();
   const [newEntryUsers, setNewEntryUsers] = useState<Entryusers[]>();
+  const [loginUser, setLoginUser] = useState<User>();
 
-  //仮置きのデータ
-  const loginUser = {
-    id: 1,
-    familyName: "山田",
-    firstName: "一郎",
-    icon: "/image1",
-  };
+  const loginID = GetCookieID();
 
   // DBからデータを取得
   useEffect(() => {
@@ -49,19 +45,28 @@ export default function MembersList({
     if (entryError) {
       console.log(entryError);
     }
-    const userData = entryData as Entryusers[];
+
+    //ログインしているユーザーのデータを取得
+    const { data: login, error: loginError } = await supabase
+      .from("users")
+      .select(`*`)
+      .eq(`id`, loginID);
+    const logData = login[0] as User;
+    setLoginUser(logData);
+
+    const userData = entryData.filter((user) => user.userID) as Entryusers[];
     setEntryUsers(userData);
 
     // ログインユーザーが参加者の場合、ログインユーザーを抜いた配列を新たに作る
     const filteredUsers = userData.filter(
-      (user) => user.users.id !== loginUser.id,
+      (user) => user.userID !== loginID && user.userID,
     );
     setNewEntryUsers(filteredUsers.length > 0 ? filteredUsers : []);
   }
-
+  console.log(entryUsers, "んとり");
   // 自分以外のユーザーの一覧表示
   const anotherUser = (user: Entryusers) => {
-    if (anotherUser === undefined) {
+    if (newEntryUsers === undefined) {
       return;
     } else {
       return (
@@ -75,11 +80,11 @@ export default function MembersList({
   };
 
   function buttonSwitching() {
-    if (displayData.ownerID === loginUser.id) {
+    if (displayData.ownerID === loginID) {
       //オーナーの場合のデータ表示
       return (
         <>
-          <tr key={loginUser.id} className={styles.tr}>
+          <tr key={loginID} className={styles.tr}>
             <td className={styles.td}>
               <img
                 src={loginUser.icon}
@@ -106,7 +111,7 @@ export default function MembersList({
                       islandName={`displayData.${table}Name`}
                       table={table}
                       params={displayData.id}
-                      user={user.users.id}
+                      user={user.id}
                     />
                   )}
                   <button onClick={open2}>島追放</button>
@@ -127,10 +132,10 @@ export default function MembersList({
           })}
         </>
       );
-    } else if (entryUsers?.some((user) => user.users.id === loginUser.id)) {
+    } else if (entryUsers?.some((user) => user.users.id === loginID)) {
       return (
         <>
-          <tr key={loginUser.id} className={styles.tr}>
+          <tr key={loginID} className={styles.tr}>
             <td className={styles.td}>
               <img
                 src={loginUser.icon}
@@ -150,7 +155,7 @@ export default function MembersList({
                   islandName={`displayData.${table}Name`}
                   table={table}
                   params={displayData.id}
-                  user={loginUser.id}
+                  user={loginID}
                 />
               )}
             </td>
