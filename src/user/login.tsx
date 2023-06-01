@@ -21,6 +21,11 @@ export default function Login() {
     }
   }, []);
 
+  const newUser = () => {
+    navigate("/user/newUser");
+    window.location.reload();
+  };
+
   const loginHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
@@ -109,9 +114,7 @@ export default function Login() {
         </div>
 
         <div>
-          <Link to="/users/newUser" className={styles.link}>
-            新規ユーザー登録はこちら
-          </Link>
+          <button onClick={newUser}>新規ユーザー登録はこちら</button>
         </div>
 
         <h3 style={{ display: visible ? "block" : "none" }}>
