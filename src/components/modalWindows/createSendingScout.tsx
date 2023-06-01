@@ -3,6 +3,9 @@ import { supabase } from "../../createClient";
 import { useEffect, useState } from "react";
 import { newUsersData } from "../../types/sendScout";
 import { useParams } from "react-router-dom";
+import ComboBoxUser from "../comboBoxUser";
+import ConvertKanaJ from "../changeKana";
+import { isReturnStatement } from "typescript";
 
 export default function CreateSendingScout({
   closeModal,
@@ -14,15 +17,32 @@ export default function CreateSendingScout({
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState<newUsersData>();
   const [post, setPost] = useState(0);
-  const [postedID, setPostedID] = useState(0);
+  const [postBy, setPostBy] = useState(0);
+  const [islandMembers, setIslandMembers] = useState<newUsersData>();
 
   const params = useParams();
   const paramsID = parseInt(params.id);
 
   useEffect(() => {
+    getPost();
     comboBoxData();
     fetchPost();
-  }, []);
+    console.log("ゆず");
+  }, [islandMembers]);
+
+  //island(event)のポストIDを取得
+  const getPost = async () => {
+    const { data: post, error: postError } = await supabase
+      .from("posts")
+      .select(`id`)
+      .eq(`${table}ID`, paramsID)
+      .eq("status", false);
+    if (postError) {
+      console.log(postError, "エラー");
+    }
+    setPostBy(post[0].id);
+  };
+
   const comboBoxData = async () => {
     //島またはイベントに既に参加している人のIDを取得
     const { data: entryUser, error: entryError } = await supabase
@@ -49,44 +69,41 @@ export default function CreateSendingScout({
         id: user.id,
         Name: user.familyName + user.firstName,
         NameKana: user.familyNameKana + user.firstNameKana,
+        NameKanaJ: `${ConvertKanaJ(user.familyNameKana)}+ ${ConvertKanaJ(
+          user.firstNameKana,
+        )}`,
       }))
       .filter((user) => !entryArray.includes(user.id));
     setUsers(newUsersData);
   };
 
   const fetchPost = async () => {
-    //コンボボックスから返されたUserIDから該当のPostIDを割り出す
-    const { data: posts, error: postError } = await supabase
-      .from("posts")
-      .select("id")
-      .eq("userID", 1)
-      .eq("status", false);
-    if (postError) {
-      console.log(postError, "エラー");
+    if (islandMembers) {
+      //コンボボックスから返されたUserIDから該当のPostIDを割り出す
+      const { data: posts, error: postError } = await supabase
+        .from("posts")
+        .select("id")
+        .eq("userID", islandMembers[0].id)
+        .eq("status", false);
+      if (postError) {
+        console.log(postError, "エラー");
+      }
+      setPost(posts[0].id);
+    } else {
+      return;
     }
-    setPost(posts[0].id);
-
-    //スカウトを送る際のPostedByに入れる為、送信する側のPostIDを取得する
-    const { data: postedBy, error: postedByError } = await supabase
-      .from("posts")
-      .select("id")
-      .eq(`${table}ID`, paramsID)
-      .eq("status", false);
-    if (postedByError) {
-      console.log(postError, "エラー");
-    }
-    setPostedID(postedBy[0].id);
   };
 
   //スカウトを送る
   const addHandler = async () => {
+    console.log(typeof message);
     const { data, error } = await supabase.from("messages").insert({
       postID: post,
       message: message,
       scout: true,
       isRead: false,
       isAnswered: false,
-      postedBy: postedID,
+      postedBy: post,
       status: false,
     });
     if (error) {
@@ -111,12 +128,13 @@ export default function CreateSendingScout({
             <div className={styles.input}>
               <div>
                 <label htmlFor="sendUser" className="label">
-                  送るユーザー
+                  送るユーザー (1人追加してください)
                 </label>
-                {/* <ComboBox
-                  Options={}
-                  htmlFor="senduser"
-                /> */}
+                <ComboBoxUser
+                  nameOptions={users}
+                  htmlFor={"sedUser"}
+                  setIslandMembers={setIslandMembers}
+                />
               </div>
               <div className={styles.box}>
                 <label htmlFor="text" className="label">
