@@ -122,6 +122,3 @@ export default function EventAll() {
     </div>
   );
 }
-function eq(arg0: string, arg1: string) {
-  throw new Error("Function not implemented.");
-}
