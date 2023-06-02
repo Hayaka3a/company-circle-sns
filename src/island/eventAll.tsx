@@ -9,13 +9,32 @@ export default function EventAll() {
   LogSt();
   const navigate = useNavigate();
   const params = useParams();
-  const [events, setEvents] = useState([]);
   const paramsID = params.id;
+  const [events, setEvents] = useState([]);
+  const [islandName, setIslandName] = useState("");
+
   const currentDateTime = new Date(); // 現在の日時取得
 
   const createHandler = () => {
     navigate("/event/create/[id]");
     window.location.reload();
+  };
+
+  // 島の名前を取得する関数
+  const fetchIslandName = async () => {
+    const { data, error } = await supabase
+      .from("islands")
+      .select("islandName")
+      .eq("id", paramsID);
+
+    if (error) {
+      console.error("islandsテーブルデータ情報取得失敗", error);
+      return;
+    }
+
+    if (data && data.length > 0) {
+      setIslandName(data[0].islandName);
+    }
   };
 
   useEffect(() => {
@@ -38,7 +57,8 @@ export default function EventAll() {
         const { data: eventData, error: eventError } = await supabase
           .from("events")
           .select("*")
-          .eq("id", eventId);
+          .eq("id", eventId)
+          .eq("status", "false");
 
         if (eventError) {
           console.error("Eventsテーブルデータ情報取得失敗", eventError);
@@ -53,13 +73,14 @@ export default function EventAll() {
       setEvents(fetchedEvents.filter((event) => event !== null));
     };
 
+    fetchIslandName();
     fetchEventData();
   }, [paramsID]);
   return (
     <div className={styles.flex}>
       <MenubarIsland />
       <div className={styles.all}>
-        <h2>○○島の掲示板</h2>
+        <h2>{islandName}島 開催イベント</h2>
         <button onClick={createHandler} className={styles.button}>
           新しいイベントを始める
         </button>
@@ -100,4 +121,7 @@ export default function EventAll() {
       </div>
     </div>
   );
+}
+function eq(arg0: string, arg1: string) {
+  throw new Error("Function not implemented.");
 }
