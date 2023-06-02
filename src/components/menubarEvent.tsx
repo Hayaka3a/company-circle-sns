@@ -8,7 +8,6 @@ export default function MenubarEvent({ thumbnail }: { thumbnail: string }) {
   const [isJoined, setIsJoined] = useState(false); // イベントに参加しているかどうかの状態
   const params = useParams();
   const paramsID = parseInt(params.id);
-  console.log(paramsID);
 
   // 画像URL変更
   useEffect(() => {

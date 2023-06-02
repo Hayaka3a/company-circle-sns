@@ -7,7 +7,9 @@ import { supabase } from "../createClient";
 export default function UserRegistration() {
   const navigate = useNavigate();
 
-  const [imageUrl, setImageUrl] = useState("/user/tanukiti.png");
+  const [imageUrl, setImageUrl] = useState(
+    "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanukiti.png7522",
+  );
   const [usersMail, setUsersMail] = useState([]);
   const [empCode, setEmpCode] = useState([]);
 
