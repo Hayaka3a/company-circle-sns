@@ -7,7 +7,7 @@ export default function EventEntryPermitPage() {
   LogSt();
   return (
     <div className={styles.display}>
-      <MenubarIsland thumbnail="a" />
+      <MenubarIsland />
       <EntryPermit table={"event"} />
     </div>
   );

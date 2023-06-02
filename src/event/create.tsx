@@ -19,6 +19,8 @@ export default function EventCreate() {
   const params = useParams();
   const islandID = params.id;
 
+  console.log(params);
+
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
     let circleElement = document.getElementById("img");
