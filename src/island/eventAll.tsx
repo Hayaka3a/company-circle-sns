@@ -57,7 +57,7 @@ export default function EventAll() {
   }, [paramsID]);
   return (
     <div className={styles.flex}>
-      <MenubarIsland thumbnail="/login/loginCounter.png" />
+      <MenubarIsland />
       <div className={styles.all}>
         <h2>○○島の掲示板</h2>
         <button onClick={createHandler} className={styles.button}>

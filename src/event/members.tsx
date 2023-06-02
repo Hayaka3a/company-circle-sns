@@ -53,7 +53,7 @@ export default function EventMembers() {
     <>
       {displayData && (
         <div className={styles.display}>
-          <MenubarEvent thumbnail={displayData.thumbnail} />
+          <MenubarEvent />
           <MembersList
             table="event"
             displayData={displayData}

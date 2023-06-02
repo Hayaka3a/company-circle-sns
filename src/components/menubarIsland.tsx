@@ -4,34 +4,42 @@ import { Link, useParams } from "react-router-dom";
 import GetCookieID from "./cookie/getCookieId";
 import { supabase } from "../createClient";
 
-export default function MenubarIsland({
-  thumbnail,
-}: {
-  thumbnail: string | null;
-}) {
+export default function MenubarIsland() {
+  interface Island {
+    islandName: string;
+    thumbnail: string;
+  }
   const [isJoined, setIsJoined] = useState(false); // サークルに参加しているかどうかの状態
+  const [island, setIsland] = useState<Island | null>(null);
   const params = useParams();
   const paramsID = parseInt(params.id);
 
-  // 画像URL変更
-  useEffect(() => {
-    let imageUrl = thumbnail;
-    let circleElement = document.getElementById("img");
-
-    if (circleElement) {
-      circleElement.style.backgroundImage = `url('${imageUrl}')`;
-    }
-  }, []);
-
   const userID = GetCookieID();
-  const islandID = paramsID.toString();
 
+  // 表示している島の情報をislandに挿入
+  const fetchIslandData = async () => {
+    const { data, error } = await supabase
+      .from("islands")
+      .select("islandName, thumbnail")
+      .eq("id", paramsID);
+
+    if (error) {
+      console.error("islandsテーブルデータ情報取得失敗", error);
+      return;
+    }
+
+    if (data && data.length > 0) {
+      setIsland(data[0]);
+    }
+  };
+
+  // ユーザーが表示している島に参加しているかどうかチェック
   const fetchData = async () => {
     const { data, error } = await supabase
       .from("userEntryStatus")
       .select("*")
       .eq("userID", userID)
-      .eq("islandID", islandID)
+      .eq("islandID", paramsID)
       .eq("status", "false");
     if (error) {
       console.log(error);
@@ -43,13 +51,24 @@ export default function MenubarIsland({
 
   useEffect(() => {
     fetchData();
+    fetchIslandData();
   }, []);
 
   return (
     <>
       <div className={styles.menubar}>
-        <div className={styles.icon} id="img"></div>
-        <h4>島名</h4>
+        {island && (
+          <img
+            className={styles.icon}
+            src={island.thumbnail || "/island/island_icon.png"}
+            alt="Event Thumbnail"
+          />
+        )}
+
+        {/* 非同期関数で取得しているから、islandデータが取得される前にコンポーネント描画されて、islandデータが
+        nullで返ってきちゃうから */}
+        <h4>{island && island.islandName}島</h4>
+
         {/* ユーザーがサークルに参加している場合 */}
         {isJoined && (
           <div className={styles.menuContents}>
