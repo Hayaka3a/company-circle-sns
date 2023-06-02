@@ -90,11 +90,8 @@ export default function UserRegistration() {
       // 画像が選択されていないのでreturn
       return;
     }
-
     const file = event.target.files?.[0];
-
     const random = Math.floor(Math.random() * 10000);
-
     const filePath = `${file.name}${random}`; // 画像の保存先のpathを指定
     const { error } = await supabase.storage
       .from("userIcon")
@@ -111,7 +108,7 @@ export default function UserRegistration() {
   const [category, setCategory] = useState([
     { id: "Java", name: "Java", checked: false, disabled: false },
     { id: "ML", name: "ML", checked: false, disabled: false },
-    { id: "CL", name: "CL", hecked: false, disabled: false },
+    { id: "CL", name: "CL", checked: false, disabled: false },
     { id: "QA", name: "QA", checked: false, disabled: false },
     { id: "PHP", name: "PHP", checked: false, disabled: false },
     { id: "FR", name: "FR", checked: false, disabled: false },
@@ -347,7 +344,7 @@ export default function UserRegistration() {
                     <div className={styles.radio}>
                       {category.map((item) => {
                         return (
-                          <div key={item.name}>
+                          <div key={item.name} className={styles.radio}>
                             <input
                               id={item.id}
                               type="checkbox"
@@ -362,7 +359,9 @@ export default function UserRegistration() {
                                 },
                               })}
                             />
-                            <label htmlFor={item.id}>{item.name}</label>
+                            <label htmlFor={item.id} className="radioLabel">
+                              {item.name}
+                            </label>
                           </div>
                         );
                       })}

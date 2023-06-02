@@ -1,7 +1,7 @@
 .background {
-  padding-top: 5%;
-  padding-bottom: 5%;
   font-size: 12px;
+  padding-bottom: 0;
+  padding: 2% 2%;
 }
 
 .box {
@@ -13,7 +13,30 @@
   text-align: center;
   border-radius: 1%;
   padding-bottom: 3%;
-  width: 70%;
+  width: 85%;
+}
+
+.editbox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tableCovered {
+  display: flex;
+  flex-direction: column; /* 縦方向に並べる */
+  height: auto;
+  width: 65%;
+}
+
+.left {
+  width: 35%;
+  display: inline-grid;
+}
+
+.unsub {
+  display: flex;
+  justify-content: end;
+  margin-right: 5%;
 }
 
 .icon {
@@ -34,20 +57,12 @@
 
 /*　各入力項目 */
 .address {
-  width: 100%;
+  width: 95%;
   height: 20px;
 }
 
-.tableCovered {
-  display: flex;
-  justify-content: center; /* 水平方向の中央揃え */
-  align-items: center; /* 垂直方向の中央揃え */
-  flex-direction: column; /* 縦方向に並べる */
-  height: auto;
-}
-
 .table {
-  width: 85%;
+  width: 95%;
   border-collapse: collapse;
   border-spacing: 0 6vh; /* 行間幅 */
   border-top: 1px solid rgb(149, 149, 149);
@@ -58,6 +73,7 @@
 .td {
   border-bottom: 1px solid rgb(180, 180, 180);
   text-align: left;
+  font-size: 13px;
 }
 
 .th:last-child,
@@ -75,7 +91,12 @@
 }
 
 .th {
-  width: 30%;
+  width: 25%;
+}
+
+.buttonbox {
+  align-self: flex-end;
+  margin-bottom: 20%;
 }
 
 .inputA {
@@ -90,7 +111,7 @@
 
 .allContents {
   height: 100%;
-  padding: 5%;
+  padding: 2%;
 }
 
 .imgSide {
@@ -102,13 +123,6 @@
   margin-top: auto;
   margin-bottom: auto;
   display: flex;
-}
-
-.radio {
-  width: 300px;
-}
-.radiolabel {
-  width: 120px;
 }
 
 /* コンボボックス */
@@ -168,7 +182,71 @@
 }
 
 .addButton {
-  height: 39px;
+  width: 120px;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(255, 182, 112, 1);
+  box-shadow: 5px 5px rgba(255, 182, 112, 1);
+  transition: 0.3s ease-in-out;
+  height: 50px;
+  background-color: white;
+}
+
+.addButton:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
+}
+
+.addButton:disabled {
+  color: rgba(212, 212, 212, 1);
+  border: 3px solid rgba(212, 212, 212, 1);
+  box-shadow: 5px 5px rgba(212, 212, 212, 1);
+  height: 50px;
+  width: 120px;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  background-color: white;
+  margin-top: 20px;
+}
+
+.noEdit {
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid #27acd9;
+  box-shadow: 5px 5px #27acd9;
+  width: 120px;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  height: 40px;
+}
+
+.noEdit:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+}
+
+.unsubButton {
+  width: 80px;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: white;
+  border: 3px solid gray;
+  transition: 0.3s ease-in-out;
+  height: 40px;
+  background-color: gray;
+}
+.unsubButton:hover {
+  background-color: white;
+  color: gray;
 }
 
 .buttonSide {
@@ -181,8 +259,8 @@
   flex-direction: column;
 }
 
-.spanTg {
-  color: rgb(255, 115, 0);
+.radio {
+  width: 200px;
 }
 
 /* 未入力時に背景色を変更 */
