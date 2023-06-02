@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LogSt from "../components/cookie/logSt";
 import styles from "../styles/island/all.module.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import MenubarIsland from "../components/menubarIsland";
 
@@ -75,7 +75,9 @@ export default function EventAll() {
                     alt="Event Thumbnail"
                   ></img>
                   <div className={styles.eventInfo}>
-                    <h2 className={styles.eventName}>{event.eventName}</h2>
+                    <Link to={`/event/${paramsID}`}>
+                      <h2 className={styles.eventName}>{event.eventName}</h2>
+                    </Link>
                     <h3>
                       開催時期 ：
                       {new Date(event.startDate).toLocaleDateString("ja-JP", {

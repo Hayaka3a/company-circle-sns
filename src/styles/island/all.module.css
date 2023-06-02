@@ -37,6 +37,7 @@
 .eventName {
   margin-right: 5%;
   align-items: center; /* 垂直方向の中央揃え */
+  white-space: nowrap;
 }
 
 .eventInfo {
