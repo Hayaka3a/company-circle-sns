@@ -92,7 +92,7 @@ function App() {
             path="/island/message/user_message"
             element={<UserMessage />}
           />
-          <Route path="/island/eventAll" element={<IslandAll />} />
+          <Route path="/island/islandAll" element={<IslandAll />} />
           {/* eventフォルダ */}
           <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/event/create/:id" element={<EventCreate />} />
