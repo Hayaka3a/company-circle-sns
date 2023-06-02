@@ -58,7 +58,7 @@ label {
     margin-top: 20px;
 }
 
-#delete_btn {
+.delete_btn {
     margin: 30px 0 20px 600px;
     color: red;
     font-weight: bold
