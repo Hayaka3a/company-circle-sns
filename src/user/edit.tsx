@@ -84,9 +84,16 @@ export default function UserEdit() {
 
     //送信するデータを成形
     delete sendData.conPw;
-    sendData.department = sendData.department[0];
     sendData.creratedBy = "システム";
     sendData.icon = imageUrl;
+
+    if (sendData.department === "office") {
+      sendData.department = "内勤";
+    } else if (sendData.department === "sales") {
+      sendData.department = "営業";
+    } else {
+      return;
+    }
 
     //usersテーブルに追加
     const { error: usersError } = await supabase
@@ -127,14 +134,14 @@ export default function UserEdit() {
 
   //職種選択用データ
   const [category, setCategory] = useState([
-    { id: "Java", name: "Java", checked: false, disabled: false },
-    { id: "ML", name: "ML", checked: false, disabled: false },
-    { id: "CL", name: "CL", checked: false, disabled: false },
-    { id: "QA", name: "QA", checked: false, disabled: false },
-    { id: "PHP", name: "PHP", checked: false, disabled: false },
-    { id: "FR", name: "FR", checked: false, disabled: false },
-    { id: "sales", name: "営業", checked: false, disabled: false },
-    { id: "office", name: "内勤", checked: false, disabled: false },
+    { id: "Java", name: "Java" },
+    { id: "ML", name: "ML" },
+    { id: "CL", name: "CL" },
+    { id: "QA", name: "QA" },
+    { id: "PHP", name: "PHP" },
+    { id: "FR", name: "FR" },
+    { id: "sales", name: "営業" },
+    { id: "office", name: "内勤" },
   ]);
 
   //編集ボタンの切り替え
@@ -374,17 +381,11 @@ export default function UserEdit() {
                               <div key={item.name} className={styles.radio}>
                                 <input
                                   id={item.id}
-                                  type="checkbox"
-                                  value={item.name}
+                                  type="radio"
+                                  value={item.id}
                                   defaultChecked={item.name === radio}
                                   disabled={!editMode}
-                                  {...register("department", {
-                                    validate: {
-                                      atLeastOneRequired: (value) =>
-                                        value.length === 1 ||
-                                        "1つ以上選択してください",
-                                    },
-                                  })}
+                                  {...register("department")}
                                 />
                                 <label htmlFor={item.id}>{item.name}</label>
                               </div>

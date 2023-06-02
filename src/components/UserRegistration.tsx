@@ -47,9 +47,16 @@ export default function UserRegistration() {
   const onSubmit = async (sendData: any) => {
     //送信するデータを成形
     delete sendData.conPw;
-    sendData.department = sendData.department[0];
     sendData.creratedBy = "システム";
     sendData.icon = imageUrl;
+
+    if (sendData.department === "office") {
+      sendData.department = "内勤";
+    } else if (sendData.department === "sales") {
+      sendData.department = "営業";
+    } else {
+      return;
+    }
 
     //usersテーブルに追加
     const { error: usersError } = await supabase.from("users").insert(sendData);
@@ -106,14 +113,14 @@ export default function UserRegistration() {
 
   //職種選択用データ
   const [category, setCategory] = useState([
-    { id: "Java", name: "Java", checked: false, disabled: false },
-    { id: "ML", name: "ML", checked: false, disabled: false },
-    { id: "CL", name: "CL", checked: false, disabled: false },
-    { id: "QA", name: "QA", checked: false, disabled: false },
-    { id: "PHP", name: "PHP", checked: false, disabled: false },
-    { id: "FR", name: "FR", checked: false, disabled: false },
-    { id: "sales", name: "営業", checked: false, disabled: false },
-    { id: "office", name: "内勤", checked: false, disabled: false },
+    { id: "Java", name: "Java" },
+    { id: "ML", name: "ML" },
+    { id: "CL", name: "CL" },
+    { id: "QA", name: "QA" },
+    { id: "PHP", name: "PHP" },
+    { id: "FR", name: "FR" },
+    { id: "sales", name: "営業" },
+    { id: "office", name: "内勤" },
   ]);
 
   return (
@@ -347,17 +354,9 @@ export default function UserRegistration() {
                           <div key={item.name} className={styles.radio}>
                             <input
                               id={item.id}
-                              type="checkbox"
+                              type="radio"
                               value={item.id}
-                              defaultChecked={item.checked}
-                              disabled={item.disabled}
-                              {...register("department", {
-                                validate: {
-                                  atLeastOneRequired: (value) =>
-                                    value.length === 1 ||
-                                    "1つ以上選択してください",
-                                },
-                              })}
+                              {...register("department")}
                             />
                             <label htmlFor={item.id} className="radioLabel">
                               {item.name}
