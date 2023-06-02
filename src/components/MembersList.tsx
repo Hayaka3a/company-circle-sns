@@ -114,7 +114,7 @@ export default function MembersList({
         <td className={styles.td}>
           <img src={user.users.icon} className={styles.icon} alt="アイコン" />
           {user.users.familyName}
-          {user.users.firstName}
+          {user.users.firstName}&nbsp;({user.users.department})
         </td>
       );
     }
@@ -133,8 +133,7 @@ export default function MembersList({
                 alt="アイコン"
               />
               {loginUser.familyName}
-              {loginUser.firstName}
-              (オーナー)
+              {loginUser.firstName}&nbsp;({loginUser.department}) (オーナー)
             </td>
             <td className={styles.td}></td>
           </tr>
@@ -188,7 +187,7 @@ export default function MembersList({
                 alt="アイコン"
               />
               {loginUser.familyName}
-              {loginUser.firstName}
+              {loginUser.firstName}&nbsp;({loginUser.department})
             </td>
             <td className={styles.td}>
               <button onClick={open}>島を抜ける</button>
