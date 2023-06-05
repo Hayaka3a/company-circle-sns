@@ -16,7 +16,7 @@ export default function MenubarEvent() {
 
   // 画像URL変更
   useEffect(() => {
-    let imageUrl = thumbnail;
+    let imageUrl = "thumbnail";
     let circleElement = document.getElementById("img");
 
     if (circleElement) {
