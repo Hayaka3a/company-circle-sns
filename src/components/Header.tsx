@@ -118,22 +118,23 @@ const Header = () => {
                     isOpenIslandList ? `${styles.open}` : `${styles.close}`
                   }
                 >
-                  {result.islands.map((island) => (
-                    <div
-                      key={island.id}
-                      className={styles.listItem}
-                      onClick={() => navigate(`/island/${island.id}`)}
-                    >
-                      <li>
-                        {island.islandName}
-                        {island.msgLength > 0 && (
-                          <span className={styles.msgIcon}>
-                            {island.msgLength}
-                          </span>
-                        )}
-                      </li>
-                    </div>
-                  ))}
+                  {result &&
+                    result.islands.map((island) => (
+                      <div
+                        key={island.id}
+                        className={styles.listItem}
+                        onClick={() => navigate(`/island/${island.id}`)}
+                      >
+                        <li>
+                          {island.islandName}
+                          {island.msgLength > 0 && (
+                            <span className={styles.msgIcon}>
+                              {island.msgLength}
+                            </span>
+                          )}
+                        </li>
+                      </div>
+                    ))}
                 </ul>
               </li>
               <input
@@ -153,22 +154,23 @@ const Header = () => {
                     isOpenEventList ? `${styles.open}` : `${styles.close}`
                   }
                 >
-                  {result.events.map((event) => (
-                    <div
-                      key={event.id}
-                      className={styles.listItem}
-                      onClick={() => navigate(`/event/${event.id}`)}
-                    >
-                      <li>
-                        {event.eventName}
-                        {event.msgLength > 0 && (
-                          <span className={styles.msgIcon}>
-                            {event.msgLength}
-                          </span>
-                        )}
-                      </li>
-                    </div>
-                  ))}
+                  {result &&
+                    result.events.map((event) => (
+                      <div
+                        key={event.id}
+                        className={styles.listItem}
+                        onClick={() => navigate(`/event/${event.id}`)}
+                      >
+                        <li>
+                          {event.eventName}
+                          {event.msgLength > 0 && (
+                            <span className={styles.msgIcon}>
+                              {event.msgLength}
+                            </span>
+                          )}
+                        </li>
+                      </div>
+                    ))}
                 </ul>
               </li>
               <li className={styles.menuGroupItem}>
@@ -177,7 +179,7 @@ const Header = () => {
                 </a>
               </li>
               <li className={styles.menuGroupItem}>
-                <a className={styles.menuGroupItemLink} href="/user/index">
+                <a className={styles.menuGroupItemLink} href="/user">
                   アカウント情報
                 </a>
               </li>

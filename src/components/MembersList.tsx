@@ -28,8 +28,8 @@ export default function MembersList({
   const [newEntryUsers, setNewEntryUsers] = useState<Entryusers[]>([]);
   const [loginUser, setLoginUser] = useState<User>();
 
-  const tempLoginID = GetCookieID();
-  const loginID = Number(tempLoginID);
+  const tmpLoginID = GetCookieID();
+  const loginID = Number(tmpLoginID);
 
   // DBからデータを取得
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function MembersList({
         console.log(error, "eventFetchError");
       } else {
         //島ID・難民データをそれぞれ配列にしまう
-        const tempArry = data.filter((user) => user.userID) as Entryusers[];
+        const tmpArry = data.filter((user) => user.userID) as Entryusers[];
         const islandArry = data
           .filter((ent) => ent.islandID)
           .map((is) => is.islandID);
@@ -67,7 +67,7 @@ export default function MembersList({
             (user) => user.userID,
           ) as Entryusers[];
           //各島民と難民を一つの配列にしまう
-          const conbined = tempArry.concat(userData);
+          const conbined = tmpArry.concat(userData);
           setEntryUsers(conbined);
         }
       }

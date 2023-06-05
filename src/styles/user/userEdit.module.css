@@ -33,6 +33,15 @@
   display: inline-grid;
 }
 
+.joinBox {
+  font-size: 13px;
+  font-weight: bold;
+}
+.joinList {
+  display: flex;
+  flex-direction: column;
+}
+
 .unsub {
   display: flex;
   justify-content: end;
@@ -112,10 +121,6 @@
 .allContents {
   height: 100%;
   padding: 2%;
-}
-
-.imgSide {
-  display: flex;
 }
 
 .faileCenter {

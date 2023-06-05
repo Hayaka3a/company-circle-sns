@@ -138,240 +138,245 @@ export default function UserRegistration() {
             <h2>新規登録</h2>
             <div className={styles.tableCovered}>
               <table className={styles.table}>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>
-                    氏名<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td className={styles.td}>
-                    <input
-                      type="text"
-                      className={`${styles.inputA}`}
-                      maxLength={300}
-                      onSubmit={onSubmit}
-                      {...register("familyName", {
-                        required: "氏名(姓)は必須項目です。",
-                      })}
-                    />
-                    <input
-                      type="text"
-                      className={`${styles.inputB} `}
-                      maxLength={300}
-                      onSubmit={onSubmit}
-                      {...register("firstName", {
-                        required: "氏名(名)は必須項目です。",
-                      })}
-                    />
-                    <p className={styles.error}>
-                      {errors.familyName?.message as ReactNode}
-                      {errors.firstName?.message as ReactNode}
-                    </p>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>
-                    カナ<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td className={styles.td}>
-                    <input
-                      type="text"
-                      className={`${styles.inputA}`}
-                      maxLength={300}
-                      onSubmit={onSubmit}
-                      {...register("familyNameKana", {
-                        required: "カナ(姓)は必須項目です。",
-                      })}
-                    />
-                    <input
-                      type="text"
-                      className={`${styles.inputB} `}
-                      maxLength={300}
-                      onSubmit={onSubmit}
-                      {...register("firstNameKana", {
-                        required: "カナ(名)は必須項目です。",
-                      })}
-                    />
-                    <p className={styles.error}>
-                      {errors.familyNameKana?.message as ReactNode}
-                      {errors.firstNameKana?.message as ReactNode}
-                    </p>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>
-                    メールアドレス<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td className={styles.td}>
-                    <input
-                      type="text"
-                      className={styles.address}
-                      maxLength={100}
-                      onSubmit={onSubmit}
-                      {...register("mailAddress", {
-                        validate: {
-                          mailCheck: (value) => {
-                            const mailCheck = usersMail.filter(
-                              (mail) => mail === value,
-                            );
-                            return (
-                              mailCheck.length === 0 ||
-                              "このメールアドレスは登録済です"
-                            );
-                          },
-                        },
-                        required: "メールアドレスは必須項目です。",
-                        pattern: {
-                          value:
-                            /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                          message: "正しいメールアドレスを入力してください。",
-                        },
-                      })}
-                    />
-                    <p className={styles.error}>
-                      {errors.mailAddress?.message as ReactNode}
-                    </p>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>
-                    パスワード<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td className={styles.td}>
-                    <input
-                      type="password"
-                      className={`${styles.inputA} `}
-                      maxLength={16}
-                      onSubmit={onSubmit}
-                      {...register("password", {
-                        required: "パスワードは必須項目です。",
-                        minLength: {
-                          value: 8,
-                          message: "8文字以上で入力してください。",
-                        },
-                        maxLength: {
-                          value: 16,
-                          message: "16文字以下で入力してください。",
-                        },
-                        pattern: {
-                          value:
-                            /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]+$/,
-                          message:
-                            "半角英大文字、半角英小文字、数字をそれぞれ1種類以上含んでください。",
-                        },
-                      })}
-                    />
-                    <p className={styles.error}>
-                      {errors.password?.message as ReactNode}
-                    </p>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>
-                    確認パスワード<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td className={styles.td}>
-                    <input
-                      type="password"
-                      className={`${styles.inputA} `}
-                      maxLength={16}
-                      {...register("conPw", {
-                        validate: {
-                          matchesPreviousPassword: (value) => {
-                            const { password } = getValues();
-                            return (
-                              password === value || "パスワードと一致しません。"
-                            );
-                          },
-                        },
-                        required: "確認パスワードは必須項目です。",
-                      })}
-                    />
-                    <p className={styles.error}>
-                      {errors.conPw?.message as ReactNode}
-                    </p>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>アイコン</th>
-                  <td className={styles.imgSide}>
-                    <div className={styles.faileCenter}>
-                      <img
-                        src={imageUrl}
-                        alt="User Profile"
-                        className={styles.icon}
+                <tbody>
+                  <tr className={styles.tr}>
+                    <th className={styles.th}>
+                      氏名<span className={styles.span}>【必須】</span>
+                    </th>
+                    <td className={styles.td}>
+                      <input
+                        type="text"
+                        className={`${styles.inputA}`}
+                        maxLength={300}
+                        onSubmit={onSubmit}
+                        {...register("familyName", {
+                          required: "氏名(姓)は必須項目です。",
+                        })}
                       />
                       <input
-                        type="file"
-                        id="thumbnail"
-                        onChange={handleFileChange}
+                        type="text"
+                        className={`${styles.inputB} `}
+                        maxLength={300}
+                        onSubmit={onSubmit}
+                        {...register("firstName", {
+                          required: "氏名(名)は必須項目です。",
+                        })}
                       />
-                    </div>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>
-                    社員番号<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td className={styles.td}>
-                    <input
-                      type="text"
-                      className={`${styles.inputA} `}
-                      maxLength={10}
-                      onSubmit={onSubmit}
-                      {...register("employeeCode", {
-                        validate: {
-                          check: (value) => {
-                            const codeCheck = empCode.filter(
-                              (emp) => emp === value,
-                            );
-                            return (
-                              codeCheck.length === 0 ||
-                              "この社員番号は登録済です"
-                            );
+                      <p className={styles.error}>
+                        {errors.familyName?.message as ReactNode}
+                        {errors.firstName?.message as ReactNode}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr className={styles.tr}>
+                    <th className={styles.th}>
+                      カナ<span className={styles.span}>【必須】</span>
+                    </th>
+                    <td className={styles.td}>
+                      <input
+                        type="text"
+                        className={`${styles.inputA}`}
+                        maxLength={300}
+                        onSubmit={onSubmit}
+                        {...register("familyNameKana", {
+                          required: "カナ(姓)は必須項目です。",
+                        })}
+                      />
+                      <input
+                        type="text"
+                        className={`${styles.inputB} `}
+                        maxLength={300}
+                        onSubmit={onSubmit}
+                        {...register("firstNameKana", {
+                          required: "カナ(名)は必須項目です。",
+                        })}
+                      />
+                      <p className={styles.error}>
+                        {errors.familyNameKana?.message as ReactNode}
+                        {errors.firstNameKana?.message as ReactNode}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr className={styles.tr}>
+                    <th className={styles.th}>
+                      メールアドレス
+                      <span className={styles.span}>【必須】</span>
+                    </th>
+                    <td className={styles.td}>
+                      <input
+                        type="text"
+                        className={styles.address}
+                        maxLength={100}
+                        onSubmit={onSubmit}
+                        {...register("mailAddress", {
+                          validate: {
+                            mailCheck: (value) => {
+                              const mailCheck = usersMail.filter(
+                                (mail) => mail === value,
+                              );
+                              return (
+                                mailCheck.length === 0 ||
+                                "このメールアドレスは登録済です"
+                              );
+                            },
                           },
-                        },
-                        required: "社員番号は必須項目です。",
-                        pattern: {
-                          value: /[0-9]/,
-                          message: "数字で入力してください。",
-                        },
-                        maxLength: {
-                          value: 10,
-                          message: "10文字以下で入力してください。",
-                        },
-                      })}
-                    />
-                    <p className={styles.error}>
-                      {errors.employeeCode?.message as ReactNode}
-                    </p>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>
-                    職種<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td className={styles.td}>
-                    <div className={styles.radio}>
-                      {category.map((item) => {
-                        return (
-                          <div key={item.name} className={styles.radio}>
-                            <input
-                              id={item.id}
-                              type="radio"
-                              value={item.id}
-                              {...register("department")}
-                            />
-                            <label htmlFor={item.id} className="radioLabel">
-                              {item.name}
-                            </label>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <p className={styles.error}>
-                      {errors.department?.message as ReactNode}
-                    </p>
-                  </td>
-                </tr>
+                          required: "メールアドレスは必須項目です。",
+                          pattern: {
+                            value:
+                              /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                            message: "正しいメールアドレスを入力してください。",
+                          },
+                        })}
+                      />
+                      <p className={styles.error}>
+                        {errors.mailAddress?.message as ReactNode}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr className={styles.tr}>
+                    <th className={styles.th}>
+                      パスワード<span className={styles.span}>【必須】</span>
+                    </th>
+                    <td className={styles.td}>
+                      <input
+                        type="password"
+                        className={`${styles.inputA} `}
+                        maxLength={16}
+                        onSubmit={onSubmit}
+                        {...register("password", {
+                          required: "パスワードは必須項目です。",
+                          minLength: {
+                            value: 8,
+                            message: "8文字以上で入力してください。",
+                          },
+                          maxLength: {
+                            value: 16,
+                            message: "16文字以下で入力してください。",
+                          },
+                          pattern: {
+                            value:
+                              /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]+$/,
+                            message:
+                              "半角英大文字、半角英小文字、数字をそれぞれ1種類以上含んでください。",
+                          },
+                        })}
+                      />
+                      <p className={styles.error}>
+                        {errors.password?.message as ReactNode}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr className={styles.tr}>
+                    <th className={styles.th}>
+                      確認パスワード
+                      <span className={styles.span}>【必須】</span>
+                    </th>
+                    <td className={styles.td}>
+                      <input
+                        type="password"
+                        className={`${styles.inputA} `}
+                        maxLength={16}
+                        {...register("conPw", {
+                          validate: {
+                            matchesPreviousPassword: (value) => {
+                              const { password } = getValues();
+                              return (
+                                password === value ||
+                                "パスワードと一致しません。"
+                              );
+                            },
+                          },
+                          required: "確認パスワードは必須項目です。",
+                        })}
+                      />
+                      <p className={styles.error}>
+                        {errors.conPw?.message as ReactNode}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr className={styles.tr}>
+                    <th className={styles.th}>アイコン</th>
+                    <td className={styles.imgSide}>
+                      <div className={styles.faileCenter}>
+                        <img
+                          src={imageUrl}
+                          alt="User Profile"
+                          className={styles.icon}
+                        />
+                        <input
+                          type="file"
+                          id="thumbnail"
+                          onChange={handleFileChange}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className={styles.tr}>
+                    <th className={styles.th}>
+                      社員番号<span className={styles.span}>【必須】</span>
+                    </th>
+                    <td className={styles.td}>
+                      <input
+                        type="text"
+                        className={`${styles.inputA} `}
+                        maxLength={10}
+                        onSubmit={onSubmit}
+                        {...register("employeeCode", {
+                          validate: {
+                            check: (value) => {
+                              const codeCheck = empCode.filter(
+                                (emp) => emp === value,
+                              );
+                              return (
+                                codeCheck.length === 0 ||
+                                "この社員番号は登録済です"
+                              );
+                            },
+                          },
+                          required: "社員番号は必須項目です。",
+                          pattern: {
+                            value: /[0-9]/,
+                            message: "数字で入力してください。",
+                          },
+                          maxLength: {
+                            value: 10,
+                            message: "10文字以下で入力してください。",
+                          },
+                        })}
+                      />
+                      <p className={styles.error}>
+                        {errors.employeeCode?.message as ReactNode}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr className={styles.tr}>
+                    <th className={styles.th}>
+                      職種<span className={styles.span}>【必須】</span>
+                    </th>
+                    <td className={styles.td}>
+                      <div className={styles.radio}>
+                        {category.map((item) => {
+                          return (
+                            <div key={item.name} className={styles.radio}>
+                              <input
+                                id={item.id}
+                                type="radio"
+                                value={item.id}
+                                {...register("department")}
+                              />
+                              <label htmlFor={item.id} className="radioLabel">
+                                {item.name}
+                              </label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <p className={styles.error}>
+                        {errors.department?.message as ReactNode}
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
             <button type="submit" disabled={!isValid || isSubmitting}>

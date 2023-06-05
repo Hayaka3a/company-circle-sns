@@ -93,52 +93,54 @@ export default function EventCreate() {
           <h1>新規イベント作成</h1>
           <div className={styles.tableCovered}>
             <table>
-              <tr>
-                <th>
-                  イベント名<span className={styles.span}>【必須】</span>
-                </th>
-                <td>
-                  <EventName
-                    eventName={eventName}
-                    setEventName={setEventName}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  詳細<span className={styles.span}>【必須】</span>
-                </th>
-                <td>
-                  <EventDetail detail={detail} setDetail={setDetail} />
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  開催期間<span className={styles.span}>【必須】</span>
-                </th>
-                <td>
-                  <Daytime
-                    startDate={startDate}
-                    setStartDate={setStartDate}
-                    endDate={endDate}
-                    setEndDate={setEndDate}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>サムネイル</th>
-                <td className={styles.imgSide}>
-                  <p className={styles.icon} id="img"></p>
-                  <div className={styles.faileCenter}>
-                    <input
-                      type="file"
-                      id="thumbnail"
-                      className={styles.inputA}
-                      onChange={handleFileChange}
+              <tbody>
+                <tr>
+                  <th>
+                    イベント名<span className={styles.span}>【必須】</span>
+                  </th>
+                  <td>
+                    <EventName
+                      eventName={eventName}
+                      setEventName={setEventName}
                     />
-                  </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    詳細<span className={styles.span}>【必須】</span>
+                  </th>
+                  <td>
+                    <EventDetail detail={detail} setDetail={setDetail} />
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    開催期間<span className={styles.span}>【必須】</span>
+                  </th>
+                  <td>
+                    <Daytime
+                      startDate={startDate}
+                      setStartDate={setStartDate}
+                      endDate={endDate}
+                      setEndDate={setEndDate}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>サムネイル</th>
+                  <td className={styles.imgSide}>
+                    <p className={styles.icon} id="img"></p>
+                    <div className={styles.faileCenter}>
+                      <input
+                        type="file"
+                        id="thumbnail"
+                        className={styles.inputA}
+                        onChange={handleFileChange}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
 
