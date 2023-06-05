@@ -66,23 +66,30 @@ export default function IslandDetail() {
   };
   return (
     <div className={styles.flex}>
-      <MenubarIsland thumbnail="/login/loginCounter.png" />
+      <MenubarIsland />
       <div className={styles.island_detail}>
         <img src="/island/island_icon.png" alt="サークルアイコン" />
         <h2>{islandDetail && islandDetail.islandName}</h2>
         <p className={styles.textDetail}>
           {islandDetail && islandDetail.detail}
         </p>
-            <div className={styles.btn}>
-              <button onClick={openResindentModal}>住民申請</button>
-              {isResidentOpen && <CreateResidentApplication closeResidentModal={closeResidentModal} table="island" />}
-              <button onClick={openModal}>メッセージを送る</button>
-              {isOpen && <CreateSendingMessage closeModal={closeModal} table="island"/>}
-            </div>
+        <div className={styles.btn}>
+          <button onClick={openResindentModal}>住民申請</button>
+          {isResidentOpen && (
+            <CreateResidentApplication
+              closeResidentModal={closeResidentModal}
+              table="island"
+            />
+          )}
+          <button onClick={openModal}>メッセージを送る</button>
+          {isOpen && (
+            <CreateSendingMessage closeModal={closeModal} table="island" />
+          )}
+        </div>
       </div>
-        <button id={styles.edit_btn} onClick={Handler}>
-          編集・削除
-        </button>
+      <button id={styles.edit_btn} onClick={Handler}>
+        編集・削除
+      </button>
     </div>
   );
 }
