@@ -6,14 +6,13 @@ import "./App.css";
 import Header from "./components/Header";
 
 // userフォルダ
-import UserDetail from "./user";
 import UserPost from "./user/post";
 import Login from "./user/login";
 import IslandMessage from "./user/message/island_message";
 import ScoutMessage from "./user/message/scout_message";
 import OperationMessage from "./user/message/operation_message";
 import NewUser from "./user/newUser";
-import UserEdit from "./user/edit";
+import UserEdit from "./user";
 
 // eventフォルダ
 import EventDetail from "./event/[id]";
@@ -56,7 +55,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           {/* userフォルダ */}
-          <Route path="/user" element={<UserDetail />} />
+          <Route path="/user" element={<UserEdit />} />
           <Route path="/user/post" element={<UserPost />} />
           <Route path="/user/login" element={<Login />} />
           <Route

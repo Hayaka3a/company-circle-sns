@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "../styles/user/userEdit.module.css";
 import LogSt from "../components/cookie/logSt";
 import QuitUser from "../components/modalWindows/quitUser";
 import QuitConf from "../components/modalWindows/quitConf";
@@ -7,7 +8,7 @@ import QuitDone from "../components/modalWindows/quitDone";
 import GetCookieID from "../components/cookie/getCookieId";
 import { supabase } from "../createClient";
 
-export default function UserEdit() {
+export default function UnsubscribeButton() {
   LogSt();
 
   const navigate = useNavigate();
@@ -100,7 +101,9 @@ export default function UserEdit() {
   return (
     <>
       <div>
-        <button onClick={openModal}>退会</button>
+        <button onClick={openModal} className={styles.unsubButton}>
+          退会
+        </button>
         {isOpen && <QuitUser closeModal={closeModal} nextOpen={nextOpen} />}
         {confOpen && (
           <QuitConf

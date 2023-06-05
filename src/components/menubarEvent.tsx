@@ -14,6 +14,16 @@ export default function MenubarEvent() {
   const params = useParams();
   const paramsID = parseInt(params.id);
 
+  // 画像URL変更
+  useEffect(() => {
+    let imageUrl = "thumbnail";
+    let circleElement = document.getElementById("img");
+
+    if (circleElement) {
+      circleElement.style.backgroundImage = `url('${imageUrl}')`;
+    }
+  }, []);
+
   const userID = GetCookieID();
 
   // 表示しているイベントの情報をeevntに挿入
