@@ -1,50 +1,48 @@
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .back {
-    background-color: rgb(204, 244, 230);
-    padding: 0 150px 100px 150px;
-    margin-left: auto;
-    margin-right: auto;
+  padding: 0 150px 100px 150px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .event_detail {
-    background-color: white;
-    padding-bottom: 100px;
+  background-color: white;
+  padding-bottom: 100px;
 }
 
 .event_detail h1 {
-    padding-top: 30px;
-    text-align: center;
+  padding-top: 30px;
+  text-align: center;
 }
 
 .eventIcon {
-   width: 100px;
-   height: 100px;
-   margin-bottom: 50px;
-   padding-left: 420px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 50px;
+  padding-left: 420px;
 }
 
 .detail {
-    float: left;
-    padding: 0 100px 20px 100px;
-    width: 730px;
+  float: left;
+  padding: 0 100px 20px 100px;
+  width: 730px;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 .btn {
-    margin-top: 100px;
-    justify-content:space-around;
-    display: flex;
+  margin-top: 100px;
+  justify-content: space-around;
+  display: flex;
 }
 
 #edit_btn {
-    margin-top: 100px;
-    margin-left: 800px;
-    color: red;
+  margin-top: 100px;
+  margin-left: 800px;
+  color: red;
 }
-

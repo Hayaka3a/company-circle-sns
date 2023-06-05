@@ -1,6 +1,5 @@
 .display {
   display: flex;
-  background-color: rgba(255, 245, 217, 0.5);
 }
 .main {
   width: 75%;

@@ -1,7 +1,10 @@
 header {
   position: relative;
-  background-color: #a3cea0;
+  background-color: #9ccaaf;
   padding: 0 15px;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
 }
 .headerItem {
   display: flex;
@@ -13,9 +16,17 @@ header {
   margin-right: 0;
 }
 
+.search {
+  align-self: self-end;
+}
+
+.logo {
+  height: 100%;
+}
+
 .logout {
-  width: 50px;
-  height: 50px;
+  height: 28px;
+  cursor: pointer;
 }
 
 .listItem {
@@ -68,13 +79,13 @@ header {
   position: absolute;
   right: -30vw;
   width: 25vw;
-  height: 70vh;
+  height: auto;
   background: #fff;
   color: #111;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #a3cea0;
+  background-color: #9ccaaf;
   transition: ease 0.5s;
 }
 .menuGroup {
@@ -153,4 +164,8 @@ header {
 }
 .checkbox:checked ~ .menu {
   right: 0;
+}
+
+.input {
+  height: 25px;
 }
