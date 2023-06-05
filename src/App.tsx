@@ -48,7 +48,7 @@ function App() {
   const showNewUser = window.location.pathname !== "/user/newUser";
 
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
         {showHeader && showNewUser && <Header />}
         <Routes>
