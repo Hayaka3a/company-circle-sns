@@ -7,7 +7,7 @@ export default function IslandEntryPermitPage() {
   LogSt();
   return (
     <div className={styles.display}>
-      <MenubarIsland thumbnail="a" />
+      <MenubarIsland />
       <EntryPermit table={"island"} />
     </div>
   );

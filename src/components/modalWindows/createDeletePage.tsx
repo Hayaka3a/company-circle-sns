@@ -1,24 +1,18 @@
 import React, { useState } from "react";
 import styles from "../../styles/createDeletePage.module.css";
-import CreateDeleteCheck from "./createDeletingCheck";
 
+// closeDeleteModalは×ボタンを押下したときの関数、nextOpenは完了系ボタン（島を沈没（削除）させる）を押したときの関数
 export default function CreateDeletePage({
   closeDeleteModal,
-
+  nextOpen,
 }: {
   closeDeleteModal: () => void;
+  nextOpen: () => void;
 }) {
 
-  const [ isDeleteCheckOpen, setIsDeleteCheckOpen ] = useState(false);
-
-  // 島を沈没（削除）させるを押した際の小窓画面（モーダルウィンドウ）の開閉
-  // isDeleteCheckOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
-  const openDeleteCheckModal = () => {
-      setIsDeleteCheckOpen(true);
-  };
-
-  const closeDeleteCheckModal = () => {
-      setIsDeleteCheckOpen(false);
+  // 現在のウィンドウを非表示にし、入力ボックスウィンドウを表示する
+  const nextHandler = () => {
+    nextOpen();
   };
 
   return (
@@ -36,18 +30,10 @@ export default function CreateDeletePage({
               <div className={styles.title}>
                 <h3 className={styles.h3}>島を沈没させてもよろしいですか？</h3>
               </div>
-              <div className={styles.flexIcon}>
-                <img src= "/island/island_icon.png" 
-                     alt="サークルアイコン" 
-                />
-                <p>〇〇島</p>
-              </div>
             </div>
             <div>
-              <button onClick={openDeleteCheckModal} id={styles.delete_btn}>島を沈没（削除）させる</button>
-              {isDeleteCheckOpen && <CreateDeleteCheck closeDeleteCheckModal={closeDeleteCheckModal} />}
+              <button onClick={nextHandler} id={styles.delete_btn}>島を沈没（削除）させる</button>
             </div>
-
           </div>
         </div>
       </div>

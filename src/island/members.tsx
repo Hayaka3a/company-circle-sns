@@ -55,7 +55,7 @@ export default function IslandMembers() {
     <>
       {displayData && (
         <div className={styles.display}>
-          <MenubarIsland thumbnail={displayData.thumbnail} />
+          <MenubarIsland />
           <MembersList
             table="island"
             displayData={displayData}

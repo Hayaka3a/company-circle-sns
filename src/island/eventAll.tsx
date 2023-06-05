@@ -1,7 +1,124 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LogSt from "../components/cookie/logSt";
+import styles from "../styles/island/all.module.css";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { supabase } from "../createClient";
+import MenubarIsland from "../components/menubarIsland";
 
 export default function EventAll() {
   LogSt();
-  return <></>;
+  const navigate = useNavigate();
+  const params = useParams();
+  const paramsID = params.id;
+  const [events, setEvents] = useState([]);
+  const [islandName, setIslandName] = useState("");
+
+  const currentDateTime = new Date(); // 現在の日時取得
+
+  const createHandler = () => {
+    navigate("/event/create/[id]");
+    window.location.reload();
+  };
+
+  // 島の名前を取得する関数
+  const fetchIslandName = async () => {
+    const { data, error } = await supabase
+      .from("islands")
+      .select("islandName")
+      .eq("id", paramsID);
+
+    if (error) {
+      console.error("islandsテーブルデータ情報取得失敗", error);
+      return;
+    }
+
+    if (data && data.length > 0) {
+      setIslandName(data[0].islandName);
+    }
+  };
+
+  useEffect(() => {
+    const fetchEventData = async () => {
+      const { data: userEntryStatusData, error } = await supabase
+        .from("userEntryStatus")
+        .select("*")
+        .eq("islandID", paramsID);
+
+      if (error) {
+        console.error("userEntryStatusテーブル情報取得失敗");
+        return;
+      }
+
+      const eventIds = userEntryStatusData
+        .filter((entry) => entry.eventID !== null)
+        .map((entry) => entry.eventID);
+
+      const fetchEventDetails = async (eventId) => {
+        const { data: eventData, error: eventError } = await supabase
+          .from("events")
+          .select("*")
+          .eq("id", eventId)
+          .eq("status", "false");
+
+        if (eventError) {
+          console.error("Eventsテーブルデータ情報取得失敗", eventError);
+        }
+        return eventData[0];
+      };
+      const eventPromises = eventIds.map((eventId) =>
+        fetchEventDetails(eventId),
+      );
+      const fetchedEvents = await Promise.all(eventPromises);
+
+      setEvents(fetchedEvents.filter((event) => event !== null));
+    };
+
+    fetchIslandName();
+    fetchEventData();
+  }, [paramsID]);
+  return (
+    <div className={styles.flex}>
+      <MenubarIsland />
+      <div className={styles.all}>
+        <h2>{islandName}島 開催イベント</h2>
+        <button onClick={createHandler} className={styles.button}>
+          新しいイベントを始める
+        </button>
+        <div className={styles.eventAll}>
+          {events
+            .filter((event) => new Date(event.endDate) > currentDateTime)
+            .map((event) => (
+              <div key={event.id} className={styles.event1}>
+                <div className={styles.imgSide}>
+                  <img
+                    className={styles.icon}
+                    src={event.thumbnail || "/event_icon.png"}
+                    alt="Event Thumbnail"
+                  ></img>
+                  <div className={styles.eventInfo}>
+                    <Link to={`/event/${paramsID}`}>
+                      <h2 className={styles.eventName}>{event.eventName}</h2>
+                    </Link>
+                    <h3>
+                      開催時期 ：
+                      {new Date(event.startDate).toLocaleDateString("ja-JP", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}{" "}
+                      ～{" "}
+                      {new Date(event.endDate).toLocaleDateString("ja-JP", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+    </div>
+  );
 }

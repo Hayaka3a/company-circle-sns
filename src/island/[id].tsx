@@ -65,7 +65,7 @@ export default function IslandDetail() {
   };
   return (
     <div className={styles.flex}>
-      <MenubarIsland thumbnail="/login/loginCounter.png" />
+      <MenubarIsland />
       <div className={styles.island_detail}>
         <img src="/island/island_icon.png" alt="サークルアイコン" />
         <h2>{islandDetail && islandDetail.islandName}</h2>
