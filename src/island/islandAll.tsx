@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import LogSt from "../components/cookie/logSt";
 import styles from "../styles/island/all.module.css";
 import { supabase } from "../createClient";
-import MenubarIsland from "../components/menubarIsland";
+
 import { useEffect, useState } from "react";
 
 export default function IslandAll() {
@@ -42,7 +42,6 @@ export default function IslandAll() {
 
   return (
     <div className={styles.flex}>
-      <MenubarIsland />
       <div className={styles.all}>
         <h2>島一覧</h2>
         <div className={styles.eventAll}>
