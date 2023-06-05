@@ -29,7 +29,7 @@ export default function EventThread() {
   return (
     <>
       <div className={styles.flex}>
-        <MenubarEvent thumbnail={""} />
+        <MenubarEvent />
         <div className={styles.threadWrapper}>
           <button onClick={openModal}>スレッドを作成する</button>
           {isOpen && (

@@ -4,8 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import GetCookieID from "./cookie/getCookieId";
 import { supabase } from "../createClient";
 
-export default function MenubarEvent({ thumbnail }: { thumbnail: string }) {
+export default function MenubarEvent() {
+  interface Event {
+    eventName: string;
+    thumbnail: string;
+  }
   const [isJoined, setIsJoined] = useState(false); // イベントに参加しているかどうかの状態
+  const [event, setEvent] = useState<Event | null>(null);
   const params = useParams();
   const paramsID = parseInt(params.id);
 
@@ -20,14 +25,31 @@ export default function MenubarEvent({ thumbnail }: { thumbnail: string }) {
   }, []);
 
   const userID = GetCookieID();
-  const eventID = paramsID.toString();
 
+  // 表示しているイベントの情報をeevntに挿入
+  const fetchIslandData = async () => {
+    const { data, error } = await supabase
+      .from("events")
+      .select("eventName, thumbnail")
+      .eq("id", paramsID);
+
+    if (error) {
+      console.error("eventsテーブルデータ情報取得失敗", error);
+      return;
+    }
+
+    if (data && data.length > 0) {
+      setEvent(data[0]);
+    }
+  };
+
+  // ユーザーが表示しているイベントに参加しているかどうかチェック
   const fetchData = async () => {
     const { data, error } = await supabase
       .from("userEntryStatus")
       .select("*")
       .eq("userID", userID)
-      .eq("eventID", eventID)
+      .eq("eventID", paramsID)
       .eq("status", "false");
     if (error) {
       console.log(error);
@@ -39,13 +61,21 @@ export default function MenubarEvent({ thumbnail }: { thumbnail: string }) {
 
   useEffect(() => {
     fetchData();
+    fetchIslandData();
   }, []);
 
   return (
     <>
       <div className={styles.menubar}>
-        <div className={styles.icon} id="img"></div>
-        <h4>イベント名</h4>
+        {event && (
+          <img
+            className={styles.icon}
+            src={event.thumbnail || "/event_icon.png"}
+            alt="Event Thumbnail"
+          />
+        )}
+
+        <h4>{event && event.eventName}</h4>
         {/* ユーザーがイベントに参加している場合 */}
         {isJoined && (
           <div className={styles.menuContents}>

@@ -92,8 +92,6 @@ export default function UnsubscribeButton() {
             document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
           }
         }
-
-        console.log("Change status of user successfully.");
         navigate("/user/newUser");
         window.location.reload();
       }

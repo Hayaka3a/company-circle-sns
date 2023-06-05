@@ -33,6 +33,7 @@ import IslandMembers from "./island/members";
 import IslandPost from "./island/post";
 import UserMessage from "./island/message/user_message";
 import IslandEntryPermitPage from "./island/post/entryPermitPage";
+import IslandAll from "./island/islandAll";
 
 // searchフォルダ
 import Search from "./search";
@@ -76,12 +77,10 @@ function App() {
           <Route path="/search" element={<Search />} />
           {/* islandフォルダ */}
           <Route path="/island/:id" element={<IslandDetail />} />
-          <Route path="/island/create:id" element={<IslandCreate />} />
-          <Route path="/island/edit:id" element={<IslandEdit />} />
+          <Route path="/island/edit/:id" element={<IslandEdit />} />
           <Route path="/island/create" element={<IslandCreate />} />
           <Route path="/island/eventAll/:id" element={<EventAll />} />
           <Route path="/island/thread/:id" element={<IslandThread />} />
-          <Route path="/island/edit" element={<IslandEdit />} />
           <Route path="/island/members/:id" element={<IslandMembers />} />
           <Route path="/island/post/:id" element={<IslandPost />} />
           <Route
@@ -92,6 +91,7 @@ function App() {
             path="/island/message/user_message"
             element={<UserMessage />}
           />
+          <Route path="/island/islandAll" element={<IslandAll />} />
           {/* eventフォルダ */}
           <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/event/create/:id" element={<EventCreate />} />
