@@ -1,24 +1,65 @@
 import React, { useState } from "react";
 import styles from "../../styles/createDeletingCheck.module.css";
-import CreateAfterDelete from "./createAfterDelete";
+import { supabase } from "../../createClient";
+import { useParams } from "react-router-dom";
+
 
 export default function CreateDeleteCheck({
-  closeDeleteCheckModal,
+  close2Modal,
+  nextOpen2,
+  inputValue,
+  setInputValue,
 }: {
-  closeDeleteCheckModal: () => void;
+  close2Modal: () => void;
+  nextOpen2: () => void;
+  inputValue: string
+  // React.Dispatch<>は、<>の値を引数として受け取る
+  setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }) {
+  
+  const [emptyChara, setEmptyChara] = useState("");
+  const [notExist, setNotExist] = useState("");
 
-  const [ isAfterDeleteOpen, setIsAfterDeleteOpen ] = useState(false);
+  // パスの最後のIDを取得する
+  const { id } = useParams();
 
-  // 削除後の小窓画面（モーダルウィンドウ）の開閉
-  // isAfterDeleteOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
-  const openAfterDeleteModal = () => {
-    setIsAfterDeleteOpen(true);
-};
+  const nextHandler = async () => {
+    if (inputValue) {
+      // IDに対応する島の情報を取得する
+      const { data, error } = await supabase
+        .from("islands")
+        .select("islandName")
+        .eq("id", id);
+  
+      if (error) {
+        // エラーハンドリング
+        console.error(error);
+        return;
+      }
+  
+      if (data && data.length > 0) {
+        const islandName = data[0].islandName;
+  
+        if (islandName !== inputValue) {
+          setNotExist("入力された島名が間違っています");
+        } else {
+          nextOpen2();
+        }
+      }
+    }
+  };
 
-const closeAfterDeleteModal = () => {
-    setIsAfterDeleteOpen(false);
-};
+  const handleInputChange = async (event) => {
+    const value = event.target.value;
+    if (/\s/.test(value)) {
+      // 空白文字（\s）を入れようとした場合、エラーメッセージを表示
+      setEmptyChara("空白文字は入力できません");
+      setNotExist("");
+    } else {
+      setInputValue(value);
+      setEmptyChara("");
+    }
+  };
 
 return (
     <>
@@ -28,27 +69,37 @@ return (
             <img
               src="/modalWindow/close.png"
               alt="×ボタン"
-              onClick={closeDeleteCheckModal}
+              onClick={close2Modal}
               className={styles.close}
             />
             <div className={styles.main}>
               <div className={styles.title}>
                 <h3 className={styles.h3}>本当に島を沈没させてもよろしいですか？</h3>
               </div>
-              <div className={styles.flexIcon}>
-                <img src= "/island/island_icon.png" 
-                     alt="サークルアイコン" 
-                />
-                <p>〇〇島</p>
-              </div>
               <div>
-                <p>削除するために下記のテキストボックスに<br /> ”〇〇島”と入力してください</p>
-                <input type="text" name="テキストボックス" id={styles.deleteCheck} />
+                <p>削除するために下記のテキストボックスに<br /> 島名を入力してください</p>
+                <p>※スペースを入れずに入力してください</p>
               </div>
+              <input 
+                type="text" 
+                id={styles.deleteCheck} 
+                value={inputValue}
+                onChange={handleInputChange}
+              />
+
+              {emptyChara && (
+                <div>
+                  <span>{emptyChara}</span>
+                </div>
+              )}
+              {notExist && (
+                <div>
+                  <span>{notExist}</span>
+                </div>
+              )}
             </div>
             <div>
-              <button onClick={openAfterDeleteModal} id={styles.delete_btn}>削除する</button>
-              {isAfterDeleteOpen && <CreateAfterDelete closeAfterDModal={closeAfterDeleteModal} />}
+              <button onClick={nextHandler} id={styles.delete_btn} disabled={!inputValue.trim()}>削除する</button>
             </div>
           </div>
         </div>
