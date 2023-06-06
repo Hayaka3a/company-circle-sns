@@ -12,18 +12,19 @@ export default function IslandDetail() {
   const [isOpen, setIsOpen] = useState(false);
   const [isResidentOpen, setIsResidentOpen] = useState(false);
   const navigate = useNavigate();
-  const islandId = useParams();
+  const islandID = useParams();
+  const islandIDValue = islandID["id"];
   const [islandDetail, setIslandDetail] = useState(null); // 取得した島の詳細情報を保持する状態変数
 
   useEffect(() => {
     fetchIslandDetail();
-  }, [islandId]);
+  }, [islandID]);
 
   const fetchIslandDetail = async () => {
     const { data, error } = await supabase
       .from("islands")
       .select("*")
-      .eq("id", islandId.id); // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
+      .eq("id", islandIDValue); // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
 
     if (error) {
       console.error("島の詳細情報の取得に失敗しました:", error);
@@ -68,7 +69,12 @@ export default function IslandDetail() {
     <div className={styles.flex}>
       <MenubarIsland />
       <div className={styles.island_detail}>
-        <img src="/island/island_icon.png" alt="サークルアイコン" />
+        {islandDetail && (
+          <img 
+            src={islandDetail.thumbnail || "/island/island_icon.png"}
+            alt="サークルアイコン" 
+          />
+        )}
         <h2>{islandDetail && islandDetail.islandName}</h2>
         <p className={styles.textDetail}>
           {islandDetail && islandDetail.detail}
@@ -77,7 +83,7 @@ export default function IslandDetail() {
           <button onClick={openResindentModal}>住民申請</button>
           {isResidentOpen && (
             <CreateResidentApplication
-              closeResidentModal={closeResidentModal}
+            closeModal={closeResidentModal}
               table="island"
             />
           )}

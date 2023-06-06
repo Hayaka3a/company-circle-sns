@@ -13,44 +13,40 @@ export default function CreateSendingMessage({
     table: string;
 }) {
   const [message, setMessage] = useState("");
-  const [postedID, setPostedID] = useState(0);
-  const [posts, setPosts] = useState(0);
+  const [postedID, setPostedID] = useState(null);
+  const [postID, setPostID] = useState();
   const [eventName, setEventName ] = useState("");
   const params = useParams();
   const paramsID = parseInt(params.id);
+
   const userID = GetCookieID();
 
 
   useEffect(() => {
     fetchPost();
     fetchEventName();
+    fetchEventPost();
   }, []);
 
 
   const fetchPost = async () => {
-    // userIDから該当のPostIDを割り出す
-    const { data: posts, error: postError } = await supabase
-    .from("posts")
-    .select("id")
-    .eq("userID", userID)
-    .eq("status", false);
-    if (postError) {
-      console.log(userID);
-      console.log(postError, "ポストエラー");
-    }
-    setPosts(posts[0].id);
-
     // PostedByに入れるため、送信する側のPostIDを取得する
-    const { data: postedBy, error: postedByError } = await supabase
+       const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
-      .eq(`${table}ID`, paramsID)
-      .eq("status", false);
+      .eq("userID", userID);
+
     if (postedByError) {
-      console.log(postedByError, "ポストバイエラー");
+      console.log(postedByError, "エラー");
     }
-    setPostedID(postedBy[0].id);
+
+    if (postedBy && postedBy.length > 0 && postedBy[0].id) {
+      setPostedID(postedBy[0].id);
+    } else {
+      console.log("PostedByIDが取得できません");
+    }
   };
+
 
   // イベント名を取得してモーダルウィンドウに表示
   const fetchEventName = async () => {
@@ -67,6 +63,25 @@ export default function CreateSendingMessage({
       console.log(eventName)
     }
   };
+
+    const fetchEventPost = async () => {
+      const { data: post, error: postError } = await supabase
+        .from("posts")
+        .select("id")
+        .eq("eventID", paramsID);
+
+      if (postError) {
+        console.error(postError, "エラー");
+      }
+
+      if (post && post.length > 0) {
+        const postId = post[0].id; // ローカルの変数名をpostIdに修正
+        setPostID(postId);
+      } else {
+        console.log("該当する投稿が見つかりませんでした");
+      }
+  };
+
   
 
   // messagesテーブルにメッセージを保存
@@ -75,7 +90,7 @@ export default function CreateSendingMessage({
       .from("messages")
       .insert([
         {
-          postID: posts,
+          postID: postID,
           message: message,
           scout: false,
           isRead: false,

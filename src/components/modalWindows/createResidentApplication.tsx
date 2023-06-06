@@ -2,21 +2,24 @@ import React, { useState, useEffect } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
+import IslandName from "../createIsland/islandName";
 
 export default function CreateResidentApplication({
-  closeResidentModal,
+  closeModal,
   table,
 }: {
-  closeResidentModal: () => void;
+  closeModal: () => void;
   table: string;
 }) {
   const params = useParams();
   const paramsID = parseInt(params.id);
   const [message, setMessage] = useState("");
   const [postedID, setPostedID] = useState(null);
+  const [islandName, setIslandName] =useState("");
 
   useEffect(() => {
     fetchPost();
+    fetchislnadName();
   }, []);
 
   const fetchPost = async () => {
@@ -31,6 +34,22 @@ export default function CreateResidentApplication({
     }
     setPostedID(postedBy[0].id);
   };
+
+  const fetchislnadName = async () => {
+    const { data: island, error: islandError } = await supabase
+      .from("islands")
+      .select("islandName")
+      .eq("id", paramsID)
+      .eq("status", false);
+  
+    if (islandError) {
+      console.log(islandError, "エラーが発生しました");
+    } else if (island && island.length > 0) {
+      setIslandName(island[0].islandName);
+      console.log(island[0].islandName);
+    }
+  };
+  
 
 
   // messagesテーブルとapplicationsテーブルにメッセージを保存
@@ -55,7 +74,7 @@ export default function CreateResidentApplication({
         console.error("メッセージの送信中にエラーが発生しました:");
       } else {
         console.log("データが正常に送信されました");
-        closeResidentModal();
+        closeModal();
       }
     } catch (error) {
       console.error("データの送信中にエラーが発生しました:", error.message);
@@ -68,18 +87,19 @@ export default function CreateResidentApplication({
 
   return (
     <>
+    {islandName &&
       <div className={styles.overlay}>
         <div className={styles.modal}>
           <div className={styles.allContents}>
             <img
               src="/modalWindow/close.png"
               alt="×ボタン"
-              onClick={closeResidentModal}
+              onClick={closeModal}
               className={styles.close}
             />
             <div className={styles.main}>
               <div className={styles.title}>
-                <h3 className={styles.h3}>○○島</h3>
+                <h3 className={styles.h3}>{islandName}</h3>
                 <p className={styles.messageName}>住民申請</p>
               </div>
               <div className={styles.input}>
@@ -99,6 +119,7 @@ export default function CreateResidentApplication({
           </div>
         </div>
       </div>
+      }
     </>
   );
 }

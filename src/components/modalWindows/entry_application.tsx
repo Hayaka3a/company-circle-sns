@@ -44,6 +44,7 @@ export default function CreateResidentApplication({
     }
   };
 
+  // イベント名を取得してモーダルウィンドウに表示
   const fetchEventName = async () => {
     const { data: event, error: eventError } = await supabase
       .from("events")
@@ -76,6 +77,7 @@ export default function CreateResidentApplication({
     }
   };
 
+  // messagesテーブルにメッセージを保存
   const saveMessage = async () => {
     const { data, error } = await supabase.from("messages").insert([
       {

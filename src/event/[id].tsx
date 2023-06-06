@@ -6,6 +6,7 @@ import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import EntryApplication from "../components/modalWindows/entry_application";
+import EventSendingMessage from "../components/modalWindows/eventSendingMessage";
 
 export default function EventDetail() {
   LogSt();
@@ -152,7 +153,7 @@ export default function EventDetail() {
             )}
             <button onClick={openModal}>メッセージを送る</button>
             {isOpen && (
-              <CreateSendingMessage closeModal={closeModal} table="island" />
+              <EventSendingMessage closeModal={closeModal} table="island" />
             )}
           </div>
           <button id={styles.edit_btn} onClick={Handler}>
