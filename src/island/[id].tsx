@@ -77,8 +77,10 @@ export default function IslandDetail() {
           <p className={styles.textDetail}>
             {islandDetail && islandDetail.detail}
           </p>
-          <div className={styles.btn}>
-            <button onClick={openResindentModal}>住民申請</button>
+          <div>
+            <button onClick={openResindentModal} className={styles.btn1}>
+              住民申請
+            </button>
             {isResidentOpen && (
               <CreateResidentApplication
                 closeResidentModal={closeResidentModal}
@@ -86,7 +88,9 @@ export default function IslandDetail() {
                 islandName={islandDetail.islandName}
               />
             )}
-            <button onClick={openModal}>メッセージを送る</button>
+            <button onClick={openModal} className={styles.btn2}>
+              メッセージを送る
+            </button>
             {isOpen && (
               <CreateSendingMessage closeModal={closeModal} table="island" />
             )}
