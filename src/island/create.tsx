@@ -20,7 +20,7 @@ export default function IslandCreate() {
     >();
   const [tagOptions, setTagOptions] =
     useState<{ id: number; Name: string; NameKana: string }[]>();
-  const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+  const [imageUrl, setImageUrl] = useState("");
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
   const [tagNames, setTagNames] = useState<
@@ -83,21 +83,27 @@ export default function IslandCreate() {
     fetchUsers();
   }, []);
 
-  // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
-  useEffect(() => {
-    let circleElement = document.getElementById("img");
-    if (circleElement) {
-      circleElement.style.backgroundImage = `url('${imageUrl}')`;
-    }
-  }, [imageUrl]);
-
   // 画像ファイル選択したら、表示画像に反映
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!event.target.files || event.target.files.length == 0) {
+      // 画像が選択されていないのでreturn
+      return;
     }
+
+    const file = event.target.files?.[0];
+    const random = Math.floor(Math.random() * 10000);
+    const filePath = `${file.name}${random}`; // 画像の保存先のpathを指定
+    const { error } = await supabase.storage
+      .from("islandIcon")
+      .upload(filePath, file);
+    if (error) {
+      console.log(error, "画像追加エラー", filePath);
+    }
+
+    const { data } = supabase.storage.from("islandIcon").getPublicUrl(filePath);
+    setImageUrl(data.publicUrl);
   };
 
   // 島作成する
@@ -226,7 +232,11 @@ export default function IslandCreate() {
                 <tr>
                   <th>サムネイル</th>
                   <td className={styles.imgSide}>
-                    <p className={styles.icon} id="img"></p>
+                    <img
+                      className={styles.icon}
+                      src={imageUrl || "/island/island_icon.png"}
+                      alt="island Thumbnail"
+                    />
                     <div className={styles.faileCenter}>
                       <input
                         type="file"

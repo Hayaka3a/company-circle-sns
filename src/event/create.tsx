@@ -11,7 +11,7 @@ export default function EventCreate() {
   LogSt();
 
   const navigate = useNavigate();
-  const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+  const [imageUrl, setImageUrl] = useState("");
   const [eventName, setEventName] = useState("");
   const [detail, setDetail] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -21,24 +21,29 @@ export default function EventCreate() {
   const paramsID = parseInt(params.id);
   const islandID = params.id;
 
-  console.log(params);
-
-  // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
-  useEffect(() => {
-    let circleElement = document.getElementById("img");
-    if (circleElement) {
-      circleElement.style.backgroundImage = `url('${imageUrl}')`;
-    }
-  }, [imageUrl]);
-
   // 画像ファイル選択したら、表示画像に反映
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!event.target.files || event.target.files.length == 0) {
+      // 画像が選択されていないのでreturn
+      return;
     }
+
+    const file = event.target.files?.[0];
+    const random = Math.floor(Math.random() * 10000);
+    const filePath = `${file.name}${random}`; // 画像の保存先のpathを指定
+    const { error } = await supabase.storage
+      .from("eventIcon")
+      .upload(filePath, file);
+    if (error) {
+      console.log(error, "画像追加エラー", filePath);
+    }
+
+    const { data } = supabase.storage.from("eventIcon").getPublicUrl(filePath);
+    setImageUrl(data.publicUrl);
   };
+
   // イベント作成する
   const createHandler = async () => {
     const eventData = {
@@ -48,6 +53,7 @@ export default function EventCreate() {
       endDate: new Date(endDate).toISOString(),
       status: "false",
       createdBy: "システム",
+      thumbnail: imageUrl,
     };
 
     try {
@@ -83,7 +89,7 @@ export default function EventCreate() {
         console.log("userEntryStatus挿入エラー");
       }
 
-      navigate(`/event/${paramsID}`);
+      navigate(`/event/${createdEventId}`);
       window.location.reload();
     } catch (error) {
       console.log("イベント作成エラー");
@@ -133,7 +139,11 @@ export default function EventCreate() {
                 <tr>
                   <th>サムネイル</th>
                   <td className={styles.imgSide}>
-                    <p className={styles.icon} id="img"></p>
+                    <img
+                      className={styles.icon}
+                      src={imageUrl || "/event_icon.png"}
+                      alt="Event Thumbnail"
+                    />
                     <div className={styles.faileCenter}>
                       <input
                         type="file"
