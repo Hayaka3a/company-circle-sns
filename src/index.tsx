@@ -80,12 +80,12 @@ export default function Index() {
   }, []);
 
   return (
-    <div>
+    <>
       <div className={styles.all}>
         {/* ロゴ */}
-        <Link to={"/"}>
-          <img src="/images/logo.png" className={styles.logo} />
-        </Link>
+
+        <img src="/images/logo.png" className={styles.logo} />
+
         <div className={styles.information}>
           <h3 className={styles.news}>お知らせ</h3>
           {/* 個人用ポスト */}
@@ -118,41 +118,45 @@ export default function Index() {
               新着イベント
             </button>
           </div>
-          {tag === "islands" && (
-            <div className={styles.islands}>
-              {islands.map((island) => (
-                <div key={island.id} className={styles.island}>
-                  <Link to={`/island/${island.id}`}>
-                    <img
-                      className={styles.icon}
-                      src={island.thumbnail || "/island/island_icon.png"}
-                      alt="Event Thumbnail"
-                    />
-                    <h2>{island.islandName}</h2>
-                  </Link>
-                </div>
-              ))}
-              <Link to={`/island/islandAll`}>島一覧情報</Link>はこちら！
-            </div>
-          )}
-          {tag === "events" && (
-            <div className={styles.events}>
-              {events.slice(0, 6).map((event) => (
-                <div key={event.id} className={styles.event}>
-                  <Link to={`/island/${event.id}`}>
-                    <img
-                      className={styles.icon}
-                      src={event.thumbnail || "/event_icon.png"}
-                      alt="Event Thumbnail"
-                    />
-                    <h2>{event.eventName}</h2>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
+          <div className={styles.down}>
+            {tag === "islands" && (
+              <div className={styles.islands}>
+                {islands.slice(0, 6).map((island) => (
+                  <div key={island.id} className={styles.island}>
+                    <Link to={`/island/${island.id}`}>
+                      <img
+                        className={styles.icon}
+                        src={island.thumbnail || "/island/island_icon.png"}
+                        alt="Event Thumbnail"
+                      />
+                      <h3>{island.islandName}</h3>
+                    </Link>
+                  </div>
+                ))}
+                {/* <div className={styles.link}>
+                  <Link to={`/island/islandAll`}>島一覧情報</Link>はこちら！
+                </div> */}
+              </div>
+            )}
+            {tag === "events" && (
+              <div className={styles.events}>
+                {events.slice(0, 6).map((event) => (
+                  <div key={event.id} className={styles.event}>
+                    <Link to={`/island/${event.id}`}>
+                      <img
+                        className={styles.icon}
+                        src={event.thumbnail || "/event_icon.png"}
+                        alt="Event Thumbnail"
+                      />
+                      <h3>{event.eventName}</h3>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

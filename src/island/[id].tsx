@@ -17,7 +17,7 @@ export default function IslandDetail() {
 
   useEffect(() => {
     fetchIslandDetail();
-  }, [islandId]);
+  }, [islandDetail]);
 
   const fetchIslandDetail = async () => {
     const { data, error } = await supabase
@@ -67,12 +67,14 @@ export default function IslandDetail() {
     <div className={styles.flex}>
       <MenubarIsland />
       <div className={styles.back}>
-        <div className={styles.island_detail}>
-          <img
-            src={islandDetail.thumbnail}
-            alt="サークルアイコン"
-            className={styles.icon}
-          />
+        <div className={styles.detail}>
+          {islandDetail && (
+            <img
+              src={islandDetail.thumbnail}
+              alt="サークルアイコン"
+              className={styles.icon}
+            />
+          )}
           <h2>{islandDetail && islandDetail.islandName}島</h2>
           <p className={styles.textDetail}>
             {islandDetail && islandDetail.detail}

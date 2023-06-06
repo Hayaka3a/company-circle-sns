@@ -12,23 +12,20 @@
   margin-left: auto;
   text-align: center;
   border-radius: 1%;
-  padding-bottom: 3%;
   width: 70%;
 }
-.island_detail {
+.detail {
   width: 50em;
+  height: 100%;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
   padding: 4% 0;
 }
 
-.island_detail h2 {
-}
-
 .editbox {
   text-align: right;
-  margin-top: 10%;
+  margin-top: 2%;
 }
 
 .btn1 {
