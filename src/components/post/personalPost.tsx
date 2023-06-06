@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { supabase } from "../../createClient";
 import GetCookieID from "../cookie/getCookieId";
+import styles from "../../styles/index.module.css";
 
 export default function PersonalPost({
   hasNewMessage,
@@ -43,6 +44,12 @@ export default function PersonalPost({
   }, [userID, setHasNewMessage]);
 
   return (
-    <>{hasNewMessage && <p>✴個人用ポストに新しいメッセージが届いています</p>}</>
+    <>
+      {hasNewMessage && (
+        <p className={styles.p}>
+          ✴あなたのポストに新しいメッセージが届いています
+        </p>
+      )}
+    </>
   );
 }

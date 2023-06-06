@@ -129,21 +129,29 @@ export default function MenubarEvent() {
             alt="Event Thumbnail"
           />
         )}
-        <h4>{event && event.eventName}</h4>{" "}
+        <h3 className={styles.title}>{event && event.eventName}</h3>
         {/* ユーザーがイベントに参加している場合 */}
         {isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/event/thread/${paramsID}`}>掲示板</Link>
+              <Link to={`/event/thread/${paramsID}`} className={styles.link}>
+                掲示板
+              </Link>
             </div>
             <div>
-              <Link to={`/event/post/${paramsID}`}>ポスト</Link>
+              <Link to={`/event/post/${paramsID}`} className={styles.link}>
+                ポスト
+              </Link>
             </div>
             <div>
-              <Link to={`/event/members/${paramsID}`}>参加者一覧</Link>
+              <Link to={`/event/members/${paramsID}`} className={styles.link}>
+                参加者一覧
+              </Link>
             </div>
             <div>
-              <Link to={`/event/${paramsID}`}>イベント詳細</Link>
+              <Link to={`/event/${paramsID}`} className={styles.link}>
+                イベント詳細
+              </Link>
             </div>
           </div>
         )}
@@ -151,10 +159,14 @@ export default function MenubarEvent() {
         {!isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/event/members`}>参加者一覧</Link>
+              <Link to={`/event/members`} className={styles.link}>
+                参加者一覧
+              </Link>
             </div>
             <div>
-              <Link to={`/event/[id]`}>イベント詳細</Link>
+              <Link to={`/event/[id]`} className={styles.link}>
+                イベント詳細
+              </Link>
             </div>
           </div>
         )}

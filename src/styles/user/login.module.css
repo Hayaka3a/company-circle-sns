@@ -12,9 +12,9 @@
 
 .board {
   margin: auto;
-  width: 460px;
+  width: 80vh;
   height: 75%;
-  margin-top: 14%;
+  margin-top: 34vh;
   text-align: center;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .logo {
-  height: 140px;
+  height: 30vh;
 }
 
 .img {
@@ -37,12 +37,14 @@
   margin-top: 2%;
   margin-bottom: 5%;
   border: 2px solid rgba(50, 67, 52, 0.1);
-  width: 65%;
+  width: 50vh;
+  height: 4vh;
 }
 
 .inputB {
   border: 2px solid rgba(50, 67, 52, 0.1);
-  width: 65%;
+  width: 50vh;
+  height: 4vh;
 }
 
 .link {
@@ -50,7 +52,7 @@
 }
 
 .button {
-  width: 80px;
+  width: 14vh;
   margin-top: 15px;
   font-weight: bold;
   border-radius: 10px;
@@ -58,7 +60,7 @@
   border: 3px solid rgba(135, 181, 140, 1);
   box-shadow: 5px 5px rgba(110, 148, 115, 1);
   transition: 0.3s ease-in-out;
-  height: 40px;
+  height: 7vh;
 }
 
 .button:hover {
