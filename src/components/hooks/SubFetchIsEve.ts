@@ -31,7 +31,7 @@ export default function SubFetchIsEve({
 
       if (eveError) {
         console.log(eveError, "eveError");
-      } else {
+      } else if (eveData) {
         //取得した２つのデータを１つの配列にする
         const tmpEve = eveData
           .filter((data) => data.events)
@@ -45,6 +45,8 @@ export default function SubFetchIsEve({
         tmpEve.map((data) => tmpIs.push(data));
 
         setCombi(tmpIs);
+      } else {
+        return;
       }
     }
   };

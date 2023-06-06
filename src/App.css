@@ -1,9 +1,12 @@
 .App {
-  text-align: center;
   background-image: url("/public/images/bg.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  font-family: "ＭＳ Ｐゴシック", "MS PGothic", "ヒラギノ明朝 ProN",
+    "Hiragino Mincho ProN", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3",
+    sans-serif;
+  color: rgba(50, 67, 52, 1);
 }
 
 .App-logo {
@@ -30,6 +33,9 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.button {
 }
 
 @keyframes App-logo-spin {

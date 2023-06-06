@@ -43,7 +43,7 @@ export default function IslandAll() {
   return (
     <div className={styles.flex}>
       <div className={styles.all}>
-        <h2>島一覧</h2>
+        <h2 className={styles.title}>島一覧</h2>
         <div className={styles.eventAll}>
           {islands.map((island) => (
             <div key={island.id} className={styles.event1}>
@@ -53,12 +53,12 @@ export default function IslandAll() {
                   src={island.thumbnail || "/island/island_icon.png"}
                   alt="island Thumbnail"
                 ></img>
-                <div className={styles.eventInfo}>
-                  <Link to={`/island/${paramsID}`}>
-                    <h2 className={styles.eventName}>{island.islandName}</h2>
-                  </Link>
-                  <p>{truncateString(island.detail, 100)}</p>
-                </div>
+              </div>
+              <div className={styles.eventInfo}>
+                <Link to={`/island/${paramsID}`}>
+                  <h2 className={styles.eventName}>{island.islandName}</h2>
+                </Link>
+                <p>{truncateString(island.detail, 100)}</p>
               </div>
             </div>
           ))}

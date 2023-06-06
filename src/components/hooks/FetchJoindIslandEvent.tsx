@@ -43,7 +43,7 @@ function FetchJoindIslandEvent() {
 
             if (postError) {
               console.log(postError, "postError");
-            } else {
+            } else if (post.length > 0) {
               // 配列で返ってくるので、index[0]から取り出す
               const msgs = post[0].messages;
               // 未読のメッセージを取得
@@ -56,6 +56,8 @@ function FetchJoindIslandEvent() {
               };
               // 配列に追加
               tmpIsland.push(modifiedIsland);
+            } else {
+              return;
             }
           } else if (join.events !== null) {
             // 参加イベントのidを取得
@@ -70,7 +72,7 @@ function FetchJoindIslandEvent() {
 
             if (postError || !post) {
               console.log(postError, "postError");
-            } else {
+            } else if (post.length > 0) {
               // 配列で返ってくるので、index[0]から取り出す
               const msgs = post[0].messages;
               // 未読のメッセージを取得
@@ -83,6 +85,8 @@ function FetchJoindIslandEvent() {
               };
               // 配列に追加
               tmpEvents.push(modifiedEvent);
+            } else {
+              return;
             }
           }
         },
