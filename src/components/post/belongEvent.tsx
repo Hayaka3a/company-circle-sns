@@ -54,6 +54,7 @@ export default function BelongEvent() {
             return acc;
           }, []);
 
+          // イベント開催している島に不参加の場合のデータを追加
           const { data: refugee, error: refugeeError } = await supabase
             .from("userEntryStatus")
             .select("eventID")
