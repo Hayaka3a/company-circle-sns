@@ -193,65 +193,67 @@ export default function IslandCreate() {
           <h1>島作成</h1>
           <div className={styles.tableCovered}>
             <table>
-              <tr>
-                <th>
-                  島名<span className={styles.span}>【必須】</span>
-                </th>
-                <td>
-                  <IslandName
-                    islandName={islandName}
-                    setIslandName={setIslandName}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  活動内容<span className={styles.span}>【必須】</span>
-                </th>
-                <td>
-                  <Detail detail={detail} setDetail={setDetail} />
-                </td>
-              </tr>
-              <tr>
-                <th>メンバー</th>
-                <td>
-                  <ComboBoxUser
-                    nameOptions={userOptions}
-                    htmlFor="user"
-                    setIslandMembers={setIslandMembers}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>サムネイル</th>
-                <td className={styles.imgSide}>
-                  <p className={styles.icon} id="img"></p>
-                  <div className={styles.faileCenter}>
-                    <input
-                      type="file"
-                      id="thumbnail"
-                      className={styles.inputA}
-                      onChange={handleFileChange}
+              <tbody>
+                <tr>
+                  <th>
+                    島名<span className={styles.span}>【必須】</span>
+                  </th>
+                  <td>
+                    <IslandName
+                      islandName={islandName}
+                      setIslandName={setIslandName}
                     />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>タグ</th>
-                <td>
-                  <ComboBoxTag
-                    tagOptions={tagOptions}
-                    htmlFor="tag"
-                    setIslandTags={setIslandTags}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>タグ追加</th>
-                <td>
-                  <AddTag setTagNames={setTagNames} />
-                </td>
-              </tr>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    活動内容<span className={styles.span}>【必須】</span>
+                  </th>
+                  <td>
+                    <Detail detail={detail} setDetail={setDetail} />
+                  </td>
+                </tr>
+                <tr>
+                  <th>メンバー</th>
+                  <td>
+                    <ComboBoxUser
+                      nameOptions={userOptions}
+                      htmlFor="user"
+                      setIslandMembers={setIslandMembers}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>サムネイル</th>
+                  <td className={styles.imgSide}>
+                    <p className={styles.icon} id="img"></p>
+                    <div className={styles.faileCenter}>
+                      <input
+                        type="file"
+                        id="thumbnail"
+                        className={styles.inputA}
+                        onChange={handleFileChange}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>タグ</th>
+                  <td>
+                    <ComboBoxTag
+                      tagOptions={tagOptions}
+                      htmlFor="tag"
+                      setIslandTags={setIslandTags}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>タグ追加</th>
+                  <td>
+                    <AddTag setTagNames={setTagNames} />
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
 

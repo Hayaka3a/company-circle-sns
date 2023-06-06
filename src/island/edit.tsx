@@ -5,7 +5,9 @@ import { supabase } from "../createClient";
 import ComboBoxTag from "../components/comboBoxTag";
 import AddTag from "../components/createIsland/addtag";
 import LogSt from "../components/cookie/logSt";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
+import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 
 export default function IslandEdit() {
   LogSt();
@@ -19,7 +21,15 @@ export default function IslandEdit() {
   // console.log(fetchIslandID)
 
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+
+  const navigate = useNavigate();
+  // 削除のモーダルウィンドウの開閉
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [ isDeleteCheckOpen, setIsDeleteCheckOpen ] = useState(false);
+  const [ isAfterDeleteOpen, setIsAfterDeleteOpen ] = useState(false);
+  const [ inputValue, setInputValue ] = useState("");
+
+
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
   const [tagName, setTagName] = useState("");
@@ -39,13 +49,82 @@ export default function IslandEdit() {
     >([]);
 
 
-  // openDeleteModalの値がtrueの時だけ小窓画面をレンダリング（表示）する
+  // 島を沈没させてもよろしいですか？モーダルウィンドウを表示
   const openDeleteModal = () => {
     setIsDeleteOpen(true);
   };
-
+  // 島を沈没させてもよろしいですか？モーダルウィンドウを非表示
   const closeDeleteModal = () => {
     setIsDeleteOpen(false);
+  };
+
+  // 島を沈没させてもよろしいですか？を閉じて、入力ウィンドウを表示
+  const nextOpen = () => {
+    setIsDeleteOpen(false);
+    setIsDeleteCheckOpen(true);
+  };
+
+  // 入力のウィンドウを閉じて、削除完了のウィンドウを表示する
+  const nextOpen2 = () => {
+    setIsDeleteCheckOpen(false);
+    setIsAfterDeleteOpen(true);
+  };
+
+  // 入力ウィンドウで×ボタンを押したら画面が閉じる
+  const close2Modal = () => {
+    setIsDeleteCheckOpen(false);
+  };
+
+  // 削除完了ウィンドウを閉じると、データが論理削除されて新規登録画面に遷移する
+  const done = async () => {
+    setIsAfterDeleteOpen(false);
+
+    // posts, islands, tagStatusテーブルのstatusをtrueに変更
+    const { data, error } = await supabase
+      .from("islands")
+      .select("islandName")
+      .eq("id", islandID);
+
+      if (error){
+        console.log("Error fetching islands data", error);
+      }
+      if (data && data.length > 0) {
+        const islandName = data[0].islandName;
+
+        if (islandName === inputValue) {
+          const { error: islandsError } = await supabase
+            .from("islands")
+            .update({ status: "true" })
+            .eq("id", islandID);
+
+          const { error: islandsTagError } = await supabase
+            .from("tagStatus")
+            .update({ status: "true" })
+            .eq("id", islandID);
+            
+          const { error: postsError } = await supabase
+            .from("posts")
+            .update({ status: "true" })
+            .eq("id", islandID);
+
+          if (islandsError || islandsTagError || postsError) {
+            console.error(
+              "Error changing status :",
+              islandsError || islandsTagError || postsError, 
+            );
+            // Cookie情報の削除
+            if (document.cookie !== "") {
+              let expirationDate = new Date ("1999-12-31T23:59:59Z");
+              document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
+              document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
+            }
+          }
+
+          console.log("Change status of islands successfully.");
+          navigate("/island/create");
+          window.location.reload();
+        }
+      }
   };
 
 
@@ -306,7 +385,16 @@ const fetchIsland = async () => {
           {editMode ? "保存" : "編集"}
         </button>
         <button onClick={openDeleteModal} className={styles.delete_btn}>削除</button>
-        {isDeleteOpen && <CreateDeletePage closeDeleteModal={closeDeleteModal} />}
+        {isDeleteOpen && <CreateDeletePage closeDeleteModal={closeDeleteModal} nextOpen={nextOpen} />}
+        {isDeleteCheckOpen && (
+          <CreateDeleteCheck
+          close2Modal={close2Modal}
+          nextOpen2={nextOpen2}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          />
+        )}
+        {isAfterDeleteOpen && <CreateAfterDelete done={done}/>}
       </div>
     </div>  
   );
