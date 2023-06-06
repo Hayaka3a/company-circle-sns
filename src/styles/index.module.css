@@ -1,0 +1,82 @@
+.information {
+  background-color: pink;
+  margin-right: 20%;
+  margin-left: 20%;
+  padding: 1%;
+  border-radius: 2%;
+}
+
+.all {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.islands {
+  background-color: rgb(99, 165, 99);
+  padding-top: 6%;
+  padding-left: 3%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.island {
+  display: flex;
+  flex-direction: column;
+  flex-basis: calc(33.33% - 10px);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  margin-bottom: 6%;
+}
+
+.events {
+  background-color: rgb(152, 205, 103);
+  padding-top: 6%;
+  padding-bottom: 5%;
+  padding-left: 3%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.event {
+  display: flex;
+  flex-direction: column;
+  flex-basis: calc(33.33% - 10px);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.icon {
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  margin-left: 3%;
+  margin-right: 10%;
+  margin-top: auto;
+}
+
+.tab {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.buttonA {
+  border: none;
+  background-color: rgb(99, 165, 99);
+  width: 18%;
+  height: 50px;
+  font-size: larger;
+}
+
+.buttonB {
+  border: none;
+  background-color: rgb(152, 205, 103);
+  width: 18%;
+  height: 50px;
+  font-size: larger;
+}
+
+.main {
+  margin: 7%;
+}

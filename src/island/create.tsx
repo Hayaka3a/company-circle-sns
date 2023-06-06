@@ -178,7 +178,7 @@ export default function IslandCreate() {
           console.log("userEnryStatus挿入エラー");
         }
 
-        navigate("/island/[id]");
+        navigate(`/island/${createdIslandId}`);
         window.location.reload();
       }
     } catch (error) {
