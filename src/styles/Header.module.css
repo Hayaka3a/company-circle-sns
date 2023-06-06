@@ -2,7 +2,7 @@ header {
   position: relative;
   background-color: #9ccaaf;
   padding: 0 15px;
-  height: 110px;
+  height: 100px;
   display: flex;
   justify-content: space-between;
 }

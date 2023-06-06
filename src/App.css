@@ -3,8 +3,9 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  font-family: "メイリオ", Meiryo, "ヒラギノ明朝 ProN", "Hiragino Mincho ProN",
-    "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", sans-serif;
+  font-family: "ＭＳ Ｐゴシック", "MS PGothic", "ヒラギノ明朝 ProN",
+    "Hiragino Mincho ProN", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3",
+    "Modern", "Chalkboard", "Chalkboard SE" sans-serif;
   color: rgba(50, 67, 52, 1);
 }
 
