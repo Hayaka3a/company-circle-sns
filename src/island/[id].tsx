@@ -35,7 +35,6 @@ export default function IslandDetail() {
     }
 
     const islandDetail = data[0]; // 最初のデータを取得（仮定）
-    console.log(islandDetail);
     setIslandDetail(islandDetail); // 島の詳細情報を状態変数にセット
   };
 
