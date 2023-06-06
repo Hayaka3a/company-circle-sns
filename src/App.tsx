@@ -22,6 +22,7 @@ import EventThread from "./event/thread";
 import EventPost from "./event/post";
 import EventMembers from "./event/members";
 import EventEntryPermitPage from "./event/post/entryPermitPage";
+import EventEverything from "./event/eventAll";
 
 // islandフォルダ
 import IslandDetail from "./island/[id]";
@@ -103,6 +104,7 @@ function App() {
             path="/event/post/entryPermit/:id"
             element={<EventEntryPermitPage />}
           />
+          <Route path="/event/eventAll" element={<EventEverything />} />
           {/* chat */}
           <Route path="/chat/:id" element={<Chat />} />
         </Routes>

@@ -129,7 +129,6 @@ export default function Index() {
                 </Link>
               </div>
             ))}
-            <Link to={`/island/islandAll`}>島一覧情報</Link>はこちら！
           </div>
         )}
 
