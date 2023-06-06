@@ -14,19 +14,9 @@ export default function MenubarEvent() {
   const params = useParams();
   const paramsID = parseInt(params.id);
 
-  // 画像URL変更
-  useEffect(() => {
-    let imageUrl = "thumbnail";
-    let circleElement = document.getElementById("img");
-
-    if (circleElement) {
-      circleElement.style.backgroundImage = `url('${imageUrl}')`;
-    }
-  }, []);
-
   const userID = GetCookieID();
 
-  // 表示しているイベントの情報をeevntに挿入
+  // 表示しているイベントの情報をeventに挿入
   const fetchIslandData = async () => {
     const { data, error } = await supabase
       .from("events")
@@ -74,8 +64,7 @@ export default function MenubarEvent() {
             alt="Event Thumbnail"
           />
         )}
-
-        <h4>{event && event.eventName}</h4>
+        <h4>{event && event.eventName}</h4>{" "}
         {/* ユーザーがイベントに参加している場合 */}
         {isJoined && (
           <div className={styles.menuContents}>
