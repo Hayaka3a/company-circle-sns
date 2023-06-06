@@ -237,6 +237,11 @@ const Header = () => {
                   サークル一覧
                 </a>
               </li>
+              <li className={styles.menuGroupItem}>
+                <a className={styles.menuGroupItemLink} href="/event/eventAll">
+                  イベント一覧
+                </a>
+              </li>
             </ul>
           </nav>
         </div>

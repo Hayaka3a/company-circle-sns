@@ -1,17 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useInsertionEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { firestore } from "../firebase";
 import styles from "../styles/Chat.module.css";
 import { chat } from "../types/chat";
 import SendMessages from "./SendMessages";
 import { supabase } from "../createClient";
+import GetCookieID from "./cookie/getCookieId";
 
 const Chat = () => {
   const [threadTitle, setThreadTitle] = useState("");
+  const [user, setUser] = useState<UserData | undefined>(undefined);
   const { id } = useParams();
   const threadID = Number(id);
-  // session?に保存されてるユーザーネーム
-  const userName = "シャチ";
+
+  const userID = GetCookieID();
+
+  // ログインしているユーザーネーム取得
+  interface UserData {
+    familyName: string;
+    firstName: string;
+    icon: string;
+  }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      let { data: userData } = (await supabase
+        .from("users")
+        .select("*")
+        .eq("id", userID)) as { data: UserData[] };
+      if (userData && userData.length > 0) {
+        setUser(userData[0]);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  // useEffectによって、データ取得が完了前にuserNameとして使用されてしまっていた
+  // userがundefinedの場合エラーを回避（オプショナルチェイニング演算子）
+  const userName = `${user?.familyName}${user?.firstName}`;
 
   // threadTitleを取得
   useEffect(() => {

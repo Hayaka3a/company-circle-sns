@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function IslandAll() {
   LogSt();
-  const navigate = useNavigate();
+
   const params = useParams();
   const paramsID = params.id;
 
