@@ -73,7 +73,7 @@ export default function IslandDetail() {
             alt="サークルアイコン"
             className={styles.icon}
           />
-          <h2>{islandDetail && islandDetail.islandName}</h2>
+          <h2>{islandDetail && islandDetail.islandName}島</h2>
           <p className={styles.textDetail}>
             {islandDetail && islandDetail.detail}
           </p>

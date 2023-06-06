@@ -433,7 +433,10 @@ export default function UserEdit() {
                               {combi.map((item) => {
                                 if (item.islands) {
                                   return (
-                                    <Link to={`/island/${item.islands.id}`}>
+                                    <Link
+                                      to={`/island/${item.islands.id}`}
+                                      className={styles.link}
+                                    >
                                       {item.islands.islandName}
                                     </Link>
                                   );
@@ -446,7 +449,10 @@ export default function UserEdit() {
                               {combi.map((item) => {
                                 if (item.events) {
                                   return (
-                                    <Link to={`/event/${item.events.id}`}>
+                                    <Link
+                                      to={`/event/${item.events.id}`}
+                                      className={styles.link}
+                                    >
                                       {item.events.eventName}
                                     </Link>
                                   );

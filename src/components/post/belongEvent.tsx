@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../createClient";
 import GetCookieID from "../cookie/getCookieId";
+import styles from "../../styles/index.module.css";
 
 export default function BelongEvent() {
   const userID = GetCookieID();
@@ -117,7 +118,11 @@ export default function BelongEvent() {
   }, [userID, setHasNewMessage]);
   return (
     <>
-      {hasNewMessage && <p>✴イベントポストに新しいメッセージが届いています</p>}
+      {hasNewMessage && (
+        <p className={styles.p}>
+          ✴イベントポストに新しいメッセージが届いています
+        </p>
+      )}
     </>
   );
 }

@@ -6,7 +6,7 @@ import FetchJoindIslandEvent from "./hooks/FetchJoindIslandEvent";
 import GetCookieID from "./cookie/getCookieId";
 import { supabase } from "../createClient";
 
-const Header = () => {
+const HeaderTop = () => {
   const [selectedRadio, setSelectedRadio] = useState("all");
   const [searchWord, setSearchWord] = useState("");
   const [userData, setUserData] = useState<{ [x: string]: any }[]>([]);
@@ -109,10 +109,7 @@ const Header = () => {
           <button>検索 </button>
         </Link>
       </div>
-      {/* ロゴ */}
-      <Link to={"/"}>
-        <img src="/images/logo.png" className={styles.logo} />
-      </Link>
+
       {/* ヘッダーの右に位置してるアイテム */}
       <div className={styles.headerItem}>
         <div className={styles.userDataFlex}>
@@ -244,4 +241,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderTop;

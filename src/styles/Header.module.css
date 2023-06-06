@@ -57,11 +57,14 @@ header {
 
 .menuGroupItemLinkWrapper {
   cursor: pointer;
+  color: black;
+  font-weight: bold;
 }
 
 /* 参加してる島、イベントの表示・非表示 */
 .open {
   display: block;
+  margin-top: 4%;
 }
 
 .close {
@@ -112,15 +115,17 @@ header {
   padding: 4px;
   text-align: center;
   margin-bottom: 1rem;
+  color: black;
 }
 .menuGroupItemLink {
+  color: black;
   padding: 0.5em 0.5em;
   text-align: center;
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.02em;
-  color: #000;
   text-decoration: none;
+  font-weight: bold;
 }
 
 /*チェックボックスを非表示*/

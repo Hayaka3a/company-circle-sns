@@ -1,14 +1,25 @@
 .information {
-  background-color: pink;
-  margin-right: 20%;
-  margin-left: 20%;
-  padding: 1%;
-  border-radius: 2%;
+  margin: 2%;
+  background-color: #ffebee;
+  border: dashed 3px #e57373;
+  box-shadow: 0 0 0 10px #ffebee, 0 0 0 25px #e57373;
+  border-radius: 3px;
+}
+
+.logo {
+  height: 190px;
+  margin: 3%;
 }
 
 .all {
   padding-left: 10%;
   padding-right: 10%;
+  text-align: center;
+}
+
+.news {
+  margin: 1%;
+  color: rgba(135, 69, 68, 1);
 }
 
 .islands {
@@ -87,4 +98,12 @@
 
 .main {
   margin: 7%;
+}
+
+.p {
+  margin: 1%;
+}
+
+.title {
+  margin: 1%;
 }

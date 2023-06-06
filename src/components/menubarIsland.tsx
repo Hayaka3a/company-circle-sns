@@ -67,25 +67,35 @@ export default function MenubarIsland() {
 
         {/* 非同期関数で取得しているから、islandデータが取得される前にコンポーネント描画されて、islandデータが
         nullで返ってきちゃうから */}
-        <h4>{island && island.islandName}島</h4>
+        <h3 className={styles.title}>{island && island.islandName}島</h3>
 
         {/* ユーザーがサークルに参加している場合 */}
         {isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/island/thread/${paramsID}`}>掲示板</Link>
+              <Link to={`/island/thread/${paramsID}`} className={styles.link}>
+                掲示板
+              </Link>
             </div>
             <div>
-              <Link to={`/island/eventAll/${paramsID}`}>イベント</Link>
+              <Link to={`/island/eventAll/${paramsID}`} className={styles.link}>
+                イベント
+              </Link>
             </div>
             <div>
-              <Link to={`/island/post/${paramsID}`}>ポスト</Link>
+              <Link to={`/island/post/${paramsID}`} className={styles.link}>
+                ポスト
+              </Link>
             </div>
             <div>
-              <Link to={`/island/members/${paramsID}`}>島民一覧</Link>
+              <Link to={`/island/members/${paramsID}`} className={styles.link}>
+                島民一覧
+              </Link>
             </div>
             <div>
-              <Link to={`/island/${paramsID}`}>島詳細</Link>
+              <Link to={`/island/${paramsID}`} className={styles.link}>
+                島詳細
+              </Link>
             </div>
           </div>
         )}
@@ -93,13 +103,19 @@ export default function MenubarIsland() {
         {!isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/island/eventAll/${paramsID}`}>イベント</Link>
+              <Link to={`/island/eventAll/${paramsID}`} className={styles.link}>
+                イベント
+              </Link>
             </div>
             <div>
-              <Link to={`/island/members/${paramsID}`}>島民一覧</Link>
+              <Link to={`/island/members/${paramsID}`} className={styles.link}>
+                島民一覧
+              </Link>
             </div>
             <div>
-              <Link to={`/island/${paramsID}`}>島詳細</Link>
+              <Link to={`/island/${paramsID}`} className={styles.link}>
+                島詳細
+              </Link>
             </div>
           </div>
         )}
