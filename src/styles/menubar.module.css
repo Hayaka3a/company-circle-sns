@@ -1,16 +1,16 @@
 .menubar {
-  background-color: green;
+  background-color: #c3d6af;
   width: 17%;
-  height: 100vh;
+  height: auto;
   position: relative;
-  padding-top: 4%;
+  padding-top: 2%;
   text-align: center;
 }
 
 .menuContents {
   justify-content: center;
-  margin-top: 30%;
-  height: 50%;
+  margin-top: 13%;
+  height: 40%;
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
   justify-items: center;
@@ -24,4 +24,5 @@
   margin-left: 3%;
   margin-right: 10%;
   margin-top: auto;
+  background-color: white;
 }

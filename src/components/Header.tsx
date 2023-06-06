@@ -68,44 +68,51 @@ const Header = () => {
   return (
     <header>
       {/* 検索箇所 */}
-      <div>
-        <form action="">
-          <input
-            type="radio"
-            name="select"
-            id="all"
-            value="all"
-            checked
-            onChange={onRadioBtnChanged}
-          />
-          <label htmlFor="all">すべて検索</label>
-          <input
-            type="radio"
-            name="select"
-            id="island"
-            value="island"
-            onChange={onRadioBtnChanged}
-          />
-          <label htmlFor="island">島のみ</label>
-          <input
-            type="radio"
-            name="select"
-            id="event"
-            value="event"
-            onChange={onRadioBtnChanged}
-          />
-          <label htmlFor="event">イベントのみ</label>
-          <br />
-          <input type="text" maxLength={22} onChange={onInputChanged} />
-          <Link
-            to={`/search?word=${encodeURIComponent(
-              searchWord,
-            )}&radio=${encodeURIComponent(selectedRadio)}`}
-          >
-            <button>検索 </button>
-          </Link>
-        </form>
+      <div className={styles.search}>
+        <input
+          type="radio"
+          name="select"
+          id="all"
+          value="all"
+          checked
+          onChange={onRadioBtnChanged}
+        />
+        <label htmlFor="all">すべて検索</label>
+        <input
+          type="radio"
+          name="select"
+          id="island"
+          value="island"
+          onChange={onRadioBtnChanged}
+        />
+        <label htmlFor="island">島のみ</label>
+        <input
+          type="radio"
+          name="select"
+          id="event"
+          value="event"
+          onChange={onRadioBtnChanged}
+        />
+        <label htmlFor="event">イベントのみ</label>
+        <br />
+        <input
+          type="text"
+          maxLength={22}
+          onChange={onInputChanged}
+          className={styles.input}
+        />
+        <Link
+          to={`/search?word=${encodeURIComponent(
+            searchWord,
+          )}&radio=${encodeURIComponent(selectedRadio)}`}
+        >
+          <button>検索 </button>
+        </Link>
       </div>
+      {/* ロゴ */}
+      <Link to={"/"}>
+        <img src="/images/logo.png" className={styles.logo} />
+      </Link>
       {/* ヘッダーの右に位置してるアイテム */}
       <div className={styles.headerItem}>
         <div className={styles.userDataFlex}>
