@@ -1,11 +1,11 @@
 .background {
   font-size: 12px;
   padding-bottom: 0;
-  padding: 2% 2%;
+  padding: 4% 2%;
 }
 
 .box {
-  background-color: rgb(231, 231, 231);
+  background-color: rgba(250, 248, 242, 1);
   padding-top: 1%;
   height: 80%;
   margin-right: auto;
@@ -14,6 +14,11 @@
   border-radius: 1%;
   padding-bottom: 3%;
   width: 85%;
+
+  border: dashed 3px rgba(209, 190, 79, 1);
+  box-shadow: 0 0 0 10px rgba(250, 248, 242, 1),
+    0 0 0 25px rgba(209, 190, 79, 1);
+  border-radius: 3px;
 }
 
 .editbox {
@@ -66,7 +71,7 @@
 
 /*　各入力項目 */
 .address {
-  width: 95%;
+  width: 85%;
   height: 20px;
 }
 
@@ -100,7 +105,7 @@
 }
 
 .th {
-  width: 25%;
+  width: 20%;
 }
 
 .buttonbox {
@@ -110,11 +115,11 @@
 
 .inputA {
   height: 20px;
-  width: 45%;
+  width: 40%;
 }
 .inputB {
   height: 20px;
-  width: 45%;
+  width: 40%;
   margin-left: 4%;
 }
 
@@ -279,4 +284,11 @@
 
 .loginPageButton {
   text-align: left;
+  margin-left: 3%;
+}
+
+.link {
+  color: rgba(146, 144, 141, 1);
+  text-decoration: none;
+  margin: 1%;
 }

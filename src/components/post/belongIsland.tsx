@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../createClient";
 import GetCookieID from "../cookie/getCookieId";
+import styles from "../../styles/index.module.css";
 
 export default function BelongIsland() {
   const userID = GetCookieID();
@@ -58,6 +59,10 @@ export default function BelongIsland() {
   }, [userID]);
 
   return (
-    <>{hasNewMessage && <p>✴島ポストに新しいメッセージが届いています</p>}</>
+    <>
+      {hasNewMessage && (
+        <p className={styles.p}>✴島ポストに新しいメッセージが届いています</p>
+      )}
+    </>
   );
 }

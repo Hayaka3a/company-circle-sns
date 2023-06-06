@@ -17,7 +17,7 @@ export default function IslandDetail() {
 
   useEffect(() => {
     fetchIslandDetail();
-  }, [islandId]);
+  }, [islandDetail]);
 
   const fetchIslandDetail = async () => {
     const { data, error } = await supabase
@@ -35,7 +35,6 @@ export default function IslandDetail() {
     }
 
     const islandDetail = data[0]; // 最初のデータを取得（仮定）
-
     setIslandDetail(islandDetail); // 島の詳細情報を状態変数にセット
   };
 
@@ -67,18 +66,22 @@ export default function IslandDetail() {
     <div className={styles.flex}>
       <MenubarIsland />
       <div className={styles.back}>
-        <div className={styles.island_detail}>
-          <img
-            src="/island/island_icon.png"
-            alt="サークルアイコン"
-            className={styles.icon}
-          />
-          <h2>{islandDetail && islandDetail.islandName}</h2>
+        <div className={styles.detail}>
+          {islandDetail && (
+            <img
+              src={islandDetail.thumbnail}
+              alt="サークルアイコン"
+              className={styles.icon}
+            />
+          )}
+          <h2>{islandDetail && islandDetail.islandName}島</h2>
           <p className={styles.textDetail}>
             {islandDetail && islandDetail.detail}
           </p>
-          <div className={styles.btn}>
-            <button onClick={openResindentModal}>住民申請</button>
+          <div>
+            <button onClick={openResindentModal} className={styles.btn1}>
+              住民申請
+            </button>
             {isResidentOpen && (
               <CreateResidentApplication
                 closeResidentModal={closeResidentModal}
@@ -86,7 +89,9 @@ export default function IslandDetail() {
                 islandName={islandDetail.islandName}
               />
             )}
-            <button onClick={openModal}>メッセージを送る</button>
+            <button onClick={openModal} className={styles.btn2}>
+              メッセージを送る
+            </button>
             {isOpen && (
               <CreateSendingMessage closeModal={closeModal} table="island" />
             )}

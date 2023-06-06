@@ -15,6 +15,14 @@
   grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
   justify-items: center;
   align-content: center;
+  color: rgba(143, 119, 99, 1);
+}
+.link {
+  color: rgba(102, 85, 70, 1);
+}
+
+.title {
+  color: rgba(68, 57, 47, 1);
 }
 
 .icon {

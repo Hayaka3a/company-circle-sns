@@ -80,75 +80,83 @@ export default function Index() {
   }, []);
 
   return (
-    <div className={styles.all}>
-      <h1>あつまれ ラクスの森</h1>
-      <div className={styles.information}>
-        <h2>あなたへお知らせ</h2>
-        {/* 個人用ポスト */}
-        <PersonalPost
-          hasNewMessage={hasNewMessage}
-          setHasNewMessage={setHasNewMessage}
-        />
-        {/* 参加サークルポスト */}
-        <BelongIsland />
-        {/* 参加イベントポスト */}
-        <BelongEvent />
-      </div>
+    <>
+      <div className={styles.all}>
+        {/* ロゴ */}
 
-      <div className={styles.main}>
-        <h2>ラクスの森情報</h2>
-        <div className={styles.tabs}>
-          <button
-            className={`${tag === "islands" ? styles.active : ""} ${
-              styles.buttonA
-            }`}
-            onClick={() => changeTagHandler("islands")}
-          >
-            おすすめ島
-          </button>
-          <button
-            className={`${tag === "events" ? styles.active : ""} ${
-              styles.buttonB
-            }`}
-            onClick={() => changeTagHandler("events")}
-          >
-            新着イベント
-          </button>
+        <img src="/images/logo.png" className={styles.logo} />
+
+        <div className={styles.information}>
+          <h3 className={styles.news}>お知らせ</h3>
+          {/* 個人用ポスト */}
+          <PersonalPost
+            hasNewMessage={hasNewMessage}
+            setHasNewMessage={setHasNewMessage}
+          />
+          {/* 参加サークルポスト */}
+          <BelongIsland />
+          {/* 参加イベントポスト */}
+          <BelongEvent />
         </div>
-        {tag === "islands" && (
-          <div className={styles.islands}>
-            {islands.map((island) => (
-              <div key={island.id} className={styles.island}>
-                <Link to={`/island/${island.id}`}>
-                  <img
-                    className={styles.icon}
-                    src={island.thumbnail || "/island/island_icon.png"}
-                    alt="Event Thumbnail"
-                  />
-                  <h2>{island.islandName}</h2>
-                </Link>
-              </div>
-            ))}
+        <div className={styles.main}>
+          <h2>ラクスの森情報</h2>
+          <div className={styles.tabs}>
+            <button
+              className={`${tag === "islands" ? styles.active : ""} ${
+                styles.buttonA
+              }`}
+              onClick={() => changeTagHandler("islands")}
+            >
+              おすすめ島
+            </button>
+            <button
+              className={`${tag === "events" ? styles.active : ""} ${
+                styles.buttonB
+              }`}
+              onClick={() => changeTagHandler("events")}
+            >
+              新着イベント
+            </button>
           </div>
-        )}
-
-        {tag === "events" && (
-          <div className={styles.events}>
-            {events.slice(0, 6).map((event) => (
-              <div key={event.id} className={styles.event}>
-                <Link to={`/island/${event.id}`}>
-                  <img
-                    className={styles.icon}
-                    src={event.thumbnail || "/event_icon.png"}
-                    alt="Event Thumbnail"
-                  />
-                  <h2>{event.eventName}</h2>
-                </Link>
+          <div className={styles.down}>
+            {tag === "islands" && (
+              <div className={styles.islands}>
+                {islands.slice(0, 6).map((island) => (
+                  <div key={island.id} className={styles.island}>
+                    <Link to={`/island/${island.id}`}>
+                      <img
+                        className={styles.icon}
+                        src={island.thumbnail || "/island/island_icon.png"}
+                        alt="Event Thumbnail"
+                      />
+                      <h3>{island.islandName}</h3>
+                    </Link>
+                  </div>
+                ))}
+                {/* <div className={styles.link}>
+                  <Link to={`/island/islandAll`}>島一覧情報</Link>はこちら！
+                </div> */}
               </div>
-            ))}
+            )}
+            {tag === "events" && (
+              <div className={styles.events}>
+                {events.slice(0, 6).map((event) => (
+                  <div key={event.id} className={styles.event}>
+                    <Link to={`/island/${event.id}`}>
+                      <img
+                        className={styles.icon}
+                        src={event.thumbnail || "/event_icon.png"}
+                        alt="Event Thumbnail"
+                      />
+                      <h3>{event.eventName}</h3>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
