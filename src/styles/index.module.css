@@ -15,6 +15,7 @@
   background-color: rgb(99, 165, 99);
   padding-top: 6%;
   padding-left: 3%;
+  padding-bottom: 3%;
   display: flex;
   flex-wrap: wrap;
 }
@@ -32,7 +33,8 @@
 .events {
   background-color: rgb(152, 205, 103);
   padding-top: 6%;
-  padding-bottom: 5%;
+  padding-left: 3%;
+  padding-bottom: 3%;
   padding-left: 3%;
   display: flex;
   flex-wrap: wrap;
@@ -54,6 +56,12 @@
   margin-left: 3%;
   margin-right: 10%;
   margin-top: auto;
+  transition: 0.3s;
+}
+
+.icon:hover {
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
 }
 
 .tab {

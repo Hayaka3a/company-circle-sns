@@ -9,6 +9,7 @@ import { supabase } from "./createClient";
 import PersonalPost from "./components/post/personalPost";
 import BelongIsland from "./components/post/belongIsland";
 import BelongEvent from "./components/post/belongEvent";
+import { Link, useParams } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -22,6 +23,8 @@ reportWebVitals();
 
 export default function Index() {
   LogSt();
+  const params = useParams();
+  const paramsID = Number(params.id);
   const [islands, setIslands] = useState([]);
   const [events, setEvents] = useState([]);
   const [tag, setTag] = useState("islands");
@@ -114,14 +117,17 @@ export default function Index() {
           <div className={styles.islands}>
             {islands.slice(0, 6).map((island) => (
               <div key={island.id} className={styles.island}>
-                <img
-                  className={styles.icon}
-                  src={island.thumbnail || "/island/island_icon.png"}
-                  alt="Event Thumbnail"
-                />
-                <h2>{island.islandName}</h2>
+                <Link to={`/island/${island.id}`}>
+                  <img
+                    className={styles.icon}
+                    src={island.thumbnail || "/island/island_icon.png"}
+                    alt="Event Thumbnail"
+                  />
+                  <h2>{island.islandName}</h2>
+                </Link>
               </div>
             ))}
+            <Link to={`/island/islandAll`}>島一覧情報</Link>はこちら！
           </div>
         )}
 
@@ -129,12 +135,14 @@ export default function Index() {
           <div className={styles.events}>
             {events.slice(0, 6).map((event) => (
               <div key={event.id} className={styles.event}>
-                <img
-                  className={styles.icon}
-                  src={event.thumbnail || "/event_icon.png"}
-                  alt="Event Thumbnail"
-                />
-                <h2>{event.eventName}</h2>
+                <Link to={`/island/${event.id}`}>
+                  <img
+                    className={styles.icon}
+                    src={event.thumbnail || "/event_icon.png"}
+                    alt="Event Thumbnail"
+                  />
+                  <h2>{event.eventName}</h2>
+                </Link>
               </div>
             ))}
           </div>
