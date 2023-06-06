@@ -8,7 +8,7 @@ export default function UserRegistration() {
   const navigate = useNavigate();
 
   const [imageUrl, setImageUrl] = useState(
-    "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanukiti.png7522",
+    "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
   );
   const [usersMail, setUsersMail] = useState([]);
   const [empCode, setEmpCode] = useState([]);

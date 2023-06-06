@@ -1,94 +1,93 @@
 .overlay {
-    z-index: 1; /* 重ねた時の順番 */
-  
-    /* 画面全体を覆う */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  
-    /* 画面の中央に要素を表示 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .modal {
-    z-index: 2;
-    width: 50%;
-    padding: 1em;
-    background: #fff;
-    text-align: center;
-    justify-content: center; /* 水平方向の中央揃え */
-    align-items: center; /* 垂直方向の中央揃え */
-    flex-direction: column; /* 縦方向に並べる */
-    height: 70%;
-    position: relative;
-  }
-  
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  
-  .allContents {
-    height: 50vh;
-    justify-content: center; /* 水平方向 */
-    align-items: center; /* 垂直方向 */
-    flex-direction: column; /* 縦方向 */
-    display: flex;
-    margin: 90px 0 0 0;
-  }
-  
-  .input {
-    align-items: flex-start; /* 垂直方向 */
-    justify-content: center; /* 水平方向 */
-    display: flex;
-  }
-  
-  .main {
-    width: auto;
-    font-size: 1.5em;
-    height: 40vh;
-    width: 70%;
-    display: grid;
-    grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
-  }
-  
-  .title {
-    align-items: center; /* 垂直方向 */
-    justify-content: center; /* 水平方向 */
-    flex-direction: column; /* 縦方向 */
-  }
+  z-index: 1; /* 重ねた時の順番 */
 
-  .flexIcon {
-    display: flex;
-  }
+  /* 画面全体を覆う */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
-  .flexIcon img {
-    width: 80px;
-    height: 80px;
-    padding-left: 60px;
-  }
+  /* 画面の中央に要素を表示 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .flexIcon p {
-    padding-left: 80px;
-  }
+.modal {
+  z-index: 2;
+  width: 50%;
+  padding: 1em;
+  background: #fff;
+  text-align: center;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  flex-direction: column; /* 縦方向に並べる */
+  height: 70%;
+  position: relative;
+}
 
-  .h3 {
-    margin-top: 0;
-    font-size: 26px;
-  }
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 
-  #deleteCheck {
-    width: 400px;
-    margin-top: 60px;
-    margin-left: 100px;
-  }
+.allContents {
+  height: 50vh;
+  justify-content: center; /* 水平方向 */
+  align-items: center; /* 垂直方向 */
+  flex-direction: column; /* 縦方向 */
+  display: flex;
+  margin: 90px 0 0 0;
+}
 
-  .dCheck_btn {
-    margin: 100px 0 0 0;
-  }
+.input {
+  align-items: flex-start; /* 垂直方向 */
+  justify-content: center; /* 水平方向 */
+  display: flex;
+}
+
+.main {
+  width: auto;
+  font-size: 1.5em;
+  height: 40vh;
+  width: 70%;
+  display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
+}
+
+.title {
+  align-items: center; /* 垂直方向 */
+  justify-content: center; /* 水平方向 */
+  flex-direction: column; /* 縦方向 */
+}
+
+.flexIcon {
+  display: flex;
+}
+
+.flexIcon img {
+  width: 80px;
+  height: 80px;
+  padding-left: 60px;
+}
+
+.flexIcon p {
+  padding-left: 80px;
+}
+
+.h3 {
+  margin-top: 0;
+  font-size: 26px;
+}
+
+#deleteCheck {
+  width: 400px;
+  margin-top: 60px;
+  margin-left: 100px;
+}
+
+.dCheck_btn {
+  margin: 100px 0 0 0;
+}

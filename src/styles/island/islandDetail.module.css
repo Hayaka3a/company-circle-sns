@@ -1,31 +1,59 @@
 .flex {
-    display: flex;
+  display: flex;
+  text-align: center;
 }
 
+.back {
+  background-color: rgba(255, 255, 255, 0.7);
+  margin-top: 2%;
+  padding-top: 1%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  border-radius: 1%;
+  padding-bottom: 3%;
+  width: 60%;
+}
 .island_detail {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 80px;
+  width: 90%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 2%;
 }
 
 .island_detail h2 {
-    padding-top: 20px;
 }
 
-.textDetail {
-    padding-top: 40px;
+.editbox {
+  text-align: right;
+  margin-top: 10%;
 }
 
 .btn {
-    margin-top: 80px;
-    justify-content:space-around;
-    display: flex;
+  margin-top: 80px;
+  justify-content: space-around;
+  display: flex;
 }
 
 #edit_btn {
-    margin-top: 100px;
-    margin-left: 800px;
-    color: red;
-    font-weight: bold
+  color: rgba(145, 145, 145, 1);
+  border: 3px solid rgba(212, 212, 212, 1);
+  box-shadow: 5px 5px rgba(212, 212, 212, 1);
+  height: 30px;
+  width: 100px;
+  margin-top: 15px;
+  font-size: 15px;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  background-color: white;
+  margin-top: 20px;
+}
+
+.icon {
+  width: 140px;
+  height: 140px;
+
+  border-radius: 50%; /*サムネイル円型*/
 }

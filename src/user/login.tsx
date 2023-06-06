@@ -66,61 +66,50 @@ export default function Login() {
     }
   };
   return (
-    <>
-      <div className={styles.box}>
-        <div className={styles.imgCovered}>
-          <img
-            src="/login/loginCounter.png"
-            alt="Login Counter"
-            className={styles.img}
-          />
-        </div>
-        <div className={styles.board}>
-          <h4 className={styles.boardTitle}>ログイン申請書</h4>
-          <div>
-            <input
-              type="email"
-              id="email"
-              placeholder="ログインID（登録メールアドレス）"
-              className={styles.inputA}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setVisible(false);
-              }}
-            />
-          </div>
-
-          <div>
-            <input
-              type="password"
-              id="pass"
-              placeholder="パスワード"
-              className={styles.inputB}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setVisible(false);
-              }}
-              required
-              pattern=".{8,16}"
-              title="8文字以上16文字以下"
-              autoComplete="off"
-            />
-          </div>
-          <div>
-            <button onClick={loginHandler} className={styles.button}>
-              ログイン
-            </button>
-          </div>
-        </div>
+    <div className={styles.box}>
+      <div className={styles.board}>
+        <img src="/images/logo.png" className={styles.logo} />
 
         <div>
-          <button onClick={newUser}>新規ユーザー登録はこちら</button>
+          <input
+            type="email"
+            id="email"
+            placeholder="ログインID（登録メールアドレス）"
+            className={styles.inputA}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setVisible(false);
+            }}
+          />
         </div>
-
-        <h3 style={{ display: visible ? "block" : "none" }}>
-          ユーザーが見つかりません。もう一度入力してください。
-        </h3>
+        <div>
+          <input
+            type="password"
+            id="pass"
+            placeholder="パスワード"
+            className={styles.inputB}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setVisible(false);
+            }}
+            required
+            pattern=".{8,16}"
+            title="8文字以上16文字以下"
+            autoComplete="off"
+          />
+        </div>
+        <div className={styles.buttonBox}>
+          <button onClick={loginHandler} className={styles.button}>
+            ログイン
+          </button>
+        </div>
+        <div className={styles.linkBox}>
+          <Link to={"/user/newUser"}>新規ユーザー登録</Link>
+        </div>
       </div>
-    </>
+      <h3 style={{ display: visible ? "block" : "none" }}>
+        ユーザーが見つかりません。もう一度入力してください。
+      </h3>
+    </div>
   );
 }

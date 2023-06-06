@@ -6,9 +6,11 @@ import { useParams } from "react-router-dom";
 export default function CreateResidentApplication({
   closeResidentModal,
   table,
+  islandName,
 }: {
   closeResidentModal: () => void;
   table: string;
+  islandName: string;
 }) {
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -29,9 +31,9 @@ export default function CreateResidentApplication({
     if (postedByError) {
       console.log(postedByError, "エラー");
     }
+
     setPostedID(postedBy[0].id);
   };
-
 
   // messagesテーブルとapplicationsテーブルにメッセージを保存
   const saveMessage = async () => {
@@ -49,7 +51,6 @@ export default function CreateResidentApplication({
             status: false,
           },
         ]);
-
 
       if (messagesError) {
         console.error("メッセージの送信中にエラーが発生しました:");
@@ -79,7 +80,7 @@ export default function CreateResidentApplication({
             />
             <div className={styles.main}>
               <div className={styles.title}>
-                <h3 className={styles.h3}>○○島</h3>
+                <h3 className={styles.h3}>{islandName}島</h3>
                 <p className={styles.messageName}>住民申請</p>
               </div>
               <div className={styles.input}>
