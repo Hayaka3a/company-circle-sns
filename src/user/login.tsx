@@ -68,10 +68,8 @@ export default function Login() {
   return (
     <div className={styles.box}>
       <div className={styles.board}>
-        <h2 className={styles.boardTitle}>
-          <img src="/images/logo.png" className={styles.logo} />
-          ログイン申請書
-        </h2>
+        <img src="/images/logo.png" className={styles.logo} />
+
         <div>
           <input
             type="email"
