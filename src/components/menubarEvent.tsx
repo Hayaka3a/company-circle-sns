@@ -64,7 +64,7 @@ export default function MenubarEvent() {
             alt="Event Thumbnail"
           />
         )}
-        <h4>{event && event.eventName}島</h4>{" "}
+        <h4>{event && event.eventName}</h4>{" "}
         {/* ユーザーがイベントに参加している場合 */}
         {isJoined && (
           <div className={styles.menuContents}>
