@@ -35,7 +35,7 @@ export default function IslandDetail() {
     }
 
     const islandDetail = data[0]; // 最初のデータを取得（仮定）
-
+    console.log(islandDetail);
     setIslandDetail(islandDetail); // 島の詳細情報を状態変数にセット
   };
 
@@ -69,7 +69,7 @@ export default function IslandDetail() {
       <div className={styles.back}>
         <div className={styles.island_detail}>
           <img
-            src="/island/island_icon.png"
+            src={islandDetail.thumbnail}
             alt="サークルアイコン"
             className={styles.icon}
           />

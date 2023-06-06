@@ -10,7 +10,6 @@ import PersonalPost from "./components/post/personalPost";
 import BelongIsland from "./components/post/belongIsland";
 import BelongEvent from "./components/post/belongEvent";
 import { Link, useParams } from "react-router-dom";
-import HeaderTop from "./components/HeaderTop";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -82,7 +81,6 @@ export default function Index() {
 
   return (
     <div>
-      <HeaderTop />
       <div className={styles.all}>
         {/* ロゴ */}
         <Link to={"/"}>

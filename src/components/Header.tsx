@@ -67,6 +67,10 @@ const Header = () => {
 
   return (
     <header>
+      {/* ロゴ */}
+      <Link to={"/"}>
+        <img src="/images/logo.png" className={styles.logo} />
+      </Link>
       {/* 検索箇所 */}
       <div className={styles.search}>
         <input
@@ -109,10 +113,7 @@ const Header = () => {
           <button>検索 </button>
         </Link>
       </div>
-      {/* ロゴ */}
-      <Link to={"/"}>
-        <img src="/images/logo.png" className={styles.logo} />
-      </Link>
+
       {/* ヘッダーの右に位置してるアイテム */}
       <div className={styles.headerItem}>
         <div className={styles.userDataFlex}>

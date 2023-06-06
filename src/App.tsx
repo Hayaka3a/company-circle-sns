@@ -47,12 +47,11 @@ function App() {
   // ログインページのみヘッダーを非表示
   const showHeader = window.location.pathname !== "/user/login";
   const showNewUser = window.location.pathname !== "/user/newUser";
-  const showHeaderToppage = window.location.pathname !== "/";
 
   return (
     <div className="App">
       <BrowserRouter>
-        {showHeader && showNewUser && showHeaderToppage && <Header />}
+        {showHeader && showNewUser && <Header />}
         <Routes>
           <Route path="/" element={<Index />} />
           {/* userフォルダ */}

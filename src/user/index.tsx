@@ -195,12 +195,13 @@ export default function UserEdit() {
 
   return (
     <>
+      {" "}
+      <div className="loginPageButton">
+        <Link to={"/"}>
+          <button>トップページへ</button>
+        </Link>
+      </div>
       <div className={styles.background}>
-        <div className="loginPageButton">
-          <Link to={"/"}>
-            <button>トップページへ</button>
-          </Link>
-        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.box}>
             <div className={styles.allContents}>
@@ -388,6 +389,7 @@ export default function UserEdit() {
                                     id={item.id}
                                     type="radio"
                                     value={item.id}
+                                    key={item.id}
                                     defaultChecked={item.name === radio}
                                     disabled={!editMode}
                                     {...register("department")}
@@ -436,6 +438,7 @@ export default function UserEdit() {
                                     <Link
                                       to={`/island/${item.islands.id}`}
                                       className={styles.link}
+                                      key={item.id}
                                     >
                                       {item.islands.islandName}
                                     </Link>
@@ -452,6 +455,7 @@ export default function UserEdit() {
                                     <Link
                                       to={`/event/${item.events.id}`}
                                       className={styles.link}
+                                      key={item.id}
                                     >
                                       {item.events.eventName}
                                     </Link>

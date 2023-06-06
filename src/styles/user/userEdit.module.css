@@ -1,7 +1,7 @@
 .background {
   font-size: 12px;
   padding-bottom: 0;
-  padding: 2% 2%;
+  padding: 4% 2%;
 }
 
 .box {
@@ -71,7 +71,7 @@
 
 /*　各入力項目 */
 .address {
-  width: 95%;
+  width: 85%;
   height: 20px;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .th {
-  width: 25%;
+  width: 20%;
 }
 
 .buttonbox {
@@ -115,11 +115,11 @@
 
 .inputA {
   height: 20px;
-  width: 45%;
+  width: 40%;
 }
 .inputB {
   height: 20px;
-  width: 45%;
+  width: 40%;
   margin-left: 4%;
 }
 
@@ -284,6 +284,7 @@
 
 .loginPageButton {
   text-align: left;
+  margin-left: 3%;
 }
 
 .link {
