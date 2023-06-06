@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import EventDetail from "../components/createEvent/detail";
 import Daytime from "../components/createEvent/daytime";
 import { supabase } from "../createClient";
+import SelectIsland from "../components/selectIsland";
 
 export default function EventCreate() {
   LogSt();
@@ -16,6 +17,8 @@ export default function EventCreate() {
   const [detail, setDetail] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [islandtags, setIslandTags] =
+    useState<{ id: number; islandName: string }[]>();
 
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -152,6 +155,15 @@ export default function EventCreate() {
                         onChange={handleFileChange}
                       />
                     </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>共同開催島</th>
+                  <td>
+                    <SelectIsland
+                      islandID={islandID}
+                      setIslandTags={setIslandTags}
+                    />
                   </td>
                 </tr>
               </tbody>
