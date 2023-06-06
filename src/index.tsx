@@ -62,13 +62,15 @@ export default function Index() {
       .from("events")
       .select("*")
       .eq("status", "false")
+      .order("createdAt", { ascending: false })
       .limit(6);
 
     if (error) {
       console.error("イベント情報取得失敗", error.message);
     } else {
-      const shuffledData = data.sort(() => Math.random() - 0.5);
-      setEvents(shuffledData);
+      // createdAtフィールドで降順にソート
+      const sortedData = data.sort((a, b) => b.createdAt - a.createdAt);
+      setEvents(sortedData);
     }
   };
 
@@ -102,7 +104,7 @@ export default function Index() {
             }`}
             onClick={() => changeTagHandler("islands")}
           >
-            島
+            おすすめ島
           </button>
           <button
             className={`${tag === "events" ? styles.active : ""} ${
@@ -110,12 +112,12 @@ export default function Index() {
             }`}
             onClick={() => changeTagHandler("events")}
           >
-            イベント
+            新着イベント
           </button>
         </div>
         {tag === "islands" && (
           <div className={styles.islands}>
-            {islands.slice(0, 6).map((island) => (
+            {islands.map((island) => (
               <div key={island.id} className={styles.island}>
                 <Link to={`/island/${island.id}`}>
                   <img
