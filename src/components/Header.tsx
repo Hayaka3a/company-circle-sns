@@ -3,16 +3,39 @@ import styles from "../styles/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
 import FetchJoindIslandEvent from "./hooks/FetchJoindIslandEvent";
+import GetCookieID from "./cookie/getCookieId";
+import { supabase } from "../createClient";
 
 const Header = () => {
   const [selectedRadio, setSelectedRadio] = useState("all");
   const [searchWord, setSearchWord] = useState("");
+  const [userData, setUserData] = useState<{ [x: string]: any }[]>([]);
 
   const [isOpenIslandList, setIsOpenIslandList] = useState(false);
   const [isOpenEventList, setIsOpenEventList] = useState(false);
   const navigate = useNavigate();
+  const userID = GetCookieID();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // ユーザーアイコンとユーザー名の取得
+  // 非同期の処理をuseEffect内で行う場合、コールバック関数を定義してその中で非同期処理を行う
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: user } = await supabase
+          .from("users")
+          .select("*")
+          .eq("id", userID);
+
+        setUserData(user);
+      } catch (error) {
+        console.error("データ取得失敗", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     // メニューが開かれたときにスクロールバーを非表示にする
@@ -92,9 +115,19 @@ const Header = () => {
       </Link>
       {/* ヘッダーの右に位置してるアイテム */}
       <div className={styles.headerItem}>
-        <div>
-          <img src="" alt="ユーザーアイコン" />
-          <span>ユーザー名</span>
+        <div className={styles.userDataFlex}>
+          <img
+            src={
+              userData.length > 0
+                ? userData[0].icon || "/user/tanukiti.png"
+                : "/user/tanukiti.png"
+            }
+            alt="ユーザーアイコン"
+            className={styles.icon}
+          />
+          <p className={styles.userName}>
+            <span>{userData.length > 0 ? userData[0].familyName : ""}さん</span>
+          </p>
         </div>
         <div className={styles.imgWrapper} onClick={logOutHandler}>
           <img

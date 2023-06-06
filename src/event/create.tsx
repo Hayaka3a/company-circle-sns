@@ -9,6 +9,7 @@ import { supabase } from "../createClient";
 
 export default function EventCreate() {
   LogSt();
+
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [eventName, setEventName] = useState("");
@@ -17,6 +18,7 @@ export default function EventCreate() {
   const [endDate, setEndDate] = useState("");
 
   const params = useParams();
+  const paramsID = parseInt(params.id);
   const islandID = params.id;
 
   console.log(params);
@@ -81,7 +83,7 @@ export default function EventCreate() {
         console.log("userEntryStatus挿入エラー");
       }
 
-      navigate("/event/[id]");
+      navigate(`/event/${paramsID}`);
       window.location.reload();
     } catch (error) {
       console.log("イベント作成エラー");

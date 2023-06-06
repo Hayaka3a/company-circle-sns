@@ -12,6 +12,18 @@ header {
   align-items: flex-end;
 }
 
+.userDataFlex {
+  display: flex;
+  align-items: center;
+  padding-right: 50px;
+}
+
+.userName {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
 .headerItem .hambuger {
   margin-right: 0;
 }
@@ -166,6 +178,11 @@ header {
   right: 0;
 }
 
-.input {
-  height: 25px;
+.icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-left: 3%;
+  margin-right: 10%;
+  margin-top: auto;
 }
