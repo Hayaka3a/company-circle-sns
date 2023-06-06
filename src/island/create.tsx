@@ -117,6 +117,7 @@ export default function IslandCreate() {
       islandName: islandName,
       detail: detail,
       ownerID: ownerID,
+      thumbnail: imageUrl,
       status: "false",
     };
 
