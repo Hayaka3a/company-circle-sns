@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
-import IslandName from "../createIsland/islandName";
 
 export default function CreateResidentApplication({
   closeModal,
@@ -52,9 +51,8 @@ export default function CreateResidentApplication({
   
 
 
-  // messagesテーブルとapplicationsテーブルにメッセージを保存
+  // messagesテーブルにメッセージを保存
   const saveMessage = async () => {
-    try {
       const { data: messagesData, error: messagesError } = await supabase
         .from("messages")
         .insert([
@@ -70,20 +68,49 @@ export default function CreateResidentApplication({
         ]);
 
 
-      if (messagesError) {
-        console.error("メッセージの送信中にエラーが発生しました:");
-      } else {
-        console.log("データが正常に送信されました");
-        closeModal();
-      }
-    } catch (error) {
-      console.error("データの送信中にエラーが発生しました:", error.message);
-    }
-  };
+        if (messagesError) {
+          console.error("メッセージの送信中にエラーが発生しました:", messagesError);
+        } else {
+          saveDataToApplications();
+          closeModal();
+        }
+      };
+      
+      const saveDataToApplications = async () => {
+        const { data: messages, error: messagesError } = await supabase
+          .from("messages")
+          .select("id")
+          .eq("status", false);
+        
+        if (messagesError) {
+          console.error("メッセージの取得中にエラーが発生しました:", messagesError);
+          return;
+        }
+        
+        const applicationsToSave = messages.map((message) => ({
+          messageID: message.id,
+        }));
+        
+        if (applicationsToSave.length === 0) {
+          console.log("保存するデータがありません。");
+          return;
+        }
+        
+        const { data: savedApplications, error: saveError } = await supabase
+          .from("applications")
+          .insert(applicationsToSave);
+        
+        if (saveError) {
+          console.error("データの保存中にエラーが発生しました:", saveError);
+        } else {
+          console.log("データが正常に保存されました:", savedApplications);
+        }
+};    
 
-  const addHandler = () => {
-    saveMessage();
-  };
+const addHandler = () => {
+  saveMessage();
+}; 
+
 
   return (
     <>
