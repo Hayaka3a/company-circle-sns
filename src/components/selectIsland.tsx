@@ -44,8 +44,9 @@ export default function SelectIsland({
   };
 
   //   追加ボタン押されたらタグを追加
+  // 追加ボタン押されたらタグを追加
   const addNameHandler = () => {
-    //  既に追加されている値を選択しようとした場合にエラーメッセージを表示
+    // 既に追加されている値を選択しようとした場合にエラーメッセージを表示
     const duplicates = tempSelectedValues.filter((selectedValue) =>
       selectedValues.some((value) => value === selectedValue),
     );
@@ -71,7 +72,7 @@ export default function SelectIsland({
     });
 
     setTempSelectedValues([]); // 一時的な選択値をリセットする
-    setSelectError("");
+    setSelectError(""); // エラーメッセージをリセットする
   };
 
   // タグの削除
