@@ -28,28 +28,33 @@ export default function CreateSendingMessage({
 
 
   const fetchPost = async () => {
-    // userIDから該当のPostIDを割り出す
+    // islandIDから該当のPostIDを割り出す
     const { data: posts, error: postError } = await supabase
     .from("posts")
     .select("id")
-    .eq("userID", userID)
+    .eq("islandID", paramsID)
     .eq("status", false);
     if (postError) {
-      console.log(userID);
+      console.log(paramsID);
       console.log(postError, "ポストエラー");
     }
     setPosts(posts[0].id);
 
     // PostedByに入れるため、送信する側のPostIDを取得する
-    const { data: postedBy, error: postedByError } = await supabase
+   const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
-      .eq(`${table}ID`, paramsID)
-      .eq("status", false);
+      .eq("userID", userID);
+
     if (postedByError) {
-      console.log(postedByError, "ポストバイエラー");
+      console.log(postedByError, "エラー");
     }
-    setPostedID(postedBy[0].id);
+
+    if (postedBy && postedBy.length > 0 && postedBy[0].id) {
+      setPostedID(postedBy[0].id);
+    } else {
+      console.log("PostedByIDが取得できません");
+    }
   };
 
   const fetchIslandName = async () => {
