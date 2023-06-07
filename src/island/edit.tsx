@@ -321,7 +321,7 @@ const fetchIsland = async () => {
             className={styles.input}
             value={islandName}
             onChange={handleIslandNameChange}
-            // readOnly={!editMode}
+            readOnly={!editMode}
           />
         </div>
 
