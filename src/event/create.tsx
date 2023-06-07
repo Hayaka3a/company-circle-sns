@@ -17,8 +17,11 @@ export default function EventCreate() {
   const [detail, setDetail] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [islandtags, setIslandTags] =
-    useState<{ id: number; islandName: string }[]>();
+  const [islandTags, setIslandTags] = useState<
+    { id: number; islandName: string }[]
+  >([]);
+
+  console.log(islandTags);
 
   const params = useParams();
   const paramsID = parseInt(params.id);

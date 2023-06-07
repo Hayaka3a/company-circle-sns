@@ -49,15 +49,44 @@ export default function SelectIsland({
       ...tempSelectedValues,
     ]);
 
+    tempSelectedValues.forEach((selectedValue) => {
+      const existingOption = islands.find(
+        (island) => island.islandName === selectedValue,
+      );
+
+      if (existingOption) {
+        // 配列にオブジェクトを追加していく
+        setIslandTags((prevTags) => [...prevTags, existingOption]);
+
+        // 追加された項目は選択項目柄除外する
+        setIslands((prevIslands) =>
+          prevIslands.filter((island) => island.islandName !== selectedValue),
+        );
+      }
+    });
+
     setTempSelectedValues([]); // 一時的な選択値をリセットする
   };
 
-  //   タグの削除
+  // タグの削除
   const deleteNameHandler = (index) => {
+    // 削除されたタグの名前取得して、配列の中へ
+    const deletedValue = selectedValues[index];
     const updatedValues = [...selectedValues];
+    // そのタグの配列を空にする
     updatedValues.splice(index, 1);
     setSelectedValues(updatedValues);
+
+    // 削除されたタグのオブジェクト取得
+    const deletedIsland = islands.find(
+      (island) => island.islandName === deletedValue,
+    );
+    if (deletedIsland) {
+      // 配列にオブジェクトを追加していく
+      setIslands((prevIslands) => [...prevIslands, deletedIsland]);
+    }
   };
+
   return (
     <>
       <p>共同開催する島がある場合は、ここから選択してください</p>
