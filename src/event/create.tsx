@@ -21,8 +21,6 @@ export default function EventCreate() {
     { id: number; islandName: string }[]
   >([]);
 
-  console.log(islandTags);
-
   const params = useParams();
   const paramsID = parseInt(params.id);
   const islandID = params.id;
@@ -88,15 +86,32 @@ export default function EventCreate() {
             status: "false",
           };
           await supabase.from("posts").insert(post);
+
+          // 共同開催島がある場合、userEntryStatusテーブルに追加
+          if (islandTags) {
+            islandTags.map(async (island) => {
+              const islandEvent = {
+                islandID: island.id,
+                eventID: createdEventId,
+                status: "false",
+              };
+              const { error: islandEventError } = await supabase
+                .from("userEntryStatus")
+                .insert(islandEvent);
+
+              if (islandEventError) {
+                console.error("共同開催島情報追加失敗");
+              }
+            });
+            navigate(`/event/${createdEventId}`);
+            window.location.reload();
+          }
         } catch (error) {
           console.log("イベントポスト作成エラー");
         }
       } catch (error) {
         console.log("userEntryStatus挿入エラー");
       }
-
-      navigate(`/event/${createdEventId}`);
-      window.location.reload();
     } catch (error) {
       console.log("イベント作成エラー");
     }

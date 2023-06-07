@@ -11,25 +11,26 @@ export default function SelectIsland({
 }) {
   const [islands, setIslands] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
-  const [tempSelectedValues, setTempSelectedValues] = useState([]); // 一時的な選択値を格納する配列を追加
+  const [tempSelectedValues, setTempSelectedValues] = useState([]); // 一時的な選択値を格納する配列
+  const [selectError, setSelectError] = useState("");
 
   const islandID_N = Number(islandID);
 
   // selectタグの選択項目を取得
-  useEffect(() => {
-    const fetchIslands = async () => {
-      const { data, error } = await supabase
-        .from("islands")
-        .select("id, islandName");
-      if (error) {
-        console.error(error);
-      } else {
-        // 今開いている島は選択項目から除外する
-        const filteredData = data.filter((island) => island.id !== islandID_N);
-        setIslands(filteredData);
-      }
-    };
+  const fetchIslands = async () => {
+    const { data, error } = await supabase
+      .from("islands")
+      .select("id, islandName");
+    if (error) {
+      console.error(error);
+    } else {
+      // 今開いている島は選択項目から除外する
+      const filteredData = data.filter((island) => island.id !== islandID_N);
+      setIslands(filteredData);
+    }
+  };
 
+  useEffect(() => {
     fetchIslands();
   }, []);
 
@@ -44,6 +45,15 @@ export default function SelectIsland({
 
   //   追加ボタン押されたらタグを追加
   const addNameHandler = () => {
+    //  既に追加されている値を選択しようとした場合にエラーメッセージを表示
+    const duplicates = tempSelectedValues.filter((selectedValue) =>
+      selectedValues.some((value) => value === selectedValue),
+    );
+    if (duplicates.length > 0) {
+      setSelectError("選択された値は既に追加されています。");
+      return;
+    }
+    // タグを追加
     setSelectedValues((prevSelectedValues) => [
       ...prevSelectedValues,
       ...tempSelectedValues,
@@ -57,39 +67,37 @@ export default function SelectIsland({
       if (existingOption) {
         // 配列にオブジェクトを追加していく
         setIslandTags((prevTags) => [...prevTags, existingOption]);
-
-        // 追加された項目は選択項目柄除外する
-        setIslands((prevIslands) =>
-          prevIslands.filter((island) => island.islandName !== selectedValue),
-        );
       }
     });
 
     setTempSelectedValues([]); // 一時的な選択値をリセットする
+    setSelectError("");
   };
 
   // タグの削除
   const deleteNameHandler = (index) => {
-    // 削除されたタグの名前取得して、配列の中へ
-    const deletedValue = selectedValues[index];
+    // 削除されたタグの名前を配列の中へ格納
     const updatedValues = [...selectedValues];
-    // そのタグの配列を空にする
+    // その配列を空にする
     updatedValues.splice(index, 1);
     setSelectedValues(updatedValues);
 
-    // 削除されたタグのオブジェクト取得
-    const deletedIsland = islands.find(
-      (island) => island.islandName === deletedValue,
+    // 削除されたタグのオブジェクトを取り出す
+    const deletedOption = islands.find(
+      (island) => island.islandName === selectedValues[index],
     );
-    if (deletedIsland) {
-      // 配列にオブジェクトを追加していく
-      setIslands((prevIslands) => [...prevIslands, deletedIsland]);
+
+    if (deletedOption) {
+      // フィルタリングして排除する
+      setIslandTags((prevTags) =>
+        prevTags.filter((tag) => tag.id !== deletedOption.id),
+      );
     }
   };
 
   return (
     <>
-      <p>共同開催する島がある場合は、ここから選択してください</p>
+      <div>共同開催する島がある場合は、ここから選択してください</div>
       <select
         name="islands"
         multiple
@@ -105,19 +113,24 @@ export default function SelectIsland({
         </optgroup>
       </select>
       <button onClick={addNameHandler}>追加</button> {/* 追加ボタンを追加 */}
+      {selectError && (
+        <div>
+          <span className={styles.span}>{selectError}</span>
+        </div>
+      )}
       {selectedValues
         .reduce((rows, value, index) => {
           if (index % 3 === 0) {
             rows.push([]);
           }
           rows[rows.length - 1].push(
-            <p key={index} className={styles.selectedValue}>
+            <div key={index} className={styles.selectedValue}>
               <div className={styles.nameFlex}>
                 <span className={styles.nowrap}>{value}</span>
                 &nbsp;&nbsp;
                 <button onClick={() => deleteNameHandler(index)}>×</button>
               </div>
-            </p>,
+            </div>,
           );
           return rows;
         }, [])
