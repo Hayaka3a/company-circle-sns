@@ -16,7 +16,7 @@ export default function EventAll() {
   const currentDateTime = new Date(); // 現在の日時取得
 
   const createHandler = () => {
-    navigate("/event/create/[id]");
+    navigate(`/event/create/${paramsID}`);
     window.location.reload();
   };
 
