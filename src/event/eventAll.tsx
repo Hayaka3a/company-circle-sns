@@ -41,10 +41,6 @@ export default function EventEverything() {
     }
   };
 
-  const pageHandler = () => {
-    navigate(`/event/${paramsID}`);
-  };
-
   return (
     <>
       <img src={"/event/sankaku.png"} alt="event" className={styles.flag}></img>
@@ -60,37 +56,35 @@ export default function EventEverything() {
           </div>
           <div className={styles.eventAll}>
             {events.map((event) => (
-              <div
-                key={event.id}
-                className={styles.event1}
-                onClick={pageHandler}
-              >
-                <div className={styles.imgSide}>
-                  <img
-                    className={styles.icon}
-                    src={event.thumbnail || "/event/event_icon.png"}
-                    alt="event Thumbnail"
-                  ></img>
+              <Link to={`/event/${event.id}`}>
+                <div key={event.id} className={styles.event1}>
+                  <div className={styles.imgSide}>
+                    <img
+                      className={styles.icon}
+                      src={event.thumbnail || "/event/event_icon.png"}
+                      alt="event Thumbnail"
+                    ></img>
+                  </div>
+                  <div className={styles.eventInfo}>
+                    <h3 className={styles.eventName}>{event.eventName}</h3>
+                    <p>{truncateString(event.detail, 89)}</p>
+                    <p>
+                      開催期間 ：
+                      {new Date(event.startDate).toLocaleDateString("ja-JP", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}{" "}
+                      ～{" "}
+                      {new Date(event.endDate).toLocaleDateString("ja-JP", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </p>
+                  </div>
                 </div>
-                <div className={styles.eventInfo}>
-                  <h3 className={styles.eventName}>{event.eventName}</h3>
-                  <p>{truncateString(event.detail, 89)}</p>
-                  <p>
-                    開催期間 ：
-                    {new Date(event.startDate).toLocaleDateString("ja-JP", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}{" "}
-                    ～{" "}
-                    {new Date(event.endDate).toLocaleDateString("ja-JP", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

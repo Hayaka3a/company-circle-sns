@@ -78,6 +78,7 @@ export default function EventAll() {
     fetchIslandName();
     fetchEventData();
   }, [paramsID]);
+
   return (
     <div className={styles.flex}>
       <MenubarIsland />
@@ -90,34 +91,36 @@ export default function EventAll() {
           {events
             .filter((event) => new Date(event.endDate) > currentDateTime)
             .map((event) => (
-              <div key={event.id} className={styles.event1}>
-                <div className={styles.imgSide}>
-                  <img
-                    className={styles.icon}
-                    src={event.thumbnail || "/event_icon.png"}
-                    alt="Event Thumbnail"
-                  ></img>
-                  <div className={styles.eventInfo}>
-                    <Link to={`/event/${paramsID}`}>
-                      <h2 className={styles.eventName}>{event.eventName}</h2>
-                    </Link>
-                    <h3>
-                      開催期間 ：
-                      {new Date(event.startDate).toLocaleDateString("ja-JP", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}{" "}
-                      ～{" "}
-                      {new Date(event.endDate).toLocaleDateString("ja-JP", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </h3>
+              <Link to={`/event/${event.id}`}>
+                <div key={event.id} className={styles.event1}>
+                  <div className={styles.imgSide}>
+                    <img
+                      className={styles.icon}
+                      src={event.thumbnail || "/event_icon.png"}
+                      alt="Event Thumbnail"
+                    ></img>
+                    <div className={styles.eventInfo}>
+                      <Link to={`/event/${paramsID}`}>
+                        <h2 className={styles.eventName}>{event.eventName}</h2>
+                      </Link>
+                      <h3>
+                        開催期間 ：
+                        {new Date(event.startDate).toLocaleDateString("ja-JP", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}{" "}
+                        ～{" "}
+                        {new Date(event.endDate).toLocaleDateString("ja-JP", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </h3>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>
