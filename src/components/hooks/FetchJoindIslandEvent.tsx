@@ -29,6 +29,8 @@ function FetchJoindIslandEvent() {
       let tmpIsland = [];
       let tmpEvents = [];
 
+      console.log(combi, "まっぷまえ");
+
       combi.map(
         async (join: { events: Event | null; islands: Island | null }) => {
           if (join.islands !== null || undefined) {
@@ -38,7 +40,7 @@ function FetchJoindIslandEvent() {
             // 参加サークルのmessagesを取得
             const { data: post, error: postError } = await supabase
               .from("posts")
-              .select("id, messages(*)")
+              .select("id, messages!messages_postID_fkey(*)")
               .eq("islandID", islandId)
               .eq("status", false);
 
@@ -67,7 +69,7 @@ function FetchJoindIslandEvent() {
             // 参加イベントのmessagesを取得
             const { data: post, error: postError } = await supabase
               .from("posts")
-              .select("id, messages(*)")
+              .select("id, messages!messages_postID_fkey(*)")
               .eq("eventID", eventId)
               .eq("status", false);
 
