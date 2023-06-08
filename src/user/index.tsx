@@ -394,7 +394,12 @@ export default function UserEdit() {
                                     disabled={!editMode}
                                     {...register("department")}
                                   />
-                                  <label htmlFor={item.id}>{item.name}</label>
+                                  <label
+                                    htmlFor={item.id}
+                                    className={styles.label}
+                                  >
+                                    {item.name}
+                                  </label>
                                 </div>
                               );
                             })}
@@ -407,7 +412,7 @@ export default function UserEdit() {
                     </tbody>
                   </table>
                 </div>
-                <div className={styles.left}>
+                <div className={styles.right}>
                   <table>
                     <tbody>
                       <tr className={styles.tr}>

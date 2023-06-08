@@ -22,7 +22,6 @@
 }
 
 .from {
-  font-size: 30px;
   margin-left: 150px;
 }
 
@@ -36,7 +35,6 @@
 .islandName {
   margin: 0 0 0 50px;
   padding-top: 35px;
-  font-size: 20px;
 }
 
 .receiving_time {
@@ -62,14 +60,12 @@
 }
 
 .send_to {
-  font-size: 30px;
   margin-left: 60px;
 }
 
 .reply_userName {
   margin: 0 0 0 40px;
   padding-top: 36px;
-  font-size: 20px;
 }
 
 textarea {
