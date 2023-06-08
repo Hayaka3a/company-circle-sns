@@ -129,13 +129,10 @@ export default function Index() {
                         src={island.thumbnail || "/island/island_icon.png"}
                         alt="Event Thumbnail"
                       />
-                      <h3>{island.islandName}</h3>
+                      <h3 className={styles.islandName}>{island.islandName}</h3>
                     </Link>
                   </div>
                 ))}
-                {/* <div className={styles.link}>
-                  <Link to={`/island/islandAll`}>島一覧情報</Link>はこちら！
-                </div> */}
               </div>
             )}
             {tag === "events" && (

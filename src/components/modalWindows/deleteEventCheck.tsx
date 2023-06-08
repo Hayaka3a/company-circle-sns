@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import styles from "../../styles/createDeletingCheck.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 
 export default function CreateDeleteCheck({
@@ -25,10 +25,10 @@ export default function CreateDeleteCheck({
 
   const nextHandler = async () => {
     if (inputValue) {
-      // IDに対応する島の情報を取得する
+      // IDに対応するイベントの情報を取得する
       const { data, error } = await supabase
-        .from("islands")
-        .select("islandName")
+        .from("events")
+        .select("eventName")
         .eq("id", id);
 
   
@@ -39,12 +39,12 @@ export default function CreateDeleteCheck({
       }
   
       if (data && data.length > 0) {
-        const islandName = data[0].islandName;
+        const eventName = data[0].eventName;
 
-        console.log(islandName)
+        console.log(eventName)
   
-        if (islandName !== inputValue) {
-          setNotExist("入力された島名が間違っています");
+        if (eventName !== inputValue) {
+          setNotExist("入力されたイベント名が間違っています");
         } else {
           nextOpen2();
         }
@@ -77,10 +77,10 @@ return (
             />
             <div className={styles.main}>
               <div className={styles.title}>
-                <h3 className={styles.h3}>本当に島を沈没させてもよろしいですか？</h3>
+                <h3 className={styles.h3}>本当にイベントを削除してもよろしいですか？</h3>
               </div>
               <div>
-                <p>削除するために下記のテキストボックスに<br /> 島名を入力してください</p>
+                <p>削除するために下記のテキストボックスに<br /> イベント名を入力してください</p>
                 <p>※スペースを入れずに入力してください</p>
               </div>
               <input 

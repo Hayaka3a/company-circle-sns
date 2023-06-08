@@ -15,6 +15,7 @@ export default function IslandDetail() {
   const islandID = useParams();
   const islandIDValue = islandID["id"];
   const [islandDetail, setIslandDetail] = useState(null); // 取得した島の詳細情報を保持する状態変数
+  const [islandImage, setIslandImage] = useState(""); // 取得した島の詳細情報を保持する状態変数
 
   useEffect(() => {
     fetchIslandDetail();
@@ -37,6 +38,9 @@ export default function IslandDetail() {
 
     const islandDetail = data[0]; // 最初のデータを取得（仮定）
     setIslandDetail(islandDetail); // 島の詳細情報を状態変数にセット
+    if (islandDetail.thumbnail) {
+      setIslandImage(islandDetail.thumbnail);
+    }
   };
 
   // 住民申請を押した際の小窓画面（モーダルウィンドウ）の開閉
