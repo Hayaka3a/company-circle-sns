@@ -25,7 +25,6 @@ export default function CreateSendingMessage({
   }, []);
 
   const fetchPost = async () => {
-
     // userIDから該当のPostIDを割り出す
     const { data: posts, error: postError } = await supabase
 
@@ -82,9 +81,8 @@ export default function CreateSendingMessage({
       },
     ]);
 
-
     if (error) {
-      console.error("メッセージの送信中にエラーが発生しました:", error);
+      console.error(error, "メッセージの送信中にエラーが発生しました:");
     } else {
       console.log("データが正常に送信されました");
       closeModal();
@@ -121,13 +119,11 @@ export default function CreateSendingMessage({
                     onChange={(e) => setMessage(e.target.value)}
                   ></textarea>
                 </div>
-
               </div>
               <div className={styles.btn}>
                 <button onClick={addHandler}>送信する</button>
               </div>
             </div>
-
           </div>
         </div>
       )}

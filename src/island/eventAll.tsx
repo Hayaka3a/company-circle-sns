@@ -79,9 +79,9 @@ export default function EventAll() {
     fetchEventData();
   }, [paramsID]);
   return (
-    <div className={styles.flex}>
+    <div className={styles.flex2}>
       <MenubarIsland />
-      <div className={styles.all}>
+      <div className={styles.back}>
         <h2>{islandName}島 開催イベント</h2>
         <button onClick={createHandler} className={styles.button}>
           新しいイベントを始める
@@ -91,10 +91,13 @@ export default function EventAll() {
             .filter((event) => new Date(event.endDate) > currentDateTime)
             .map((event) => (
               <div key={event.id} className={styles.event1}>
-                <div className={styles.imgSide}>
+                <div className={styles.imgSide2}>
                   <img
-                    className={styles.icon}
-                    src={event.thumbnail || "/event_icon.png"}
+                    className={styles.icon2}
+                    src={
+                      event.thumbnail ||
+                      "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                    }
                     alt="Event Thumbnail"
                   ></img>
                   <div className={styles.eventInfo}>
