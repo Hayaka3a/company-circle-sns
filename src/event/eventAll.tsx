@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export default function EventEverything() {
   LogSt();
 
+  const navigate = useNavigate();
   const params = useParams();
   const paramsID = params.id;
 
@@ -18,7 +19,7 @@ export default function EventEverything() {
     const { data, error } = await supabase
       .from("events")
       .select("*")
-      .eq("status", "false");
+      .eq("status", false);
 
     if (error) {
       console.error("eventsテーブルデータ情報取得失敗", error);
@@ -40,44 +41,60 @@ export default function EventEverything() {
     }
   };
 
+  const pageHandler = () => {
+    navigate(`/event/${paramsID}`);
+  };
+
   return (
-    <div className={styles.flex}>
-      <div className={styles.all}>
-        <h2 className={styles.title}>イベント一覧</h2>
-        <div className={styles.eventAll}>
-          {events.map((event) => (
-            <div key={event.id} className={styles.event1}>
-              <div className={styles.imgSide}>
-                <img
-                  className={styles.icon}
-                  src={event.thumbnail || "/event_icon.png"}
-                  alt="event Thumbnail"
-                ></img>
+    <>
+      <img src={"/event/sankaku.png"} alt="event" className={styles.flag}></img>
+      <div className={styles.flex}>
+        <div className={styles.all}>
+          <div className={styles.side}>
+            <h2 className={styles.title}>イベント一覧</h2>
+            <img
+              src={"/event/party.png"}
+              alt="event"
+              className={styles.party}
+            ></img>
+          </div>
+          <div className={styles.eventAll}>
+            {events.map((event) => (
+              <div
+                key={event.id}
+                className={styles.event1}
+                onClick={pageHandler}
+              >
+                <div className={styles.imgSide}>
+                  <img
+                    className={styles.icon}
+                    src={event.thumbnail || "/event/event_icon.png"}
+                    alt="event Thumbnail"
+                  ></img>
+                </div>
+                <div className={styles.eventInfo}>
+                  <h3 className={styles.eventName}>{event.eventName}</h3>
+                  <p>{truncateString(event.detail, 89)}</p>
+                  <p>
+                    開催期間 ：
+                    {new Date(event.startDate).toLocaleDateString("ja-JP", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}{" "}
+                    ～{" "}
+                    {new Date(event.endDate).toLocaleDateString("ja-JP", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                </div>
               </div>
-              <div className={styles.eventInfo}>
-                <Link to={`/event/${paramsID}`}>
-                  <h2 className={styles.eventName}>{event.eventName}</h2>
-                </Link>
-                <p>{truncateString(event.detail, 100)}</p>
-                <h3>
-                  開催時期 ：
-                  {new Date(event.startDate).toLocaleDateString("ja-JP", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}{" "}
-                  ～{" "}
-                  {new Date(event.endDate).toLocaleDateString("ja-JP", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </h3>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

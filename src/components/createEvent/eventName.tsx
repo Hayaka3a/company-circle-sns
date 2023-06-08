@@ -33,7 +33,8 @@ export default function EventName({
       const { data, error } = await supabase
         .from("events")
         .select("*")
-        .eq("eventName", eventName);
+        .eq("eventName", eventName)
+        .eq("status", false);
       if (error) {
         console.error("クエリエラー:", error.message);
       } else {

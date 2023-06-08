@@ -21,7 +21,8 @@ export default function MenubarIsland() {
     const { data, error } = await supabase
       .from("islands")
       .select("islandName, thumbnail")
-      .eq("id", paramsID);
+      .eq("id", paramsID)
+      .eq("status", false);
 
     if (error) {
       console.error("islandsテーブルデータ情報取得失敗", error);
@@ -40,7 +41,7 @@ export default function MenubarIsland() {
       .select("*")
       .eq("userID", userID)
       .eq("islandID", paramsID)
-      .eq("status", "false");
+      .eq("status", false);
     if (error) {
       console.log(error);
       // ユーザーがサークルに参加してるとき

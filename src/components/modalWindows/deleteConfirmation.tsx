@@ -27,6 +27,7 @@ export default function DeleteComfirmation({
           .update({ status: true })
           .eq(`userID`, user)
           .eq(`${table}ID`, params);
+
         if (error) {
           console.error(error.message);
         } else {

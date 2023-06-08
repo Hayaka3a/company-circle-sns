@@ -23,6 +23,7 @@ const SendMessages = ({ threadID }: { threadID: number }) => {
       let { data: userData } = (await supabase
         .from("users")
         .select("*")
+        .eq("status", false)
         .eq("id", userID)) as { data: UserData[] };
 
       setUser(userData[0]);

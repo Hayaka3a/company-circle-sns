@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MenubarIsland from "../components/menubarIsland";
 import styles from "../styles/island/islandDetail.module.css";
 import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
 import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
-import { Link, useNavigate, useNavigation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import LogSt from "../components/cookie/logSt";
 
@@ -20,14 +20,14 @@ export default function IslandDetail() {
 
   useEffect(() => {
     fetchIslandDetail();
-  }, [islandDetail]);
+  }, []);
 
   const fetchIslandDetail = async () => {
     const { data, error } = await supabase
       .from("islands")
       .select("*")
-      .eq("id", islandId.id); // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
-
+      .eq("id", islandId.id) // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
+      .eq("status", false);
     if (error) {
       console.error("島の詳細情報の取得に失敗しました:", error);
       return;

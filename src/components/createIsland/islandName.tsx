@@ -33,7 +33,8 @@ export default function IslandName({
       const { data, error } = await supabase
         .from("islands")
         .select("*")
-        .eq("islandName", islandName);
+        .eq("islandName", islandName)
+        .eq("status", false);
       if (error) {
         console.error("クエリエラー:", error.message);
       } else {

@@ -39,7 +39,8 @@ function FetchJoindIslandEvent() {
             const { data: post, error: postError } = await supabase
               .from("posts")
               .select("id, messages(*)")
-              .eq("islandID", islandId);
+              .eq("islandID", islandId)
+              .eq("status", false);
 
             if (postError) {
               console.log(postError, "postError");
