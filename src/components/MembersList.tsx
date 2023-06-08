@@ -34,7 +34,7 @@ export default function MembersList({
   // DBからデータを取得
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [entryUsers]);
 
   async function fetchData() {
     //イベントの場合
@@ -90,7 +90,8 @@ export default function MembersList({
     const { data: login, error: loginError } = await supabase
       .from("users")
       .select(`*`)
-      .eq(`id`, loginID);
+      .eq(`id`, loginID)
+      .eq("status", false);
 
     if (loginError || !login) {
       console.log(loginError, "loginError");
@@ -142,8 +143,10 @@ export default function MembersList({
               return (
                 <tr key={user.id} className={styles.tr}>
                   {anotherUser(user)}
-                  <td className={styles.td}>
-                    <button onClick={open}>島主権限を譲渡</button>
+                  <td className={styles.td2}>
+                    <button onClick={open} className={styles.ownerBtn}>
+                      島主権限を譲渡
+                    </button>
                     {modal && (
                       <DeleteComfirmation
                         closeModal={close}
@@ -155,7 +158,9 @@ export default function MembersList({
                         user={user.id}
                       />
                     )}
-                    <button onClick={open2}>島追放</button>
+                    <button onClick={open2} className={styles.exileBtn}>
+                      島追放
+                    </button>
                     {modal2 && (
                       <DeleteComfirmation
                         closeModal={close2}
@@ -189,8 +194,10 @@ export default function MembersList({
               {loginUser.familyName}
               {loginUser.firstName}&nbsp;({loginUser.department})
             </td>
-            <td className={styles.td}>
-              <button onClick={open}>島を抜ける</button>
+            <td className={styles.td2}>
+              <button onClick={open} className={styles.unsubBtn}>
+                島を抜ける
+              </button>
               {modal && (
                 <DeleteComfirmation
                   closeModal={close}
@@ -209,7 +216,7 @@ export default function MembersList({
               return (
                 <tr key={user.id}>
                   {anotherUser(user)}
-                  <td className={styles.td}></td>
+                  <td className={styles.td2}></td>
                 </tr>
               );
             })}

@@ -19,7 +19,7 @@ export default function EventEverything() {
     const { data, error } = await supabase
       .from("events")
       .select("*")
-      .eq("status", "false");
+      .eq("status", false);
 
     if (error) {
       console.error("eventsテーブルデータ情報取得失敗", error);

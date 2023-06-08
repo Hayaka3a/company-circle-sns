@@ -49,6 +49,7 @@ export default function EntryPermit({ table }: { table: string }) {
         isAnswered: true,
       })
       .eq(`id`, messageID);
+
     if (updateError) {
       console.log(updateError, "エラー");
     }

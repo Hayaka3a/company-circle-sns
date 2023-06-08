@@ -60,7 +60,7 @@ export default function EventAll() {
           .from("events")
           .select("*")
           .eq("id", eventId)
-          .eq("status", "false");
+          .eq("status", false);
 
         if (eventError) {
           console.error("Eventsテーブルデータ情報取得失敗", eventError);

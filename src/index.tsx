@@ -41,7 +41,7 @@ export default function Index() {
       const { data, error } = await supabase
         .from("islands")
         .select("*")
-        .eq("status", "false");
+        .eq("status", false);
 
       if (error) {
         console.error("島情報取得失敗", error.message);
@@ -61,7 +61,7 @@ export default function Index() {
     const { data, error } = await supabase
       .from("events")
       .select("*")
-      .eq("status", "false")
+      .eq("status", false)
       .order("createdAt", { ascending: false })
       .limit(6);
 

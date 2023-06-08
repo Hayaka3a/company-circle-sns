@@ -43,10 +43,10 @@
   width: 80px;
   margin-top: 15px;
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 3vh;
   color: rgba(94, 70, 44, 1);
   border: 3px solid rgba(255, 182, 112, 1);
-  box-shadow: 5px 5px rgba(255, 182, 112, 1);
+  box-shadow: 0.7vh 0.7vh rgba(255, 182, 112, 1);
   transition: 0.3s ease-in-out;
   height: 40px;
 }
@@ -60,10 +60,10 @@
   margin-left: 20px;
   margin-top: 15px;
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 3vh;
   color: rgba(94, 70, 44, 1);
   border: 3px solid #27acd9;
-  box-shadow: 5px 5px #27acd9;
+  box-shadow: 0.7vh 0.7vh #27acd9;
   transition: 0.3s ease-in-out;
   height: 40px;
 }
