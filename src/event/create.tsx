@@ -7,6 +7,7 @@ import EventDetail from "../components/createEvent/detail";
 import Daytime from "../components/createEvent/daytime";
 import { supabase } from "../createClient";
 import SelectIsland from "../components/selectIsland";
+import MenubarIsland from "../components/menubarIsland";
 
 export default function EventCreate() {
   LogSt();
@@ -119,88 +120,86 @@ export default function EventCreate() {
   };
 
   return (
-    <div className={styles.background}>
+    <div className={styles.all}>
+      <MenubarIsland />
       <div className={styles.box}>
-        <div className={styles.allContents}>
-          <h1>新規イベント作成</h1>
-          <div className={styles.tableCovered}>
-            <table>
-              <tbody>
-                <tr>
-                  <th>
-                    イベント名<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td>
-                    <EventName
-                      eventName={eventName}
-                      setEventName={setEventName}
+        <h2>新しいイベントを作成</h2>
+        <div className={styles.tableCovered}>
+          <table className={styles.table}>
+            <tbody className={styles.tbody}>
+              <tr className={styles.tr}>
+                <th className={styles.th}>
+                  イベント名<span className={styles.span}>【必須】</span>
+                </th>
+                <td className={styles.td}>
+                  <EventName
+                    eventName={eventName}
+                    setEventName={setEventName}
+                  />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
+                <th className={styles.th}>
+                  詳細<span className={styles.span}>【必須】</span>
+                </th>
+                <td className={styles.td}>
+                  <EventDetail detail={detail} setDetail={setDetail} />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
+                <th className={styles.th}>
+                  開催期間<span className={styles.span}>【必須】</span>
+                </th>
+                <td className={styles.td}>
+                  <Daytime
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
+                  />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
+                <th className={styles.th}>サムネイル</th>
+                <td className={styles.imgSide}>
+                  <img
+                    className={styles.icon}
+                    src={imageUrl || "/event/event_icon.png"}
+                    alt="Event Thumbnail"
+                  />
+                  <div className={styles.faileCenter}>
+                    <input
+                      type="file"
+                      id="thumbnail"
+                      className={styles.inputA}
+                      onChange={handleFileChange}
                     />
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    詳細<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td>
-                    <EventDetail detail={detail} setDetail={setDetail} />
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    開催期間<span className={styles.span}>【必須】</span>
-                  </th>
-                  <td>
-                    <Daytime
-                      startDate={startDate}
-                      setStartDate={setStartDate}
-                      endDate={endDate}
-                      setEndDate={setEndDate}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th>サムネイル</th>
-                  <td className={styles.imgSide}>
-                    <img
-                      className={styles.icon}
-                      src={imageUrl || "/event/event_icon.png"}
-                      alt="Event Thumbnail"
-                    />
-                    <div className={styles.faileCenter}>
-                      <input
-                        type="file"
-                        id="thumbnail"
-                        className={styles.inputA}
-                        onChange={handleFileChange}
-                      />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th>共同開催島</th>
-                  <td>
-                    <SelectIsland
-                      islandID={islandID}
-                      setIslandTags={setIslandTags}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <button
-            onClick={createHandler}
-            disabled={
-              !eventName.trim() ||
-              !detail.trim() ||
-              !startDate.trim() ||
-              !endDate.trim()
-            }
-          >
-            新しいイベントを開催する
-          </button>
+                  </div>
+                </td>
+              </tr>
+              <tr className={styles.tr}>
+                <th className={styles.th}>共同開催島</th>
+                <td className={styles.td}>
+                  <SelectIsland
+                    islandID={islandID}
+                    setIslandTags={setIslandTags}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <button
+          onClick={createHandler}
+          disabled={
+            !eventName.trim() ||
+            !detail.trim() ||
+            !startDate.trim() ||
+            !endDate.trim()
+          }
+        >
+          新しいイベントを開催する
+        </button>
       </div>
     </div>
   );

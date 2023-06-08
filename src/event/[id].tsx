@@ -87,7 +87,7 @@ export default function EventDetail() {
   };
 
   const Handler = () => {
-    navigate("/event/edit");
+    navigate(`/event/edit/${eventId}`);
     window.location.reload();
   };
   return (

@@ -26,8 +26,8 @@
   z-index: 0;
   margin: 2em auto;
   padding: 5em;
-  border-radius: 30px 60px/60px 30px;
-  border: solid 8px #ffca2b;
+  border-radius: 7vh;
+  border: solid 0.5vh #ffca2b;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.12), 0 2px 3px 0 rgba(0, 0, 0, 0.22);
   transition: 0.3s;
 }
@@ -50,6 +50,24 @@
   margin: 14px;
   z-index: -1;
   border-radius: 3px;
+}
+
+.event2 {
+  margin: 0 auto;
+  display: flex;
+  background: rgb(250 255 198);
+  margin-bottom: 3%;
+  height: 22vh;
+  width: 80%;
+  position: relative;
+  padding: 1em !important;
+  z-index: 0;
+  margin: 2em auto;
+  padding: 5em;
+  border: dashed 0.5vh rgba(194, 209, 37, 1);
+  border-radius: 1vh;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.12), 0 2px 3px 0 rgba(0, 0, 0, 0.22);
+  transition: 0.3s;
 }
 
 .title {
@@ -129,6 +147,7 @@
 }
 
 .eventName {
+  margin-top: 1vh;
   margin-right: 5%;
   align-items: center; /* 垂直方向の中央揃え */
   white-space: nowrap;
@@ -136,7 +155,15 @@
   transition: color 0.3s;
   color: #f8880f;
 }
-
+.eventName2 {
+  margin-top: 1vh;
+  margin-right: 5%;
+  align-items: center; /* 垂直方向の中央揃え */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: color 0.3s;
+  color: #8a7660;
+}
 .link {
   text-decoration: none;
 }
@@ -185,7 +212,7 @@
   margin-left: auto;
   text-align: center;
   border-radius: 1%;
-  width: 160vh;
+  width: 80%;
   min-height: 35vh;
 
   border: dashed 0.5vh rgba(138, 121, 98, 1);
@@ -207,4 +234,16 @@
   margin-left: 3%;
   background-color: #ffbe5d;
   border: 9px double #f7a54e;
+}
+.icon3 {
+  width: 17vh;
+  height: 17vh;
+  border-radius: 50%; /*サムネイル円型*/
+  margin-left: 3%;
+  background-color: #f1f6db;
+  border: 9px double #737e66;
+}
+
+.date {
+  width: 62vh;
 }

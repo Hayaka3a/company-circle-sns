@@ -16,7 +16,7 @@ function Thread({ thread }: { thread: thread[] }) {
           }}
           className={styles.thread}
         >
-          <p className={styles.title}>{thread.threadTitle}</p>
+          <h2 className={styles.title}>{thread.threadTitle}</h2>
         </div>
       ))}
     </div>

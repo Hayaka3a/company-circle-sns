@@ -65,7 +65,7 @@ export default function IslandDetail() {
   };
 
   const Handler = () => {
-    navigate("/island/edit");
+    navigate(`/island/edit/${islandId}`);
     window.location.reload();
   };
   return (
