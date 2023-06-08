@@ -38,11 +38,17 @@
   margin-bottom: 3vh;
   border: dashed 0.5vh rgba(194, 209, 37, 1);
   border-radius: 1vh;
+  background: rgb(250 255 198);
 }
 
 .title {
-  font-weight: bold;
-  margin-left: 4vh;
+  margin-top: 1vh;
+  margin-right: 5%;
+  align-items: center; /* 垂直方向の中央揃え */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: color 0.3s;
+  color: #8a7660;
 }
 
 .imgWrapper {
