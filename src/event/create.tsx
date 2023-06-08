@@ -162,7 +162,7 @@ export default function EventCreate() {
                   <td className={styles.imgSide}>
                     <img
                       className={styles.icon}
-                      src={imageUrl || "/event_icon.png"}
+                      src={imageUrl || "/event/event_icon.png"}
                       alt="Event Thumbnail"
                     />
                     <div className={styles.faileCenter}>

@@ -43,7 +43,6 @@ export default function SelectIsland({
     setTempSelectedValues(selectedOptions); // 一時的な選択値を更新する
   };
 
-  //   追加ボタン押されたらタグを追加
   // 追加ボタン押されたらタグを追加
   const addNameHandler = () => {
     // 既に追加されている値を選択しようとした場合にエラーメッセージを表示
@@ -54,11 +53,6 @@ export default function SelectIsland({
       setSelectError("選択された値は既に追加されています。");
       return;
     }
-    // タグを追加
-    setSelectedValues((prevSelectedValues) => [
-      ...prevSelectedValues,
-      ...tempSelectedValues,
-    ]);
 
     tempSelectedValues.forEach((selectedValue) => {
       const existingOption = islands.find(
@@ -71,7 +65,12 @@ export default function SelectIsland({
       }
     });
 
-    setTempSelectedValues([]); // 一時的な選択値をリセットする
+    // タグを追加
+    setSelectedValues((prevSelectedValues) => [
+      ...prevSelectedValues,
+      ...tempSelectedValues,
+    ]);
+
     setSelectError(""); // エラーメッセージをリセットする
   };
 
@@ -113,7 +112,7 @@ export default function SelectIsland({
           ))}
         </optgroup>
       </select>
-      <button onClick={addNameHandler}>追加</button> {/* 追加ボタンを追加 */}
+      <button onClick={addNameHandler}>追加</button>
       {selectError && (
         <div>
           <span className={styles.span}>{selectError}</span>
