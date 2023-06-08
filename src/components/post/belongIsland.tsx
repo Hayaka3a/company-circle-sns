@@ -13,39 +13,58 @@ export default function BelongIsland() {
         const { data: entrys, error: entrysError } = await supabase
           .from("userEntryStatus")
           .select("islandID")
-          .eq("userID", userID);
+          .eq("userID", userID)
+          .eq("status", false);
 
         if (entrysError) {
           console.error("データ1取得失敗", entrysError.message);
           return;
         }
 
+        // データがnullまたは空の場合は何も行わずにreturnする
+        if (!entrys || entrys.length === 0) {
+          return;
+        }
+
         for (const entry of entrys) {
-          const { data: posts, error: postsError } = await supabase
-            .from("posts")
-            .select("id")
-            .eq("islandID", entry.islandID);
+          // islandIDがnullじゃない場合は実行
+          if (entry.islandID !== null) {
+            const { data: posts, error: postsError } = await supabase
+              .from("posts")
+              .select("id")
+              .eq("islandID", entry.islandID)
+              .eq("status", false);
 
-          if (postsError) {
-            console.error("データ2取得失敗", postsError.message);
-            return;
-          }
-
-          for (const post of posts) {
-            const { data: messages, error: messagesError } = await supabase
-              .from("messages")
-              .select("*")
-              .eq("postID", post.id)
-              .eq("isRead", "false");
-
-            if (messagesError) {
-              console.error("データ3取得失敗", messagesError.message);
+            if (postsError) {
+              console.error("データ2取得失敗", postsError.message);
               return;
             }
-            if (messages.length > 0) {
-              setHasNewMessage(true);
-              return; // 最初の未読メッセージが見つかったらループを中断する
+
+            for (const post of posts) {
+              const { data: messages, error: messagesError } = await supabase
+                .from("messages")
+                .select("*")
+                .eq("postID", post.id)
+                .eq("isRead", "false")
+                .eq("status", false);
+
+              // データがnullまたは空の場合は何も行わずにreturnする
+              if (!messages || messages.length === 0) {
+                return;
+              }
+
+              if (messagesError) {
+                console.error("データ3取得失敗", messagesError.message);
+                return;
+              }
+              if (messages.length > 0) {
+                setHasNewMessage(true);
+                return; // 最初の未読メッセージが見つかったらループを中断する
+              }
             }
+          } else {
+            // islandIDがnullの場合はスキップ
+            console.log("どこの島にも所属していません");
           }
         }
         // 最初の未読メッセージが見つからなかった場合は false を設定する
