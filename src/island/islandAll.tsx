@@ -48,7 +48,7 @@ export default function IslandAll() {
         <h2 className={styles.title}>島一覧</h2>
         <div className={styles.eventAll}>
           {islands.map((island) => (
-            <Link to={`/island/${island.id}`}>
+            <Link to={`/island/${island.id}`} className={styles.link}>
               <div key={island.id} className={styles.event1}>
                 <div className={styles.imgSide}>
                   <img

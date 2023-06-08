@@ -56,7 +56,7 @@ export default function EventEverything() {
           </div>
           <div className={styles.eventAll}>
             {events.map((event) => (
-              <Link to={`/event/${event.id}`}>
+              <Link to={`/event/${event.id}`} className={styles.link}>
                 <div key={event.id} className={styles.event1}>
                   <div className={styles.imgSide}>
                     <img

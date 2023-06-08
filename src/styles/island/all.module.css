@@ -156,3 +156,7 @@
     transform: translateY(0px);
   }
 }
+
+.link {
+  text-decoration: none;
+}
