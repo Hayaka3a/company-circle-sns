@@ -37,7 +37,9 @@ export default function CreateResidentApplication({
 
   // messagesテーブルとapplicationsテーブルにメッセージを保存
   const saveMessage = async () => {
-    try {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+
       const { data: messagesData, error: messagesError } = await supabase
         .from("messages")
         .insert([
@@ -49,6 +51,7 @@ export default function CreateResidentApplication({
             isAnswered: false,
             postedBy: postedID,
             status: false,
+            sendingDate: formattedDate,
           },
         ]);
 
@@ -58,9 +61,6 @@ export default function CreateResidentApplication({
         console.log("データが正常に送信されました");
         closeResidentModal();
       }
-    } catch (error) {
-      console.error("データの送信中にエラーが発生しました:", error.message);
-    }
   };
 
   const addHandler = () => {
