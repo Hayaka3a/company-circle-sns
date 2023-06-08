@@ -104,7 +104,7 @@ function App() {
             path="/event/post/entryPermit/:id"
             element={<EventEntryPermitPage />}
           />
-          <Route path="/event/eventAll:id" element={<EventEverything />} />
+          <Route path="/event/eventAll" element={<EventEverything />} />
           {/* chat */}
           <Route path="/chat/:id" element={<Chat />} />
         </Routes>
