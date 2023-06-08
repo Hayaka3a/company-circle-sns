@@ -27,6 +27,7 @@ export default function CreateSendingMessage({
   const fetchPost = async () => {
     // userIDから該当のPostIDを割り出す
     const { data: posts, error: postError } = await supabase
+
       .from("posts")
       .select("id")
       .eq("userID", userID)
@@ -35,9 +36,8 @@ export default function CreateSendingMessage({
       console.log(userID);
       console.log(postError, "ポストエラー");
     }
-    setPosts(posts[0].id);
+    setPosts(postsData[0]?.id || 0);
 
-    // PostedByに入れるため、送信する側のPostIDを取得する
     const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
@@ -46,8 +46,7 @@ export default function CreateSendingMessage({
     if (postedByError) {
       console.log(postedByError, "ポストバイエラー");
     }
-    console.log(postedBy[0].id);
-    setPostedID(postedBy[0].id);
+    setPostedID(postedBy[0]?.id || 0);
   };
 
   const fetchIslandName = async () => {
@@ -64,8 +63,10 @@ export default function CreateSendingMessage({
     }
   };
 
-  // messagesテーブルにメッセージを保存
   const sendMessage = async () => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+
     const { data, error } = await supabase.from("messages").insert([
       {
         postID: posts,
@@ -75,8 +76,11 @@ export default function CreateSendingMessage({
         isAnswered: false,
         postedBy: postedID,
         status: false,
+
+        sendingDate: formattedDate,
       },
     ]);
+
     if (error) {
       console.error(error, "メッセージの送信中にエラーが発生しました:");
     } else {
@@ -116,11 +120,9 @@ export default function CreateSendingMessage({
                   ></textarea>
                 </div>
               </div>
-            </div>
-            <div>
-              <button onClick={addHandler} className={styles.btn}>
-                送信する
-              </button>
+              <div className={styles.btn}>
+                <button onClick={addHandler}>送信する</button>
+              </div>
             </div>
           </div>
         </div>
