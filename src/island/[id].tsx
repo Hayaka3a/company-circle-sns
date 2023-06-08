@@ -14,6 +14,9 @@ export default function IslandDetail() {
   const navigate = useNavigate();
   const islandId = useParams();
   const [islandDetail, setIslandDetail] = useState(null); // 取得した島の詳細情報を保持する状態変数
+  const [islandImage, setIslandImage] = useState(
+    "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
+  ); // 取得した島の詳細情報を保持する状態変数
 
   useEffect(() => {
     fetchIslandDetail();
@@ -36,6 +39,9 @@ export default function IslandDetail() {
 
     const islandDetail = data[0]; // 最初のデータを取得（仮定）
     setIslandDetail(islandDetail); // 島の詳細情報を状態変数にセット
+    if (islandDetail.thumbnail) {
+      setIslandImage(islandDetail.thumbnail);
+    }
   };
 
   // 住民申請を押した際の小窓画面（モーダルウィンドウ）の開閉
@@ -69,7 +75,7 @@ export default function IslandDetail() {
         <div className={styles.detail}>
           {islandDetail && (
             <img
-              src={islandDetail.thumbnail}
+              src={islandImage}
               alt="サークルアイコン"
               className={styles.icon}
             />

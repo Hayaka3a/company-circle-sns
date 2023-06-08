@@ -50,7 +50,6 @@
 
 .main {
   width: auto;
-  font-size: 1.5em;
   height: 40vh;
   width: 70%;
   display: grid;
@@ -79,7 +78,6 @@
 
 .h3 {
   margin-top: 0;
-  font-size: 26px;
 }
 
 #deleteCheck {

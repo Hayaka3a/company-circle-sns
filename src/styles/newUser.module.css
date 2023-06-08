@@ -1,7 +1,6 @@
 .background {
   padding-top: 5%;
   padding-bottom: 5%;
-  font-size: 12px;
 }
 
 .box {
@@ -24,7 +23,6 @@
 
 .span {
   color: red; /*必須文字*/
-  font-size: 12px;
 }
 
 /* 未入力時に背景色を変更 */

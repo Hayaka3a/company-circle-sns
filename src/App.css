@@ -10,6 +10,16 @@
   font-size: 2.5vh;
 }
 
+input {
+  font-size: 2.5vh;
+}
+button {
+  font-size: 2.5vh;
+}
+th {
+  font-size: 2vh;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

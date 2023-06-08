@@ -31,7 +31,7 @@ function FetchJoindIslandEvent() {
 
       combi.map(
         async (join: { events: Event | null; islands: Island | null }) => {
-          if (join.islands !== null) {
+          if (join.islands !== null || undefined) {
             // 参加サークルのidを取得
             const islandId = join.islands.id;
 
@@ -88,6 +88,8 @@ function FetchJoindIslandEvent() {
             } else {
               return;
             }
+          } else {
+            return;
           }
         },
       );

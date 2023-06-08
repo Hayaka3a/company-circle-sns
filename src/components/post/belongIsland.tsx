@@ -29,27 +29,27 @@ export default function BelongIsland() {
           if (postsError) {
             console.error("データ2取得失敗", postsError.message);
             return;
-          }
+          } else {
+            for (const post of posts) {
+              const { data: messages, error: messagesError } = await supabase
+                .from("messages")
+                .select("*")
+                .eq("postID", post.id)
+                .eq("isRead", "false");
 
-          for (const post of posts) {
-            const { data: messages, error: messagesError } = await supabase
-              .from("messages")
-              .select("*")
-              .eq("postID", post.id)
-              .eq("isRead", "false");
-
-            if (messagesError) {
-              console.error("データ3取得失敗", messagesError.message);
-              return;
-            }
-            if (messages.length > 0) {
-              setHasNewMessage(true);
-              return; // 最初の未読メッセージが見つかったらループを中断する
+              if (messagesError) {
+                console.error("データ3取得失敗", messagesError.message);
+                return;
+              }
+              if (messages.length > 0) {
+                setHasNewMessage(true);
+                return; // 最初の未読メッセージが見つかったらループを中断する
+              }
             }
           }
+          // 最初の未読メッセージが見つからなかった場合は false を設定する
+          setHasNewMessage(false);
         }
-        // 最初の未読メッセージが見つからなかった場合は false を設定する
-        setHasNewMessage(false);
       } catch (error) {
         console.error("メッセージ情報取得失敗", error.message);
       }

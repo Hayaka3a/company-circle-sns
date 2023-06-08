@@ -4,8 +4,8 @@ header {
   padding: 0 15px;
   height: 15vh;
   display: flex;
-  width: auto;
-  justify-content: space-evenly;
+  width: 100%;
+  justify-content: space-between;
 }
 .headerItem {
   display: flex;
@@ -16,7 +16,7 @@ header {
 .userDataFlex {
   display: flex;
   align-items: center;
-  padding-right: 50px;
+  padding-right: 3vh;
 }
 
 .userName {
@@ -32,13 +32,37 @@ header {
 .search {
   align-self: self-end;
 }
+.btn {
+  padding: 0.3vh 1.5vh;
+  border: none;
+  border-radius: 2vh;
+  user-select: none;
+  cursor: pointer;
+  margin-bottom: 1vh;
+  margin-left: 1vh;
+  background-color: rgba(194, 137, 66, 1);
+  color: white;
+}
+
+/* ホバー時 */
+.btn:hover {
+  box-shadow: none;
+  transform: translateY(0.5vh);
+}
+
+/* クリック時 */
+.btn:active {
+  box-shadow: none;
+  transform: translateY(1vh);
+}
 
 .logo {
-  height: 100%;
+  height: 16vh;
 }
 
 .logout {
-  height: 28px;
+  height: 6vh;
+  margin: 0 3vh;
   cursor: pointer;
 }
 
@@ -76,12 +100,12 @@ header {
 .msgIcon {
   display: inline-block;
   margin-left: 1rem;
-  width: 20px;
-  height: 20px;
-  padding: 3px;
+  width: 3vh;
+  height: 3vh;
+  padding-bottom: 0.2vh;
   color: #fff;
-  border: 1px solid #172a22;
-  background-color: #172a22;
+  border: 1px solid rgba(207, 135, 56, 1);
+  background-color: rgba(207, 135, 56, 1);
   border-radius: 50%;
   text-align: center;
 }
@@ -122,7 +146,7 @@ header {
   color: black;
   padding: 0.5em 0.5em;
   text-align: center;
-  font-size: 18px;
+
   font-weight: bold;
   letter-spacing: 0.02em;
   text-decoration: none;
@@ -143,11 +167,12 @@ header {
   box-sizing: border-box;
   position: relative;
   z-index: 100;
+  margin-right: 3vh;
 }
 .menuTrigger {
   position: relative;
-  width: 32px;
-  height: 26px;
+  width: 6vh;
+  height: 5vh;
   background: none;
   border: none;
   appearance: none;
@@ -157,7 +182,7 @@ header {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 4px;
+  height: 0.4vh;
   background-color: #172a22;
   border-radius: 4px;
 }
@@ -165,20 +190,20 @@ header {
   top: 0;
 }
 .menuTrigger span:nth-of-type(2) {
-  top: 11px;
+  top: 2.4vh;
 }
 .menuTrigger span:nth-of-type(3) {
   bottom: 0;
 }
 /*チェックボックスにチェックが入ったら*/
 .checkbox:checked + label span:nth-of-type(1) {
-  transform: translateY(11px) rotate(-45deg);
+  transform: translateY(2.5vh) rotate(-45deg);
 }
 .checkbox:checked + label span:nth-of-type(2) {
   opacity: 0;
 }
 .checkbox:checked + label span:nth-of-type(3) {
-  transform: translateY(-11px) rotate(45deg);
+  transform: translateY(-2.3vh) rotate(45deg);
 }
 .checkbox:checked ~ .menu {
   right: 0;
@@ -193,6 +218,7 @@ header {
   margin-top: auto;
 }
 .input {
-  height: 20px;
-  margin-bottom: 5px;
+  height: 2.5vh;
+  margin-bottom: 1vh;
+  width: 30vh;
 }
