@@ -7,6 +7,7 @@ import { supabase } from "../createClient";
 import CreateDeletePage from "../components/modalWindows/deleteEvent";
 import CreateDeleteCheck from "../components/modalWindows/deleteEventCheck";
 import CreateAfterDelete from "../components/modalWindows/deleteEventAfter";
+import IslandSelected from "../components/islandSelected";
 
 
 export default function EventEdit() {
@@ -17,6 +18,7 @@ export default function EventEdit() {
   useEffect(() => {
     fetchEvent();
     entryIsland();
+    // addIsland();
   },[]);
 
   const navigate = useNavigate();
@@ -26,10 +28,15 @@ export default function EventEdit() {
   const [ isAfterDeleteOpen, setIsAfterDeleteOpen ] = useState(false);
   const [ inputValue, setInputValue ] = useState("");
 
-  // 参加サークル選択ウィンドウの開閉
-  const [selectedIsland, setSelectedIsland] = useState(false);
 
-  
+  // 参加サークル追加
+  const [islandTags, setIslandTags] = useState<
+    { id: number; islandName: string }[]
+  >([]);
+
+  console.log(islandTags)
+
+
   const [eventID, setEventID] = useState<number>(); // eventIDステートに追加
   const [eventName, setEventName] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -38,17 +45,7 @@ export default function EventEdit() {
   const [eventJoin, setEventJoin] = useState("");
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
-
-
-  // 参加サークル選択モーダルウィンドウの表示
-  const selectionIslandOpen = () => {
-    setSelectedIsland(true);
-  };
-
-  // 参加サークル選択モーダルウィンドウの非表示
-  const selectionIslandClose = () => {
-    setSelectedIsland(false);
-  };
+  const [islandJoinID, setIslandJoinID] = useState("");
 
 
 
@@ -121,7 +118,7 @@ export default function EventEdit() {
         }
 
         console.log("Change status of events successfully.");
-        navigate("/");
+        // navigate("/");
         window.location.reload();
       }
     }
@@ -167,11 +164,14 @@ export default function EventEdit() {
     }
   
     const joinIslandIDs = data.map((entry) => entry.islandID); // フィルタリングされたデータの島IDを抽出
+    setIslandJoinID(joinIslandIDs[0]);
+
+    console.log("サークルid", joinIslandIDs);
   
     // islandsテーブルからislandNameを取得
     const { data: islandData, error: islandError } = await supabase
       .from("islands")
-      .select("islandName")
+      .select("islandName, id")
       .in("id", joinIslandIDs);
   
     if (islandError) {
@@ -237,6 +237,9 @@ export default function EventEdit() {
   };
 
 
+
+  
+
   // 保存処理の実装
   const handleSaveClick = () => {
     setEditMode((prev) => !prev);
@@ -245,6 +248,7 @@ export default function EventEdit() {
     }
     handleSave();
     createHandler();
+    addIsland();
   };
 
   const handleSave = async () => {
@@ -273,6 +277,33 @@ export default function EventEdit() {
       status: "false"
     };
   }
+
+    // 参加サークルをuserEntryStatusテーブルに追加
+    const addIsland = async () => {
+    if (islandTags) {
+      await Promise.all(
+        islandTags.map(async (island) => {
+            const islandEvent = {
+            islandID: island.id,
+            eventID: fetchEventID,
+            status: "false",
+          };
+  
+  
+          const { error: islandEventError } = await supabase
+            .from("userEntryStatus")
+            .insert(islandEvent);
+    
+          if (islandEventError) {
+            console.error("共同開催島情報追加失敗");
+          }
+          navigate(`/`);
+          window.location.reload();
+        })
+      );
+    }
+  }
+  
 
 
   return (
@@ -341,26 +372,12 @@ export default function EventEdit() {
           <label>参加島（サークル）</label>
           {eventJoin}
           {editMode && (
-            <div>
-              <button onClick={selectionIslandOpen}>選択</button>
-              {/* {selectedIsland && 
-             } */}
-            </div>
+            <IslandSelected
+              islandIDs={[islandJoinID]} // islandIDsを配列として初期化する
+              setIslandTags={setIslandTags}
+            />
           )}
-          {/* <input 
-            type="text" 
-            id="eventJoin" 
-            class={styles.center}
-            value={eventJoin}
-            onChange={handleEventJoinChange}
-            readOnly={!editMode}
-          /> */}
-          {/* {islandNames.map((name, index) => (
-            <p key={index} class={styles.center}>
-              {name}
-            </p>
-          ))} */}
-        </div>
+          </div>
 
 
           <button id={styles.edit_btn} onClick={handleSaveClick}>
