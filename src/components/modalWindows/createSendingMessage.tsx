@@ -46,6 +46,7 @@ export default function CreateSendingMessage({
     if (postedByError) {
       console.log(postedByError, "ポストバイエラー");
     }
+    console.log(postedBy[0].id);
     setPostedID(postedBy[0].id);
   };
 
@@ -77,7 +78,7 @@ export default function CreateSendingMessage({
       },
     ]);
     if (error) {
-      console.error("メッセージの送信中にエラーが発生しました:");
+      console.error(error, "メッセージの送信中にエラーが発生しました:");
     } else {
       console.log("データが正常に送信されました");
       closeModal();
