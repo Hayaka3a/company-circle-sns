@@ -7,7 +7,6 @@ import { supabase } from "../createClient";
 import CreateDeletePage from "../components/modalWindows/deleteEvent";
 import CreateDeleteCheck from "../components/modalWindows/deleteEventCheck";
 import CreateAfterDelete from "../components/modalWindows/deleteEventAfter";
-import SelectionIslandPage from "../components/modalWindows/selectionIsland_page";
 
 
 export default function EventEdit() {
@@ -122,7 +121,7 @@ export default function EventEdit() {
         }
 
         console.log("Change status of events successfully.");
-        navigate("/event/create");
+        navigate("/");
         window.location.reload();
       }
     }
@@ -344,7 +343,8 @@ export default function EventEdit() {
           {editMode && (
             <div>
               <button onClick={selectionIslandOpen}>選択</button>
-              {selectedIsland && <SelectionIslandPage selectionIslandClose={selectionIslandClose} />}
+              {/* {selectedIsland && 
+             } */}
             </div>
           )}
           {/* <input 
