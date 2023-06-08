@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import EventDetail from "../components/createEvent/detail";
 import Daytime from "../components/createEvent/daytime";
 import { supabase } from "../createClient";
+import SelectIsland from "../components/selectIsland";
 
 export default function EventCreate() {
   LogSt();
@@ -16,6 +17,9 @@ export default function EventCreate() {
   const [detail, setDetail] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [islandTags, setIslandTags] = useState<
+    { id: number; islandName: string }[]
+  >([]);
 
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -83,15 +87,32 @@ export default function EventCreate() {
             status: false,
           };
           await supabase.from("posts").insert(post);
+
+          // 共同開催島がある場合、userEntryStatusテーブルに追加
+          if (islandTags) {
+            islandTags.map(async (island) => {
+              const islandEvent = {
+                islandID: island.id,
+                eventID: createdEventId,
+                status: "false",
+              };
+              const { error: islandEventError } = await supabase
+                .from("userEntryStatus")
+                .insert(islandEvent);
+
+              if (islandEventError) {
+                console.error("共同開催島情報追加失敗");
+              }
+            });
+            navigate(`/event/${createdEventId}`);
+            window.location.reload();
+          }
         } catch (error) {
           console.log("イベントポスト作成エラー");
         }
       } catch (error) {
         console.log("userEntryStatus挿入エラー");
       }
-
-      navigate(`/event/${createdEventId}`);
-      window.location.reload();
     } catch (error) {
       console.log("イベント作成エラー");
     }
@@ -142,7 +163,7 @@ export default function EventCreate() {
                   <td className={styles.imgSide}>
                     <img
                       className={styles.icon}
-                      src={imageUrl || "/event_icon.png"}
+                      src={imageUrl || "/event/event_icon.png"}
                       alt="Event Thumbnail"
                     />
                     <div className={styles.faileCenter}>
@@ -153,6 +174,15 @@ export default function EventCreate() {
                         onChange={handleFileChange}
                       />
                     </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>共同開催島</th>
+                  <td>
+                    <SelectIsland
+                      islandID={islandID}
+                      setIslandTags={setIslandTags}
+                    />
                   </td>
                 </tr>
               </tbody>

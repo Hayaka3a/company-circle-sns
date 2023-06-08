@@ -5,7 +5,7 @@ import { supabase } from "../createClient";
 import ComboBoxTag from "../components/comboBoxTag";
 import AddTag from "../components/createIsland/addtag";
 import LogSt from "../components/cookie/logSt";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 
@@ -317,7 +317,7 @@ export default function IslandEdit() {
             className={styles.input}
             value={islandName}
             onChange={handleIslandNameChange}
-            // readOnly={!editMode}
+            readOnly={!editMode}
           />
         </div>
 

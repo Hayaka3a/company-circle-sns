@@ -17,15 +17,70 @@
 .event1 {
   margin: 0 auto;
   display: flex;
-  background-color: rgb(248, 248, 237);
+  background-color: rgb(254, 240, 176);
   margin-bottom: 3%;
-  padding: 1%;
   height: auto;
   width: 80%;
+  position: relative;
+  padding: 1.5em !important;
+  z-index: 0;
+  margin: 2em auto;
+  padding: 5em;
+  border-radius: 30px 60px/60px 30px;
+  border: solid 8px #ffca2b;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.12), 0 2px 3px 0 rgba(0, 0, 0, 0.22);
+  transition: 0.3s;
+}
+
+.event1:hover {
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  border: solid 8px #f9d56a;
+}
+
+.event1:before {
+  position: absolute;
+  border: 5px dashed #f4cc76;
+  content: "";
+  display: block;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: 14px;
+  z-index: -1;
+  border-radius: 3px;
 }
 
 .title {
-  text-align: center;
+  position: relative;
+  display: inline-block;
+  height: 64px;
+  margin-left: 30px;
+  padding: 1rem 2rem 1rem 3rem;
+  background: #6cccb4;
+  color: white;
+}
+
+.title:before {
+  position: absolute;
+  top: 0;
+  left: -30px;
+  content: "";
+  border-width: 50px 30px 50px 0;
+  border-style: solid;
+  border-color: transparent #6cccb4 transparent transparent;
+}
+
+.title:after {
+  position: absolute;
+  top: calc(50% - 7px);
+  left: -10px;
+  width: 14px;
+  height: 14px;
+  content: "";
+  border-radius: 50%;
+  background: #fff;
 }
 
 .button {
@@ -34,23 +89,70 @@
 
 .imgSide {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin-left: 3%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.side {
+  margin-left: 7%;
+  display: flex;
 }
 
 .icon {
-  width: 130px;
-  height: 130px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%; /*サムネイル円型*/
   margin-left: 3%;
   margin-right: 10%;
-  margin-top: auto;
+  background-color: #ffbe5d;
+  border: 9px double #f7a54e;
 }
 
 .eventName {
   margin-right: 5%;
   align-items: center; /* 垂直方向の中央揃え */
   white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: color 0.3s;
+  color: #f8880f;
+}
+
+.link {
+  text-decoration: none;
 }
 
 .eventInfo {
   margin-left: 9%;
+  height: 220px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  align-items: center;
+}
+
+.flag {
+  width: 100%;
+}
+
+.party {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  margin-top: 1%;
+  animation: fuwafuwa 2s infinite;
+}
+
+@keyframes fuwafuwa {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }

@@ -16,7 +16,7 @@ export default function EventAll() {
   const currentDateTime = new Date(); // 現在の日時取得
 
   const createHandler = () => {
-    navigate("/event/create/[id]");
+    navigate(`/event/create/${paramsID}`);
     window.location.reload();
   };
 
@@ -102,7 +102,7 @@ export default function EventAll() {
                       <h2 className={styles.eventName}>{event.eventName}</h2>
                     </Link>
                     <h3>
-                      開催時期 ：
+                      開催期間 ：
                       {new Date(event.startDate).toLocaleDateString("ja-JP", {
                         year: "numeric",
                         month: "long",
