@@ -1,10 +1,13 @@
 .background {
-  padding-top: 5%;
+  padding-top: 2vh;
   padding-bottom: 5%;
 }
 
+.form {
+  padding-top: 3vh;
+}
+
 .box {
-  background-color: rgb(231, 231, 231);
   padding-top: 1%;
   height: 80%;
   margin-right: auto;
@@ -12,17 +15,23 @@
   text-align: center;
   border-radius: 1%;
   padding-bottom: 3%;
-  width: 70%;
+  width: 77%;
+
+  background-color: rgba(255, 254, 245, 1);
+  border: dashed 0.5vh rgba(138, 121, 98, 1);
+  box-shadow: 0 0 0 1vh rgba(250, 248, 242, 1), 0 0 0 2vh rgba(138, 121, 98, 1);
+  border-radius: 1vh;
 }
 
 .icon {
-  height: 100px;
-  width: 100px;
+  height: 12vh;
+  width: 12vh;
   border-radius: 50%; /*サムネイル円型*/
 }
 
 .span {
   color: red; /*必須文字*/
+  font-size: 2vh;
 }
 
 /* 未入力時に背景色を変更 */
@@ -33,7 +42,6 @@
 /*　各入力項目 */
 .address {
   width: 100%;
-  height: 20px;
 }
 
 .tableCovered {
@@ -74,21 +82,20 @@
 
 .th {
   width: 30%;
+  font-size: 2.5vh;
 }
 
 .inputA {
-  height: 20px;
   width: 45%;
 }
 .inputB {
-  height: 20px;
   width: 45%;
   margin-left: 4%;
 }
 
 .allContents {
   height: 100%;
-  padding: 5%;
+  padding: 4%;
 }
 
 .imgSide {
@@ -102,11 +109,8 @@
   display: flex;
 }
 
-.radio {
-  width: 300px;
-}
-.radiolabel {
-  width: 120px;
+.label {
+  width: 10vh;
 }
 
 /* コンボボックス */
@@ -190,6 +194,7 @@
 
 .radio {
   display: flex;
+  width: 80vh;
 }
 
 .loginPageButton {

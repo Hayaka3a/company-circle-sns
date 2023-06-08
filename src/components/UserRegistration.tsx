@@ -134,7 +134,7 @@ export default function UserRegistration() {
           <button>ログインページへ戻る</button>
         </Link>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={styles.box}>
           <div className={styles.allContents}>
             <h2>新規登録</h2>
@@ -366,7 +366,7 @@ export default function UserRegistration() {
                                 value={item.id}
                                 {...register("department")}
                               />
-                              <label htmlFor={item.id} className="radioLabel">
+                              <label htmlFor={item.id} className="label">
                                 {item.name}
                               </label>
                             </div>

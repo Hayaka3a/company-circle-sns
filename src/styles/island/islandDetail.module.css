@@ -22,8 +22,8 @@
   margin-right: auto;
   padding: 4% 1vh;
 
-  border: dashed 0.5vh rgba(207, 111, 93, 1);
-  box-shadow: 0 0 0 1vh rgba(250, 248, 242, 1), 0 0 0 2vh rgba(207, 111, 93, 1);
+  border: dashed 0.5vh rgba(138, 121, 98, 1);
+  box-shadow: 0 0 0 1vh rgba(250, 248, 242, 1), 0 0 0 2vh rgba(138, 121, 98, 1);
   border-radius: 1vh;
 }
 

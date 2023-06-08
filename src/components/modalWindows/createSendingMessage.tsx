@@ -26,7 +26,7 @@ export default function CreateSendingMessage({
 
   const fetchPost = async () => {
     // userIDから該当のPostIDを割り出す
-    const { data: posts, error: postError } = await supabase
+    const { data: postsData, error: postError } = await supabase
 
       .from("posts")
       .select("id")
@@ -120,8 +120,10 @@ export default function CreateSendingMessage({
                   ></textarea>
                 </div>
               </div>
-              <div className={styles.btn}>
-                <button onClick={addHandler}>送信する</button>
+              <div>
+                <button onClick={addHandler} className={styles.btn}>
+                  送信する
+                </button>
               </div>
             </div>
           </div>
