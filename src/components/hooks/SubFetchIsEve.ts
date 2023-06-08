@@ -47,7 +47,6 @@ export default function SubFetchIsEve({
         }[];
         tmpEve.map((data) => tmpIs.push(data));
 
-        console.log(tmpIs, "せっとまえ");
         setCombi(tmpIs);
       } else {
         return;

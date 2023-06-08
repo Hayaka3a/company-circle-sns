@@ -29,8 +29,6 @@ function FetchJoindIslandEvent() {
       let tmpIsland = [];
       let tmpEvents = [];
 
-      console.log(combi, "まっぷまえ");
-
       combi.map(
         async (join: { events: Event | null; islands: Island | null }) => {
           if (join.islands !== null || undefined) {
