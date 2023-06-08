@@ -20,7 +20,8 @@ export default function SelectIsland({
   const fetchIslands = async () => {
     const { data, error } = await supabase
       .from("islands")
-      .select("id, islandName");
+      .select("id, islandName")
+      .eq("status", false);
     if (error) {
       console.error(error);
     } else {
