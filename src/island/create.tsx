@@ -214,32 +214,32 @@ export default function IslandCreate() {
     <div className={styles.background}>
       <div className={styles.box}>
         <div className={styles.allContents}>
-          <h1>島作成</h1>
+          <h2 className={styles.h2}>新しい島を作成</h2>
           <div className={styles.tableCovered}>
-            <table>
-              <tbody>
-                <tr>
-                  <th>
+            <table className={styles.table}>
+              <tbody className={styles.tbody}>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>
                     島名<span className={styles.span}>【必須】</span>
                   </th>
-                  <td>
+                  <td className={styles.td}>
                     <IslandName
                       islandName={islandName}
                       setIslandName={setIslandName}
                     />
                   </td>
                 </tr>
-                <tr>
-                  <th>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>
                     活動内容<span className={styles.span}>【必須】</span>
                   </th>
-                  <td>
+                  <td className={styles.td}>
                     <Detail detail={detail} setDetail={setDetail} />
                   </td>
                 </tr>
-                <tr>
-                  <th>メンバー</th>
-                  <td>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>メンバー</th>
+                  <td className={styles.td}>
                     <ComboBoxUser
                       nameOptions={userOptions}
                       htmlFor="user"
@@ -247,8 +247,8 @@ export default function IslandCreate() {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <th>サムネイル</th>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>サムネイル</th>
                   <td className={styles.imgSide}>
                     <img
                       className={styles.icon}
@@ -265,9 +265,9 @@ export default function IslandCreate() {
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <th>タグ</th>
-                  <td>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>タグ</th>
+                  <td className={styles.td}>
                     <ComboBoxTag
                       tagOptions={tagOptions}
                       htmlFor="tag"
@@ -275,9 +275,9 @@ export default function IslandCreate() {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <th>タグ追加</th>
-                  <td>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>タグ追加</th>
+                  <td className={styles.td}>
                     <AddTag setTagNames={setTagNames} />
                   </td>
                 </tr>
