@@ -8,6 +8,7 @@
     "Modern", "Chalkboard", "Chalkboard SE" sans-serif;
   color: rgba(95, 95, 95, 1);
   font-size: 2.5vh;
+  min-height: 100vh;
 }
 
 input {

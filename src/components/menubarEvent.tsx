@@ -13,6 +13,9 @@ export default function MenubarEvent() {
   const [event, setEvent] = useState<Event | null>(null);
   const params = useParams();
   const paramsID = parseInt(params.id);
+  const [eventImage, setEventImage] = useState(
+    "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
+  );
 
   const userID = GetCookieID();
 
@@ -21,7 +24,8 @@ export default function MenubarEvent() {
     const { data, error } = await supabase
       .from("events")
       .select("eventName, thumbnail")
-      .eq("id", paramsID);
+      .eq("id", paramsID)
+      .eq("status", false);
 
     if (error) {
       console.error("eventsテーブルデータ情報取得失敗", error);
@@ -30,6 +34,9 @@ export default function MenubarEvent() {
 
     if (data && data.length > 0) {
       setEvent(data[0]);
+      if (data[0].thumbnail) {
+        setEventImage(data[0].thumbnail);
+      }
     }
   };
 
@@ -40,7 +47,8 @@ export default function MenubarEvent() {
       const { data: entrys, error: entrysError } = await supabase
         .from("userEntryStatus")
         .select("islandID")
-        .eq("userID", userID);
+        .eq("userID", userID)
+        .eq("status", false);
 
       // entrys配列の中からeventIDがnullの値のものを配列から取り除く
       const ens = entrys.filter((event) => event.islandID !== null);
@@ -56,7 +64,8 @@ export default function MenubarEvent() {
             const { data: events, error: eventsError } = await supabase
               .from("userEntryStatus")
               .select("eventID")
-              .eq("islandID", en.islandID);
+              .eq("islandID", en.islandID)
+              .eq("status", false);
 
             if (eventsError) {
               console.error("データ1取得失敗", eventsError.message);
@@ -87,7 +96,8 @@ export default function MenubarEvent() {
         const { data: refugee, error: refugeeError } = await supabase
           .from("userEntryStatus")
           .select("eventID")
-          .eq("userID", userID);
+          .eq("userID", userID)
+          .eq("status", false);
 
         if (refugeeError) {
           console.error("データ取得失敗", refugeeError.message);
@@ -123,11 +133,7 @@ export default function MenubarEvent() {
     <>
       <div className={styles.menubar}>
         {event && (
-          <img
-            className={styles.icon}
-            src={event.thumbnail || "/event_icon.png"}
-            alt="Event Thumbnail"
-          />
+          <img className={styles.icon} src={eventImage} alt="Event Thumbnail" />
         )}
         <h3 className={styles.title}>{event && event.eventName}</h3>
         {/* ユーザーがイベントに参加している場合 */}

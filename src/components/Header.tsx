@@ -26,7 +26,8 @@ const Header = () => {
         const { data: user } = await supabase
           .from("users")
           .select("*")
-          .eq("id", userID);
+          .eq("id", userID)
+          .eq("status", false);
 
         setUserData(user);
       } catch (error) {
@@ -164,7 +165,10 @@ const Header = () => {
                       <div
                         key={island.id}
                         className={styles.listItem}
-                        onClick={() => navigate(`/island/${island.id}`)}
+                        onClick={() => {
+                          navigate(`/island/${island.id}`);
+                          window.location.reload();
+                        }}
                       >
                         <li>
                           {island.islandName}
@@ -200,7 +204,10 @@ const Header = () => {
                       <div
                         key={event.id}
                         className={styles.listItem}
-                        onClick={() => navigate(`/event/${event.id}`)}
+                        onClick={() => {
+                          navigate(`/event/${event.id}`);
+                          window.location.reload();
+                        }}
                       >
                         <li>
                           {event.eventName}
@@ -234,7 +241,7 @@ const Header = () => {
                   className={styles.menuGroupItemLink}
                   href="/island/islandAll"
                 >
-                  サークル一覧
+                  島一覧
                 </a>
               </li>
               <li className={styles.menuGroupItem}>

@@ -24,7 +24,8 @@ export default function QuitConf({
       const { data } = await supabase
         .from("users")
         .select("familyName, firstName")
-        .eq("id", userId);
+        .eq("id", userId)
+        .eq("status", false);
 
       if (data && data.length > 0) {
         const familyName = data[0].familyName;

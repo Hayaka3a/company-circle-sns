@@ -12,10 +12,10 @@
   margin-left: auto;
   text-align: center;
   border-radius: 1%;
-  width: 70%;
+  width: 137vh;
 }
 .detail {
-  width: 50em;
+  width: 125vh;
   height: 100%;
   text-align: center;
   margin-left: auto;
@@ -29,15 +29,15 @@
 }
 
 .btn1 {
-  width: 140px;
+  width: 24vh;
   margin-top: 15px;
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 10vh;
   color: rgba(94, 70, 44, 1);
   border: 3px solid rgba(255, 182, 112, 1);
-  box-shadow: 5px 5px rgba(255, 182, 112, 1);
+  box-shadow: 0.7vh 0.7vh rgba(255, 182, 112, 1);
   transition: 0.3s ease-in-out;
-  height: 40px;
+  height: 8vh;
 }
 .btn1:hover {
   box-shadow: none;
@@ -46,16 +46,16 @@
 }
 
 .btn2 {
-  width: 140px;
+  width: 24vh;
   margin-left: 10%;
-  margin-top: 15px;
+  margin-top: 10vh;
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 10vh;
   color: rgba(94, 70, 44, 1);
   border: 3px solid #27acd9;
-  box-shadow: 5px 5px #27acd9;
+  box-shadow: 0.7vh 0.7vh #27acd9;
+  height: 8vh;
   transition: 0.3s ease-in-out;
-  height: 40px;
 }
 .btn2:hover {
   box-shadow: none;
@@ -66,19 +66,34 @@
 #edit_btn {
   color: rgba(145, 145, 145, 1);
   border: 3px solid rgba(212, 212, 212, 1);
-  box-shadow: 5px 5px rgba(212, 212, 212, 1);
-  height: 30px;
-  width: 100px;
-  margin-top: 15px;
-  border-radius: 10px;
+  box-shadow: 0.7vh 0.7vh rgba(212, 212, 212, 1);
+  height: 7vh;
+  width: 20vh;
+  margin-top: 10vh;
+  border-radius: 10vh;
   transition: 0.3s ease-in-out;
   background-color: white;
-  margin-top: 20px;
+  margin-top: 10vh;
 }
 
 .icon {
-  width: 140px;
-  height: 140px;
+  width: 23vh;
+  height: 23vh;
 
   border-radius: 50%; /*サムネイル円型*/
+}
+
+/* 以下Eventのみ */
+.table {
+  width: 100vh;
+  text-align: center;
+  margin: auto;
+}
+.td1 {
+  text-align: center;
+  width: 30%;
+  font-weight: bold;
+}
+.td2 {
+  width: 70%;
 }

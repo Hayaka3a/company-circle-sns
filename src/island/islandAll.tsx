@@ -20,7 +20,7 @@ export default function IslandAll() {
     const { data, error } = await supabase
       .from("islands")
       .select("*")
-      .eq("status", "false");
+      .eq("status", false);
 
     if (error) {
       console.error("islandsテーブルデータ情報取得失敗", error);

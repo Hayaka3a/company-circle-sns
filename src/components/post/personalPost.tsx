@@ -18,7 +18,8 @@ export default function PersonalPost({
         const { data: posts, error: postsError } = await supabase
           .from("posts")
           .select("id")
-          .eq("userID", userID);
+          .eq("userID", userID)
+          .eq("status", false);
 
         if (postsError) {
           console.error("データ取得失敗", postsError.message);
@@ -29,7 +30,8 @@ export default function PersonalPost({
           .from("messages")
           .select("*")
           .eq("postID", posts[0].id)
-          .eq("isRead", "false");
+          .eq("isRead", false)
+          .eq("status", false);
 
         if (messagesError) {
           console.error("メッセージ情報取得失敗", messagesError.message);
