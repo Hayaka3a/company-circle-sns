@@ -76,7 +76,7 @@ export default function EventEverything() {
                   <h3 className={styles.eventName}>{event.eventName}</h3>
                   <p>{truncateString(event.detail, 89)}</p>
                   <p>
-                    開催時期 ：
+                    開催期間 ：
                     {new Date(event.startDate).toLocaleDateString("ja-JP", {
                       year: "numeric",
                       month: "long",
