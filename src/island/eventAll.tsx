@@ -25,7 +25,8 @@ export default function EventAll() {
     const { data, error } = await supabase
       .from("islands")
       .select("islandName")
-      .eq("id", paramsID);
+      .eq("id", paramsID)
+      .eq("status", false);
 
     if (error) {
       console.error("islandsテーブルデータ情報取得失敗", error);
@@ -42,7 +43,8 @@ export default function EventAll() {
       const { data: userEntryStatusData, error } = await supabase
         .from("userEntryStatus")
         .select("*")
-        .eq("islandID", paramsID);
+        .eq("islandID", paramsID)
+        .eq("status", false);
 
       if (error) {
         console.error("userEntryStatusテーブル情報取得失敗");
@@ -58,7 +60,7 @@ export default function EventAll() {
           .from("events")
           .select("*")
           .eq("id", eventId)
-          .eq("status", "false");
+          .eq("status", false);
 
         if (eventError) {
           console.error("Eventsテーブルデータ情報取得失敗", eventError);

@@ -80,7 +80,7 @@
 .textSending {
   width: -webkit-fill-available;
   height: 33vh;
-  border-radius: 10px;
+  border-radius: 3vh;
   transition: 0.3s ease;
   color: #868283;
 }

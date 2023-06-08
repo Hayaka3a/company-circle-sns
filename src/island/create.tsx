@@ -39,7 +39,10 @@ export default function IslandCreate() {
   // データベースから全ユーザー名前取得
   useEffect(() => {
     const fetchUsers = async () => {
-      let { data, error } = await supabase.from("users").select();
+      let { data, error } = await supabase
+        .from("users")
+        .select()
+        .eq("status", false);
       if (error) {
         console.error("Error fetching users:", error.message);
       } else {
@@ -66,7 +69,10 @@ export default function IslandCreate() {
   // データベースから全タグ名取得
   useEffect(() => {
     const fetchUsers = async () => {
-      let { data, error } = await supabase.from("tags").select();
+      let { data, error } = await supabase
+        .from("tags")
+        .select()
+        .eq("status", false);
       if (error) {
         console.error("Error fetching tags:", error.message);
       } else {
@@ -118,7 +124,7 @@ export default function IslandCreate() {
       detail: detail,
       ownerID: ownerID,
       thumbnail: imageUrl,
-      status: "false",
+      status: false,
     };
 
     try {
@@ -130,13 +136,14 @@ export default function IslandCreate() {
         const { data } = await supabase
           .from("islands")
           .select("id")
-          .eq("islandName", islandName);
+          .eq("islandName", islandName)
+          .eq("status", false);
         const createdIslandId = data[0].id;
 
         // postテーブルに島用ポスト作成
         const post = {
           islandID: createdIslandId,
-          status: "false",
+          status: false,
         };
         const { error } = await supabase.from("posts").insert(post);
         if (error) {
@@ -148,7 +155,7 @@ export default function IslandCreate() {
           const enStatusData = islandMembers.map((user) => ({
             userID: user.id,
             islandID: createdIslandId,
-            status: "false",
+            status: false,
           }));
           for (let entry of enStatusData) {
             await supabase.from("userEntryStatus").insert(entry);
@@ -158,7 +165,7 @@ export default function IslandCreate() {
               const tgStatusData = islandTags.map((tag) => ({
                 tagID: tag.id,
                 islandID: createdIslandId,
-                status: "false",
+                status: false,
               }));
               for (let tgS of tgStatusData) {
                 await supabase.from("tagStatus").insert(tgS);
@@ -168,7 +175,7 @@ export default function IslandCreate() {
                   const tgNameData = tagNames.map((tagName) => ({
                     tagName: tagName.Name,
                     tagNameKana: tagName.NameKana,
-                    status: "false",
+                    status: false,
                   }));
                   for (let tg of tgNameData) {
                     await supabase.from("tags").insert(tg);

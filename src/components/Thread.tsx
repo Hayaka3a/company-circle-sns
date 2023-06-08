@@ -16,9 +16,6 @@ function Thread({ thread }: { thread: thread[] }) {
           }}
           className={styles.thread}
         >
-          <div className={styles.imgWrapper}>
-            <img src={thread.events?.thumbnail} alt="アイコン" />
-          </div>
           <p className={styles.title}>{thread.threadTitle}</p>
         </div>
       ))}

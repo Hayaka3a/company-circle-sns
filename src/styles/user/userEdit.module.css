@@ -4,7 +4,7 @@
 }
 
 .box {
-  background-color: rgba(250, 248, 242, 1);
+  background-color: rgba(255, 254, 245, 1);
   padding-top: 1%;
   height: 80%;
   margin-right: auto;
@@ -195,7 +195,7 @@
   font-weight: bold;
   color: rgba(94, 70, 44, 1);
   border: 3px solid rgba(255, 182, 112, 1);
-  box-shadow: 5px 5px rgba(255, 182, 112, 1);
+  box-shadow: 0.7vh 0.7vh rgba(255, 182, 112, 1);
   transition: 0.3s ease-in-out;
   background-color: white;
 }
@@ -209,11 +209,11 @@
 .addButton:disabled {
   color: rgba(212, 212, 212, 1);
   border: 3px solid rgba(212, 212, 212, 1);
-  box-shadow: 5px 5px rgba(212, 212, 212, 1);
+  box-shadow: 0.7vh 0.7vh rgba(212, 212, 212, 1);
   height: 7vh;
   width: 22vh;
   border-radius: 3vh;
-  font-eight: bold;
+  font-weight: bold;
   transition: 0.3s ease-in-out;
   background-color: white;
   margin-top: 2vh;
@@ -222,7 +222,7 @@
 .noEdit {
   color: rgba(94, 70, 44, 1);
   border: 3px solid #27acd9;
-  box-shadow: 5px 5px #27acd9;
+  box-shadow: 0.7vh 0.7vh #27acd9;
   height: 7vh;
   width: 22vh;
   border-radius: 3vh;

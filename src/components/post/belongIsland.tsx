@@ -13,7 +13,8 @@ export default function BelongIsland() {
         const { data: entrys, error: entrysError } = await supabase
           .from("userEntryStatus")
           .select("islandID")
-          .eq("userID", userID);
+          .eq("userID", userID)
+          .eq("status", false);
 
         if (entrysError) {
           console.error("データ1取得失敗", entrysError.message);
@@ -24,7 +25,8 @@ export default function BelongIsland() {
           const { data: posts, error: postsError } = await supabase
             .from("posts")
             .select("id")
-            .eq("islandID", entry.islandID);
+            .eq("islandID", entry.islandID)
+            .eq("status", false);
 
           if (postsError) {
             console.error("データ2取得失敗", postsError.message);
@@ -35,7 +37,8 @@ export default function BelongIsland() {
                 .from("messages")
                 .select("*")
                 .eq("postID", post.id)
-                .eq("isRead", "false");
+                .eq("isRead", false)
+                .eq("status", false);
 
               if (messagesError) {
                 console.error("データ3取得失敗", messagesError.message);

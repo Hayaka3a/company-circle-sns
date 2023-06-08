@@ -11,12 +11,12 @@ import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 
 export default function IslandEdit() {
   LogSt();
-  const id= useParams();
+  const id = useParams();
   const fetchIslandID = id.id;
 
   useEffect(() => {
-    fetchIsland()
-  },[])
+    fetchIsland();
+  }, []);
 
   // console.log(fetchIslandID)
 
@@ -25,10 +25,9 @@ export default function IslandEdit() {
   const navigate = useNavigate();
   // 削除のモーダルウィンドウの開閉
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [ isDeleteCheckOpen, setIsDeleteCheckOpen ] = useState(false);
-  const [ isAfterDeleteOpen, setIsAfterDeleteOpen ] = useState(false);
-  const [ inputValue, setInputValue ] = useState("");
-
+  const [isDeleteCheckOpen, setIsDeleteCheckOpen] = useState(false);
+  const [isAfterDeleteOpen, setIsAfterDeleteOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
@@ -36,18 +35,14 @@ export default function IslandEdit() {
   const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandID, setIslandID] = useState<number>(); // islandIDステートを追加
 
-
   const [tagOptions, setTagOptions] =
-      useState<
-        { id: number; Name: string; NameKana: string; }[]
-      >();
-    const [islandTags, setIslandTags] = useState<
-      { id: number; Name: string; NameKana: string; }[]
-    >([]);
-    const [tagNames, setTagNames] = useState<
+    useState<{ id: number; Name: string; NameKana: string }[]>();
+  const [islandTags, setIslandTags] = useState<
+    { id: number; Name: string; NameKana: string }[]
+  >([]);
+  const [tagNames, setTagNames] = useState<
     { Name: string; NameKana: string }[]
-    >([]);
-
+  >([]);
 
   // 島を沈没させてもよろしいですか？モーダルウィンドウを表示
   const openDeleteModal = () => {
@@ -83,105 +78,105 @@ export default function IslandEdit() {
     const { data, error } = await supabase
       .from("islands")
       .select("islandName")
-      .eq("id", islandID);
+      .eq("id", islandID)
+      .eq("status", false);
 
-      if (error){
-        console.log("Error fetching islands data", error);
-      }
-      if (data && data.length > 0) {
-        const islandName = data[0].islandName;
+    if (error) {
+      console.log("Error fetching islands data", error);
+    }
+    if (data && data.length > 0) {
+      const islandName = data[0].islandName;
 
-        if (islandName === inputValue) {
-          const { error: islandsError } = await supabase
-            .from("islands")
-            .update({ status: "true" })
-            .eq("id", islandID);
+      if (islandName === inputValue) {
+        const { error: islandsError } = await supabase
+          .from("islands")
+          .update({ status: "true" })
+          .eq("id", islandID);
 
-          const { error: islandsTagError } = await supabase
-            .from("tagStatus")
-            .update({ status: "true" })
-            .eq("id", islandID);
-            
-          const { error: postsError } = await supabase
-            .from("posts")
-            .update({ status: "true" })
-            .eq("id", islandID);
+        const { error: islandsTagError } = await supabase
+          .from("tagStatus")
+          .update({ status: "true" })
+          .eq("id", islandID);
 
-          if (islandsError || islandsTagError || postsError) {
-            console.error(
-              "Error changing status :",
-              islandsError || islandsTagError || postsError, 
-            );
-            // Cookie情報の削除
-            if (document.cookie !== "") {
-              let expirationDate = new Date ("1999-12-31T23:59:59Z");
-              document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
-              document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
-            }
+        const { error: postsError } = await supabase
+          .from("posts")
+          .update({ status: "true" })
+          .eq("id", islandID);
+
+        if (islandsError || islandsTagError || postsError) {
+          console.error(
+            "Error changing status :",
+            islandsError || islandsTagError || postsError,
+          );
+          // Cookie情報の削除
+          if (document.cookie !== "") {
+            let expirationDate = new Date("1999-12-31T23:59:59Z");
+            document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
+            document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
           }
-
-          console.log("Change status of islands successfully.");
-          navigate("/island/create");
-          window.location.reload();
         }
-      }
-  };
 
-
-// データベースからislands情報を取得
-const fetchIsland = async () => {
-
-  const { data } = await supabase
-    .from("islands")
-    .select("*")
-    .eq("id", fetchIslandID);
-
-
-  if (data) {
-    const island = data[0];
-    const fetchislandID = island.id;
-
-
-    setIslandID(fetchislandID); // islandIDステートに値をセット
-    setIslandName(island.islandName); // サークル名をislandNameステートにセット
-    setDetail(island.detail); // 活動内容をdetailステートにセット
-    
-
-    const { data: fetchTag, error: fetchTagError } = await supabase
-      .from("tagStatus")
-      .select("tagID")
-      .eq("islandID", islandID);
-
-    if (fetchTag) {
-      const tagIDs = fetchTag.map((island) => island.tagID);      
-      const { data: fetchTagsData, error: fetchTagsError } = await supabase
-        .from("tags")
-        .select("*")
-        .in("id", tagIDs);
-
-      if (fetchTagsData) {
-        const tags: {
-          id: number;
-          Name: string;
-          NameKana: string;
-          // NameKanaJ: string;
-        }[] = fetchTagsData.map((tag) => ({
-          id: tag.id,
-          Name: tag.tagName,
-          NameKana: tag.tagNameKana,
-          // NameKanaJ: `${ConvertKanaJ(tag.tagNameKana)}`,
-        }));
-        if (tags.length > 0) {
-          const tagNames = tags.map((tag) => ({ Name: tag.Name, NameKana: tag.NameKana }));          
-          setTagNames(tagNames);
-          // console.log(tagNames)
-        } 
+        console.log("Change status of islands successfully.");
+        navigate("/island/create");
+        window.location.reload();
       }
     }
-  }
-};
+  };
 
- 
+  // データベースからislands情報を取得
+  const fetchIsland = async () => {
+    const { data } = await supabase
+      .from("islands")
+      .select("*")
+      .eq("id", fetchIslandID)
+      .eq("status", false);
+
+    if (data) {
+      const island = data[0];
+      const fetchislandID = island.id;
+
+      setIslandID(fetchislandID); // islandIDステートに値をセット
+      setIslandName(island.islandName); // サークル名をislandNameステートにセット
+      setDetail(island.detail); // 活動内容をdetailステートにセット
+
+      const { data: fetchTag, error: fetchTagError } = await supabase
+        .from("tagStatus")
+        .select("tagID")
+        .eq("islandID", islandID)
+        .eq("status", false);
+
+      if (fetchTag) {
+        const tagIDs = fetchTag.map((island) => island.tagID);
+        const { data: fetchTagsData, error: fetchTagsError } = await supabase
+          .from("tags")
+          .select("*")
+          .in("id", tagIDs)
+          .eq("status", false);
+
+        if (fetchTagsData) {
+          const tags: {
+            id: number;
+            Name: string;
+            NameKana: string;
+            // NameKanaJ: string;
+          }[] = fetchTagsData.map((tag) => ({
+            id: tag.id,
+            Name: tag.tagName,
+            NameKana: tag.tagNameKana,
+            // NameKanaJ: `${ConvertKanaJ(tag.tagNameKana)}`,
+          }));
+          if (tags.length > 0) {
+            const tagNames = tags.map((tag) => ({
+              Name: tag.Name,
+              NameKana: tag.NameKana,
+            }));
+            setTagNames(tagNames);
+            // console.log(tagNames)
+          }
+        }
+      }
+    }
+  };
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
@@ -207,17 +202,19 @@ const fetchIsland = async () => {
 
   // 編集ボタンを押下、活動内容を変更
   const handelDetailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDetail(e.target.value)
+    setDetail(e.target.value);
   };
 
-
   // タグ追加
-  const addHandler = async () => {}
+  const addHandler = async () => {};
 
   // データベースから全タグ名取得
   useEffect(() => {
     const fetchUsers = async () => {
-      let { data, error } = await supabase.from("tags").select();
+      let { data, error } = await supabase
+        .from("tags")
+        .select()
+        .eq("status", false);
       if (error) {
         console.error("Error fetching tags:", error.message);
       } else {
@@ -228,87 +225,86 @@ const fetchIsland = async () => {
             NameKana: tag.tagNameKana,
           }));
         setTagOptions(tagsAll);
-        console.log(tagsAll)
+        console.log(tagsAll);
       }
     };
 
     fetchUsers();
-  }, [])
-        
+  }, []);
 
-    // 保存処理の実装
-    const handleSaveClick = (e: SyntheticEvent) => {
-      setEditMode((prev) => !prev);
-      if (!editMode) {
-        return;
-      }
-      handleSave();
-      createHandler();
-      // fetchislandID();
-    };
-  
-    const handleSave = async () => {
-      try {
-        await supabase.from("islands").update([
+  // 保存処理の実装
+  const handleSaveClick = (e: SyntheticEvent) => {
+    setEditMode((prev) => !prev);
+    if (!editMode) {
+      return;
+    }
+    handleSave();
+    createHandler();
+    // fetchislandID();
+  };
+
+  const handleSave = async () => {
+    try {
+      await supabase
+        .from("islands")
+        .update([
           {
             islandName: islandName,
             detail: detail,
           },
-        ]).eq("id", fetchIslandID);
-        console.log("Data updated successfully.");
-      } catch (error) {
-        console.error("Error updating data:", error.message);
-      }
+        ])
+        .eq("id", fetchIslandID);
+      console.log("Data updated successfully.");
+    } catch (error) {
+      console.error("Error updating data:", error.message);
+    }
+  };
+
+  // const island = data[0];
+  // const fetchislandID = island.id ;
+
+  const createHandler = async () => {
+    if (islandName.trim() === "" || detail.trim() === "") {
+      alert("島の名前と活動内容は入力必須項目です。");
+      return;
+    }
+
+    const islandData = {
+      islandName: islandName,
+      detail: detail,
+      status: false,
     };
 
-    // const island = data[0];
-    // const fetchislandID = island.id ;
-
-    const createHandler = async () => {
-      if (islandName.trim() === "" || detail.trim() === "") {
-        alert("島の名前と活動内容は入力必須項目です。");
-        return;
-      }
-
-      const islandData = {
-        islandName: islandName,
-        detail: detail,
-        status: "false"
-      };
-
-      try {
-        // tagStatusテーブルへ挿入
-        const tgStatusData = islandTags.map((tag) => ({
-          tagID: tag.id,
-          islandID: fetchIslandID, // fetchIslandIDを使用してislandIDの値を設定
-          status: "false",
-        }));
-        for (let tgS of tgStatusData) {
-          await supabase.from("tagStatus").insert(tgS);
-          // console.log("tagStatusが正常に更新されました");
-          // tagsテーブルへ挿入
-          try {
-            const tgNameData = tagNames.map((tagName) =>({
-              tagName: tagName.Name,
-              tagNameKana: tagName.NameKana,
-              status: "false",
-            }));
-            for (let tg of tgNameData) {
-              await supabase.from("tags").insert(tg);
-              console.log("tagsが正常に更新されました");
-            }
-          } catch (error) {
-            console.log("tags挿入エラー");
+    try {
+      // tagStatusテーブルへ挿入
+      const tgStatusData = islandTags.map((tag) => ({
+        tagID: tag.id,
+        islandID: fetchIslandID, // fetchIslandIDを使用してislandIDの値を設定
+        status: false,
+      }));
+      for (let tgS of tgStatusData) {
+        await supabase.from("tagStatus").insert(tgS);
+        // console.log("tagStatusが正常に更新されました");
+        // tagsテーブルへ挿入
+        try {
+          const tgNameData = tagNames.map((tagName) => ({
+            tagName: tagName.Name,
+            tagNameKana: tagName.NameKana,
+            status: false,
+          }));
+          for (let tg of tgNameData) {
+            await supabase.from("tags").insert(tg);
+            console.log("tagsが正常に更新されました");
           }
+        } catch (error) {
+          console.log("tags挿入エラー");
         }
-      } catch (error) {
-        console.log("tagStatus挿入エラー");
       }
-    };
+    } catch (error) {
+      console.log("tagStatus挿入エラー");
+    }
+  };
 
-    
-
-  
   return (
     <div className={styles.back}>
       <h1 className={styles.name}>島情報編集・削除</h1>
@@ -326,14 +322,16 @@ const fetchIsland = async () => {
         </div>
 
         <div className={styles.detail}>
-          <label htmlFor="detail" className={styles.detail}>活動内容</label>
+          <label htmlFor="detail" className={styles.detail}>
+            活動内容
+          </label>
           <input
             type="text"
             id="detail"
             className={styles.inputA}
             value={detail}
             onChange={handelDetailChange} // 追加
-            readOnly={!editMode} // 編集モードでない場合は無効化する          
+            readOnly={!editMode} // 編集モードでない場合は無効化する
           />
         </div>
 
@@ -351,7 +349,8 @@ const fetchIsland = async () => {
             onChange={handleFileChange}
             disabled={!editMode}
           />
-        </div><br />
+        </div>
+        <br />
 
         <div className={styles.tag}>
           <label htmlFor="tag">タグ</label>
@@ -365,37 +364,42 @@ const fetchIsland = async () => {
           />
         )}
         <div>
-        {tagNames.map((tag, index) => (
-          <div key={index}>{tag.Name}</div>
-        ))}        
+          {tagNames.map((tag, index) => (
+            <div key={index}>{tag.Name}</div>
+          ))}
         </div>
 
         <div>
-              <label htmlFor="addTag">タグ追加</label>
-            </div>
+          <label htmlFor="addTag">タグ追加</label>
+        </div>
         {editMode && (
-          <>            
-            <AddTag  
-              setTagNames={setTagNames}
-            />  
-          </>   
+          <>
+            <AddTag setTagNames={setTagNames} />
+          </>
         )}
 
         <button className={styles.edit_btn} onClick={handleSaveClick}>
           {editMode ? "保存" : "編集"}
         </button>
-        <button onClick={openDeleteModal} className={styles.delete_btn}>削除</button>
-        {isDeleteOpen && <CreateDeletePage closeDeleteModal={closeDeleteModal} nextOpen={nextOpen} />}
-        {isDeleteCheckOpen && (
-          <CreateDeleteCheck
-          close2Modal={close2Modal}
-          nextOpen2={nextOpen2}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
+        <button onClick={openDeleteModal} className={styles.delete_btn}>
+          削除
+        </button>
+        {isDeleteOpen && (
+          <CreateDeletePage
+            closeDeleteModal={closeDeleteModal}
+            nextOpen={nextOpen}
           />
         )}
-        {isAfterDeleteOpen && <CreateAfterDelete done={done}/>}
+        {isDeleteCheckOpen && (
+          <CreateDeleteCheck
+            close2Modal={close2Modal}
+            nextOpen2={nextOpen2}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+          />
+        )}
+        {isAfterDeleteOpen && <CreateAfterDelete done={done} />}
       </div>
-    </div>  
+    </div>
   );
 }

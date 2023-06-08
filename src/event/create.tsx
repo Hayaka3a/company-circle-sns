@@ -51,7 +51,7 @@ export default function EventCreate() {
       detail: detail,
       startDate: new Date(startDate).toISOString(),
       endDate: new Date(endDate).toISOString(),
-      status: "false",
+      status: false,
       createdBy: "システム",
       thumbnail: imageUrl,
     };
@@ -63,7 +63,8 @@ export default function EventCreate() {
       const { data } = await supabase
         .from("events")
         .select("id")
-        .eq("eventName", eventName);
+        .eq("eventName", eventName)
+        .eq("status", false);
       const createdEventId = data[0].id;
 
       // userEntryStatusテーブルに挿入
@@ -71,7 +72,7 @@ export default function EventCreate() {
         const enStatusData = {
           islandID: islandID,
           eventID: createdEventId,
-          status: "false",
+          status: false,
         };
         await supabase.from("userEntryStatus").insert(enStatusData);
 
@@ -79,7 +80,7 @@ export default function EventCreate() {
         try {
           const post = {
             eventID: createdEventId,
-            status: "false",
+            status: false,
           };
           await supabase.from("posts").insert(post);
         } catch (error) {

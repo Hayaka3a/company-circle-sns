@@ -18,7 +18,8 @@ export default function UserRegistration() {
     const fetchUsers = async () => {
       const { data: users, error: usersError } = await supabase
         .from("users")
-        .select(`mailAddress,employeeCode`);
+        .select(`mailAddress,employeeCode`)
+        .eq("status", false);
       if (usersError) {
         console.log(usersError, "fetchUsersError");
       } else {
@@ -69,7 +70,8 @@ export default function UserRegistration() {
       const { data: getUserData, error: getUserError } = await supabase
         .from("users")
         .select("id")
-        .eq("employeeCode", sendData.employeeCode);
+        .eq("employeeCode", sendData.employeeCode)
+        .eq("status", false);
 
       if (getUserError) {
         console.log(getUserError, "getUserエラー");
@@ -77,7 +79,7 @@ export default function UserRegistration() {
         // postテーブルに追加
         const post = {
           userID: getUserData[0].id,
-          status: "false",
+          status: false,
         };
         const { error: postError } = await supabase.from("posts").insert(post);
         if (postError) {

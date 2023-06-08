@@ -34,7 +34,8 @@ export default function Login() {
         .from("users")
         .select("*")
         .eq("mailAddress", email)
-        .eq("password", password);
+        .eq("password", password)
+        .eq("status", false);
 
       if (error) {
         console.log("データベースエラー:", error.message);
@@ -99,17 +100,22 @@ export default function Login() {
           />
         </div>
         <div className={styles.buttonBox}>
+          <h3
+            style={{ display: visible ? "block" : "none" }}
+            className={styles.errorMessage}
+          >
+            ユーザーが見つかりません。もう一度入力してください。
+          </h3>
           <button onClick={loginHandler} className={styles.button}>
             ログイン
           </button>
         </div>
         <div className={styles.linkBox}>
-          <Link to={"/user/newUser"}>新規ユーザー登録</Link>
+          <Link to={"/user/newUser"} className={styles.link}>
+            新規ユーザー登録
+          </Link>
         </div>
       </div>
-      <h3 style={{ display: visible ? "block" : "none" }}>
-        ユーザーが見つかりません。もう一度入力してください。
-      </h3>
     </div>
   );
 }
