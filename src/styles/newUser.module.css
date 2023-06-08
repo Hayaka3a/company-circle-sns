@@ -18,7 +18,7 @@
 
 .icon {
   height: 100px;
-  width: 29%;
+  width: 100px;
   border-radius: 50%; /*サムネイル円型*/
 }
 
@@ -102,6 +102,13 @@
   margin-top: auto;
   margin-bottom: auto;
   display: flex;
+}
+
+.radio {
+  width: 300px;
+}
+.radiolabel {
+  width: 120px;
 }
 
 /* コンボボックス */

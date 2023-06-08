@@ -69,7 +69,7 @@ export default function SearchDisplay({ word, radio }) {
                     <div className={styles.typeEve}>{searchData.table}</div>
                   )}
 
-                  <Link to={`/${searchData.table}/${searchData.id}`}>
+                  <Link to={`/${searchData.tableQuery}/${searchData.id}`}>
                     {searchData.name}
                   </Link>
                 </div>

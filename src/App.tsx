@@ -6,14 +6,13 @@ import "./App.css";
 import Header from "./components/Header";
 
 // userフォルダ
-import UserDetail from "./user";
 import UserPost from "./user/post";
 import Login from "./user/login";
 import IslandMessage from "./user/message/island_message";
 import ScoutMessage from "./user/message/scout_message";
 import OperationMessage from "./user/message/operation_message";
 import NewUser from "./user/newUser";
-import UserEdit from "./user/edit";
+import UserEdit from "./user";
 
 // eventフォルダ
 import EventDetail from "./event/[id]";
@@ -23,6 +22,7 @@ import EventThread from "./event/thread";
 import EventPost from "./event/post";
 import EventMembers from "./event/members";
 import EventEntryPermitPage from "./event/post/entryPermitPage";
+import EventEverything from "./event/eventAll";
 
 // islandフォルダ
 import IslandDetail from "./island/[id]";
@@ -50,13 +50,13 @@ function App() {
   const showNewUser = window.location.pathname !== "/user/newUser";
 
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
         {showHeader && showNewUser && <Header />}
         <Routes>
           <Route path="/" element={<Index />} />
           {/* userフォルダ */}
-          <Route path="/user" element={<UserDetail />} />
+          <Route path="/user" element={<UserEdit />} />
           <Route path="/user/post" element={<UserPost />} />
           <Route path="/user/login" element={<Login />} />
           <Route
@@ -104,6 +104,7 @@ function App() {
             path="/event/post/entryPermit/:id"
             element={<EventEntryPermitPage />}
           />
+          <Route path="/event/eventAll" element={<EventEverything />} />
           {/* chat */}
           <Route path="/chat/:id" element={<Chat />} />
         </Routes>

@@ -1,0 +1,294 @@
+.background {
+  font-size: 12px;
+  padding-bottom: 0;
+  padding: 4% 2%;
+}
+
+.box {
+  background-color: rgba(250, 248, 242, 1);
+  padding-top: 1%;
+  height: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  border-radius: 1%;
+  padding-bottom: 3%;
+  width: 85%;
+
+  border: dashed 3px rgba(209, 190, 79, 1);
+  box-shadow: 0 0 0 10px rgba(250, 248, 242, 1),
+    0 0 0 25px rgba(209, 190, 79, 1);
+  border-radius: 3px;
+}
+
+.editbox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tableCovered {
+  display: flex;
+  flex-direction: column; /* 縦方向に並べる */
+  height: auto;
+  width: 65%;
+}
+
+.left {
+  width: 35%;
+  display: inline-grid;
+}
+
+.joinBox {
+  font-size: 13px;
+  font-weight: bold;
+}
+.joinList {
+  display: flex;
+  flex-direction: column;
+}
+
+.unsub {
+  display: flex;
+  justify-content: end;
+  margin-right: 5%;
+}
+
+.icon {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%; /*サムネイル円型*/
+}
+
+.span {
+  color: red; /*必須文字*/
+  font-size: 12px;
+}
+
+/* 未入力時に背景色を変更 */
+.error {
+  color: red;
+}
+
+/*　各入力項目 */
+.address {
+  width: 85%;
+  height: 20px;
+}
+
+.table {
+  width: 95%;
+  border-collapse: collapse;
+  border-spacing: 0 6vh; /* 行間幅 */
+  border-top: 1px solid rgb(149, 149, 149);
+  margin-bottom: 6%;
+}
+
+.th,
+.td {
+  border-bottom: 1px solid rgb(180, 180, 180);
+  text-align: left;
+  font-size: 13px;
+}
+
+.th:last-child,
+.td:last-child {
+  border-right: none; /* 最後の列の縦線を非表示*/
+}
+
+.tr {
+  height: 13vh; /* 行の高さ */
+  width: 90%;
+}
+
+.td {
+  width: 100%;
+}
+
+.th {
+  width: 20%;
+}
+
+.buttonbox {
+  align-self: flex-end;
+  margin-bottom: 20%;
+}
+
+.inputA {
+  height: 20px;
+  width: 40%;
+}
+.inputB {
+  height: 20px;
+  width: 40%;
+  margin-left: 4%;
+}
+
+.allContents {
+  height: 100%;
+  padding: 2%;
+}
+
+.faileCenter {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+}
+
+/* コンボボックス */
+
+.selectedValuesContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selectedValue {
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(100, 207, 6);
+}
+
+.row {
+  display: flex;
+}
+
+.nameFlex {
+  display: flex;
+  align-items: center;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.suggestionList {
+  background-color: white;
+  margin-bottom: 3%;
+}
+
+.li {
+  list-style: none;
+  margin-left: 2%;
+  margin-right: 2%;
+  padding: 2.5%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.li:hover {
+  background-color: rgb(211, 211, 211);
+  border-radius: 5%;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.addButton {
+  width: 120px;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(255, 182, 112, 1);
+  box-shadow: 5px 5px rgba(255, 182, 112, 1);
+  transition: 0.3s ease-in-out;
+  height: 50px;
+  background-color: white;
+}
+
+.addButton:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
+}
+
+.addButton:disabled {
+  color: rgba(212, 212, 212, 1);
+  border: 3px solid rgba(212, 212, 212, 1);
+  box-shadow: 5px 5px rgba(212, 212, 212, 1);
+  height: 50px;
+  width: 120px;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  background-color: white;
+  margin-top: 20px;
+}
+
+.noEdit {
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid #27acd9;
+  box-shadow: 5px 5px #27acd9;
+  width: 120px;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  height: 40px;
+}
+
+.noEdit:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+}
+
+.unsubButton {
+  width: 80px;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: white;
+  border: 3px solid gray;
+  transition: 0.3s ease-in-out;
+  height: 40px;
+  background-color: gray;
+}
+.unsubButton:hover {
+  background-color: white;
+  color: gray;
+}
+
+.buttonSide {
+  display: flex;
+}
+
+/* addTag.tsx */
+.tagInputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio {
+  width: 200px;
+}
+
+/* 未入力時に背景色を変更 */
+.errorInputTg {
+  background-color: rgb(247, 177, 140);
+}
+
+.radio {
+  display: flex;
+}
+
+.loginPageButton {
+  text-align: left;
+  margin-left: 3%;
+}
+
+.link {
+  color: rgba(146, 144, 141, 1);
+  text-decoration: none;
+  margin: 1%;
+}

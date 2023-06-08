@@ -1,38 +1,31 @@
 .box {
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgb(0, 163, 0);
-  padding: 1%;
-  height: 800px;
-  width: 80vw;
-  max-width: 1080px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/public/login/login.png");
+  background-size: cover;
+  background-position: center center;
+  overflow-y: hidden;
 }
 
 .board {
-  position: absolute;
-  top: 50%;
-  left: 32%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.9);
-  padding-right: 3%;
-  padding-left: 3%;
-  padding-bottom: 4%;
-  border-radius: 1%;
-  width: 300px;
-  height: 200px;
+  margin: auto;
+  width: 80vh;
+  height: 75%;
+  margin-top: 34vh;
+  text-align: center;
 }
 
 .boardTitle {
-  margin-top: 20%;
+  text-align: center;
+  color: rgba(115, 101, 74, 1);
+  margin-top: 0;
 }
 
-.imgCovered {
-  position: relative;
-  height: 50vh;
-  width: 100%;
-  margin-bottom: 1%;
+.logo {
+  height: 30vh;
 }
 
 .img {
@@ -40,38 +33,47 @@
   height: 55vh;
 }
 
-.button {
-  position: absolute;
-  top: 80%;
-  left: 73%;
-  transform: translate(-50%, -50%);
-}
-
 .inputA {
-  margin-top: 10%;
-  margin-bottom: 10%;
-  border: 2px solid #3aeb26;
-  width: 100%;
-}
-
-.inputA:focus {
-  outline: rgb(101, 240, 97) 2px solid;
-  box-shadow: 0 0 10px 0 #66a342;
-  border: 3px solid #fef6fb;
-  transition: left 0.2s ease, top 0.2s ease;
+  margin-top: 2%;
+  margin-bottom: 5%;
+  border: 2px solid rgba(50, 67, 52, 0.1);
+  width: 50vh;
+  height: 4vh;
 }
 
 .inputB {
-  border: 2px solid #3aeb26;
-  width: 100%;
-}
-
-.inputB:focus {
-  outline: rgb(101, 240, 97) 2px solid;
-  box-shadow: 0 0 10px 0 #66a342;
-  border: 3px solid #fef6fb;
+  border: 2px solid rgba(50, 67, 52, 0.1);
+  width: 50vh;
+  height: 4vh;
 }
 
 .link {
   color: red;
+}
+
+.button {
+  width: 14vh;
+  margin-top: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(135, 181, 140, 1);
+  box-shadow: 5px 5px rgba(110, 148, 115, 1);
+  transition: 0.3s ease-in-out;
+  height: 7vh;
+}
+
+.button:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
+}
+
+.buttonBox {
+  display: inline-block;
+}
+
+.linkBox {
+  margin-top: 3%;
+  text-align: right;
 }

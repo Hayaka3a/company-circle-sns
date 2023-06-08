@@ -1,31 +1,85 @@
 .flex {
-    display: flex;
+  display: flex;
+  text-align: center;
 }
 
-.island_detail {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 80px;
+.back {
+  background-color: rgba(255, 255, 255, 0.9);
+  margin-top: 2%;
+  padding-top: 1%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  border-radius: 1%;
+  width: 70%;
+}
+.detail {
+  width: 50em;
+  height: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4% 0;
 }
 
-.island_detail h2 {
-    padding-top: 20px;
+.editbox {
+  text-align: right;
+  margin-top: 2%;
 }
 
-.textDetail {
-    padding-top: 40px;
+.btn1 {
+  width: 140px;
+  margin-top: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(255, 182, 112, 1);
+  box-shadow: 5px 5px rgba(255, 182, 112, 1);
+  transition: 0.3s ease-in-out;
+  height: 40px;
+}
+.btn1:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
 }
 
-.btn {
-    margin-top: 80px;
-    justify-content:space-around;
-    display: flex;
+.btn2 {
+  width: 140px;
+  margin-left: 10%;
+  margin-top: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid #27acd9;
+  box-shadow: 5px 5px #27acd9;
+  transition: 0.3s ease-in-out;
+  height: 40px;
+}
+.btn2:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 0.6);
 }
 
 #edit_btn {
-    margin-top: 100px;
-    margin-left: 800px;
-    color: red;
-    font-weight: bold
+  color: rgba(145, 145, 145, 1);
+  border: 3px solid rgba(212, 212, 212, 1);
+  box-shadow: 5px 5px rgba(212, 212, 212, 1);
+  height: 30px;
+  width: 100px;
+  margin-top: 15px;
+  font-size: 15px;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  background-color: white;
+  margin-top: 20px;
+}
+
+.icon {
+  width: 140px;
+  height: 140px;
+
+  border-radius: 50%; /*サムネイル円型*/
 }

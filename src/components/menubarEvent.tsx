@@ -16,7 +16,7 @@ export default function MenubarEvent() {
 
   const userID = GetCookieID();
 
-  // 表示しているイベントの情報をeevntに挿入
+  // 表示しているイベントの情報をeventに挿入
   const fetchIslandData = async () => {
     const { data, error } = await supabase
       .from("events")
@@ -35,17 +35,82 @@ export default function MenubarEvent() {
 
   // ユーザーが表示しているイベントに参加しているかどうかチェック
   const fetchData = async () => {
-    const { data, error } = await supabase
-      .from("userEntryStatus")
-      .select("*")
-      .eq("userID", userID)
-      .eq("eventID", paramsID)
-      .eq("status", "false");
-    if (error) {
-      console.log(error);
-      // ユーザーがイベントに参加してるとき
-    } else if (data && data.length > 0) {
-      setIsJoined(true);
+    try {
+      //　ユーザーが参加している島からイベントを取得
+      const { data: entrys, error: entrysError } = await supabase
+        .from("userEntryStatus")
+        .select("islandID")
+        .eq("userID", userID);
+
+      // entrys配列の中からeventIDがnullの値のものを配列から取り除く
+      const ens = entrys.filter((event) => event.islandID !== null);
+
+      if (entrysError) {
+        console.error("データ1取得失敗", entrysError.message);
+        return;
+      }
+
+      try {
+        const filteredEvents = await Promise.all(
+          ens.map(async (en) => {
+            const { data: events, error: eventsError } = await supabase
+              .from("userEntryStatus")
+              .select("eventID")
+              .eq("islandID", en.islandID);
+
+            if (eventsError) {
+              console.error("データ1取得失敗", eventsError.message);
+              return;
+            }
+
+            // events配列の中からeventIDがnullの値のものを配列から取り除く
+            const filteredEvents = events.filter(
+              (event) => event.eventID !== null,
+            );
+
+            return filteredEvents;
+          }),
+        );
+
+        // 配列の配列になっているのをフラット化する（ただの配列に直す）
+        const flattenedEvents = filteredEvents.flat();
+
+        // 同じeventIDを持つデータを1つにまとめる
+        const uniqueEvents = flattenedEvents.reduce((acc, event) => {
+          if (!acc.some((e) => e.eventID === event.eventID)) {
+            acc.push(event);
+          }
+          return acc;
+        }, []);
+
+        // イベントを開催している島に不参加の場合のデータを追加
+        const { data: refugee, error: refugeeError } = await supabase
+          .from("userEntryStatus")
+          .select("eventID")
+          .eq("userID", userID);
+
+        if (refugeeError) {
+          console.error("データ取得失敗", refugeeError.message);
+          return;
+        }
+        const uniqueEventsFiltered = refugee.filter(
+          (evt) => evt.eventID !== null,
+        );
+
+        uniqueEvents.push(...uniqueEventsFiltered);
+        // ユーザーもしくは参加している島がイベント参加している場合
+        // uniqueEvents配列内のeventIDとparamsIDを比較して、一致する場合にisJoinedを設定
+        const isJoinedEvent = uniqueEvents.some(
+          (event) => event.eventID === paramsID,
+        );
+        if (isJoinedEvent) {
+          setIsJoined(true);
+        }
+      } catch (error) {
+        console.error("データ取得2失敗");
+      }
+    } catch (error) {
+      console.error("データ取得1失敗");
     }
   };
 
@@ -64,22 +129,29 @@ export default function MenubarEvent() {
             alt="Event Thumbnail"
           />
         )}
-
-        <h4>{event && event.eventName}</h4>
+        <h3 className={styles.title}>{event && event.eventName}</h3>
         {/* ユーザーがイベントに参加している場合 */}
         {isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/event/thread/${paramsID}`}>掲示板</Link>
+              <Link to={`/event/thread/${paramsID}`} className={styles.link}>
+                掲示板
+              </Link>
             </div>
             <div>
-              <Link to={`/event/post/${paramsID}`}>ポスト</Link>
+              <Link to={`/event/post/${paramsID}`} className={styles.link}>
+                ポスト
+              </Link>
             </div>
             <div>
-              <Link to={`/event/members/${paramsID}`}>参加者一覧</Link>
+              <Link to={`/event/members/${paramsID}`} className={styles.link}>
+                参加者一覧
+              </Link>
             </div>
             <div>
-              <Link to={`/event/${paramsID}`}>イベント詳細</Link>
+              <Link to={`/event/${paramsID}`} className={styles.link}>
+                イベント詳細
+              </Link>
             </div>
           </div>
         )}
@@ -87,10 +159,14 @@ export default function MenubarEvent() {
         {!isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/event/members`}>参加者一覧</Link>
+              <Link to={`/event/members`} className={styles.link}>
+                参加者一覧
+              </Link>
             </div>
             <div>
-              <Link to={`/event/[id]`}>イベント詳細</Link>
+              <Link to={`/event/[id]`} className={styles.link}>
+                イベント詳細
+              </Link>
             </div>
           </div>
         )}

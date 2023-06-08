@@ -36,8 +36,6 @@ export default function IslandDetail() {
     }
 
     const islandDetail = data[0]; // 最初のデータを取得（仮定）
-
-    console.log("島の詳細情報:", islandDetail);
     setIslandDetail(islandDetail); // 島の詳細情報を状態変数にセット
   };
 
@@ -79,23 +77,25 @@ export default function IslandDetail() {
         <p className={styles.textDetail}>
           {islandDetail && islandDetail.detail}
         </p>
-        <div className={styles.btn}>
           <button onClick={openResindentModal}>住民申請</button>
           {isResidentOpen && (
             <CreateResidentApplication
             closeModal={closeResidentModal}
-              table="island"
+            table="island"
             />
           )}
-          <button onClick={openModal}>メッセージを送る</button>
-          {isOpen && (
-            <CreateSendingMessage closeModal={closeModal} table="island" />
-          )}
+            <button onClick={openModal} className={styles.btn2}>
+              メッセージを送る
+            </button>
+            {isOpen && (
+              <CreateSendingMessage closeModal={closeModal} table="island" />
+            )}
+          <div className={styles.editbox}>
+            <button id={styles.edit_btn} onClick={Handler}>
+              編集・削除
+            </button>
+          </div>
         </div>
       </div>
-      <button id={styles.edit_btn} onClick={Handler}>
-        編集・削除
-      </button>
-    </div>
   );
 }

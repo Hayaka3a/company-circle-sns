@@ -1,0 +1,125 @@
+.information {
+  margin: 2%;
+  background-color: #ffebee;
+  border: dashed 3px #e57373;
+  box-shadow: 0 0 0 10px #ffebee, 0 0 0 25px #e57373;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.logo {
+  margin-top: 2%;
+  height: 190px;
+  margin-bottom: 3%;
+}
+
+.all {
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+  width: auto;
+  height: auto;
+}
+
+.news {
+  margin: 1%;
+  color: rgba(135, 69, 68, 1);
+}
+
+.islands {
+  background-color: rgba(250, 247, 235, 1);
+  padding-top: 2%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+  text-align: center;
+  display: flex;
+  margin-bottom: 50px;
+  border: dashed 3px rgba(209, 190, 79, 1);
+  box-shadow: 0 0 0 10px rgba(250, 247, 235, 1),
+    0 0 0 25px rgba(209, 190, 79, 1);
+  border-radius: 3px;
+}
+
+.island {
+  display: flex;
+  flex-direction: column;
+  flex-basis: calc(33.33% - 10px);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.events {
+  background-color: rgba(250, 247, 235, 1);
+  padding-top: 2%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+  text-align: center;
+  display: flex;
+  margin-bottom: 50px;
+  border: dashed 3px rgba(156, 194, 116, 1);
+  box-shadow: 0 0 0 10px rgba(250, 247, 235, 1),
+    0 0 0 25px rgba(156, 194, 116, 1);
+  border-radius: 5px;
+}
+
+.event {
+  display: flex;
+  flex-direction: column;
+  flex-basis: calc(33.33% - 10px);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-left: 3%;
+  margin-right: 10%;
+  margin-top: auto;
+  transition: 0.3s;
+}
+
+.icon:hover {
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.tab {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.buttonA {
+  border: none;
+  background-color: rgba(225, 195, 18, 1);
+  width: 18%;
+  height: 50px;
+  font-size: 100%;
+  border-radius: 3px;
+  margin-border: 5%;
+}
+
+.buttonB {
+  border: none;
+  background-color: rgb(152, 205, 103);
+  width: 18%;
+  height: 50px;
+  font-size: 100%;
+  border-radius: 5px;
+}
+
+.main {
+  margin-top: 8%;
+  padding-bottom: 20px;
+}
+
+.p {
+  margin: 1%;
+}
+
+.title {
+  margin: 1%;
+}
