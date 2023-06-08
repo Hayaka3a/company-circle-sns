@@ -1,5 +1,4 @@
 .background {
-  font-size: 12px;
   padding-bottom: 0;
   padding: 4% 2%;
 }
@@ -15,10 +14,9 @@
   padding-bottom: 3%;
   width: 85%;
 
-  border: dashed 3px rgba(209, 190, 79, 1);
-  box-shadow: 0 0 0 10px rgba(250, 248, 242, 1),
-    0 0 0 25px rgba(209, 190, 79, 1);
-  border-radius: 3px;
+  border: dashed 0.5vh rgba(209, 190, 79, 1);
+  box-shadow: 0 0 0 1vh rgba(250, 248, 242, 1), 0 0 0 2vh rgba(209, 190, 79, 1);
+  border-radius: 1vh;
 }
 
 .editbox {
@@ -33,13 +31,13 @@
   width: 65%;
 }
 
-.left {
-  width: 35%;
+.right {
+  width: 34%;
   display: inline-grid;
+  margin-right: 1%;
 }
 
 .joinBox {
-  font-size: 13px;
   font-weight: bold;
 }
 .joinList {
@@ -61,7 +59,6 @@
 
 .span {
   color: red; /*必須文字*/
-  font-size: 12px;
 }
 
 /* 未入力時に背景色を変更 */
@@ -72,7 +69,7 @@
 /*　各入力項目 */
 .address {
   width: 85%;
-  height: 20px;
+  height: 3vh;
 }
 
 .table {
@@ -87,7 +84,6 @@
 .td {
   border-bottom: 1px solid rgb(180, 180, 180);
   text-align: left;
-  font-size: 13px;
 }
 
 .th:last-child,
@@ -114,11 +110,11 @@
 }
 
 .inputA {
-  height: 20px;
+  height: 3vh;
   width: 40%;
 }
 .inputB {
-  height: 20px;
+  height: 3vh;
   width: 40%;
   margin-left: 4%;
 }
@@ -192,16 +188,15 @@
 }
 
 .addButton {
-  width: 120px;
+  height: 7vh;
+  width: 22vh;
+  border-radius: 3vh;
   margin-top: 15px;
-  font-size: 15px;
   font-weight: bold;
-  border-radius: 10px;
   color: rgba(94, 70, 44, 1);
   border: 3px solid rgba(255, 182, 112, 1);
   box-shadow: 5px 5px rgba(255, 182, 112, 1);
   transition: 0.3s ease-in-out;
-  height: 50px;
   background-color: white;
 }
 
@@ -215,26 +210,24 @@
   color: rgba(212, 212, 212, 1);
   border: 3px solid rgba(212, 212, 212, 1);
   box-shadow: 5px 5px rgba(212, 212, 212, 1);
-  height: 50px;
-  width: 120px;
-  margin-top: 15px;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 10px;
+  height: 7vh;
+  width: 22vh;
+  border-radius: 3vh;
+  font-eight: bold;
   transition: 0.3s ease-in-out;
   background-color: white;
-  margin-top: 20px;
+  margin-top: 2vh;
 }
 
 .noEdit {
   color: rgba(94, 70, 44, 1);
   border: 3px solid #27acd9;
   box-shadow: 5px 5px #27acd9;
-  width: 120px;
+  height: 7vh;
+  width: 22vh;
+  border-radius: 3vh;
   font-weight: bold;
-  border-radius: 10px;
   transition: 0.3s ease-in-out;
-  height: 40px;
 }
 
 .noEdit:hover {
@@ -243,15 +236,14 @@
 }
 
 .unsubButton {
-  width: 80px;
   margin-top: 15px;
-  font-size: 15px;
   font-weight: bold;
-  border-radius: 10px;
+  height: 7vh;
+  width: 22vh;
+  border-radius: 3vh;
   color: white;
   border: 3px solid gray;
   transition: 0.3s ease-in-out;
-  height: 40px;
   background-color: gray;
 }
 .unsubButton:hover {
@@ -291,4 +283,8 @@
   color: rgba(146, 144, 141, 1);
   text-decoration: none;
   margin: 1%;
+}
+
+.label {
+  width: 7.5vh;
 }

@@ -110,7 +110,7 @@ const Header = () => {
             searchWord,
           )}&radio=${encodeURIComponent(selectedRadio)}`}
         >
-          <button>検索 </button>
+          <button className={styles.btn}>検索 </button>
         </Link>
       </div>
 

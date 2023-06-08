@@ -18,11 +18,14 @@ export default function SubFetchIsEve({
       console.log(error, "firstFetchError");
     } else {
       const tmpIs = data;
+
       //島が参加しているイベント取得
-      const joinIsArray = data.map(
-        (data: { events: Event | null; islands: Island | null }) =>
-          data.islands.id,
-      );
+      const joinIsArray = data
+        .filter((data) => data.islands)
+        .map(
+          (data: { events: Event | null; islands: Island | null }) =>
+            data.islands.id,
+        );
       let { data: eveData, error: eveError } = await supabase
         .from("userEntryStatus")
         .select("events(*)")
@@ -31,7 +34,7 @@ export default function SubFetchIsEve({
 
       if (eveError) {
         console.log(eveError, "eveError");
-      } else if (eveData) {
+      } else if (eveData.length > 0) {
         //取得した２つのデータを１つの配列にする
         const tmpEve = eveData
           .filter((data) => data.events)
