@@ -5,7 +5,7 @@ import { supabase } from "../createClient";
 import ComboBoxTag from "../components/comboBoxTag";
 import AddTag from "../components/createIsland/addtag";
 import LogSt from "../components/cookie/logSt";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 
@@ -15,7 +15,7 @@ export default function IslandEdit() {
   const fetchIslandID = id.id;
 
   useEffect(() => {
-    fetchIsland()
+    fetchIsland();
   },[])
 
   // console.log(fetchIslandID)
@@ -248,7 +248,6 @@ const fetchIsland = async () => {
     };
   
     const handleSave = async () => {
-      try {
         await supabase.from("islands").update([
           {
             islandName: islandName,
@@ -256,10 +255,7 @@ const fetchIsland = async () => {
           },
         ]).eq("id", fetchIslandID);
         console.log("Data updated successfully.");
-      } catch (error) {
-        console.error("Error updating data:", error.message);
-      }
-    };
+      }; 
 
     // const island = data[0];
     // const fetchislandID = island.id ;
