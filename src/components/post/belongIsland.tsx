@@ -15,8 +15,6 @@ export default function BelongIsland() {
           .select("islandID")
           .eq("userID", userID)
           .eq("status", false);
-          .eq("userID", userID)
-          .eq("status", false);
 
         if (entrysError) {
           console.error("データ1取得失敗", entrysError.message);
