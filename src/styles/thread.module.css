@@ -16,6 +16,10 @@
   text-align: center;
   border-radius: 3vh;
   width: 70%;
+
+  border: dashed 0.5vh rgba(138, 121, 98, 1);
+  box-shadow: 0 0 0 1vh rgba(250, 248, 242, 1), 0 0 0 2vh rgba(138, 121, 98, 1);
+  border-radius: 1vh;
 }
 
 .flex {
@@ -34,11 +38,17 @@
   margin-bottom: 3vh;
   border: dashed 0.5vh rgba(194, 209, 37, 1);
   border-radius: 1vh;
+  background: rgb(250 255 198);
 }
 
 .title {
-  font-weight: bold;
-  margin-left: 4vh;
+  margin-top: 1vh;
+  margin-right: 5%;
+  align-items: center; /* 垂直方向の中央揃え */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: color 0.3s;
+  color: #8a7660;
 }
 
 .imgWrapper {

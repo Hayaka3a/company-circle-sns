@@ -38,7 +38,7 @@ function FetchJoindIslandEvent() {
             // 参加サークルのmessagesを取得
             const { data: post, error: postError } = await supabase
               .from("posts")
-              .select("id, messages(*)")
+              .select("id, messages!messages_postID_fkey(*)")
               .eq("islandID", islandId)
               .eq("status", false);
 
@@ -67,7 +67,7 @@ function FetchJoindIslandEvent() {
             // 参加イベントのmessagesを取得
             const { data: post, error: postError } = await supabase
               .from("posts")
-              .select("id, messages(*)")
+              .select("id, messages!messages_postID_fkey(*)")
               .eq("eventID", eventId)
               .eq("status", false);
 
