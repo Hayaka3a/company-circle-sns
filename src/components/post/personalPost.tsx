@@ -39,7 +39,7 @@ export default function PersonalPost({
 
         setHasNewMessage(true);
       } catch (error) {
-        console.error("メッセージ情報取得失敗", error.message);
+        console.error("メッセージ情報取得失敗2", error.message);
       }
     };
     fetchData();
