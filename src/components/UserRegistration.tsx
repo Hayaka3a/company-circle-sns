@@ -35,9 +35,10 @@ export default function UserRegistration() {
       }
     };
     fetchUsers();
+
+    //ReactHookFormで使用
   }, []);
 
-  //ReactHookFormで使用
   const {
     register,
     getValues,
@@ -57,8 +58,6 @@ export default function UserRegistration() {
       sendData.department = "内勤";
     } else if (sendData.department === "sales") {
       sendData.department = "営業";
-    } else {
-      return;
     }
 
     //usersテーブルに追加
@@ -86,7 +85,7 @@ export default function UserRegistration() {
           console.log(postError, "insertPostsエラー");
         } else {
           //すべて成功したらログイン画面に遷移
-          navigate("/");
+          navigate("/user/login");
           window.location.reload();
         }
       }
@@ -382,7 +381,7 @@ export default function UserRegistration() {
               </table>
             </div>
             <button type="submit" disabled={!isValid || isSubmitting}>
-              新しい島生活を始める
+              登録
             </button>
           </div>
         </div>
