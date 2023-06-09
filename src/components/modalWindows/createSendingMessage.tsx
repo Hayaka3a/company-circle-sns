@@ -47,6 +47,7 @@ export default function CreateSendingMessage({
       console.log(postedByError, "ポストバイエラー");
     }
     setPostedID(postedBy[0]?.id || 0);
+    console.log(postedID);
   };
 
   const fetchIslandName = async () => {
@@ -63,7 +64,7 @@ export default function CreateSendingMessage({
     }
   };
 
-  const sendMessage = async () => {
+  const addHandler = async () => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString();
 
@@ -86,10 +87,6 @@ export default function CreateSendingMessage({
       console.log("データが正常に送信されました");
       closeModal();
     }
-  };
-
-  const addHandler = () => {
-    sendMessage();
   };
 
   return (
