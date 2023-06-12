@@ -160,7 +160,7 @@ export default function EventDetail() {
             <button onClick={openEntryModal}>参加申請</button>
             {entryAOpen && (
               <CreateResidentApplication
-                closeModal={closeModal}
+                closeModal={closeEntryModal}
                 table="event"
               />
             )}
