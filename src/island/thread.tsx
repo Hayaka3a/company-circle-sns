@@ -31,7 +31,9 @@ export default function IslandThread() {
       <div className={styles.flex}>
         <MenubarIsland />
         <div className={styles.threadWrapper}>
-          <button onClick={openModal}>スレッドを作成する</button>
+          <button onClick={openModal} className={styles.btn}>
+            スレッドを作成する
+          </button>
           {isOpen && (
             <CreateThread
               closeModal={closeModal}

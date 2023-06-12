@@ -53,7 +53,8 @@ export default function UnsubscribeButton() {
     const { data, error } = await supabase
       .from("users")
       .select("familyName, firstName")
-      .eq("id", userId);
+      .eq("id", userId)
+      .eq("status", false);
 
     if (error) {
       console.error("Error fetching user data:", error);

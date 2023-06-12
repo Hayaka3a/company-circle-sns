@@ -23,6 +23,7 @@ export default function CreateThread({
           .from("islands")
           .select("islandName")
           .eq("id", islandID)
+          .eq("status", false)
           .single();
         if (data) {
           setIslandName(data.islandName);
@@ -33,6 +34,7 @@ export default function CreateThread({
           .from("events")
           .select("eventName")
           .eq("id", eventID)
+          .eq("status", false)
           .single();
         if (data) {
           setEventName(data.eventName);
@@ -50,7 +52,7 @@ export default function CreateThread({
 
     const { data, error } = await supabase
       .from("threads")
-      .insert({ threadTitle, islandID, eventID, status: true });
+      .insert({ threadTitle, islandID, eventID, status: false });
     if (error) {
       console.error("Failed to create thread:", error.message);
     } else {
@@ -80,8 +82,11 @@ export default function CreateThread({
                 <p className={styles.p}>新規スレッド作成</p>
               </div>
               <div className={styles.input}>
-                <label htmlFor="threadName">スレッド名</label>
+                <label htmlFor="threadName" className={styles.name}>
+                  スレッド名
+                </label>
                 <input
+                  className={styles.text}
                   type="text"
                   onChange={(e) => {
                     setThreadTitle(e.target.value);

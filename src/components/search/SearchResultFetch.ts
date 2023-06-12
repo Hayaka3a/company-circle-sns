@@ -11,6 +11,7 @@ export const islandFetch = async (setIsland) => {
   const { data: tags } = await supabase
     .from("tagStatus")
     .select("*, tags(*)")
+    .eq("status", false)
     .eq("status", false);
   const tag = tags as Tags[];
 

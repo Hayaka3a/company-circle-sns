@@ -18,7 +18,8 @@ export default function UserRegistration() {
     const fetchUsers = async () => {
       const { data: users, error: usersError } = await supabase
         .from("users")
-        .select(`mailAddress,employeeCode`);
+        .select(`mailAddress,employeeCode`)
+        .eq("status", false);
       if (usersError) {
         console.log(usersError, "fetchUsersError");
       } else {
@@ -34,9 +35,10 @@ export default function UserRegistration() {
       }
     };
     fetchUsers();
+
+    //ReactHookFormで使用
   }, []);
 
-  //ReactHookFormで使用
   const {
     register,
     getValues,
@@ -56,8 +58,6 @@ export default function UserRegistration() {
       sendData.department = "内勤";
     } else if (sendData.department === "sales") {
       sendData.department = "営業";
-    } else {
-      return;
     }
 
     //usersテーブルに追加
@@ -69,7 +69,8 @@ export default function UserRegistration() {
       const { data: getUserData, error: getUserError } = await supabase
         .from("users")
         .select("id")
-        .eq("employeeCode", sendData.employeeCode);
+        .eq("employeeCode", sendData.employeeCode)
+        .eq("status", false);
 
       if (getUserError) {
         console.log(getUserError, "getUserエラー");
@@ -77,14 +78,14 @@ export default function UserRegistration() {
         // postテーブルに追加
         const post = {
           userID: getUserData[0].id,
-          status: "false",
+          status: false,
         };
         const { error: postError } = await supabase.from("posts").insert(post);
         if (postError) {
           console.log(postError, "insertPostsエラー");
         } else {
           //すべて成功したらログイン画面に遷移
-          navigate("/");
+          navigate("/user/login");
           window.location.reload();
         }
       }
@@ -132,7 +133,7 @@ export default function UserRegistration() {
           <button>ログインページへ戻る</button>
         </Link>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={styles.box}>
           <div className={styles.allContents}>
             <h2>新規登録</h2>
@@ -364,7 +365,7 @@ export default function UserRegistration() {
                                 value={item.id}
                                 {...register("department")}
                               />
-                              <label htmlFor={item.id} className="radioLabel">
+                              <label htmlFor={item.id} className="label">
                                 {item.name}
                               </label>
                             </div>
@@ -380,7 +381,7 @@ export default function UserRegistration() {
               </table>
             </div>
             <button type="submit" disabled={!isValid || isSubmitting}>
-              新しい島生活を始める
+              登録
             </button>
           </div>
         </div>

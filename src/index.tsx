@@ -41,7 +41,7 @@ export default function Index() {
       const { data, error } = await supabase
         .from("islands")
         .select("*")
-        .eq("status", "false");
+        .eq("status", false);
 
       if (error) {
         console.error("島情報取得失敗", error.message);
@@ -61,7 +61,7 @@ export default function Index() {
     const { data, error } = await supabase
       .from("events")
       .select("*")
-      .eq("status", "false")
+      .eq("status", false)
       .order("createdAt", { ascending: false })
       .limit(6);
 
@@ -99,7 +99,6 @@ export default function Index() {
           <BelongEvent />
         </div>
         <div className={styles.main}>
-          <h2>ラクスの森情報</h2>
           <div className={styles.tabs}>
             <button
               className={`${tag === "islands" ? styles.active : ""} ${
@@ -126,7 +125,10 @@ export default function Index() {
                     <Link to={`/island/${island.id}`}>
                       <img
                         className={styles.icon}
-                        src={island.thumbnail || "/island/island_icon.png"}
+                        src={
+                          island.thumbnail ||
+                          "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                        }
                         alt="Event Thumbnail"
                       />
                       <h3 className={styles.islandName}>{island.islandName}</h3>
@@ -142,7 +144,10 @@ export default function Index() {
                     <Link to={`/island/${event.id}`}>
                       <img
                         className={styles.icon}
-                        src={event.thumbnail || "/event_icon.png"}
+                        src={
+                          event.thumbnail ||
+                          "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                        }
                         alt="Event Thumbnail"
                       />
                       <h3>{event.eventName}</h3>

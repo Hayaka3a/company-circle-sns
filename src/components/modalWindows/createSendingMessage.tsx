@@ -25,26 +25,47 @@ export default function CreateSendingMessage({
   }, []);
 
   const fetchPost = async () => {
+    // userIDから該当のPostIDを割り出す
     const { data: postsData, error: postError } = await supabase
+
       .from("posts")
       .select("id")
       .eq("userID", userID)
       .eq("status", false);
+
+    // // islandIDから該当のPostIDを割り出す
+    // const { data: posts, error: postError } = await supabase
+    // .from("posts")
+    // .select("id")
+    // .eq("islandID", paramsID)
+    // .eq("status", false);
+
     if (postError) {
       console.log(userID);
+      // console.log(paramsID);
       console.log(postError, "ポストエラー");
     }
     setPosts(postsData[0]?.id || 0);
 
-    const { data: postedBy, error: postedByError } = await supabase
+
+    // PostedByに入れるため、送信する側のPostIDを取得する
+   const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
-      .eq(`${table}ID`, paramsID)
-      .eq("status", false);
+      .eq("userID", userID);
+
     if (postedByError) {
-      console.log(postedByError, "ポストバイエラー");
+      console.log(postedByError, "エラー");
     }
+
+    if (postedBy && postedBy.length > 0 && postedBy[0].id) {
+      setPostedID(postedBy[0].id);
+    } else {
+      console.log("PostedByIDが取得できません");
+    }
+
     setPostedID(postedBy[0]?.id || 0);
+
   };
 
   const fetchIslandName = async () => {
@@ -74,12 +95,13 @@ export default function CreateSendingMessage({
         isAnswered: false,
         postedBy: posts,
         status: false,
+
         sendingDate: formattedDate,
       },
     ]);
 
     if (error) {
-      console.error("メッセージの送信中にエラーが発生しました:", error);
+      console.error(error, "メッセージの送信中にエラーが発生しました:");
     } else {
       console.log("データが正常に送信されました");
       closeModal();
@@ -117,8 +139,10 @@ export default function CreateSendingMessage({
                   ></textarea>
                 </div>
               </div>
-              <div className={styles.btn}>
-                <button onClick={addHandler}>送信する</button>
+              <div>
+                <button onClick={addHandler} className={styles.btn}>
+                  送信する
+                </button>
               </div>
             </div>
           </div>

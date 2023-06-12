@@ -50,7 +50,8 @@ export default function UserEdit() {
   const fetchUsers = async () => {
     const { data: users, error: usersError } = await supabase
       .from("users")
-      .select(`mailAddress`);
+      .select(`mailAddress`)
+      .eq("status", false);
     if (usersError) {
       console.log(usersError, "fetchUsersError");
     } else {
@@ -58,7 +59,8 @@ export default function UserEdit() {
       const { data: loginUser, error: loginError } = await supabase
         .from("users")
         .select(`*`)
-        .eq("id", userID);
+        .eq("id", userID)
+        .eq("status", false);
       if (usersError) {
         console.log(loginError, "fetchLoginUsersError");
       } else {
@@ -104,6 +106,7 @@ export default function UserEdit() {
       .from("users")
       .update(sendData)
       .eq("id", userID);
+
     if (usersError) {
       console.log(usersError, "insertUsersエラー");
     } else {
