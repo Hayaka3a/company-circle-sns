@@ -41,15 +41,12 @@ export default function CreateSendingMessage({
     // .eq("status", false);
 
     if (postError) {
-      console.log(userID);
-      // console.log(paramsID);
       console.log(postError, "ポストエラー");
     }
     setPosts(postsData[0]?.id || 0);
 
-
     // PostedByに入れるため、送信する側のPostIDを取得する
-   const { data: postedBy, error: postedByError } = await supabase
+    const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
       .eq("userID", userID);
@@ -65,7 +62,6 @@ export default function CreateSendingMessage({
     }
 
     setPostedID(postedBy[0]?.id || 0);
-
   };
 
   const fetchIslandName = async () => {
@@ -95,8 +91,6 @@ export default function CreateSendingMessage({
         isAnswered: false,
         postedBy: posts,
         status: false,
-
-        sendingDate: formattedDate,
       },
     ]);
 

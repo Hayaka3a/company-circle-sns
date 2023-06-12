@@ -98,12 +98,13 @@
   width: 90%;
 }
 .th {
-  text-align: center;
+  text-align: right;
   width: 20%;
   font-weight: bold;
 }
-.td2 {
+.td {
   width: 70%;
+  height: 10vh;
 }
 
 .textDetail {
