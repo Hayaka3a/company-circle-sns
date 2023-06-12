@@ -4,6 +4,8 @@ import MenubarEvent from "../components/menubarEvent";
 import { Link, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import styles from "../styles/island/island_post.module.css";
+import { format } from "date-fns";
+import classNames from "classnames";
 
 export default function EventPost() {
   LogSt();
@@ -69,8 +71,8 @@ export default function EventPost() {
   }, []);
   return (
     <>
+      <MenubarEvent />
       <div className={styles.islandPostBack}>
-        <MenubarEvent />
         <h1>POST</h1>
 
         <div className={styles.postMessageBack}>
@@ -79,7 +81,7 @@ export default function EventPost() {
             <p>受信メッセージはありません</p>
           ) : (
             messages.map((message) => (
-              <div className={styles.message}>
+              <div className={styles.message} key={message.id}>
                 <div className={styles.flex}>
                   <img
                     src={
@@ -89,11 +91,24 @@ export default function EventPost() {
                     alt="アイコン"
                   />
                   <div className={styles.right}>
-                    <p className={styles.username}>
+                    <h3
+                      className={classNames(styles.username, {
+                        [styles.unread]: !message.isRead,
+                      })}
+                    >
                       {message.by.users.familyName}&nbsp;
                       {message.by.users.firstName}
+                    </h3>
+                    <p
+                      className={classNames({
+                        [styles.unread]: !message.isRead,
+                      })}
+                    >
+                      ＞ {message.message}
                     </p>
-                    <p>{message.message}</p>
+                    <p>
+                      {format(new Date(message.sendingDate), "yyyy年MM月dd日")}
+                    </p>
                   </div>
                 </div>
                 <Link to={`/island/message/user_message/${message.id}`}>

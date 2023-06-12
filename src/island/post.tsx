@@ -1,15 +1,18 @@
 import styles from "../styles/island/island_post.module.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CreateSendingScout from "../components/modalWindows/createSendingScout";
 import { useEffect, useState } from "react";
 import MenubarIsland from "../components/menubarIsland";
 import LogSt from "../components/cookie/logSt";
 import { supabase } from "../createClient";
+import { format } from "date-fns";
+import classNames from "classnames";
 
 export default function IslandPost() {
   LogSt();
   const params = useParams();
   const paramsID = parseInt(params.id);
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
 
   const [modal, setModal] = useState(false);
@@ -34,8 +37,7 @@ export default function IslandPost() {
         .from("messages")
         .select("*")
         .eq("postID", postID)
-        .eq("status", false)
-        .eq("isRead", false);
+        .eq("status", false);
 
       if (msgError) {
         console.error("msg情報取得失敗");
@@ -73,11 +75,23 @@ export default function IslandPost() {
     fetchMsg();
   }, []);
 
+  // 既読に変更し、メッセージ全文確認ページへ遷移
+  const readHandler = async (messageId) => {
+    const { error } = await supabase
+      .from("messages")
+      .update({ isRead: true })
+      .eq("id", messageId);
+    if (error) {
+      console.error("Failed to update 'isRead' field:", error);
+    } else {
+      navigate(`/island/message/islandPostMessage/${messageId}`);
+    }
+  };
+
   return (
     <div className={styles.all}>
       <MenubarIsland />
       <div className={styles.islandPostBack}>
-        <MenubarIsland />
         <h1>POST</h1>
         <Link to={`/island/post/entryPermit/${paramsID}`}>
           <button>許可待ちの住民申請</button>
@@ -100,16 +114,27 @@ export default function IslandPost() {
                     alt="アイコン"
                   />
                   <div className={styles.right}>
-                    <p className={styles.username}>
+                    <h3
+                      className={classNames(styles.username, {
+                        [styles.unread]: !message.isRead,
+                      })}
+                    >
                       {message.by.users.familyName}&nbsp;
                       {message.by.users.firstName}
+                    </h3>
+                    <p
+                      className={classNames({
+                        [styles.unread]: !message.isRead,
+                      })}
+                    >
+                      ＞ {message.message}
                     </p>
-                    <p>{message.message}</p>
+                    <p>
+                      {format(new Date(message.sendingDate), "yyyy年MM月dd日")}
+                    </p>
                   </div>
                 </div>
-                <Link to={`/island/message/user_message/${message.id}`}>
-                  <button>表示</button>
-                </Link>
+                <button onClick={() => readHandler(message.id)}>表示</button>
               </div>
             ))
           )}

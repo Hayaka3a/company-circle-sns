@@ -58,3 +58,7 @@ h1 {
   font-weight: bold;
   margin-top: 0;
 }
+
+.unread {
+  color: rgb(0, 161, 209);
+}
