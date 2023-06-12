@@ -31,13 +31,13 @@ export default function EntryPermit({ table }: { table: string }) {
       .eq("status", false);
     if (error) {
       console.log(error, "エラー");
+    } else {
+      //applicationsが取得できたものだけで新たな配列を作成
+      const selectApp = data[0].messages.filter(
+        (message) => message.applications.length > 0,
+      );
+      setMessage(selectApp);
     }
-
-    //applicationsが取得できたものだけで新たな配列を作成
-    const selectApp = data[0].messages.filter(
-      (message) => message.applications.length > 0,
-    );
-    setMessage(selectApp);
   }
 
   //OKボタンの処理
