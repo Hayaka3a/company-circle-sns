@@ -89,7 +89,7 @@ function App() {
             element={<IslandEntryPermitPage />}
           />
           <Route
-            path="/island/message/user_message"
+            path="/island/message/user_message/:id"
             element={<UserMessage />}
           />
           <Route path="/island/islandAll" element={<IslandAll />} />

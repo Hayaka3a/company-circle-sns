@@ -12,8 +12,8 @@ export default function CreateSendingMessage({
   table: string;
 }) {
   const [message, setMessage] = useState("");
-  const [postedID, setPostedID] = useState(0);
-  const [posts, setPosts] = useState(0);
+  const [postedID, setPostedID] = useState();
+  const [posts, setPosts] = useState();
   const [islandName, setIslandName] = useState("");
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -25,29 +25,28 @@ export default function CreateSendingMessage({
   }, []);
 
   const fetchPost = async () => {
-    // userIDから該当のPostIDを割り出す
+    // postID: postsテーブルにある送り先（島もしくはイベント）のポスト番号📫
     const { data: postsData, error: postError } = await supabase
 
       .from("posts")
       .select("id")
-      .eq("userID", userID)
+      .eq(`${table}ID`, paramsID)
       .eq("status", false);
     if (postError) {
-      console.log(userID);
       console.log(postError, "ポストエラー");
     }
-    setPosts(postsData[0]?.id || 0);
+    setPosts(postsData[0]?.id);
 
+    // postedBy：postsテーブルにある送信者のポスト番号📫
     const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
-      .eq(`${table}ID`, paramsID)
+      .eq(`userID`, userID)
       .eq("status", false);
     if (postedByError) {
       console.log(postedByError, "ポストバイエラー");
     }
-    setPostedID(postedBy[0]?.id || 0);
-    console.log(postedID);
+    setPostedID(postedBy[0]?.id);
   };
 
   const fetchIslandName = async () => {

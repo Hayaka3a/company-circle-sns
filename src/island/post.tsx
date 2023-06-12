@@ -10,7 +10,7 @@ export default function IslandPost() {
   LogSt();
   const params = useParams();
   const paramsID = parseInt(params.id);
-  console.log(paramsID);
+  const [messages, setMessages] = useState([]);
 
   const [modal, setModal] = useState(false);
   const openModal = () => setModal(true);
@@ -18,60 +18,53 @@ export default function IslandPost() {
 
   //メッセージ受信
   const fetchMsg = async () => {
+    // 島ポスト番号を検索
     const { data, error } = await supabase
       .from("posts")
       .select("id")
-      .eq("status", "false")
-      .eq("isalndID", paramsID);
+      .eq("status", false)
+      .eq("islandID", paramsID);
 
     if (error) {
       console.error("post情報取得失敗");
     } else {
       const postID = data[0].id;
+      // 島ポストに届いているメッセージ検索
       const { data: msgs, error: msgError } = await supabase
         .from("messages")
         .select("*")
-        .eq("postID", postID);
+        .eq("postID", postID)
+        .eq("status", false)
+        .eq("isRead", false);
 
       if (msgError) {
         console.error("msg情報取得失敗");
       } else {
-        if (msgs.length > 0) {
-          // 受信しているメッセージがあるときのみ実行
-          //msgsのオブジェクトデータごとにpostedByの検索をかける
-          const msgArray = msgs.map(async (msg) => {
-            const postID = msg.postedBy;
-            const { data: by, error: byError } = await supabase
-              .from("posts")
-              .select("*")
-              .eq("id", postID);
-            console.log(msgArray);
-            if (byError) {
-              console.error("送信者取得失敗");
-            } else {
-              if (by.length > 0) {
-                const post = by[0];
-                // 送信者がイベントのメッセージ一覧
-                if (post.islandID === null && post.userID === null) {
-                  //   setEventsMS(msgs);
-                  const eventMsg = msgs.filter(
-                    (post) => post.islandID === null && post.userID === null,
-                  );
-                  console.log(eventMsg);
-                  // 送信者が島のメッセージ一覧
-                } else if (post.eventID === null && post.userID === null) {
-                  //   setIslandsMs(msgs);
-                  const islandMsg = msgs.filter(
-                    (post) => post.eventID === null && post.userID === null,
-                  );
-                  console.log(islandMsg);
-                }
-              }
-            }
-          });
-        } else {
-          console.log("受信メッセージはありません");
-        }
+        //msgsのオブジェクトデータごとにpost情報を取得
+        const userPromises = msgs.map(async (msg) => {
+          const postID = msg.postedBy;
+
+          const { data: by, error: byError } = await supabase
+            .from("posts")
+            .select("*, users(*)")
+            .eq("id", postID)
+            .eq("status", false)
+            .single();
+
+          if (byError) {
+            console.error("送信者取得失敗");
+          } else {
+            // ユーザーネームとユーザーのポスト情報がついているbyとmsgsを結び付ける
+            const userObject = {
+              ...msg,
+              by: by,
+            };
+            return userObject;
+          }
+        });
+        // 全てのデータがそろうのを待ってから挿入
+        const resolvedUserData = await Promise.all(userPromises);
+        setMessages(resolvedUserData);
       }
     }
   };
@@ -83,6 +76,7 @@ export default function IslandPost() {
   return (
     <>
       <div className={styles.islandPostBack}>
+        <MenubarIsland />
         <h1>POST</h1>
         <Link to={`/island/post/entryPermit/${paramsID}`}>
           <button>許可待ちの住民申請</button>
@@ -91,42 +85,33 @@ export default function IslandPost() {
         {modal && <CreateSendingScout closeModal={closeModal} table="island" />}
         <div className={styles.postMessageBack}>
           <h2>受信メッセージ✉️</h2>
-          <div className={styles.message}>
-            <div className={styles.flex}>
-              <img src="/user/user_icon.png" alt="アイコン" />
-              <div className={styles.right}>
-                <p className={styles.username}>ユーザーネーム</p>
-                <p>テキストテキストテキストテキストテキストテキスト...</p>
+          {messages.length === 0 ? (
+            <p>受信メッセージはありません</p>
+          ) : (
+            messages.map((message) => (
+              <div className={styles.message}>
+                <div className={styles.flex}>
+                  <img
+                    src={
+                      message.by.users.icon ||
+                      "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                    }
+                    alt="アイコン"
+                  />
+                  <div className={styles.right}>
+                    <p className={styles.username}>
+                      {message.by.users.familyName}&nbsp;
+                      {message.by.users.firstName}
+                    </p>
+                    <p>{message.message}</p>
+                  </div>
+                </div>
+                <Link to={`/island/message/user_message/${message.id}`}>
+                  <button>表示</button>
+                </Link>
               </div>
-            </div>
-            <Link to={`/island/message/user_message`}>
-              <button>表示</button>
-            </Link>
-          </div>
-          <div className={styles.message}>
-            <div className={styles.flex}>
-              <img src="/user/user_icon.png" alt="アイコン" />
-              <div className={styles.right}>
-                <p className={styles.username}>ユーザーネーム</p>
-                <p>テキストテキストテキストテキストテキストテキスト...</p>
-              </div>
-            </div>
-            <Link to={`/island/message/user_message`}>
-              <button>表示</button>
-            </Link>
-          </div>
-          <div className={styles.message}>
-            <div className={styles.flex}>
-              <img src="/user/user_icon.png" alt="アイコン" />
-              <div className={styles.right}>
-                <p className={styles.username}>ユーザーネーム</p>
-                <p>テキストテキストテキストテキストテキストテキスト...</p>
-              </div>
-            </div>
-            <Link to={`/island/message/user_message`}>
-              <button>表示</button>
-            </Link>
-          </div>
+            ))
+          )}
         </div>
       </div>
     </>
