@@ -2,28 +2,29 @@ import React, { useState, useEffect } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import GetCookieID from "../cookie/getCookieId";
 
 export default function CreateResidentApplication({
-  closeModal,
+  closeEntryModal,
   table,
 }: {
-  closeModal: () => void;
+  closeEntryModal: () => void;
   table: string;
 }) {
   const params = useParams();
   const paramsID = parseInt(params.id);
   const [message, setMessage] = useState("");
-  const [islandName, setIslandName] = useState("");
+  const [eventName, setEventName] = useState("");
   const [postedID, setPostedID] = useState(null);
-  const [postID, setPostID] = useState(null);
+  const [postID, setPostID] = useState();
 
   const userID = GetCookieID();
 
   useEffect(() => {
     fetchPost();
-    fetchislnadName();
-    fetchIslandPost();
+    fetchEventName();
+    fetchEventPost();
   }, []);
 
   const fetchPost = async () => {
@@ -43,41 +44,41 @@ export default function CreateResidentApplication({
     }
   };
 
-  const fetchislnadName = async () => {
-    const { data: island, error: islandError } = await supabase
-      .from("islands")
-      .select("islandName")
+  // イベント名を取得してモーダルウィンドウに表示
+  const fetchEventName = async () => {
+    const { data: event, error: eventError } = await supabase
+      .from("events")
+      .select("eventName")
       .eq("id", paramsID)
       .eq("status", false);
 
-    if (islandError) {
-      console.log(islandError, "エラーが発生しました");
-    } else if (island && island.length > 0) {
-      setIslandName(island[0].islandName);
-      console.log(island[0].islandName);
+    if (eventError) {
+      console.log(eventError, "エラーが発生しました");
+    } else if (event && event.length > 0) {
+      setEventName(event[0].eventName);
     }
   };
 
-  const fetchIslandPost = async () => {
+  const fetchEventPost = async () => {
     const { data: post, error: postError } = await supabase
       .from("posts")
       .select("id")
-      .eq("islandID", paramsID);
+      .eq("eventID", paramsID);
 
     if (postError) {
       console.error(postError, "エラー");
     }
 
     if (post && post.length > 0) {
-      const postId = post[0].id;
+      const postId = post[0].id; // ローカルの変数名をpostIdに修正
       setPostID(postId);
     } else {
       console.log("該当する投稿が見つかりませんでした");
     }
   };
 
+  // messagesテーブルにメッセージを保存
   const saveMessage = async () => {
-
     const { data, error } = await supabase.from("messages").insert([
       {
         postID: postID,
@@ -94,12 +95,8 @@ export default function CreateResidentApplication({
       console.log(error, "エラー");
     } else {
       console.log("データが正常に送信されました");
-      closeModal();
+      closeEntryModal();
     }
-
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString();
-     
   };
 
   const addHandler = () => {
@@ -108,20 +105,20 @@ export default function CreateResidentApplication({
 
   return (
     <>
-      {islandName && (
+      {eventName && (
         <div className={styles.overlay}>
           <div className={styles.modal}>
             <div className={styles.allContents}>
               <img
                 src="/modalWindow/close.png"
                 alt="×ボタン"
-                onClick={closeModal}
+                onClick={closeEntryModal}
                 className={styles.close}
               />
               <div className={styles.main}>
                 <div className={styles.title}>
-                  <h3 className={styles.h3}>{islandName}</h3>
-                  <p className={styles.messageName}>住民申請</p>
+                  <h3 className={styles.h3}>{eventName}</h3>
+                  <p className={styles.messageName}>イベント参加申請</p>
                 </div>
                 <div className={styles.input}>
                   <label htmlFor="threadName">コメント</label>

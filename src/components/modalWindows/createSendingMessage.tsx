@@ -32,6 +32,7 @@ export default function CreateSendingMessage({
       .select("id")
       .eq(`${table}ID`, paramsID)
       .eq("status", false);
+
     if (postError) {
       console.log(postError, "ポストエラー");
     }
@@ -44,7 +45,7 @@ export default function CreateSendingMessage({
       .eq(`userID`, userID)
       .eq("status", false);
     if (postedByError) {
-      console.log(postedByError, "ポストバイエラー");
+      console.log(postedByError, "エラー");
     }
     setPostedID(postedBy[0]?.id);
   };
@@ -69,12 +70,12 @@ export default function CreateSendingMessage({
 
     const { data, error } = await supabase.from("messages").insert([
       {
-        postID: posts,
+        postID: postedID,
         message: message,
         scout: false,
         isRead: false,
         isAnswered: false,
-        postedBy: postedID,
+        postedBy: posts,
         status: false,
         sendingDate: formattedDate,
       },

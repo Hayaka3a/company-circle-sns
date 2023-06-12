@@ -150,12 +150,12 @@ export default function MenubarEvent() {
               </Link>
             </div>
             <div>
-              <Link to={`/event/members/${paramsID}`} className={styles.link}>
+              <Link to={`/event/members/${paramsID}`} className={styles.link2}>
                 参加者一覧
               </Link>
             </div>
             <div>
-              <Link to={`/event/${paramsID}`} className={styles.link}>
+              <Link to={`/event/${paramsID}`} className={styles.link2}>
                 イベント詳細
               </Link>
             </div>

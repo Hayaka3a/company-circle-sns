@@ -74,7 +74,8 @@ export default function IslandPost() {
   }, []);
 
   return (
-    <>
+    <div className={styles.all}>
+      <MenubarIsland />
       <div className={styles.islandPostBack}>
         <MenubarIsland />
         <h1>POST</h1>
@@ -114,6 +115,6 @@ export default function IslandPost() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

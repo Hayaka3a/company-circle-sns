@@ -82,7 +82,10 @@ export default function MenubarIsland() {
               </Link>
             </div>
             <div>
-              <Link to={`/island/eventAll/${paramsID}`} className={styles.link}>
+              <Link
+                to={`/island/eventAll/${paramsID}`}
+                className={styles.link2}
+              >
                 イベント
               </Link>
             </div>
@@ -92,7 +95,7 @@ export default function MenubarIsland() {
               </Link>
             </div>
             <div>
-              <Link to={`/island/members/${paramsID}`} className={styles.link}>
+              <Link to={`/island/members/${paramsID}`} className={styles.link2}>
                 島民一覧
               </Link>
             </div>
@@ -107,12 +110,15 @@ export default function MenubarIsland() {
         {!isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/island/eventAll/${paramsID}`} className={styles.link}>
+              <Link
+                to={`/island/eventAll/${paramsID}`}
+                className={styles.link2}
+              >
                 イベント
               </Link>
             </div>
             <div>
-              <Link to={`/island/members/${paramsID}`} className={styles.link}>
+              <Link to={`/island/members/${paramsID}`} className={styles.link2}>
                 島民一覧
               </Link>
             </div>
