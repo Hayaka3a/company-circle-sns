@@ -103,7 +103,6 @@
 
 .button {
   margin-left: 70%;
-
   height: 7vh;
   width: 31vh;
   border-radius: 3vh;
@@ -197,6 +196,10 @@
   100% {
     transform: translateY(0px);
   }
+}
+
+.link {
+  text-decoration: none;
 }
 
 .flex2 {

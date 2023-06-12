@@ -140,6 +140,16 @@ export default function IslandCreate() {
           .eq("status", false);
         const createdIslandId = data[0].id;
 
+        //　作成者のデータをuserEntryStatusへ挿入
+        const ownerData = {
+          userID: ownerID,
+          islandID: createdIslandId,
+          status: "false",
+        };
+        const { error: owner } = await supabase
+          .from("userEntryStatus")
+          .insert(ownerData);
+
         // postテーブルに島用ポスト作成
         const post = {
           islandID: createdIslandId,
