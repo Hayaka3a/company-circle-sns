@@ -101,7 +101,7 @@ export default function EventDetail() {
           <h2>{eventDetail && eventDetail.eventName}</h2>
 
           <table className={styles.table}>
-            <tbody>
+            <tbody className={styles.tbody}>
               <tr>
                 <td className={styles.td1}>開催日時</td>
                 <td className={styles.td2}>
@@ -124,7 +124,7 @@ export default function EventDetail() {
                 </td>
               </tr>
               <tr>
-                <td className={styles.td1}>イベント詳細</td>
+                <th className={styles.td1}>イベント詳細</th>
                 <td className={styles.td2}>
                   <p className={styles.textDetail}>
                     {eventDetail && eventDetail.detail}
@@ -132,7 +132,7 @@ export default function EventDetail() {
                 </td>
               </tr>
               <tr>
-                <td className={styles.td1}>参加島</td>
+                <th className={styles.td1}>参加島</th>
                 <td className={styles.td2}>
                   {islandArray.map((data) => {
                     return (

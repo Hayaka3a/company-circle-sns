@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MenubarEvent from "../components/menubarEvent";
-import styles from "../styles/islandEdit.module.css";
+import styles from "../styles/island/islandEdit.module.css";
 import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
@@ -266,12 +266,11 @@ export default function EventEdit() {
   };
 
   return (
-    <div className={styles.flex}>
+    <div className={styles.all}>
       <MenubarEvent />
       <div className={styles.back}>
         <div className={styles.event_detail}>
-          <h1>イベント編集・削除</h1>
-
+          <h1 className={styles.name}>島情報編集・削除</h1>
           <div>
             <label htmlFor="eventName">イベント名</label>
             <input
@@ -330,30 +329,23 @@ export default function EventEdit() {
             {editMode && (
               <div>
                 <button onClick={selectionIslandOpen}>選択</button>
-                {/* {selectedIsland && 
-             } */}
               </div>
             )}
-            {/* <input 
-            type="text" 
-            id="eventJoin" 
-            class={styles.center}
-            value={eventJoin}
-            onChange={handleEventJoinChange}
-            readOnly={!editMode}
-          /> */}
-            {/* {islandNames.map((name, index) => (
-            <p key={index} class={styles.center}>
-              {name}
-            </p>
-          ))} */}
           </div>
 
-          <button id={styles.edit_btn} onClick={handleSaveClick}>
+          <button
+            id={styles.edit_btn}
+            onClick={handleSaveClick}
+            className={styles.edit_btn}
+          >
             {editMode ? "保存" : "編集"}
           </button>
 
-          <button onClick={openDeleteModal}>削除</button>
+          <div className={styles.delete}>
+            <button onClick={openDeleteModal} className={styles.delete_btn}>
+              削除
+            </button>
+          </div>
           {isDeleteOpen && (
             <CreateDeletePage
               closeDeleteModal={closeDeleteModal}
