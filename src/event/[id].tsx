@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import MenubarEvent from "../components/menubarEvent";
-import styles from "../styles/eventDetail.module.css";
+import styles from "../styles/island/islandDetail.module.css";
 import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
+import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { supabase } from "../createClient";
 import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
@@ -27,6 +30,7 @@ export default function EventDetail() {
   },[eventID]);
 
   // イベント情報を取得
+
   const fetchEventDetail = async () => {
     const { data, error } = await supabase
       .from("events")
@@ -99,7 +103,6 @@ export default function EventDetail() {
   const openModal = () => {
     setIsOpen(true);
   };
-
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -108,6 +111,7 @@ export default function EventDetail() {
     navigate("/event/edit");
     window.location.reload();
   };
+
 
   return (
     <div className={styles.flex}>
@@ -159,6 +163,7 @@ export default function EventDetail() {
           <button id={styles.edit_btn} onClick={Handler}>
             編集・削除
           </button>
+
         </div>
       </div>
     </div>

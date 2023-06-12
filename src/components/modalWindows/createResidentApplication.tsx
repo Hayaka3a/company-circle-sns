@@ -77,6 +77,7 @@ export default function CreateResidentApplication({
   };
 
   const saveMessage = async () => {
+
     const { data, error } = await supabase.from("messages").insert([
       {
         postID: postID,
@@ -95,6 +96,10 @@ export default function CreateResidentApplication({
       console.log("データが正常に送信されました");
       closeModal();
     }
+
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+     
   };
 
   const addHandler = () => {

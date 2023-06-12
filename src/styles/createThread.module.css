@@ -17,14 +17,14 @@
 
 .modal {
   z-index: 2;
-  width: 50%;
+  width: 71vh;
   padding: 1em;
   background: #fff;
   text-align: center;
   justify-content: center; /* 水平方向の中央揃え */
   align-items: center; /* 垂直方向の中央揃え */
   flex-direction: column; /* 縦方向に並べる */
-  height: 50%;
+  height: 43vh;
   position: relative;
 }
 
@@ -32,10 +32,11 @@
   position: absolute;
   top: 10px;
   right: 10px;
+  height: 5vh;
 }
 
 .allContents {
-  height: 50vh;
+  height: 43vh;
   justify-content: center; /* 水平方向 */
   align-items: center; /* 垂直方向 */
   flex-direction: column; /* 縦方向 */
@@ -49,11 +50,8 @@
 }
 
 .main {
-  width: auto;
-  height: 40vh;
+  height: 25vh;
   width: 70%;
-  display: grid;
-  grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
 }
 
 .title {
@@ -68,4 +66,11 @@
 
 .p {
   margin-top: 0;
+}
+
+.text {
+  outline: solid 0.3vh rgba(209, 227, 172, 1);
+}
+.name {
+  margin-right: 2vh;
 }

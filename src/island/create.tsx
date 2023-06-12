@@ -39,7 +39,10 @@ export default function IslandCreate() {
   // データベースから全ユーザー名前取得
   useEffect(() => {
     const fetchUsers = async () => {
-      let { data, error } = await supabase.from("users").select();
+      let { data, error } = await supabase
+        .from("users")
+        .select()
+        .eq("status", false);
       if (error) {
         console.error("Error fetching users:", error.message);
       } else {
@@ -66,7 +69,10 @@ export default function IslandCreate() {
   // データベースから全タグ名取得
   useEffect(() => {
     const fetchUsers = async () => {
-      let { data, error } = await supabase.from("tags").select();
+      let { data, error } = await supabase
+        .from("tags")
+        .select()
+        .eq("status", false);
       if (error) {
         console.error("Error fetching tags:", error.message);
       } else {
@@ -118,7 +124,7 @@ export default function IslandCreate() {
       detail: detail,
       ownerID: ownerID,
       thumbnail: imageUrl,
-      status: "false",
+      status: false,
     };
 
     try {
@@ -130,13 +136,14 @@ export default function IslandCreate() {
         const { data } = await supabase
           .from("islands")
           .select("id")
-          .eq("islandName", islandName);
+          .eq("islandName", islandName)
+          .eq("status", false);
         const createdIslandId = data[0].id;
 
         // postテーブルに島用ポスト作成
         const post = {
           islandID: createdIslandId,
-          status: "false",
+          status: false,
         };
         const { error } = await supabase.from("posts").insert(post);
         if (error) {
@@ -148,7 +155,7 @@ export default function IslandCreate() {
           const enStatusData = islandMembers.map((user) => ({
             userID: user.id,
             islandID: createdIslandId,
-            status: "false",
+            status: false,
           }));
           for (let entry of enStatusData) {
             await supabase.from("userEntryStatus").insert(entry);
@@ -158,7 +165,7 @@ export default function IslandCreate() {
               const tgStatusData = islandTags.map((tag) => ({
                 tagID: tag.id,
                 islandID: createdIslandId,
-                status: "false",
+                status: false,
               }));
               for (let tgS of tgStatusData) {
                 await supabase.from("tagStatus").insert(tgS);
@@ -168,7 +175,7 @@ export default function IslandCreate() {
                   const tgNameData = tagNames.map((tagName) => ({
                     tagName: tagName.Name,
                     tagNameKana: tagName.NameKana,
-                    status: "false",
+                    status: false,
                   }));
                   for (let tg of tgNameData) {
                     await supabase.from("tags").insert(tg);
@@ -197,32 +204,32 @@ export default function IslandCreate() {
     <div className={styles.background}>
       <div className={styles.box}>
         <div className={styles.allContents}>
-          <h1>島作成</h1>
+          <h2 className={styles.h2}>新しい島を作成</h2>
           <div className={styles.tableCovered}>
-            <table>
-              <tbody>
-                <tr>
-                  <th>
+            <table className={styles.table}>
+              <tbody className={styles.tbody}>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>
                     島名<span className={styles.span}>【必須】</span>
                   </th>
-                  <td>
+                  <td className={styles.td}>
                     <IslandName
                       islandName={islandName}
                       setIslandName={setIslandName}
                     />
                   </td>
                 </tr>
-                <tr>
-                  <th>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>
                     活動内容<span className={styles.span}>【必須】</span>
                   </th>
-                  <td>
+                  <td className={styles.td}>
                     <Detail detail={detail} setDetail={setDetail} />
                   </td>
                 </tr>
-                <tr>
-                  <th>メンバー</th>
-                  <td>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>メンバー</th>
+                  <td className={styles.td}>
                     <ComboBoxUser
                       nameOptions={userOptions}
                       htmlFor="user"
@@ -230,8 +237,8 @@ export default function IslandCreate() {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <th>サムネイル</th>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>サムネイル</th>
                   <td className={styles.imgSide}>
                     <img
                       className={styles.icon}
@@ -248,9 +255,9 @@ export default function IslandCreate() {
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <th>タグ</th>
-                  <td>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>タグ</th>
+                  <td className={styles.td}>
                     <ComboBoxTag
                       tagOptions={tagOptions}
                       htmlFor="tag"
@@ -258,9 +265,9 @@ export default function IslandCreate() {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <th>タグ追加</th>
-                  <td>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>タグ追加</th>
+                  <td className={styles.td}>
                     <AddTag setTagNames={setTagNames} />
                   </td>
                 </tr>

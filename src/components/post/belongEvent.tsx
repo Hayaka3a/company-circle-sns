@@ -13,7 +13,8 @@ export default function BelongEvent() {
         const { data: entrys, error: entrysError } = await supabase
           .from("userEntryStatus")
           .select("islandID")
-          .eq("userID", userID);
+          .eq("userID", userID)
+          .eq("status", false);
 
         // entrys配列の中からeventIDがnullの値のものを配列から取り除く
         const ens = entrys.filter((event) => event.islandID !== null);
@@ -28,7 +29,8 @@ export default function BelongEvent() {
               const { data: events, error: eventsError } = await supabase
                 .from("userEntryStatus")
                 .select("eventID")
-                .eq("islandID", en.islandID);
+                .eq("islandID", en.islandID)
+                .eq("status", false);
 
               if (eventsError) {
                 console.error("データ1取得失敗", eventsError.message);
@@ -59,7 +61,8 @@ export default function BelongEvent() {
           const { data: refugee, error: refugeeError } = await supabase
             .from("userEntryStatus")
             .select("eventID")
-            .eq("userID", userID);
+            .eq("userID", userID)
+            .eq("status", false);
 
           if (refugeeError) {
             console.error("データ取得失敗", refugeeError.message);
@@ -77,7 +80,8 @@ export default function BelongEvent() {
               const { data: posts } = await supabase
                 .from("posts")
                 .select("id")
-                .eq("eventID", event.eventID);
+                .eq("eventID", event.eventID)
+                .eq("status", false);
 
               try {
                 await Promise.all(
@@ -87,7 +91,8 @@ export default function BelongEvent() {
                         .from("messages")
                         .select("*")
                         .eq("postID", post.id)
-                        .eq("isRead", "false");
+                        .eq("isRead", false)
+                        .eq("status", false);
 
                     if (messagesError) {
                       console.error("データ1取得失敗", messagesError.message);

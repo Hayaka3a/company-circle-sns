@@ -6,17 +6,23 @@
 .box {
   background-color: rgb(231, 231, 231);
   padding-top: 1%;
-  height: 900px;
+  height: auto;
+  width: 116vh;
   margin-right: 27%;
   margin-left: 27%;
   text-align: center;
   border-radius: 1%;
   padding-bottom: 3%;
+
+  background-color: rgba(255, 254, 245, 1);
+  border: dashed 0.5vh rgba(209, 190, 79, 1);
+  box-shadow: 0 0 0 1vh rgba(250, 248, 242, 1), 0 0 0 2vh rgba(209, 190, 79, 1);
+  border-radius: 1vh;
 }
 
 .icon {
-  width: 100px;
-  height: 100px;
+  width: 13vh;
+  height: 13vh;
   border-radius: 50%; /*サムネイル円型*/
   margin-left: auto;
   margin-right: auto;
@@ -43,7 +49,7 @@
   height: auto;
 }
 
-table {
+.table {
   width: 85%;
   border-collapse: collapse;
   border-spacing: 0 6vh; /* 行間幅 */
@@ -51,26 +57,32 @@ table {
   margin-bottom: 6%;
 }
 
-th,
-td {
+.th {
+  border-bottom: 1px solid rgb(180, 180, 180);
+  text-align: left;
+}
+.td {
   border-bottom: 1px solid rgb(180, 180, 180);
   text-align: left;
 }
 
-th:last-child,
-td:last-child {
+.th:last-child {
+  border-right: none; /* 最後の列の縦線を非表示*/
+}
+.td:last-child {
   border-right: none; /* 最後の列の縦線を非表示*/
 }
 
-tr {
+.tr {
   height: 10vh; /* 行の高さ */
 }
 
-td {
+.td {
   width: 100%;
+  padding: 4vh 0;
 }
 
-th {
+.th {
   width: 50%;
 }
 
@@ -145,7 +157,8 @@ th {
 }
 
 .addButton {
-  height: 39px;
+  height: 4vh;
+  margin: 1vh;
 }
 
 .buttonSide {
@@ -169,4 +182,8 @@ th {
 
 /* islandName */
 .islandNameText {
+}
+
+.input {
+  margin: 1vh;
 }

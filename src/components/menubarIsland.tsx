@@ -21,7 +21,8 @@ export default function MenubarIsland() {
     const { data, error } = await supabase
       .from("islands")
       .select("islandName, thumbnail")
-      .eq("id", paramsID);
+      .eq("id", paramsID)
+      .eq("status", false);
 
     if (error) {
       console.error("islandsテーブルデータ情報取得失敗", error);
@@ -40,7 +41,7 @@ export default function MenubarIsland() {
       .select("*")
       .eq("userID", userID)
       .eq("islandID", paramsID)
-      .eq("status", "false");
+      .eq("status", false);
     if (error) {
       console.log(error);
       // ユーザーがサークルに参加してるとき
@@ -60,7 +61,10 @@ export default function MenubarIsland() {
         {island && (
           <img
             className={styles.icon}
-            src={island.thumbnail || "/island/island_icon.png"}
+            src={
+              island.thumbnail ||
+              "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+            }
             alt="Event Thumbnail"
           />
         )}
@@ -78,7 +82,10 @@ export default function MenubarIsland() {
               </Link>
             </div>
             <div>
-              <Link to={`/island/eventAll/${paramsID}`} className={styles.link}>
+              <Link
+                to={`/island/eventAll/${paramsID}`}
+                className={styles.link2}
+              >
                 イベント
               </Link>
             </div>
@@ -88,7 +95,7 @@ export default function MenubarIsland() {
               </Link>
             </div>
             <div>
-              <Link to={`/island/members/${paramsID}`} className={styles.link}>
+              <Link to={`/island/members/${paramsID}`} className={styles.link2}>
                 島民一覧
               </Link>
             </div>
@@ -103,12 +110,15 @@ export default function MenubarIsland() {
         {!isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/island/eventAll/${paramsID}`} className={styles.link}>
+              <Link
+                to={`/island/eventAll/${paramsID}`}
+                className={styles.link2}
+              >
                 イベント
               </Link>
             </div>
             <div>
-              <Link to={`/island/members/${paramsID}`} className={styles.link}>
+              <Link to={`/island/members/${paramsID}`} className={styles.link2}>
                 島民一覧
               </Link>
             </div>

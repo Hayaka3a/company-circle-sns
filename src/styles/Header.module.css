@@ -1,11 +1,14 @@
 header {
-  position: relative;
   background-color: #9ccaaf;
   padding: 0 15px;
   height: 15vh;
   display: flex;
   width: 100%;
   justify-content: space-between;
+  position: sticky;
+  z-index: 999;
+  top: 0;
+  left: 0;
 }
 .headerItem {
   display: flex;

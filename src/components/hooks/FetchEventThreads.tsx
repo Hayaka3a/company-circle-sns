@@ -9,7 +9,8 @@ function FetchEventThreads(id: number, eqName: string) {
       let { data: threads, error } = await supabase
         .from("threads")
         .select(`id, threadTitle,  events(*)`)
-        .eq(eqName, id);
+        .eq(eqName, id)
+        .eq("status", false);
       setThreads(threads as thread[]);
     };
     fetchThread();

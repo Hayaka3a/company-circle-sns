@@ -16,7 +16,7 @@ export default function EventAll() {
   const currentDateTime = new Date(); // 現在の日時取得
 
   const createHandler = () => {
-    navigate("/event/create/[id]");
+    navigate(`/event/create/${paramsID}`);
     window.location.reload();
   };
 
@@ -25,7 +25,8 @@ export default function EventAll() {
     const { data, error } = await supabase
       .from("islands")
       .select("islandName")
-      .eq("id", paramsID);
+      .eq("id", paramsID)
+      .eq("status", false);
 
     if (error) {
       console.error("islandsテーブルデータ情報取得失敗", error);
@@ -42,7 +43,8 @@ export default function EventAll() {
       const { data: userEntryStatusData, error } = await supabase
         .from("userEntryStatus")
         .select("*")
-        .eq("islandID", paramsID);
+        .eq("islandID", paramsID)
+        .eq("status", false);
 
       if (error) {
         console.error("userEntryStatusテーブル情報取得失敗");
@@ -58,7 +60,7 @@ export default function EventAll() {
           .from("events")
           .select("*")
           .eq("id", eventId)
-          .eq("status", "false");
+          .eq("status", false);
 
         if (eventError) {
           console.error("Eventsテーブルデータ情報取得失敗", eventError);
@@ -77,9 +79,9 @@ export default function EventAll() {
     fetchEventData();
   }, [paramsID]);
   return (
-    <div className={styles.flex}>
+    <div className={styles.flex2}>
       <MenubarIsland />
-      <div className={styles.all}>
+      <div className={styles.back}>
         <h2>{islandName}島 開催イベント</h2>
         <button onClick={createHandler} className={styles.button}>
           新しいイベントを始める
@@ -88,19 +90,22 @@ export default function EventAll() {
           {events
             .filter((event) => new Date(event.endDate) > currentDateTime)
             .map((event) => (
-              <div key={event.id} className={styles.event1}>
-                <div className={styles.imgSide}>
+              <div key={event.id} className={styles.event2}>
+                <div className={styles.imgSide2}>
                   <img
-                    className={styles.icon}
-                    src={event.thumbnail || "/event_icon.png"}
+                    className={styles.icon3}
+                    src={
+                      event.thumbnail ||
+                      "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                    }
                     alt="Event Thumbnail"
                   ></img>
                   <div className={styles.eventInfo}>
                     <Link to={`/event/${paramsID}`}>
-                      <h2 className={styles.eventName}>{event.eventName}</h2>
+                      <h2 className={styles.eventName2}>{event.eventName}</h2>
                     </Link>
-                    <h3>
-                      開催時期 ：
+                    <h3 className={styles.date}>
+                      開催期間 ：
                       {new Date(event.startDate).toLocaleDateString("ja-JP", {
                         year: "numeric",
                         month: "long",
