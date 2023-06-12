@@ -4,9 +4,9 @@ import styles from "../styles/island/islandDetail.module.css";
 import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
-import EntryApplication from "../components/modalWindows/entry_application";
 import EventSendingMessage from "../components/modalWindows/eventSendingMessage";
 import { format } from "date-fns";
+import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
 
 export default function EventDetail() {
   LogSt();
@@ -159,14 +159,14 @@ export default function EventDetail() {
           <div className={styles.btn}>
             <button onClick={openEntryModal}>参加申請</button>
             {entryAOpen && (
-              <EntryApplication
-                closeEntryModal={closeEntryModal}
-                table="events"
+              <CreateResidentApplication
+                closeModal={closeModal}
+                table="event"
               />
             )}
             <button onClick={openModal}>メッセージを送る</button>
             {isOpen && (
-              <EventSendingMessage closeModal={closeModal} table="island" />
+              <EventSendingMessage closeModal={closeModal} table="events" />
             )}
           </div>
           <button id={styles.edit_btn} onClick={Handler}>
