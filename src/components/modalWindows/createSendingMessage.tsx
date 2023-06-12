@@ -79,9 +79,6 @@ export default function CreateSendingMessage({
   };
 
   const sendMessage = async () => {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString();
-
     const { data, error } = await supabase.from("messages").insert([
       {
         postID: postedID,
