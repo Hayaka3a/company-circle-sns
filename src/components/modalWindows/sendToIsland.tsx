@@ -25,47 +25,26 @@ export default function CreateSendingMessage({
   }, []);
 
   const fetchPost = async () => {
-    // userIDから該当のPostIDを割り出す
     const { data: postsData, error: postError } = await supabase
-
       .from("posts")
       .select("id")
       .eq("userID", userID)
       .eq("status", false);
-
-    // // islandIDから該当のPostIDを割り出す
-    // const { data: posts, error: postError } = await supabase
-    // .from("posts")
-    // .select("id")
-    // .eq("islandID", paramsID)
-    // .eq("status", false);
-
     if (postError) {
       console.log(userID);
-      // console.log(paramsID);
       console.log(postError, "ポストエラー");
     }
     setPosts(postsData[0]?.id || 0);
 
-
-    // PostedByに入れるため、送信する側のPostIDを取得する
-   const { data: postedBy, error: postedByError } = await supabase
+    const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
-      .eq("userID", userID);
-
+      .eq(`${table}ID`, paramsID)
+      .eq("status", false);
     if (postedByError) {
-      console.log(postedByError, "エラー");
+      console.log(postedByError, "ポストバイエラー");
     }
-
-    if (postedBy && postedBy.length > 0 && postedBy[0].id) {
-      setPostedID(postedBy[0].id);
-    } else {
-      console.log("PostedByIDが取得できません");
-    }
-
     setPostedID(postedBy[0]?.id || 0);
-
   };
 
   const fetchIslandName = async () => {
@@ -95,13 +74,12 @@ export default function CreateSendingMessage({
         isAnswered: false,
         postedBy: posts,
         status: false,
-
         sendingDate: formattedDate,
       },
     ]);
 
     if (error) {
-      console.error(error, "メッセージの送信中にエラーが発生しました:");
+      console.error("メッセージの送信中にエラーが発生しました:", error);
     } else {
       console.log("データが正常に送信されました");
       closeModal();
@@ -126,12 +104,10 @@ export default function CreateSendingMessage({
               />
               <div className={styles.main}>
                 <div className={styles.title}>
-                  <h3 className={styles.h3}>{islandName}</h3>
-                  <p className={styles.messageName}>メッセージ</p>
+                  <h3 className={styles.h3}>To: {userID}</h3>
+                  <p className={styles.messageName}></p>
                 </div>
                 <div className={styles.input}>
-                  <label htmlFor="threadName">コメント</label>
-                  <br />
                   <textarea
                     name="text"
                     className={styles.textSending}
@@ -139,10 +115,8 @@ export default function CreateSendingMessage({
                   ></textarea>
                 </div>
               </div>
-              <div>
-                <button onClick={addHandler} className={styles.btn}>
-                  送信する
-                </button>
+              <div className={styles.btn}>
+                <button onClick={addHandler}>送信する</button>
               </div>
             </div>
           </div>

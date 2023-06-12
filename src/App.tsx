@@ -32,7 +32,7 @@ import IslandThread from "./island/thread";
 import IslandCreate from "./island/create";
 import IslandMembers from "./island/members";
 import IslandPost from "./island/post";
-import UserMessage from "./island/message/user_message";
+import IslandPostMessage from "./island/message/islandPostMessage";
 import IslandEntryPermitPage from "./island/post/entryPermitPage";
 import IslandAll from "./island/islandAll";
 
@@ -89,8 +89,8 @@ function App() {
             element={<IslandEntryPermitPage />}
           />
           <Route
-            path="/island/message/user_message"
-            element={<UserMessage />}
+            path="/island/message/islandPostMessage/:id"
+            element={<IslandPostMessage />}
           />
           <Route path="/island/islandAll" element={<IslandAll />} />
           {/* eventフォルダ */}
