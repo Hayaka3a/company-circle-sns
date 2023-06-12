@@ -64,10 +64,7 @@ export default function CreateSendingMessage({
     }
   };
 
-  const addHandler = async () => {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString();
-
+  const sendMessage = async () => {
     const { data, error } = await supabase.from("messages").insert([
       {
         postID: postedID,
@@ -77,7 +74,6 @@ export default function CreateSendingMessage({
         isAnswered: false,
         postedBy: posts,
         status: false,
-        sendingDate: formattedDate,
       },
     ]);
 
@@ -117,7 +113,7 @@ export default function CreateSendingMessage({
                 </div>
               </div>
               <div>
-                <button onClick={addHandler} className={styles.btn}>
+                <button onClick={sendMessage} className={styles.btn}>
                   送信する
                 </button>
               </div>
