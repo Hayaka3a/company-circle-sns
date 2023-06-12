@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import LogSt from "../components/cookie/logSt";
 import { Event } from "../types/members";
+import EventSendingMessage from "../components/modalWindows/eventSendingMessage";
 
 export default function EventDetail() {
   LogSt();
@@ -165,7 +166,7 @@ export default function EventDetail() {
               メッセージを送る
             </button>
             {isOpen && (
-              <CreateSendingMessage closeModal={closeModal} table="event" />
+              <EventSendingMessage closeModal={closeModal} table="event" />
             )}
           </div>
           <div className={styles.editbox}>
