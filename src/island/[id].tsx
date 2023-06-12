@@ -26,7 +26,7 @@ export default function IslandDetail() {
     const { data, error } = await supabase
       .from("islands")
       .select("*")
-      .eq("id", islandId.id) // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
+      .eq("id", islandID.id) // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
       .eq("status", false);
 
     if (error) {
@@ -66,7 +66,7 @@ export default function IslandDetail() {
   };
 
   const Handler = () => {
-    navigate(`/island/edit/${islandId.id}`);
+    navigate(`/island/edit/${islandID.id}`);
     window.location.reload();
   };
   return (

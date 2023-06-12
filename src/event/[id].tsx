@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import MenubarEvent from "../components/menubarEvent";
 import styles from "../styles/island/islandDetail.module.css";
-import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
-import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { supabase } from "../createClient";
 import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import EntryApplication from "../components/modalWindows/entry_application";
 import EventSendingMessage from "../components/modalWindows/eventSendingMessage";
+import { format } from 'date-fns';
+
 
 export default function EventDetail() {
   LogSt();
@@ -21,6 +19,11 @@ export default function EventDetail() {
   const [eventDetail, setEventDetail] = useState(null); // 取得したイベントの詳細情報を保持する状態変数
   const [islandNames, setIslandNames] = useState([]); // 島名を保持する状態変数
   const [entryAOpen, setEntryAOpen] = useState(false);
+
+  const startDate = eventDetail ? format(new Date(eventDetail.startDate), 'yyyy年MM月dd日') : '';
+    // console.log("開始日時", startDate);
+  const endDate = eventDetail ? format(new Date(eventDetail.endDate), 'yyyy年MM月dd日') : '';   
+    // console.log("終了日時", endDate); 
 
   // console.log(eventDetail)
 
@@ -84,7 +87,7 @@ export default function EventDetail() {
   const islandNames = islandData.map((island) => island.islandName);
   setIslandNames(islandNames); // 島名をセット
 
-  console.log("島名:", islandNames);
+  // console.log("島名:", islandNames);
 };
 
   // イベント参加申請を押した際の小窓画面（モーダルウィンドウ）の開閉
@@ -108,7 +111,7 @@ export default function EventDetail() {
   };
 
   const Handler = () => {
-    navigate("/event/edit");
+    navigate(`/event/edit/${eventID.id}`);
     window.location.reload();
   };
 
@@ -119,15 +122,22 @@ export default function EventDetail() {
       <div className={styles.back}>
         <div className={styles.event_detail}>
           <h1>{eventDetail && eventDetail.eventName}</h1>
-          {eventDetail && (
-            <img 
-              src={eventDetail.thumbnail || "/event_icon.png"}
-              className={styles.eventIcon} 
-            />
-          )}
+            {eventDetail && (
+              <img 
+                src={eventDetail.thumbnail || "/event_icon.png"}
+                className={styles.eventIcon} 
+              />
+            )}            
           <div>
             <label className={styles.detail}>開催日時</label>
-            <p className={styles.center}>{eventDetail && eventDetail.startDate}~{eventDetail && eventDetail.endDate}</p>
+            <p className={styles.center}>
+              {eventDetail && eventDetail.startDate && eventDetail.endDate && (
+                <>
+                  {format(new Date(eventDetail.startDate), 'yyyy年MM月dd日')} ~
+                  {format(new Date(eventDetail.endDate), 'yyyy年MM月dd日')}
+                </>
+              )}            
+            </p>
           </div>
 
           <div>
