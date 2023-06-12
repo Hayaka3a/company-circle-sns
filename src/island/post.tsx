@@ -94,7 +94,7 @@ export default function IslandPost() {
       <div className={styles.islandPostBack}>
         <h1>POST</h1>
         <Link to={`/island/post/entryPermit/${paramsID}`}>
-          <button>許可待ちの住民申請</button>
+          <button>住民許可待ち申請</button>
         </Link>
         <button onClick={openModal}>島に招待する</button>
         {modal && <CreateSendingScout closeModal={closeModal} table="island" />}
