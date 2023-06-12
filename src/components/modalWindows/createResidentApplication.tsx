@@ -11,14 +11,18 @@ export default function CreateResidentApplication({
   closeModal: () => void;
   table: string;
 }) {
+  //島もしくはイベントのID取得
   const params = useParams();
-  const paramsID = parseInt(params.id);
+  const paramsID = Number(params.id);
+
+  //ログインしているユーザーのIDを取得
+  const user = GetCookieID();
+  const userID = Number(user);
+
   const [message, setMessage] = useState("");
   const [islandName, setIslandName] = useState("");
   const [postedID, setPostedID] = useState(null);
   const [postID, setPostID] = useState(null);
-
-  const userID = GetCookieID();
 
   useEffect(() => {
     fetchPost();
@@ -26,6 +30,7 @@ export default function CreateResidentApplication({
     fetchIslandPost();
   }, []);
 
+  //ログインユーザーのポストIDを取得し、postByに格納
   const fetchPost = async () => {
     const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
@@ -35,7 +40,6 @@ export default function CreateResidentApplication({
     if (postedByError) {
       console.log(postedByError, "エラー");
     }
-
     if (postedBy && postedBy.length > 0 && postedBy[0].id) {
       setPostedID(postedBy[0].id);
     } else {
@@ -43,26 +47,41 @@ export default function CreateResidentApplication({
     }
   };
 
+  //現在の島・イベントの名前を取得
   const fetchislnadName = async () => {
-    const { data: island, error: islandError } = await supabase
-      .from("islands")
-      .select("islandName")
-      .eq("id", paramsID)
-      .eq("status", false);
+    if (table === "island") {
+      const { data: island, error: islandError } = await supabase
+        .from("islands")
+        .select("islandName")
+        .eq("id", paramsID)
+        .eq("status", false);
 
-    if (islandError) {
-      console.log(islandError, "エラーが発生しました");
-    } else if (island && island.length > 0) {
-      setIslandName(island[0].islandName);
-      console.log(island[0].islandName);
+      if (islandError) {
+        console.log(islandError, "エラーが発生しました");
+      } else if (island && island.length > 0) {
+        setIslandName(island[0].islandName + "島");
+      }
+    } else {
+      const { data: event, error: eventError } = await supabase
+        .from("events")
+        .select("eventName")
+        .eq("id", paramsID)
+        .eq("status", false);
+
+      if (eventError) {
+        console.log(eventError, "エラーが発生しました");
+      } else if (event && event.length > 0) {
+        setIslandName(event[0].eventName);
+      }
     }
   };
 
+  //島かイベントのポストを取得、postIDに格納
   const fetchIslandPost = async () => {
     const { data: post, error: postError } = await supabase
       .from("posts")
       .select("id")
-      .eq("islandID", paramsID);
+      .eq(`${table}ID`, paramsID);
 
     if (postError) {
       console.error(postError, "エラー");
@@ -72,16 +91,15 @@ export default function CreateResidentApplication({
       const postId = post[0].id;
       setPostID(postId);
     } else {
-      console.log("該当する投稿が見つかりませんでした");
+      console.log("該当するポストが見つかりませんでした");
     }
   };
 
   const saveMessage = async () => {
-
-    const { data, error } = await supabase.from("messages").insert([
+    const { error } = await supabase.from("messages").insert([
       {
         postID: postID,
-        message: message,
+        message: "参加申請",
         scout: false,
         isRead: false,
         isAnswered: false,
@@ -89,21 +107,32 @@ export default function CreateResidentApplication({
         status: false,
       },
     ]);
-
     if (error) {
-      console.log(error, "エラー");
+      console.log(error, "メッセージ追加エラー");
     } else {
-      console.log("データが正常に送信されました");
-      closeModal();
+      const { data: messageID, error: messageIDError } = await supabase
+        .from("messages")
+        .select("id")
+        .eq("postID", postID)
+        .eq("postedBy", postedID)
+        .eq("status", false);
+      if (messageIDError) {
+        console.log(messageIDError, "メッセージID取得エラー");
+      } else {
+        const { error } = await supabase.from("applications").insert([
+          {
+            messageID: messageID[0].id,
+            message: message,
+            status: false,
+          },
+        ]);
+        if (error) {
+          console.log(error, "アプリケーションズ追加エラー");
+        } else {
+          closeModal();
+        }
+      }
     }
-
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString();
-     
-  };
-
-  const addHandler = () => {
-    saveMessage();
   };
 
   return (
@@ -135,7 +164,7 @@ export default function CreateResidentApplication({
                 </div>
               </div>
               <div className={styles.btn}>
-                <button onClick={addHandler}>送信する</button>
+                <button onClick={saveMessage}>送信する</button>
               </div>
             </div>
           </div>
