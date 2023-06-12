@@ -12,15 +12,15 @@ export default function IslandDetail() {
   const [isOpen, setIsOpen] = useState(false);
   const [isResidentOpen, setIsResidentOpen] = useState(false);
   const navigate = useNavigate();
-  const islandId = useParams();
+  const islandID = useParams();
+  const islandIDValue = islandID["id"];
   const [islandDetail, setIslandDetail] = useState(null); // 取得した島の詳細情報を保持する状態変数
-  const [islandImage, setIslandImage] = useState(
-    "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
-  ); // 取得した島の詳細情報を保持する状態変数
+  const [islandImage, setIslandImage] = useState(""); // 取得した島の詳細情報を保持する状態変数
 
   useEffect(() => {
     fetchIslandDetail();
   }, []);
+
 
   const fetchIslandDetail = async () => {
     const { data, error } = await supabase
@@ -28,6 +28,7 @@ export default function IslandDetail() {
       .select("*")
       .eq("id", islandId.id) // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
       .eq("status", false);
+
     if (error) {
       console.error("島の詳細情報の取得に失敗しました:", error);
       return;
@@ -71,37 +72,30 @@ export default function IslandDetail() {
   return (
     <div className={styles.flex}>
       <MenubarIsland />
-      <div className={styles.back}>
-        <div className={styles.detail}>
-          {islandDetail && (
-            <img
-              src={islandImage}
-              alt="サークルアイコン"
-              className={styles.icon}
+      <div className={styles.island_detail}>
+        {islandDetail && (
+          <img 
+            src={islandDetail.thumbnail || "/island/island_icon.png"}
+            alt="サークルアイコン" 
+          />
+        )}
+        <h2>{islandDetail && islandDetail.islandName}</h2>
+        <p className={styles.textDetail}>
+          {islandDetail && islandDetail.detail}
+        </p>
+          <button onClick={openResindentModal}>住民申請</button>
+          {isResidentOpen && (
+            <CreateResidentApplication
+            closeModal={closeResidentModal}
+            table="island"
             />
           )}
-          <h2>{islandDetail && islandDetail.islandName}島</h2>
-          <p className={styles.textDetail}>
-            {islandDetail && islandDetail.detail}
-          </p>
-          <div>
-            <button onClick={openResindentModal} className={styles.btn1}>
-              住民申請
-            </button>
-            {isResidentOpen && (
-              <CreateResidentApplication
-                closeResidentModal={closeResidentModal}
-                table="island"
-                islandName={islandDetail.islandName}
-              />
-            )}
             <button onClick={openModal} className={styles.btn2}>
               メッセージを送る
             </button>
             {isOpen && (
               <CreateSendingMessage closeModal={closeModal} table="island" />
             )}
-          </div>
           <div className={styles.editbox}>
             <button id={styles.edit_btn} onClick={Handler}>
               編集・削除
@@ -109,6 +103,5 @@ export default function IslandDetail() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
