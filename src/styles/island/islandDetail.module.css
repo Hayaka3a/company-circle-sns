@@ -97,9 +97,9 @@
 .tbody {
   width: 90%;
 }
-.td1 {
+.th {
   text-align: center;
-  width: 30%;
+  width: 20%;
   font-weight: bold;
 }
 .td2 {
@@ -108,4 +108,5 @@
 
 .textDetail {
   width: 90%;
+  margin: auto;
 }

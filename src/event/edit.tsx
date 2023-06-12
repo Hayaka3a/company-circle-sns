@@ -270,69 +270,92 @@ export default function EventEdit() {
       <MenubarEvent />
       <div className={styles.back}>
         <div className={styles.event_detail}>
-          <h1 className={styles.name}>島情報編集・削除</h1>
-          <div>
-            <label htmlFor="eventName">イベント名</label>
-            <input
-              type="text"
-              id="eventName"
-              value={eventName}
-              onChange={handleEventNameChange}
-              readOnly={!editMode}
-            />
-            <br />
-            <label htmlFor="thumbnail">サムネイル</label>
-            <input
-              type="file"
-              id="thumbnail"
-              className={styles.eventIcon}
-              onChange={handleFileChange}
-              disabled={!editMode}
-            />
-          </div>
+          <h1 className={styles.name}>イベント情報編集・削除</h1>
 
-          <div>
-            <label className={styles.detail}>開催日時</label>
-            <input
-              type="text"
-              id="startDate"
-              className={styles.center}
-              value={startDate}
-              onChange={handleStartDateChange}
-              readOnly={!editMode}
-            />
-            <input
-              type="text"
-              id="endDate"
-              className={styles.center}
-              value={endDate}
-              onChange={handleEndDateChange}
-              readOnly={!editMode}
-            />
-          </div>
-
-          <div>
-            <label className={styles.detail}>イベント詳細</label>
-            <input
-              type="text"
-              id="eventDetail"
-              className={styles.center}
-              value={eventDetail}
-              onChange={handleEventDetailChange}
-              readOnly={!editMode}
-            />
-          </div>
-
-          <div>
-            <label>参加島（サークル）</label>
-            {eventJoin}
-            {editMode && (
-              <div>
-                <button onClick={selectionIslandOpen}>選択</button>
-              </div>
-            )}
-          </div>
-
+          <table className={styles.table}>
+            <tbody className={styles.tbody}>
+              <tr className={styles.tr}>
+                <th className={styles.th}>
+                  <label htmlFor="eventName">イベント名</label>
+                </th>
+                <td className={styles.td}>
+                  <input
+                    type="text"
+                    id="eventName"
+                    value={eventName}
+                    onChange={handleEventNameChange}
+                    readOnly={!editMode}
+                  />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
+                <th className={styles.th}>
+                  <label htmlFor="thumbnail">サムネイル</label>
+                </th>
+                <td className={styles.td}>
+                  <input
+                    type="file"
+                    id="thumbnail"
+                    className={styles.eventIcon}
+                    onChange={handleFileChange}
+                    disabled={!editMode}
+                  />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
+                <th className={styles.th}>
+                  <label className={styles.detail}>開催日時</label>
+                </th>
+                <td className={styles.td}>
+                  <input
+                    type="text"
+                    id="startDate"
+                    className={styles.center}
+                    value={startDate}
+                    onChange={handleStartDateChange}
+                    readOnly={!editMode}
+                  />
+                  ～
+                  <input
+                    type="text"
+                    id="endDate"
+                    className={styles.center}
+                    value={endDate}
+                    onChange={handleEndDateChange}
+                    readOnly={!editMode}
+                  />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
+                <th className={styles.th}>
+                  <label className={styles.detail}>イベント詳細</label>
+                </th>
+                <td className={styles.td}>
+                  <input
+                    type="text"
+                    id="eventDetail"
+                    className={styles.center}
+                    value={eventDetail}
+                    onChange={handleEventDetailChange}
+                    readOnly={!editMode}
+                  />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
+                <th className={styles.th}>
+                  <label>参加島（サークル）</label>
+                </th>
+                <td className={styles.td}>
+                  {eventJoin}
+                  {editMode && (
+                    <div>
+                      <button onClick={selectionIslandOpen}>選択</button>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
           <button
             id={styles.edit_btn}
             onClick={handleSaveClick}

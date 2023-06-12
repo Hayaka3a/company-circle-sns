@@ -57,7 +57,10 @@ export default function SearchDisplay({ word, radio }) {
           return (
             <div className={styles.result} key={searchData.id}>
               <img
-                src={searchData.thumbnail}
+                src={
+                  searchData.thumbnail ||
+                  "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351"
+                }
                 className={styles.icon}
                 alt="アイコン"
               />
