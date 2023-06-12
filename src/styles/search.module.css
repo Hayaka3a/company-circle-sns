@@ -5,8 +5,11 @@
 }
 
 .main {
-  width: 80%;
+  width: 70%;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
   margin-left: 2%;
+  background-color: rgba(255, 254, 245, 1);
 }
 .word {
   margin: 5% 0%;
@@ -18,9 +21,8 @@
 }
 .icon {
   border-radius: 50%;
-  height: 100px;
-  width: 100px;
-  border: 1px solid orange;
+  height: 14vh;
+  width: 14vh;
   margin: 0 5%;
 }
 .detail {

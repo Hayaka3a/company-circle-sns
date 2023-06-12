@@ -6,9 +6,13 @@
   position: relative;
   padding-top: 2%;
   text-align: center;
+  overflow: hidden;
+  word-spacing: -5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .menuContents {
+  width: 100%;
   justify-content: center;
   margin-top: 13%;
   height: 40%;
@@ -19,22 +23,64 @@
   align-content: center;
   color: rgba(143, 119, 99, 1);
 }
+
 .link {
   color: rgba(102, 85, 70, 1);
   text-decoration: none;
   font-weight: bold;
+  word-spacing: 0;
+  width: 100%;
+  list-style: none;
+  margin: 0 auto;
+  padding: 3.7vh 6vh;
+  border-right: none;
+  border-bottom: none;
+  font-family: calibri light;
+  cursor: pointer;
+}
+
+.link:hover {
+  box-shadow: inset -50px 0 175px -50px rgba(255, 245, 118, 0.8);
+}
+
+.link:active {
+  background: rgba(255, 170, 118, 0.5);
+}
+
+.link2 {
+  color: rgba(102, 85, 70, 1);
+  text-decoration: none;
+  font-weight: bold;
+  word-spacing: 0;
+  width: 100%;
+  list-style: none;
+  margin: 0 auto;
+  padding: 3.7vh 3vh;
+  border-right: none;
+  border-bottom: none;
+  font-family: calibri light;
+  cursor: pointer;
+}
+
+.link2:hover {
+  box-shadow: inset -50px 0 175px -50px rgba(255, 245, 118, 0.8);
+}
+
+.link2:active {
+  background: rgba(255, 170, 118, 0.5);
 }
 
 .title {
+  margin-bottom: 6vh;
   font-size: 3vh;
   text-align: center;
-  line-height: 0.95em;
-  font-weight: bold;
-  color: transparent;
-  background: rgba(0, 0, 0, 1);
-  text-shadow: 0 0 0.1em rgba(255, 255, 255, 0.05),
-    0.01em 0.04em 0.03em rgba(255, 255, 255, 0.4);
-  -webkit-background-clip: text;
+  position: relative;
+  border-radius: 5px;
+  outline: 2px solid rgba(212, 184, 80, 1);
+  outline-offset: 8px;
+  background: rgba(255, 255, 222, 1);
+  color: rgba(130, 105, 82, 0.8);
+  text-align: center;
 }
 
 .icon {

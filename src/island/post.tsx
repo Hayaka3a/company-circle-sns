@@ -15,7 +15,8 @@ export default function IslandPost() {
   const closeModal = () => setModal(false);
 
   return (
-    <>
+    <div className={styles.all}>
+      <MenubarIsland />
       <div className={styles.islandPostBack}>
         <h1>POST</h1>
         <Link to={`/island/post/entryPermit/${paramsID}`}>
@@ -63,6 +64,6 @@ export default function IslandPost() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

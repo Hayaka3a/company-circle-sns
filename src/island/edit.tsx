@@ -1,5 +1,5 @@
 import React, { useState, useEffect, SyntheticEvent } from "react";
-import styles from "../styles/islandEdit.module.css";
+import styles from "../styles/island/islandEdit.module.css";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
 import { supabase } from "../createClient";
 import ComboBoxTag from "../components/comboBoxTag";
@@ -8,6 +8,7 @@ import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
+import MenubarIsland from "../components/menubarIsland";
 
 export default function IslandEdit() {
   LogSt();
@@ -306,84 +307,95 @@ export default function IslandEdit() {
   };
 
   return (
-    <div className={styles.back}>
-      <h1 className={styles.name}>島情報編集・削除</h1>
-      <div className={styles.inputs}>
-        <div className={styles.islandName}>
-          <label htmlFor="islandName">島名</label>
-          <input
-            type="text"
-            id="islandName"
-            className={styles.input}
-            value={islandName}
-            onChange={handleIslandNameChange}
-            readOnly={!editMode}
-          />
-        </div>
+    <div className={styles.all}>
+      <MenubarIsland />
+      <div className={styles.back}>
+        <h1 className={styles.name}>島情報編集・削除</h1>
+        <table className={styles.table}>
+          <tbody className={styles.tbody}>
+            <tr className={styles.tr}>
+              <th className={styles.th}>島名</th>
+              <td className={styles.td}>
+                <input
+                  type="text"
+                  id="islandName"
+                  className={styles.input}
+                  value={islandName}
+                  onChange={handleIslandNameChange}
+                  readOnly={!editMode}
+                />
+              </td>
+            </tr>
+            <tr className={styles.tr}>
+              <th className={styles.th}>活動内容</th>
+              <td className={styles.td}>
+                <textarea
+                  id="detail"
+                  className={styles.detail}
+                  value={detail}
+                  onChange={(e) => handelDetailChange} // 追加
+                  readOnly={!editMode} // 編集モードでない場合は無効化する
+                />
+              </td>
+            </tr>
+            <tr className={styles.tr}>
+              <th className={styles.th}>サムネイル</th>
+              <td className={styles.imgSide}>
+                <div className={styles.faileCenter}>
+                  <img
+                    className={styles.icon}
+                    src={imageUrl}
+                    alt="island Thumbnail"
+                  />
+                  <input
+                    type="file"
+                    id="thumbnail"
+                    className={styles.inputA}
+                    onChange={handleFileChange}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr className={styles.tr}>
+              <th className={styles.th}>タグ</th>
+              <td>
+                {tagName}
+                {editMode && (
+                  <ComboBoxTag
+                    tagOptions={tagOptions}
+                    htmlFor="tag"
+                    setIslandTags={setIslandTags}
+                  />
+                )}
+                <div>
+                  {tagNames.map((tag, index) => (
+                    <div key={index}>{tag.Name}</div>
+                  ))}
+                </div>
+              </td>
+            </tr>
 
-        <div className={styles.detail}>
-          <label htmlFor="detail" className={styles.detail}>
-            活動内容
-          </label>
-          <input
-            type="text"
-            id="detail"
-            className={styles.inputA}
-            value={detail}
-            onChange={handelDetailChange} // 追加
-            readOnly={!editMode} // 編集モードでない場合は無効化する
-          />
-        </div>
-
-        <div className={styles.box}>
-          <p
-            className={styles.icon}
-            id="img"
-            style={{ backgroundImage: `url('${imageUrl}')` }}
-          ></p>
-          <label htmlFor="thumbnail">サムネイル</label>
-          <input
-            type="file"
-            id="thumbnail"
-            className={styles.inputA}
-            onChange={handleFileChange}
-            disabled={!editMode}
-          />
-        </div>
-        <br />
-
-        <div className={styles.tag}>
-          <label htmlFor="tag">タグ</label>
-        </div>
-        {tagName}
-        {editMode && (
-          <ComboBoxTag
-            tagOptions={tagOptions}
-            htmlFor="tag"
-            setIslandTags={setIslandTags}
-          />
-        )}
-        <div>
-          {tagNames.map((tag, index) => (
-            <div key={index}>{tag.Name}</div>
-          ))}
-        </div>
-
-        <div>
-          <label htmlFor="addTag">タグ追加</label>
-        </div>
-        {editMode && (
-          <>
-            <AddTag setTagNames={setTagNames} />
-          </>
-        )}
-
+            {editMode && (
+              <>
+                <tr className={styles.tr}>
+                  <th className={styles.th}>タグ追加</th>
+                  <td>
+                    <AddTag setTagNames={setTagNames} />
+                  </td>
+                </tr>
+              </>
+            )}
+          </tbody>
+        </table>
         <button className={styles.edit_btn} onClick={handleSaveClick}>
           {editMode ? "保存" : "編集"}
         </button>
-        <button onClick={openDeleteModal} className={styles.delete_btn}>
-          削除
-        </button>
+
+        <div className={styles.delete}>
+          <button onClick={openDeleteModal} className={styles.delete_btn}>
+            アカウントを削除
+          </button>
+        </div>
         {isDeleteOpen && (
           <CreateDeletePage
             closeDeleteModal={closeDeleteModal}
