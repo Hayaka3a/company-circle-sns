@@ -43,7 +43,6 @@ export default function IslandDetail() {
 
     // ownerじゃない人には「編集・削除」ボタン機能を表示させない
     if (owner !== userId) {
-      console.log("ownerじゃありません");
       setButton(false);
     }
     if (userError) {
