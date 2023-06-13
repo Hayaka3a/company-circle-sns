@@ -39,14 +39,10 @@ export default function IslandPost() {
         .eq("postID", postID)
         .eq("status", false);
 
-      console.log(msgsUnfil);
-
       // applicationsにデータがある場合は排除（住民許可申請は表示させない）
       let msgs = msgsUnfil.filter(function (ms) {
         return ms.applications.length === 0;
       });
-
-      console.log(msgs);
 
       if (msgError) {
         console.error("msg情報取得失敗");

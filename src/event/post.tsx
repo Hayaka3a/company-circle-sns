@@ -37,8 +37,7 @@ export default function EventPost() {
         .from("messages")
         .select("*, applications(*)")
         .eq("postID", postID)
-        .eq("status", false)
-        .eq("isRead", false);
+        .eq("status", false);
 
       // applicationsにデータがある場合は排除（住民許可申請は表示させない）
       let msgs = msgsUnfil.filter(function (ms) {
@@ -111,6 +110,7 @@ export default function EventPost() {
             messages.map((message) => (
               <div className={styles.message} key={message.id}>
                 <div className={styles.flex}>
+                  <div className={styles.unreadCircle}></div>
                   <img
                     src={
                       message.by.users.icon ||
