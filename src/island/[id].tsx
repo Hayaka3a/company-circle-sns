@@ -80,7 +80,8 @@ export default function IslandDetail() {
       }
 
       // 島ポスト番号が送信済みの参加申請のpostIDと同じだった場合に「住民申請」ボタンをグレーアウトし、「すでに申請済みです」のエラーを表示させる
-      if (appMsg[0].postID === island[0].id) {
+      const matchingAppMsg = appMsg.find((msg) => msg.postID === island[0].id);
+      if (matchingAppMsg) {
         setAlreadyError("すでに住民許可申請を送っています");
       }
     }
