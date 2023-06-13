@@ -288,6 +288,7 @@ export default function IslandCreate() {
           <button
             onClick={createHandler}
             disabled={!islandName.trim() || !detail.trim()}
+            className={styles.btn}
           >
             新しい島生活を始める
           </button>

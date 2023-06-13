@@ -143,11 +143,11 @@ export default function EventPost() {
                         </p>
                       </div>
                       <p
-                        className={classNames(styles.mss, {
+                        className={classNames(styles.mss1, {
                           [styles.unread]: !message.isRead,
                         })}
                       >
-                        {message.message}
+                        {message.message.substring(0, 80)}...
                       </p>
                     </div>
                   </div>

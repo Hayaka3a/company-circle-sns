@@ -194,6 +194,7 @@ export default function EventCreate() {
         </div>
         <button
           onClick={createHandler}
+          className={styles.btn}
           disabled={
             !eventName.trim() ||
             !detail.trim() ||
