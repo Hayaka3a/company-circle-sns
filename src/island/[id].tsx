@@ -67,6 +67,7 @@ export default function IslandDetail() {
       .eq("postedBy", data[0].id);
 
     const appMsg = message.filter((msg) => msg.message === "参加申請");
+    console.log(appMsg);
 
     // 島ポスト番号取得
     if (appMsg.length > 0) {
@@ -74,13 +75,15 @@ export default function IslandDetail() {
         .from("posts")
         .select("*")
         .eq("islandID", Number(islandId.id));
+      console.log(island);
 
       if (islandError) {
         console.log("島ポスト番号取得失敗");
       }
 
       // 島ポスト番号が送信済みの参加申請のpostIDと同じだった場合に「住民申請」ボタンをグレーアウトし、「すでに申請済みです」のエラーを表示させる
-      if (appMsg[0].postID === island[0].id) {
+      const matchingAppMsg = appMsg.find((msg) => msg.postID === island[0].id);
+      if (matchingAppMsg) {
         setAlreadyError("すでに住民許可申請を送っています");
       }
     }

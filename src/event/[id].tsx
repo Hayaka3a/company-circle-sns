@@ -104,8 +104,9 @@ export default function EventDetail() {
         console.log("島ポスト番号取得失敗");
       }
 
-      // 島ポスト番号が送信済みの参加申請のpostIDと同じだった場合に「住民申請」ボタンをグレーアウトし、「すでに申請済みです」のエラーを表示させる
-      if (appMsg[0].postID === event[0].id) {
+      // イベントポスト番号が送信済みの参加申請のpostIDと同じだった場合に「住民申請」ボタンをグレーアウトし、「すでに申請済みです」のエラーを表示させる
+      const matchingAppMsg = appMsg.find((msg) => msg.postID === event[0].id);
+      if (matchingAppMsg) {
         setAlreadyError("すでに住民許可申請を送っています");
       }
     }

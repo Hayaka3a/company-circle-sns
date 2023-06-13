@@ -15,6 +15,7 @@ export default function BelongIsland() {
           .select("islandID")
           .eq("userID", userID)
           .eq("status", false);
+        console.log(entrys);
 
         if (entrysError) {
           console.error("データ1取得失敗", entrysError.message);
@@ -34,6 +35,8 @@ export default function BelongIsland() {
               .select("id")
               .eq("islandID", entry.islandID)
               .eq("status", false);
+
+            console.log(posts);
 
             if (postsError) {
               console.error("データ2取得失敗", postsError.message);
