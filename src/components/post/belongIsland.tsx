@@ -15,7 +15,6 @@ export default function BelongIsland() {
           .select("islandID")
           .eq("userID", userID)
           .eq("status", false);
-        console.log(entrys);
 
         if (entrysError) {
           console.error("データ1取得失敗", entrysError.message);
@@ -43,7 +42,7 @@ export default function BelongIsland() {
               return;
             }
 
-            for (const post of posts) {
+            posts.map(async (post) => {
               const { data: messages, error: messagesError } = await supabase
                 .from("messages")
                 .select("*")
@@ -51,20 +50,23 @@ export default function BelongIsland() {
                 .eq("isRead", "false")
                 .eq("status", false);
 
+              console.log(messages);
+
               // データがnullまたは空の場合は何も行わずにreturnする
               if (!messages || messages.length === 0) {
+                // console.log("データがnullもしくは空です");
                 return;
               }
 
               if (messagesError) {
                 console.error("データ3取得失敗", messagesError.message);
-                return;
               }
               if (messages.length > 0) {
                 setHasNewMessage(true);
-                return; // 最初の未読メッセージが見つかったらループを中断する
+                console.log("メッセージを見つけました");
+                // 最初の未読メッセージが見つかったらループを中断する
               }
-            }
+            });
           } else {
             // islandIDがnullの場合はスキップ
             console.log("どこの島にも所属していません");
