@@ -4,50 +4,45 @@ import styles from '../../styles/island/user_message_post.module.css';
 import LogSt from '../../components/cookie/logSt';
 import { supabase } from '../../createClient';
 import { format } from 'date-fns';
-import SendToIsland from '../../components/modalWindows/sendToIsland';
+import GetCookieID from '../../components/cookie/getCookieId';
+import { useCookies } from 'react-cookie';
 
 export default function IslandPostMessage() {
   LogSt();
 
   const { id } = useParams();
 
+  const cookies = useCookies(["id"]);
+  const postedBy = cookies[0].id;
+
+  // console.log("Cookieから取得", postedBy);
+
+
+
   const [userMessages, setUserMessages] = useState([]);
   const [islands, setIslands] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [imageUrl, setImageUrl] = useState("");
-  const [isOpen, setIsOpen] =useState(false);
-
-
-  // 返信ボタンを押した際の小窓画面（モーダルウィンドウ）の開閉
-  // isOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
-
+  const [imageUrl, setImageUrl] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [showTextArea, setShowTextArea] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetchUserMessages();
   }, []);
 
-  // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
-    let circleElement = document.getElementById("img");
+    let circleElement = document.getElementById('img');
     if (circleElement) {
       circleElement.style.backgroundImage = `url('${imageUrl}')`;
     }
   }, [imageUrl]);
 
-  // messages情報取得
   const fetchUserMessages = async () => {
     const { data: messages, error: messagesError } = await supabase
       .from('messages')
       .select('*')
-      .eq('postID', parseInt(id))
+      .eq('id', parseInt(id))
       .eq('status', false);
 
     if (messagesError) {
@@ -58,18 +53,16 @@ export default function IslandPostMessage() {
     if (messages) {
       setUserMessages(messages);
 
-      const islandIDs = messages.map(message => message.postedBy);
+      const islandIDs = messages.map((message) => message.postedBy);
       fetchPosts(islandIDs);
     }
   };
 
-  // posts情報取得
   const fetchPosts = async (islandIDs) => {
     const { data: posts, error: postsError } = await supabase
       .from('posts')
       .select('id, islandID')
       .in('id', islandIDs);
-
 
     if (postsError) {
       console.log('postsの取得エラー', postsError);
@@ -78,18 +71,17 @@ export default function IslandPostMessage() {
 
     if (posts) {
       setPosts(posts);
-      const uniqueIslandIDs = Array.from(new Set(posts.map(post => post.islandID)));
+
+      const uniqueIslandIDs = Array.from(new Set(posts.map((post) => post.islandID)));
       fetchIslands(uniqueIslandIDs);
     }
   };
 
-  // islands情報取得
   const fetchIslands = async (islandIDs) => {
     const { data: islands, error: islandsError } = await supabase
       .from('islands')
       .select('*')
       .in('id', islandIDs);
-
 
     if (islandsError) {
       console.log('islandsの取得エラー', islandsError);
@@ -101,6 +93,74 @@ export default function IslandPostMessage() {
     }
   };
 
+  const openTextArea = () => {
+    setShowTextArea(true);
+  };
+
+  const handleSendMessage = async () => {
+    const messageInput = document.getElementById('message-text') as HTMLInputElement;
+    const messageText = messageInput.value.trim();
+    if (messageText === '') {
+      setErrorMessage('メッセージを入力してください。');
+      return;
+    }
+
+    // データベースクエリを実行して、postedByの値に基づいてuserIDを取得
+    const { data, error } = await supabase
+      .from('posts')
+      .select('id')
+      .eq('userID', postedBy)
+      .single();
+
+    if (error) {
+      console.error('エラー:', error);
+      // エラーハンドリングを行う
+      return;
+    }
+
+    // 結果からidを取得
+    const userId = data?.id;
+
+    // console.log("送信する側", userId)
+
+
+
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+
+    const { data: messageData, error: messageError } = await supabase.from('messages').insert([
+      {
+        postID: posts[0].id,
+        message: messageText,
+        scout: false,
+        isRead: false,
+        isAnswered: false,
+        postedBy: userId,
+        status: false,
+        sendingDate: formattedDate,
+      },
+    ]);
+
+    if (messageError) {
+      console.error('メッセージの送信中にエラーが発生しました:', error);
+      return;
+    }
+
+    console.log('データが正常に送信されました');
+
+    messageInput.value = '';
+    setShowTextArea(false);
+  };
+
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
 
   return (
     <div className={styles.back}>
@@ -117,27 +177,29 @@ export default function IslandPostMessage() {
                 <div className={styles.flex}>
                   <p className={styles.from}>from:</p>
                   <img
-                    id='img'
-                    src={island.thumbnail || "island/island_icon.png"}
-                    alt='island Thumbnail'
-                  >
-                  </img>
+                    id="img"
+                    src={island.thumbnail || 'island/island_icon.png'}
+                    alt="island Thumbnail"
+                  />
                   <h3 className={styles.userName}>{island.islandName}</h3>
                 </div>
               )}
-              <p className={styles.receiving_time}>受信日時: {format(new Date(message.sendingDate), 'yyyy年MM月dd日 HH:mm')}</p>
+              <p className={styles.receiving_time}>
+                受信日時: {format(new Date(message.sendingDate), 'yyyy年MM月dd日 HH:mm')}
+              </p>
               <p className={styles.text_body}>{message.message}</p>
             </div>
           );
         })}
       </div>
-      <button onClick={openModal}>
-        返信する
-      </button>
-      {isOpen && (
-        <SendToIsland closeModal={closeModal} table='island'/>
+      <button onClick={openTextArea}>返信する</button>
+      {showTextArea && (
+        <div>
+          {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+          <textarea id="message-text" placeholder="返信メッセージを入力してください" />
+          <button onClick={handleSendMessage}>送信</button>
+        </div>
       )}
     </div>
   );
 }
-
