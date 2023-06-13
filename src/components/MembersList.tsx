@@ -114,8 +114,10 @@ export default function MembersList({
       return (
         <td className={styles.td}>
           <img src={user.users.icon} className={styles.icon} alt="アイコン" />
-          {user.users.familyName}
-          {user.users.firstName}&nbsp;({user.users.department})
+          <div className={styles.name}>
+            {user.users.familyName}
+            {user.users.firstName}&nbsp;({user.users.department})
+          </div>
         </td>
       );
     }
@@ -133,10 +135,11 @@ export default function MembersList({
                 className={styles.icon}
                 alt="アイコン"
               />
-              {loginUser.familyName}
-              {loginUser.firstName}&nbsp;({loginUser.department}) (オーナー)
+              <div className={styles.name}>
+                {loginUser.familyName}
+                {loginUser.firstName}&nbsp;({loginUser.department}) (オーナー)
+              </div>
             </td>
-            <td className={styles.td}></td>
           </tr>
           {loginUser &&
             newEntryUsers.map((user) => {

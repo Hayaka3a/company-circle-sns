@@ -23,11 +23,12 @@
 .tbody {
 }
 .td {
-  width: 50%;
-  height: 15%;
+  height: 12vh;
   padding-left: 8vh;
   background-color: rgba(255, 254, 245, 1);
   font-weight: bold;
+  text-align: left;
+  display: flex;
 }
 .td2 {
   width: 80%;
@@ -37,7 +38,8 @@
 }
 
 .name {
-  margin-bottom: 2vh;
+  width: 36vh;
+  margin: auto 0;
 }
 
 .icon {

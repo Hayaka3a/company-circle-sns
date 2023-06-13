@@ -8,11 +8,10 @@ import CreateDeletePage from "../components/modalWindows/deleteEvent";
 import CreateDeleteCheck from "../components/modalWindows/deleteEventCheck";
 import CreateAfterDelete from "../components/modalWindows/deleteEventAfter";
 
-
 export default function EventEdit() {
   LogSt();
 
-  const id= useParams();
+  const id = useParams();
   const fetchEventID = id.id;
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function EventEdit() {
   const [endDate, setEndDate] = useState("");
   const [eventDetail, setEventDetail] = useState(""); // 取得したイベントの詳細情報を保持する状態変数
   const [eventJoin, setEventJoin] = useState("");
-  const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+  const [imageUrl, setImageUrl] = useState("");
   const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
 
   // 参加サークル選択モーダルウィンドウの表示
@@ -135,6 +134,7 @@ export default function EventEdit() {
       setStartDate(event.startDate); // イベント開始日時（startDate）をstartDateステートにセット
       setEndDate(event.endDate); // イベント終了日時（endDate）をendDateステートにセット
       setEventDetail(event.detail); // イベント詳細をeventDetailステートにセット
+      setImageUrl(event.thumbnail);
     }
   };
 
@@ -174,8 +174,6 @@ export default function EventEdit() {
 
     const islandNames = islandData.map((island) => island.islandName);
     const joinedNames = islandNames.join(", "); // 配列の要素を結合した文字列を作成
-
-    console.log("参加サークルの島名:", joinedNames);
 
     setEventJoin(joinedNames); // 参加サークルをeventJoinステートにセット
   };
@@ -257,23 +255,14 @@ export default function EventEdit() {
       alert("必須項目です。");
       return;
     }
-
-    const eventData = {
-      eventName: eventName,
-      startDate: startDate,
-      endDate: endDate,
-      detail: eventDetail,
-      status: "false",
-    };
   };
 
   return (
-    <div className={styles.all}>
+    <div className={styles.flex}>
       <MenubarEvent />
       <div className={styles.back}>
         <div className={styles.event_detail}>
-          <h1 className={styles.name}>イベント情報編集・削除</h1>
-
+          <h2 className={styles.name}>イベント情報編集・削除</h2>
           <table className={styles.table}>
             <tbody className={styles.tbody}>
               <tr className={styles.tr}>
@@ -295,13 +284,20 @@ export default function EventEdit() {
                   <label htmlFor="thumbnail">サムネイル</label>
                 </th>
                 <td className={styles.td}>
-                  <input
-                    type="file"
-                    id="thumbnail"
-                    className={styles.eventIcon}
-                    onChange={handleFileChange}
-                    disabled={!editMode}
-                  />
+                  <div className="imageSide">
+                    <img
+                      className={styles.icon}
+                      src={imageUrl || "/event/event_icon.png"}
+                      alt="Event Thumbnail"
+                    />
+                    <input
+                      type="file"
+                      id="thumbnail"
+                      className={styles.eventIcon}
+                      onChange={handleFileChange}
+                      disabled={!editMode}
+                    />
+                  </div>
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -385,9 +381,7 @@ export default function EventEdit() {
               setInputValue={setInputValue}
             />
           )}
-
-          {isAfterDeleteOpen && <CreateAfterDelete done={done}/>}
-
+          {isAfterDeleteOpen && <CreateAfterDelete done={done} />}
         </div>
       </div>
     </div>
