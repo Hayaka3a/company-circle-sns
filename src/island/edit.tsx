@@ -358,7 +358,7 @@ export default function IslandEdit() {
             </tr>
             <tr className={styles.tr}>
               <th className={styles.th}>タグ</th>
-              <td>
+              <td className={styles.td}>
                 {tagName}
                 {editMode && (
                   <ComboBoxTag
@@ -379,7 +379,7 @@ export default function IslandEdit() {
               <>
                 <tr className={styles.tr}>
                   <th className={styles.th}>タグ追加</th>
-                  <td>
+                  <td className={styles.td}>
                     <AddTag setTagNames={setTagNames} />
                   </td>
                 </tr>

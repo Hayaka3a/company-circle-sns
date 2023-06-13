@@ -130,8 +130,10 @@ export default function EventSendingMessage({
                   ></textarea>
                 </div>
               </div>
-              <div className={styles.btn}>
-                <button onClick={addHandler}>送信する</button>
+              <div>
+                <button onClick={addHandler} className={styles.btn}>
+                  送信する
+                </button>
               </div>
             </div>
           </div>

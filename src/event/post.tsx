@@ -95,54 +95,70 @@ export default function EventPost() {
   };
   return (
     <>
-      <MenubarEvent />
-      <div className={styles.islandPostBack}>
-        <h1>POST</h1>
-        <Link to={`/island/post/entryPermit/${paramsID}`}>
-          <button>イベント参加許可待ち申請</button>
-        </Link>
-        <button onClick={openModal}>イベントに招待する</button>
-        {modal && <CreateSendingScout closeModal={closeModal} table="island" />}
-        <div className={styles.postMessageBack}>
-          <h2>受信メッセージ✉️</h2>
-          {messages.length === 0 ? (
-            <p>受信メッセージはありません</p>
-          ) : (
-            messages.map((message) => (
-              <div className={styles.message} key={message.id}>
-                <div className={styles.flex}>
-                  <img
-                    src={
-                      message.by.users.icon ||
-                      "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
-                    }
-                    alt="アイコン"
-                  />
-                  <div className={styles.right}>
-                    <h3
-                      className={classNames(styles.username, {
-                        [styles.unread]: !message.isRead,
-                      })}
-                    >
-                      {message.by.users.familyName}&nbsp;
-                      {message.by.users.firstName}
-                    </h3>
-                    <p
-                      className={classNames({
-                        [styles.unread]: !message.isRead,
-                      })}
-                    >
-                      ＞ {message.message}
-                    </p>
-                    <p>
-                      {format(new Date(message.sendingDate), "yyyy年MM月dd日")}
-                    </p>
-                  </div>
-                </div>
-                <button onClick={() => readHandler(message.id)}>表示</button>
-              </div>
-            ))
+      <div className={styles.all}>
+        <MenubarEvent />
+        <div className={styles.islandPostBack}>
+          <h1>POST</h1>
+          <Link to={`/island/post/entryPermit/${paramsID}`}>
+            <button className={styles.btn2}>イベント参加許可待ち申請</button>
+          </Link>
+          <button onClick={openModal} className={styles.btn1}>
+            イベントに招待する
+          </button>
+          {modal && (
+            <CreateSendingScout closeModal={closeModal} table="island" />
           )}
+          <div className={styles.postMessageBack}>
+            <h2>受信メッセージ✉️</h2>
+            {messages.length === 0 ? (
+              <p>受信メッセージはありません</p>
+            ) : (
+              messages.map((message) => (
+                <div className={styles.message} key={message.id}>
+                  <div className={styles.flex}>
+                    <img
+                      src={
+                        message.by.users.icon ||
+                        "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                      }
+                      alt="アイコン"
+                    />
+                    <div className={styles.right}>
+                      <div className={styles.upper}>
+                        <h3
+                          className={classNames(styles.username, {
+                            [styles.unread]: !message.isRead,
+                          })}
+                        >
+                          {message.by.users.familyName}&nbsp;
+                          {message.by.users.firstName}
+                        </h3>
+                        <p className={styles.date}>
+                          {format(
+                            new Date(message.sendingDate),
+                            "yyyy年MM月dd日",
+                          )}
+                        </p>
+                      </div>
+                      <p
+                        className={classNames(styles.mss, {
+                          [styles.unread]: !message.isRead,
+                        })}
+                      >
+                        {message.message}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => readHandler(message.id)}
+                    className={styles.displayButton}
+                  >
+                    表示
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </>

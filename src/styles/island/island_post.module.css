@@ -22,12 +22,13 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5vh;
 }
 
 .message {
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.12), 0 2px 3px 0 rgba(0, 0, 0, 0.22);
   border-radius: 7vh;
-  background-color: rgba(255, 246, 234, 0.8);
+  background-color: rgba(255, 247, 227, 0.8);
   width: 80%;
   margin-left: auto;
   margin-right: auto;
@@ -54,6 +55,11 @@
 
 .flex .username {
   font-weight: bold;
+  margin-right: 2vh;
+}
+
+.date {
+  margin-top: 3vh;
 }
 
 .h1 {
@@ -63,4 +69,58 @@
 
 .unread {
   color: rgb(0, 161, 209);
+}
+
+.upper {
+  display: flex;
+}
+
+.mss {
+  margin-top: 0;
+  width: 100%;
+}
+
+.displayButton {
+  color: white;
+  background-color: rgba(108, 151, 140, 1);
+  font-weight: 500;
+  width: 13vh;
+  margin: 1vh 0;
+}
+
+.btn1 {
+  height: 7vh;
+  width: 36vh;
+  border-radius: 3vh;
+  margin-left: 10vh;
+  font-weight: bold;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(222, 204, 97, 1);
+  box-shadow: 0.7vh 0.7vh rgba(189, 174, 83, 1);
+  transition: 0.3s ease-in-out;
+  background-color: white;
+}
+
+.btn1:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(161, 145, 86, 1);
+}
+
+.btn2 {
+  height: 7vh;
+  width: 36vh;
+  border-radius: 3vh;
+  font-weight: bold;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(217, 137, 162, 0.9);
+  box-shadow: 0.7vh 0.7vh rgba(227, 68, 117, 0.7);
+  transition: 0.3s ease-in-out;
+  background-color: white;
+}
+
+.btn2:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(118, 85, 112, 0.9);
 }

@@ -105,7 +105,7 @@ export default function EventAll() {
                     <div className={styles.eventInfo}>
                       <h2 className={styles.eventName}>{event.eventName}</h2>
 
-                      <h3>
+                      <h3 className={styles.date}>
                         開催期間 ：
                         {new Date(event.startDate).toLocaleDateString("ja-JP", {
                           year: "numeric",

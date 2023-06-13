@@ -99,9 +99,11 @@ export default function IslandPost() {
       <div className={styles.islandPostBack}>
         <h1 className={styles.h1}>POST</h1>
         <Link to={`/island/post/entryPermit/${paramsID}`}>
-          <button>住民許可待ち申請</button>
+          <button className={styles.btn2}>住民許可待ち申請</button>
         </Link>
-        <button onClick={openModal}>島に招待する</button>
+        <button onClick={openModal} className={styles.btn1}>
+          島に招待する
+        </button>
         {modal && <CreateSendingScout closeModal={closeModal} table="island" />}
         <div className={styles.postMessageBack}>
           <h2>受信メッセージ✉️</h2>
@@ -119,27 +121,37 @@ export default function IslandPost() {
                     alt="アイコン"
                   />
                   <div className={styles.right}>
-                    <h3
-                      className={classNames(styles.username, {
-                        [styles.unread]: !message.isRead,
-                      })}
-                    >
-                      {message.by.users.familyName}&nbsp;
-                      {message.by.users.firstName}
-                    </h3>
+                    <div className={styles.upper}>
+                      <h3
+                        className={classNames(styles.username, {
+                          [styles.unread]: !message.isRead,
+                        })}
+                      >
+                        {message.by.users.familyName}&nbsp;
+                        {message.by.users.firstName}
+                      </h3>
+                      <p className={styles.date}>
+                        {format(
+                          new Date(message.sendingDate),
+                          "yyyy年MM月dd日",
+                        )}
+                      </p>
+                    </div>
                     <p
-                      className={classNames({
+                      className={classNames(styles.mss, {
                         [styles.unread]: !message.isRead,
                       })}
                     >
-                      ＞ {message.message}
-                    </p>
-                    <p>
-                      {format(new Date(message.sendingDate), "yyyy年MM月dd日")}
+                      {message.message}
                     </p>
                   </div>
                 </div>
-                <button onClick={() => readHandler(message.id)}>表示</button>
+                <button
+                  onClick={() => readHandler(message.id)}
+                  className={styles.displayButton}
+                >
+                  表示
+                </button>
               </div>
             ))
           )}

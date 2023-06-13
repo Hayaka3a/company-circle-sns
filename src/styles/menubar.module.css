@@ -40,11 +40,7 @@
 }
 
 .link:hover {
-  box-shadow: inset -50px 0 175px -50px rgba(255, 245, 118, 0.8);
-}
-
-.link:active {
-  background: rgba(255, 170, 118, 0.5);
+  color: rgba(207, 159, 89, 0.8);
 }
 
 .link2 {
@@ -63,11 +59,7 @@
 }
 
 .link2:hover {
-  box-shadow: inset -50px 0 175px -50px rgba(255, 245, 118, 0.8);
-}
-
-.link2:active {
-  background: rgba(255, 170, 118, 0.5);
+  color: rgba(207, 159, 89, 0.8);
 }
 
 .title {
@@ -89,4 +81,5 @@
   border-radius: 50%; /*サムネイル円型*/
   margin-top: auto;
   background-color: white;
+  border: outset;
 }
