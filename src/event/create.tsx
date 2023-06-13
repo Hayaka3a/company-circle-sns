@@ -8,6 +8,7 @@ import Daytime from "../components/createEvent/daytime";
 import { supabase } from "../createClient";
 import SelectIsland from "../components/selectIsland";
 import MenubarIsland from "../components/menubarIsland";
+import GetCookieID from "../components/cookie/getCookieId";
 
 export default function EventCreate() {
   LogSt();
@@ -25,6 +26,7 @@ export default function EventCreate() {
   const params = useParams();
   const paramsID = parseInt(params.id);
   const islandID = params.id;
+  const ownerID = GetCookieID();
 
   // 画像ファイル選択したら、表示画像に反映
   const handleFileChange = async (
@@ -56,6 +58,7 @@ export default function EventCreate() {
       detail: detail,
       startDate: new Date(startDate).toISOString(),
       endDate: new Date(endDate).toISOString(),
+      ownerID: ownerID,
       status: false,
       createdBy: "システム",
       thumbnail: imageUrl,
