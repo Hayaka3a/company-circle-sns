@@ -37,27 +37,32 @@ export default function UserPost() {
             const postID = msg.postedBy;
             const { data: by, error: byError } = await supabase
               .from("posts")
-              .select("*")
-              .eq("id", postID);
+              .select("*, events(*), islands(*)")
+              .eq("id", postID)
+              .eq("status", false);
+            // console.log(by);
+
             if (byError) {
               console.error("送信者取得失敗");
             } else {
               if (by.length > 0) {
-                const post = by[0];
                 // 送信者がイベントのメッセージ一覧
-                if (post.islandID === null && post.userID === null) {
-                  //   setEventsMS(msgs);
-                  const eventMsg = msgs.filter(
-                    (post) => post.islandID === null && post.userID === null,
-                  );
-                  console.log(eventMsg);
+                if (by[0].islands === null) {
+                  const eventObject = {
+                    ...msg,
+                    by: by[0],
+                  };
+                  console.log(eventObject);
+                  return eventObject;
+
                   // 送信者が島のメッセージ一覧
-                } else if (post.eventID === null && post.userID === null) {
-                  //   setIslandsMs(msgs);
-                  const islandMsg = msgs.filter(
-                    (post) => post.eventID === null && post.userID === null,
-                  );
-                  console.log(islandMsg);
+                } else if (by[0].events === null) {
+                  const islandObject = {
+                    ...msg,
+                    by: by[0],
+                  };
+                  console.log(islandObject);
+                  return islandObject;
                 }
               }
             }
