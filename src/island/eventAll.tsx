@@ -92,7 +92,7 @@ export default function EventAll() {
             .filter((event) => new Date(event.endDate) > currentDateTime)
             .map((event) => (
               <Link to={`/event/${event.id}`} className={styles.link}>
-                <div key={event.id} className={styles.event1}>
+                <div key={event.id} className={styles.event2}>
                   <div className={styles.imgSide}>
                     <img
                       className={styles.icon}
