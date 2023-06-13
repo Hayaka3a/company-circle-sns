@@ -55,7 +55,7 @@
 .event2 {
   margin: 0 auto;
   display: flex;
-  background-color: rgba(255, 246, 234, 0.8);
+  background-color: rgba(255, 247, 227, 0.8);
   margin-bottom: 3%;
   height: 22vh;
   width: 80%;
@@ -124,8 +124,8 @@
   justify-content: center;
   height: 100%;
   margin-left: 3%;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .side {
@@ -137,8 +137,7 @@
   width: 17vh;
   height: 17vh;
   border-radius: 50%; /*サムネイル円型*/
-  margin-left: 3%;
-  margin-right: 10%;
+  margin-left: 4vh;
   background-color: #ffbe5d;
   border: 9px double #f7a54e;
 }
@@ -212,7 +211,7 @@
   margin-left: auto;
   text-align: center;
   border-radius: 1%;
-  width: 80%;
+  width: 75%;
   min-height: 35vh;
 
   border: dashed 0.5vh rgba(138, 121, 98, 1);

@@ -232,7 +232,7 @@ const Header = () => {
                 </a>
               </li>
               <li className={styles.menuGroupItem}>
-                <a className={styles.menuGroupItemLink} href="/user/post">
+                <a className={styles.menuGroupItemLink} href={`/user/post`}>
                   あなたのポスト
                 </a>
               </li>
