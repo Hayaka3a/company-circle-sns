@@ -1,17 +1,17 @@
 .content {
   padding-bottom: 150px;
   min-height: 70vh;
-  margin-left: 2vh;
 }
 
 .title {
   font-weight: bold;
-  font-size: 25px;
+  font-size: 5vh;
+  padding-left: 4vh;
 }
 
 .titleWrapper {
   padding: 1vh;
-  background-color: #fff;
+  background-color: rgba(132, 207, 196, 1);
 }
 
 .content p {
@@ -62,7 +62,7 @@
 
 .sent {
   max-width: 60%;
-  background-color: #85e14b;
+  background-color: rgba(207, 203, 112, 1);
   color: black;
   border-top-right-radius: 15px;
   flex-direction: row-reverse;
@@ -89,7 +89,7 @@
   border-top: 1px solid lightgray;
   margin-left: -5px;
   padding: 3vh;
-  background-color: #fafafa;
+  background-color: rgba(132, 207, 196, 1);
 }
 
 .msgs {

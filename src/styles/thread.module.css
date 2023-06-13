@@ -38,7 +38,7 @@
   margin-bottom: 3vh;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.12), 0 2px 3px 0 rgba(0, 0, 0, 0.22);
   border-radius: 1vh;
-  background-color: rgba(255, 246, 234, 0.8);
+  background-color: rgba(255, 247, 227, 0.8);
 }
 
 .title {
@@ -63,7 +63,8 @@
   height: 7vh;
   width: 31vh;
   border-radius: 3vh;
-  margin-top: 15px;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
   font-weight: bold;
   color: rgba(94, 70, 44, 1);
   border: 3px solid rgba(217, 137, 162, 0.9);
@@ -76,4 +77,10 @@
   box-shadow: none;
   transform: translate(5px, 5px);
   color: rgba(174, 52, 90, 1);
+}
+
+.h1 {
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 1vh;
 }

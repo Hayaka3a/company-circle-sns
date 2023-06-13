@@ -249,7 +249,7 @@ export default function IslandCreate() {
                 </tr>
                 <tr className={styles.tr}>
                   <th className={styles.th}>サムネイル</th>
-                  <td className={styles.imgSide}>
+                  <td className={`${styles.imgSide}`}>
                     <img
                       className={styles.icon}
                       src={imageUrl || "/island/island_icon.png"}

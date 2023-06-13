@@ -145,6 +145,11 @@ header {
   margin-bottom: 1rem;
   color: black;
 }
+
+.menuGroupItemLink:hover {
+  color: rgba(152, 163, 138, 1);
+}
+
 .menuGroupItemLink {
   color: black;
   padding: 0.5em 0.5em;
@@ -173,6 +178,7 @@ header {
   margin-right: 3vh;
 }
 .menuTrigger {
+  margin-right: 6vh;
   position: relative;
   width: 6vh;
   height: 5vh;
