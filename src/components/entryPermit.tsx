@@ -39,7 +39,6 @@ export default function EntryPermit({ table }: { table: string }) {
     if (!data || data.length === 0) {
       console.log("ポストまたはメッセージがみつかりませんでした");
     } else {
-      console.log(data);
       //applicationsが取得できたものだけで新たな配列を作成
       const selectApp = data[0].messages.filter(
         (message) => message.applications.length > 0 && !message.isAnswered,
