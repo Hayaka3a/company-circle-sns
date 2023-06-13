@@ -77,7 +77,6 @@ export default function MembersList({
             return item;
           });
           setEntryUsers(updatedData);
-          console.log(updatedData);
           getLoginUser();
         }
       }
