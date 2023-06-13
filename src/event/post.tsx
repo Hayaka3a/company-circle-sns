@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import LogSt from "../components/cookie/logSt";
 import MenubarEvent from "../components/menubarEvent";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import styles from "../styles/island/island_post.module.css";
 import { format } from "date-fns";
 import classNames from "classnames";
+import CreateSendingScout from "../components/modalWindows/createSendingScout";
 
 export default function EventPost() {
   LogSt();
   const params = useParams();
   const paramsID = parseInt(params.id);
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
+
+  const [modal, setModal] = useState(false);
+  const openModal = () => setModal(true);
+  const closeModal = () => setModal(false);
 
   //メッセージ受信
   const fetchMsg = async () => {
@@ -27,12 +33,17 @@ export default function EventPost() {
     } else {
       const postID = data[0].id;
       // イベントポストに届いているメッセージ検索
-      const { data: msgs, error: msgError } = await supabase
+      const { data: msgsUnfil, error: msgError } = await supabase
         .from("messages")
-        .select("*")
+        .select("*, applications(*)")
         .eq("postID", postID)
         .eq("status", false)
         .eq("isRead", false);
+
+      // applicationsにデータがある場合は排除（住民許可申請は表示させない）
+      let msgs = msgsUnfil.filter(function (ms) {
+        return ms.applications.length === 0;
+      });
 
       if (msgError) {
         console.error("msg情報取得失敗");
@@ -69,12 +80,29 @@ export default function EventPost() {
   useEffect(() => {
     fetchMsg();
   }, []);
+
+  // 既読に変更し、メッセージ全文確認ページへ遷移
+  const readHandler = async (messageId) => {
+    const { error } = await supabase
+      .from("messages")
+      .update({ isRead: true })
+      .eq("id", messageId);
+    if (error) {
+      console.error("Failed to update 'isRead' field:", error);
+    } else {
+      navigate(`/island/message/islandPostMessage/${messageId}`);
+    }
+  };
   return (
     <>
       <MenubarEvent />
       <div className={styles.islandPostBack}>
         <h1>POST</h1>
-
+        <Link to={`/island/post/entryPermit/${paramsID}`}>
+          <button>イベント参加許可待ち申請</button>
+        </Link>
+        <button onClick={openModal}>イベントに招待する</button>
+        {modal && <CreateSendingScout closeModal={closeModal} table="island" />}
         <div className={styles.postMessageBack}>
           <h2>受信メッセージ✉️</h2>
           {messages.length === 0 ? (
@@ -111,9 +139,7 @@ export default function EventPost() {
                     </p>
                   </div>
                 </div>
-                <Link to={`/island/message/user_message/${message.id}`}>
-                  <button>表示</button>
-                </Link>
+                <button onClick={() => readHandler(message.id)}>表示</button>
               </div>
             ))
           )}
