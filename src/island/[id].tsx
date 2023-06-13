@@ -16,6 +16,7 @@ export default function IslandDetail() {
   const navigate = useNavigate();
   const islandId = useParams();
   const userId = GetCookieID();
+  const [button, setButton] = useState(true);
   const [islandDetail, setIslandDetail] = useState(null); // 取得した島の詳細情報を保持する状態変数
   const [islandImage, setIslandImage] = useState(
     "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
@@ -32,6 +33,23 @@ export default function IslandDetail() {
       .select("*")
       .eq("id", islandId.id) // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
       .eq("status", false);
+
+    const { data: user, error: userError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("id", data[0].ownerID);
+
+    const owner = user[0].id.toString();
+
+    // ownerじゃない人には「編集・削除」ボタン機能を表示させない
+    if (owner !== userId) {
+      console.log("ownerじゃありません");
+      setButton(false);
+    }
+    if (userError) {
+      console.error("owner情報の取得に失敗しました:", error);
+    }
+
     if (error) {
       console.error("島の詳細情報の取得に失敗しました:", error);
       return;
@@ -156,11 +174,13 @@ export default function IslandDetail() {
               <CreateSendingMessage closeModal={closeModal} table="island" />
             )}
           </div>
-          <div className={styles.editbox}>
-            <button id={styles.edit_btn} onClick={Handler}>
-              編集・削除
-            </button>
-          </div>
+          {button && (
+            <div className={styles.editbox}>
+              <button id={styles.edit_btn} onClick={Handler}>
+                編集・削除
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
