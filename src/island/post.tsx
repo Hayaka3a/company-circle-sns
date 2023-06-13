@@ -33,11 +33,16 @@ export default function IslandPost() {
     } else {
       const postID = data[0].id;
       // 島ポストに届いているメッセージ検索
-      const { data: msgs, error: msgError } = await supabase
+      const { data: msgsUnfil, error: msgError } = await supabase
         .from("messages")
-        .select("*")
+        .select("*, applications(*)")
         .eq("postID", postID)
         .eq("status", false);
+
+      // applicationsにデータがある場合は排除（住民許可申請は表示させない）
+      let msgs = msgsUnfil.filter(function (ms) {
+        return ms.applications.length === 0;
+      });
 
       if (msgError) {
         console.error("msg情報取得失敗");
