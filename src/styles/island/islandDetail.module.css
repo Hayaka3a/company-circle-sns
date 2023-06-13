@@ -112,3 +112,13 @@
   width: 90%;
   margin: auto;
 }
+
+/* すでに住民許可申請を送っている場合 */
+.span {
+  color: red;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
