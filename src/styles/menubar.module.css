@@ -1,8 +1,8 @@
 .menubar {
   background-color: #c3d6af;
   width: 17%;
-  height: 131vh;
-  min-height: 100vh;
+  height: auto;
+  min-height: 81.5vh;
   position: relative;
   padding-top: 2%;
   text-align: center;

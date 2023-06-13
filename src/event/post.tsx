@@ -129,6 +129,9 @@ export default function EventPost() {
                             [styles.unread]: !message.isRead,
                           })}
                         >
+                          {message.isRead === false && (
+                            <div className={styles.unreadCircle}>未読</div>
+                          )}
                           {message.by.users.familyName}&nbsp;
                           {message.by.users.firstName}
                         </h3>

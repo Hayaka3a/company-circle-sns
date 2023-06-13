@@ -6,7 +6,8 @@
 .islandPostBack {
   background-color: rgba(255, 254, 245, 1);
   margin-top: 2%;
-  padding-top: 1%;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   height: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -44,7 +45,6 @@
   width: 15vh;
   height: 15vh;
   margin: auto 4vh;
-  overflow: hidden;
   position: relative;
   border-radius: 50%;
 }
@@ -75,7 +75,7 @@
 .unreadCircle {
   display: inline-block;
   padding: 0.2em 0.5em;
-  background-color: #6cdff6;
+  background-color: #fd9dc3;
   border-radius: 1em;
   margin-right: 0.5em;
 }
@@ -90,7 +90,8 @@
 
 .mss {
   margin-top: 0;
-  width: 100%;
+  width: 95%;
+  text-align: left;
 }
 
 .displayButton {
