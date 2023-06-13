@@ -35,7 +35,11 @@ export default function DeleteComfirmation({
           window.location.reload();
         }
       };
-      return <button onClick={handler}>はい</button>;
+      return (
+        <button onClick={handler} className={styles.btn}>
+          はい
+        </button>
+      );
       // return <LeaveButton table={table} params={params} user={user} />;
     } else if (category === "追放") {
       const handler = async () => {
@@ -52,7 +56,11 @@ export default function DeleteComfirmation({
           window.location.reload();
         }
       };
-      return <button onClick={handler}>はい</button>;
+      return (
+        <button onClick={handler} className={styles.btn}>
+          はい
+        </button>
+      );
     } else if (category === "譲渡") {
       //オーナー権限を譲渡する
       const handler = async () => {
@@ -60,6 +68,7 @@ export default function DeleteComfirmation({
           .from(`${table}s`)
           .update({ ownerID: user })
           .eq("id", params);
+
         if (error) {
           console.error(error.message);
         } else {
@@ -68,7 +77,11 @@ export default function DeleteComfirmation({
         }
       };
 
-      return <button onClick={handler}>はい</button>;
+      return (
+        <button onClick={handler} className={styles.btn}>
+          はい
+        </button>
+      );
     }
   };
 
@@ -85,11 +98,10 @@ export default function DeleteComfirmation({
             />
             <div className={styles.main}>
               <div className={styles.title}>
-                <h3 className={styles.h3}>{islandName}島</h3>
                 <p className={styles.messageName}>{text}</p>
               </div>
             </div>
-            <div className={styles.btn}>{addHandler(category)}</div>
+            <div>{addHandler(category)}</div>
           </div>
         </div>
       </div>

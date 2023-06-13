@@ -98,7 +98,7 @@ export default function EventPost() {
         <MenubarEvent />
         <div className={styles.islandPostBack}>
           <h1>POST</h1>
-          <Link to={`/island/post/entryPermit/${paramsID}`}>
+          <Link to={`/event/post/entryPermit/${paramsID}`}>
             <button className={styles.btn2}>イベント参加許可待ち申請</button>
           </Link>
           <button onClick={openModal} className={styles.btn1}>
