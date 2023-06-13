@@ -17,18 +17,20 @@
 
 .modal {
   z-index: 2;
-  width: 55%;
+  width: 99vh;
   padding: 1em;
   background: #fff;
   text-align: center;
-  height: 78%;
+  height: 70vh;
   position: relative;
+  margin-top: 12vh;
 }
 
 .close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 2vh;
+  right: 2vh;
+  height: 6vh;
 }
 
 .allContents {
@@ -46,10 +48,6 @@
   text-align: left;
 }
 
-.input label {
-  font-size: initial;
-}
-
 .main {
   width: auto;
   display: grid;
@@ -60,7 +58,8 @@
   align-items: center; /* 垂直方向 */
   justify-content: center; /* 水平方向 */
   flex-direction: column; /* 縦方向 */
-  margin-bottom: 5px;
+  margin-bottom: 3vh;
+  margin-top: 0;
 }
 
 .h3 {
@@ -83,7 +82,5 @@
   border-radius: 3vh;
   transition: 0.3s ease;
   color: #868283;
-}
-.box {
-  margin-top: 1rem;
+  padding: 1.5vh;
 }
