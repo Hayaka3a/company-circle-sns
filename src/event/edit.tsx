@@ -1,53 +1,53 @@
 import React, { useEffect, useState } from "react";
 import MenubarEvent from "../components/menubarEvent";
+import styles from "../styles/island/islandEdit.module.css"
 import LogSt from "../components/cookie/logSt";
-import styles from "../styles/eventDetail.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import CreateDeletePage from "../components/modalWindows/deleteEvent";
 import CreateDeleteCheck from "../components/modalWindows/deleteEventCheck";
 import CreateAfterDelete from "../components/modalWindows/deleteEventAfter";
+import IslandSelected from "../components/islandSelected";
 
 
 export default function EventEdit() {
   LogSt();
-
   const id= useParams();
   const fetchEventID = id.id;
 
   useEffect(() => {
     fetchEvent();
     entryIsland();
-  }, []);
+    // addIsland();
+  },[]);
 
   const navigate = useNavigate();
   // 削除のモーダルウィンドウの開閉
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [isDeleteCheckOpen, setIsDeleteCheckOpen] = useState(false);
-  const [isAfterDeleteOpen, setIsAfterDeleteOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [ isDeleteCheckOpen, setIsDeleteCheckOpen ] = useState(false);
+  const [ isAfterDeleteOpen, setIsAfterDeleteOpen ] = useState(false);
+  const [ inputValue, setInputValue ] = useState("");
 
-  // 参加サークル選択ウィンドウの開閉
-  const [selectedIsland, setSelectedIsland] = useState(false);
+
+  // 参加サークル追加
+  const [islandTags, setIslandTags] = useState<
+    { id: number; islandName: string }[]
+  >([]);
+
+  // console.log(islandTags)
+
 
   const [eventID, setEventID] = useState<number>(); // eventIDステートに追加
   const [eventName, setEventName] = useState("");
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [endDate, setEndDate] = useState(""); 
   const [eventDetail, setEventDetail] = useState(""); // 取得したイベントの詳細情報を保持する状態変数
   const [eventJoin, setEventJoin] = useState("");
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
   const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
+  const [islandJoinID, setIslandJoinID] = useState("");
 
-  // 参加サークル選択モーダルウィンドウの表示
-  const selectionIslandOpen = () => {
-    setSelectedIsland(true);
-  };
 
-  // 参加サークル選択モーダルウィンドウの非表示
-  const selectionIslandClose = () => {
-    setSelectedIsland(false);
-  };
 
   // イベントを削除してもよろしいですか？モーダルウィンドウを表示
   const openDeleteModal = () => {
@@ -79,11 +79,13 @@ export default function EventEdit() {
   const done = async () => {
     setIsAfterDeleteOpen(false);
 
-    // posts, eventsテーブルのstatusをtrueに変更
-    const { data, error } = await supabase
-      .from("events")
-      .select("eventName")
-      .eq("id", eventID);
+
+
+  // posts, eventsテーブルのstatusをtrueに変更
+  const { data, error } = await supabase
+    .from("events")
+    .select("eventName")
+    .eq("id", eventID);
 
     if (error) {
       console.log("Error fetching events data", error);
@@ -93,9 +95,9 @@ export default function EventEdit() {
 
       if (eventName === inputValue) {
         const { error: eventsError } = await supabase
-          .from("events")
-          .update({ status: "true" })
-          .eq("id", eventID);
+         .from("events")
+         .update({ status: "true" })
+         .eq("id", eventID); 
 
         const { error: postsError } = await supabase
           .from("posts")
@@ -103,29 +105,35 @@ export default function EventEdit() {
           .eq("id", eventID);
 
         if (eventsError || postsError) {
-          console.error("Error changing status :", eventsError || postsError);
+          console.error(
+            "Error changing status :",
+            eventsError || postsError,
+          );
           // Cookie情報の削除
           if (document.cookie !== "") {
-            let expirationDate = new Date("1999-12-31T23:59:59Z");
+            let expirationDate = new Date ("1999-12-31T23:59:59Z");
             document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
             document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
           }
         }
 
         console.log("Change status of events successfully.");
-        navigate("/");
+        // navigate("/");
         window.location.reload();
       }
     }
   };
 
+  
   // データベースからevents情報を取得
   const fetchEvent = async () => {
+
     const { data } = await supabase
       .from("events")
       .select("*")
       .eq("id", fetchEventID);
 
+    
     if (data) {
       const event = data[0];
       const fetcheventID = event.id;
@@ -134,51 +142,58 @@ export default function EventEdit() {
       setEventName(event.eventName); // イベント名をeventNameステートにセット
       setStartDate(event.startDate); // イベント開始日時（startDate）をstartDateステートにセット
       setEndDate(event.endDate); // イベント終了日時（endDate）をendDateステートにセット
-      setEventDetail(event.detail); // イベント詳細をeventDetailステートにセット
+      setEventDetail(event.detail); // イベント詳細をeventDetailステートにセット      
     }
   };
+
 
   const entryIsland = async () => {
     const { data, error } = await supabase
       .from("userEntryStatus")
       .select("islandID")
       .eq("eventID", fetchEventID);
-
+  
     if (error) {
       console.log("参加サークル取得に失敗しました", error);
       return;
     }
-
+  
     if (!data || data.length === 0) {
       console.log("該当する参加サークルが見つかりませんでした");
       return;
     }
-
+  
     const joinIslandIDs = data.map((entry) => entry.islandID); // フィルタリングされたデータの島IDを抽出
+    setIslandJoinID(joinIslandIDs[0]);
 
+    // console.log("サークルid", joinIslandIDs);
+  
     // islandsテーブルからislandNameを取得
     const { data: islandData, error: islandError } = await supabase
       .from("islands")
-      .select("islandName")
+      .select("islandName, id")
       .in("id", joinIslandIDs);
-
+  
     if (islandError) {
       console.log("島名取得に失敗しました", islandError);
       return;
     }
-
+  
     if (!islandData || islandData.length === 0) {
       console.log("該当する島が見つかりませんでした");
       return;
     }
-
+  
     const islandNames = islandData.map((island) => island.islandName);
-    const joinedNames = islandNames.join(", "); // 配列の要素を結合した文字列を作成
+    const joinedNames = islandNames.join(', '); // 配列の要素を結合した文字列を作成
 
-    console.log("参加サークルの島名:", joinedNames);
+    // console.log("参加サークルの島名:", joinedNames);
 
-    setEventJoin(joinedNames); // 参加サークルをeventJoinステートにセット
+    setEventJoin(joinedNames);  // 参加サークルをeventJoinステートにセット
+
   };
+
+
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
@@ -186,7 +201,7 @@ export default function EventEdit() {
     if (circleElement) {
       circleElement.style.backgroundImage = `url('${imageUrl}')`;
     }
-  }, [imageUrl]);
+  },[imageUrl]);
 
   // 画像ファイル選択したら、表示画像に反映
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -196,6 +211,7 @@ export default function EventEdit() {
       setImageUrl(url);
     }
   };
+
 
   // 編集ボタンを押下、イベント名を変更
   const handleEventNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,6 +238,8 @@ export default function EventEdit() {
     setEventJoin(e.target.value);
   };
 
+
+
   // 保存処理の実装
   const handleSaveClick = () => {
     setEditMode((prev) => !prev);
@@ -230,30 +248,23 @@ export default function EventEdit() {
     }
     handleSave();
     createHandler();
+    addIsland();
   };
 
   const handleSave = async () => {
-    await supabase
-      .from("events")
-      .update([
-        {
-          eventName: eventName,
-          startDate: startDate,
-          endDate: endDate,
-          detail: eventDetail,
-        },
-      ])
-      .eq("id", fetchEventID);
+    await supabase.from("events").update([
+      {
+        eventName: eventName,
+        startDate: startDate,
+        endDate: endDate,
+        detail: eventDetail,
+      },
+    ]).eq("id", fetchEventID);
     console.log("Data updated successfuly.");
   };
 
   const createHandler = async () => {
-    if (
-      eventName.trim() === "" ||
-      startDate.trim() === "" ||
-      endDate.trim() === "" ||
-      eventDetail.trim() === ""
-    ) {
+    if (eventName.trim() === "" || startDate.trim() === "" || endDate.trim() === "" || eventDetail.trim() === "") {
       alert("必須項目です。");
       return;
     }
@@ -263,133 +274,131 @@ export default function EventEdit() {
       startDate: startDate,
       endDate: endDate,
       detail: eventDetail,
-      status: "false",
+      status: "false"
     };
-  };
+  }
+
+    // 参加サークルをuserEntryStatusテーブルに追加
+    const addIsland = async () => {
+    if (islandTags) {
+      await Promise.all(
+        islandTags.map(async (island) => {
+            const islandEvent = {
+            islandID: island.id,
+            eventID: fetchEventID,
+            status: "false",
+          };
+  
+  
+          const { error: islandEventError } = await supabase
+            .from("userEntryStatus")
+            .insert(islandEvent);
+    
+          if (islandEventError) {
+            console.error("共同開催島情報追加失敗");
+          }
+          navigate(`/`);
+          window.location.reload();
+        })
+      );
+    }
+  }
+  
+
 
   return (
-    <div className={styles.all}>
+    <div className={styles.flex}>
       <MenubarEvent />
       <div className={styles.back}>
         <div className={styles.event_detail}>
-          <h1 className={styles.name}>イベント情報編集・削除</h1>
+          <h1>イベント編集・削除</h1>
 
-          <table className={styles.table}>
-            <tbody className={styles.tbody}>
-              <tr className={styles.tr}>
-                <th className={styles.th}>
-                  <label htmlFor="eventName">イベント名</label>
-                </th>
-                <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="eventName"
-                    value={eventName}
-                    onChange={handleEventNameChange}
-                    readOnly={!editMode}
-                  />
-                </td>
-              </tr>
-              <tr className={styles.tr}>
-                <th className={styles.th}>
-                  <label htmlFor="thumbnail">サムネイル</label>
-                </th>
-                <td className={styles.td}>
-                  <input
-                    type="file"
-                    id="thumbnail"
-                    className={styles.eventIcon}
-                    onChange={handleFileChange}
-                    disabled={!editMode}
-                  />
-                </td>
-              </tr>
-              <tr className={styles.tr}>
-                <th className={styles.th}>
-                  <label className={styles.detail}>開催日時</label>
-                </th>
-                <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="startDate"
-                    className={styles.center}
-                    value={startDate}
-                    onChange={handleStartDateChange}
-                    readOnly={!editMode}
-                  />
-                  ～
-                  <input
-                    type="text"
-                    id="endDate"
-                    className={styles.center}
-                    value={endDate}
-                    onChange={handleEndDateChange}
-                    readOnly={!editMode}
-                  />
-                </td>
-              </tr>
-              <tr className={styles.tr}>
-                <th className={styles.th}>
-                  <label className={styles.detail}>イベント詳細</label>
-                </th>
-                <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="eventDetail"
-                    className={styles.center}
-                    value={eventDetail}
-                    onChange={handleEventDetailChange}
-                    readOnly={!editMode}
-                  />
-                </td>
-              </tr>
-              <tr className={styles.tr}>
-                <th className={styles.th}>
-                  <label>参加島（サークル）</label>
-                </th>
-                <td className={styles.td}>
-                  {eventJoin}
-                  {editMode && (
-                    <div>
-                      <button onClick={selectionIslandOpen}>選択</button>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <button
-            id={styles.edit_btn}
-            onClick={handleSaveClick}
-            className={styles.edit_btn}
-          >
+          <div>
+          <label htmlFor="eventName">イベント名</label>
+          <input 
+            type="text" 
+            id="eventName"
+            value={eventName}
+            onChange={handleEventNameChange}
+            readOnly={!editMode} 
+          />
+          <br />
+          <label htmlFor="thumbnail">サムネイル</label>
+          <input 
+            type="file" 
+            id="thumbnail"
+            className={styles.eventIcon}
+            onChange={handleFileChange}
+            disabled={!editMode} 
+          />
+          </div>
+
+
+          <div>
+            <label className={styles.detail}>開催日時</label>
+            <input 
+              type="text" 
+              id="startDate" 
+              className={styles.center}
+              value={startDate}
+              onChange={handleStartDateChange}
+              readOnly={!editMode}
+            />
+            <input 
+              type="text" 
+              id="endDate"
+              className={styles.center}
+              value={endDate}
+              onChange={handleEndDateChange}
+              readOnly={!editMode} 
+            />
+          </div>
+
+
+          <div>
+            <label className={styles.detail}>イベント詳細</label>
+              <input 
+                type="text" 
+                id="eventDetail"
+                className={styles.center}
+                value={eventDetail}
+                onChange={handleEventDetailChange}
+                readOnly={!editMode} 
+              />
+          </div>
+
+
+          <div>
+          <label>参加島（サークル）</label>
+          {eventJoin}
+          {editMode && (
+            <IslandSelected
+              islandIDs={[islandJoinID]} // islandIDsを配列として初期化する
+              setIslandTags={setIslandTags}
+            />
+          )}
+          </div>
+
+
+          <button id={styles.edit_btn} onClick={handleSaveClick}>
             {editMode ? "保存" : "編集"}
           </button>
 
-          <div className={styles.delete}>
-            <button onClick={openDeleteModal} className={styles.delete_btn}>
-              削除
-            </button>
-          </div>
-          {isDeleteOpen && (
-            <CreateDeletePage
-              closeDeleteModal={closeDeleteModal}
-              nextOpen={nextOpen}
-            />
-          )}
+          <button onClick={openDeleteModal}>削除</button>
+          {isDeleteOpen && <CreateDeletePage closeDeleteModal={closeDeleteModal} nextOpen={nextOpen} />}
           {isDeleteCheckOpen && (
             <CreateDeleteCheck
-              close2Modal={close2Modal}
-              nextOpen2={nextOpen2}
-              inputValue={inputValue}
-              setInputValue={setInputValue}
+            close2Modal={close2Modal}
+            nextOpen2={nextOpen2}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
             />
           )}
-
           {isAfterDeleteOpen && <CreateAfterDelete done={done}/>}
-
         </div>
       </div>
     </div>
   );
 }
+
+
