@@ -108,7 +108,7 @@ export default function UserPost() {
               <p>受信メッセージはありません</p>
             ) : (
               messages.map((message) => (
-                <div className={styles.message}>
+                <div className={styles.message} key={message.id}>
                   <div className={styles.flex}>
                     <img
                       className={styles.icon}
@@ -145,7 +145,7 @@ export default function UserPost() {
                           [styles.unread]: !message.isRead,
                         })}
                       >
-                        {message.message}
+                        {message.message.substring(0, 80)}...
                       </p>
                     </div>
                   </div>
