@@ -3,8 +3,6 @@ import { supabase } from "../createClient";
 import styles from "../styles/entryPermit.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Message } from "../types/entryPermit";
-import SendMessages from "./SendMessages";
-import { arrayBuffer } from "stream/consumers";
 
 export default function EntryPermit({ table }: { table: string }) {
   const [message, setMessage] = useState<Message>();
@@ -37,7 +35,11 @@ export default function EntryPermit({ table }: { table: string }) {
       .eq("status", false);
     if (error) {
       console.log(error, "エラー");
+    }
+    if (!data || data.length === 0) {
+      console.log("ポストまたはメッセージがみつかりませんでした");
     } else {
+      console.log(data);
       //applicationsが取得できたものだけで新たな配列を作成
       const selectApp = data[0].messages.filter(
         (message) => message.applications.length > 0 && !message.isAnswered,

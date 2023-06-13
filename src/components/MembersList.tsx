@@ -31,10 +31,14 @@ export default function MembersList({
   const tmpLoginID = GetCookieID();
   const loginID = Number(tmpLoginID);
 
+  console.log(displayData);
+
   // DBからデータを取得
   useEffect(() => {
-    fetchData();
-  }, [entryUsers]);
+    if (!loginUser) {
+      fetchData();
+    }
+  }, [entryUsers, newEntryUsers]);
 
   async function fetchData() {
     //イベントの場合
@@ -69,6 +73,7 @@ export default function MembersList({
           //各島民と難民を一つの配列にしまう
           const conbined = tmpArry.concat(userData);
           setEntryUsers(conbined);
+          getLoginUser();
         }
       }
     } else {
@@ -81,11 +86,18 @@ export default function MembersList({
         .eq(`status`, false);
       if (entryError || !entryData) {
         console.log(entryError, "entryError");
+      } else {
+        const userData = entryData.filter(
+          (user) => user.userID,
+        ) as Entryusers[];
+        setEntryUsers(userData);
+        getLoginUser();
       }
-      const userData = entryData.filter((user) => user.userID) as Entryusers[];
-      setEntryUsers(userData);
     }
+  }
 
+  //ログインユーザーのデータを取得
+  const getLoginUser = async () => {
     //ログインしているユーザーのデータを取得
     const { data: login, error: loginError } = await supabase
       .from("users")
@@ -105,7 +117,7 @@ export default function MembersList({
       );
       setNewEntryUsers(filteredUsers.length > 0 ? filteredUsers : []);
     }
-  }
+  };
 
   // 自分以外のユーザーの一覧表示
   const anotherUser = (user: Entryusers) => {
