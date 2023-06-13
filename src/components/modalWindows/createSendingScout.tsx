@@ -104,7 +104,7 @@ export default function CreateSendingScout({
       scout: true,
       isRead: false,
       isAnswered: false,
-      postedBy: post,
+      postedBy: postBy,
       status: false,
     });
     if (error) {

@@ -36,14 +36,14 @@
   text-align: center;
   cursor: pointer;
   margin-bottom: 3vh;
-  border: dashed 0.5vh rgba(194, 209, 37, 1);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.12), 0 2px 3px 0 rgba(0, 0, 0, 0.22);
   border-radius: 1vh;
-  background: rgb(250 255 198);
+  background-color: rgba(255, 246, 234, 0.8);
 }
 
 .title {
   margin-top: 1vh;
-  margin-right: 5%;
+  margin-left: 4vh;
   align-items: center; /* 垂直方向の中央揃え */
   white-space: nowrap;
   text-overflow: ellipsis;

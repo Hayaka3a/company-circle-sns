@@ -163,8 +163,10 @@ export default function CreateResidentApplication({
                   ></textarea>
                 </div>
               </div>
-              <div className={styles.btn}>
-                <button onClick={saveMessage}>送信する</button>
+              <div>
+                <button onClick={saveMessage} className={styles.btn}>
+                  送信する
+                </button>
               </div>
             </div>
           </div>
