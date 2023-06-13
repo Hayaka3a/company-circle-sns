@@ -92,6 +92,17 @@
   background-color: rgba(132, 207, 196, 1);
 }
 
+.editInput {
+  background-color: rgba(132, 207, 196, 1);
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #b4b4b4;
+  font-weight: bold;
+  font-size: 5vh;
+  padding-left: 4vh;
+  color: #858585;
+}
+
 .msgs {
   display: flex;
   flex-direction: column;
@@ -103,6 +114,37 @@
   height: 4vh;
   margin-left: 5px;
   margin-bottom: -3px;
+  border: 7px solid #60d4d6;
+}
+
+.editButton {
+  background-color: rgb(180, 206, 50);
+  border-radius: 45%;
+  margin-left: 1%;
+  color: #ffffff;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  width: 100px;
+}
+
+.editButtonA {
+  background-color: rgb(180, 206, 50);
+  border-radius: 45%;
+  margin-left: 1%;
+  color: white;
+  width: 100px;
+}
+
+.editButtonB {
+  background-color: rgb(87, 206, 54);
+  border-radius: 50%;
+  margin-left: 1%;
+  color: rgb(255, 255, 255);
+  width: 55px;
+}
+
+.flex {
+  display: flex;
 }
 
 /* 送信ボタン */
