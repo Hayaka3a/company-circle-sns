@@ -150,7 +150,9 @@ export default function CreateSendingScout({
               </div>
             </div>
             <div className={styles.btn}>
-              <button onClick={addHandler}>送信</button>
+              <button onClick={addHandler} disabled={!islandMembers}>
+                送信
+              </button>
             </div>
           </div>
         </div>

@@ -67,12 +67,12 @@ export default function CreateSendingMessage({
   const sendMessage = async () => {
     const { data, error } = await supabase.from("messages").insert([
       {
-        postID: postedID,
+        postID: posts,
         message: message,
         scout: false,
         isRead: false,
         isAnswered: false,
-        postedBy: posts,
+        postedBy: postedID,
         status: false,
       },
     ]);
