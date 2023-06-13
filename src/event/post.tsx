@@ -115,7 +115,6 @@ export default function EventPost() {
               messages.map((message) => (
                 <div className={styles.message} key={message.id}>
                   <div className={styles.flex}>
-                    <div className={styles.unreadCircle}></div>
                     <img
                       src={
                         message.by.users.icon ||
