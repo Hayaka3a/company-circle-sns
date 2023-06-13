@@ -31,8 +31,6 @@ export default function MembersList({
   const tmpLoginID = GetCookieID();
   const loginID = Number(tmpLoginID);
 
-  console.log(displayData);
-
   // DBからデータを取得
   useEffect(() => {
     if (!loginUser) {
@@ -72,7 +70,14 @@ export default function MembersList({
           ) as Entryusers[];
           //各島民と難民を一つの配列にしまう
           const conbined = tmpArry.concat(userData);
-          setEntryUsers(conbined);
+          const updatedData = conbined.map((item) => {
+            if (item.userID === displayData.ownerID) {
+              item.users.firstName += "(オーナー)";
+            }
+            return item;
+          });
+          setEntryUsers(updatedData);
+          console.log(updatedData);
           getLoginUser();
         }
       }
@@ -90,7 +95,15 @@ export default function MembersList({
         const userData = entryData.filter(
           (user) => user.userID,
         ) as Entryusers[];
-        setEntryUsers(userData);
+
+        const updatedData = userData.map((item) => {
+          if (item.userID === displayData.ownerID) {
+            item.users.firstName += "(オーナー)";
+          }
+          return item;
+        });
+
+        setEntryUsers(updatedData);
         getLoginUser();
       }
     }
@@ -149,7 +162,7 @@ export default function MembersList({
               />
               <div className={styles.name}>
                 {loginUser.familyName}
-                {loginUser.firstName}&nbsp;({loginUser.department}) (オーナー)
+                {loginUser.firstName}&nbsp;({loginUser.department})(オーナー)
               </div>
             </td>
           </tr>
