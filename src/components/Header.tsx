@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
-
 import FetchJoindIslandEvent from "./hooks/FetchJoindIslandEvent";
 import GetCookieID from "./cookie/getCookieId";
 import { supabase } from "../createClient";
@@ -79,7 +78,6 @@ const Header = () => {
           name="select"
           id="all"
           value="all"
-          checked
           onChange={onRadioBtnChanged}
         />
         <label htmlFor="all">すべて検索</label>

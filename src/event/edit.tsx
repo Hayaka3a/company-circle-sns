@@ -8,11 +8,10 @@ import CreateDeletePage from "../components/modalWindows/deleteEvent";
 import CreateDeleteCheck from "../components/modalWindows/deleteEventCheck";
 import CreateAfterDelete from "../components/modalWindows/deleteEventAfter";
 
-
 export default function EventEdit() {
   LogSt();
 
-  const id= useParams();
+  const id = useParams();
   const fetchEventID = id.id;
 
   useEffect(() => {
@@ -273,7 +272,6 @@ export default function EventEdit() {
       <div className={styles.back}>
         <div className={styles.event_detail}>
           <h1 className={styles.name}>イベント情報編集・削除</h1>
-
           <table className={styles.table}>
             <tbody className={styles.tbody}>
               <tr className={styles.tr}>
@@ -386,8 +384,7 @@ export default function EventEdit() {
             />
           )}
 
-          {isAfterDeleteOpen && <CreateAfterDelete done={done}/>}
-
+          {isAfterDeleteOpen && <CreateAfterDelete done={done} />}
         </div>
       </div>
     </div>
