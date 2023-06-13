@@ -8,13 +8,16 @@ import { supabase } from "../createClient";
 import LogSt from "../components/cookie/logSt";
 import { Event } from "../types/members";
 import EventSendingMessage from "../components/modalWindows/eventSendingMessage";
+import GetCookieID from "../components/cookie/getCookieId";
 
 export default function EventDetail() {
   LogSt();
   const [isOpen, setIsOpen] = useState(false);
+  const [alreadyError, setAlreadyError] = useState("");
   const [isResidentOpen, setIsResidentOpen] = useState(false);
   const navigate = useNavigate();
   const eventId = useParams();
+  const userId = GetCookieID();
   const [eventDetail, setEventDetail] = useState<Event>(null); // 取得した島の詳細情報を保持する状態変数
   const [eventImage, setEventImage] = useState(
     "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
@@ -25,6 +28,7 @@ export default function EventDetail() {
   useEffect(() => {
     fetchEventDetail();
     fetchIsland();
+    fetchEventPost();
   }, []);
 
   const fetchEventDetail = async () => {
@@ -66,6 +70,47 @@ export default function EventDetail() {
     } else {
       const island = data.filter((data) => data.islandID);
       setIslandArray(island);
+    }
+  };
+
+  // すでに住民申請を送っているか確認確認
+  const fetchEventPost = async () => {
+    // ユーザーのポスト番号取得
+    const { data, error } = await supabase
+      .from("posts")
+      .select("id")
+      .eq("userID", userId)
+      .eq("status", false);
+
+    if (error) {
+      console.log("ユーザーポスト番号取得失敗");
+    }
+    // ユーザーが送信したメッセージ取得
+    const { data: message, error: messageError } = await supabase
+      .from("messages")
+      .select("*")
+      .eq("postedBy", data[0].id);
+
+    const appMsg = message.filter((msg) => msg.message === "参加申請");
+
+    // イベントポスト番号取得
+    if (appMsg.length > 0) {
+      const { data: event, error: eventError } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("eventID", Number(eventId.id));
+
+      if (eventError) {
+        console.log("島ポスト番号取得失敗");
+      }
+
+      // 島ポスト番号が送信済みの参加申請のpostIDと同じだった場合に「住民申請」ボタンをグレーアウトし、「すでに申請済みです」のエラーを表示させる
+      if (appMsg[0].postID === event[0].id) {
+        setAlreadyError("すでに住民許可申請を送っています");
+      }
+    }
+    if (messageError) {
+      console.log("ユーザー送信メッセージ一覧取得失敗");
     }
   };
 
@@ -153,7 +198,16 @@ export default function EventDetail() {
           </table>
 
           <div>
-            <button onClick={openResindentModal} className={styles.btn1}>
+            {alreadyError && (
+              <div>
+                <span className={styles.span}>{alreadyError}</span>
+              </div>
+            )}
+            <button
+              onClick={openResindentModal}
+              className={`${styles.btn1} ${alreadyError && styles.disabled}`}
+              disabled={alreadyError ? true : false}
+            >
               住民申請
             </button>
             {isResidentOpen && (
