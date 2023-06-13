@@ -67,7 +67,6 @@ export default function IslandDetail() {
       .eq("postedBy", data[0].id);
 
     const appMsg = message.filter((msg) => msg.message === "参加申請");
-    console.log(appMsg);
 
     // 島ポスト番号取得
     if (appMsg.length > 0) {
@@ -75,7 +74,6 @@ export default function IslandDetail() {
         .from("posts")
         .select("*")
         .eq("islandID", Number(islandId.id));
-      console.log(island);
 
       if (islandError) {
         console.log("島ポスト番号取得失敗");

@@ -35,8 +35,6 @@ export default function BelongIsland() {
               .eq("islandID", entry.islandID)
               .eq("status", false);
 
-            console.log(posts);
-
             if (postsError) {
               console.error("データ2取得失敗", postsError.message);
               return;
@@ -50,11 +48,8 @@ export default function BelongIsland() {
                 .eq("isRead", "false")
                 .eq("status", false);
 
-              console.log(messages);
-
               // データがnullまたは空の場合は何も行わずにreturnする
               if (!messages || messages.length === 0) {
-                // console.log("データがnullもしくは空です");
                 return;
               }
 
@@ -64,7 +59,6 @@ export default function BelongIsland() {
               if (messages.length > 0) {
                 setHasNewMessage(true);
                 console.log("メッセージを見つけました");
-                // 最初の未読メッセージが見つかったらループを中断する
               }
             });
           } else {
