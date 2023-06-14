@@ -15,7 +15,6 @@ export default function EventEdit() {
   const id= useParams();
   const fetchEventID = id.id;
 
-  // console.log(fetchEventID)
 
   useEffect(() => {
     fetchEvent();
@@ -36,7 +35,6 @@ export default function EventEdit() {
     { id: number; islandName: string }[]
   >([]);
 
-  // console.log(islandTags)
 
 
   const [eventID, setEventID] = useState<number>(); // eventIDステートに追加
@@ -188,7 +186,6 @@ export default function EventEdit() {
     const islandNames = islandData.map((island) => island.islandName);
     const joinedNames = islandNames.join(', '); // 配列の要素を結合した文字列を作成
 
-    // console.log("参加サークルの島名:", joinedNames);
 
     setEventJoin(joinedNames);  // 参加サークルをeventJoinステートにセット
 
