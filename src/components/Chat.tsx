@@ -157,6 +157,9 @@ const Chat = () => {
           </div>
         ) : (
           <div className={styles.flex}>
+            <a href="javascript:history.back()" className={styles.link}>
+              <p>＜</p>
+            </a>{" "}
             <p className={styles.title}>{threadTitle}</p>
             <button onClick={handleEditClick} className={styles.editButton}>
               編集

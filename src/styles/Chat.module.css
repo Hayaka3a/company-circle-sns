@@ -117,30 +117,43 @@
   border: 7px solid #60d4d6;
 }
 
+.link {
+  text-decoration: none;
+  color: black;
+  margin-left: 2%;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-weight: bold;
+}
+
 .editButton {
   background-color: rgb(180, 206, 50);
-  border-radius: 45%;
   margin-left: 1%;
   color: #ffffff;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  width: 100px;
+  margin-top: 1.5vh;
+  margin-bottom: 1.5vh;
+  margin-left: 4vh;
+  width: 90px;
 }
 
 .editButtonA {
   background-color: rgb(180, 206, 50);
-  border-radius: 45%;
-  margin-left: 1%;
+  margin-top: 1vh;
+  margin-left: 4vh;
+  margin-bottom: 1vh;
   color: white;
-  width: 100px;
+  width: 90px;
 }
 
 .editButtonB {
   background-color: rgb(87, 206, 54);
+  margin-top: 1vh;
+  margin-left: 4vh;
+  margin-bottom: 1vh;
   border-radius: 50%;
   margin-left: 1%;
   color: rgb(255, 255, 255);
-  width: 55px;
+  width: 50px;
 }
 
 .flex {
