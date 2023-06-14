@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import styles from '../../styles/island/user_message_post.module.css';
-import LogSt from '../../components/cookie/logSt';
-import { supabase } from '../../createClient';
+import { supabase } from './createClient';
 import { format } from 'date-fns';
-import GetCookieID from '../../components/cookie/getCookieId';
+import GetCookieID from './components/cookie/getCookieId';
 import { useCookies } from 'react-cookie';
+import LogSt from './components/cookie/logSt';
+import styles from '../src/styles/message.module.css'
 
-export default function IslandPostMessage() {
+export default function Message() {
   LogSt();
 
   const { id } = useParams();

@@ -92,7 +92,7 @@ export default function UserPost() {
     if (error) {
       console.error("Failed to update 'isRead' field:", error);
     } else {
-      navigate(`/island/message/islandPostMessage/${messageId}`);
+      navigate(`/message/${messageId}`);
     }
   };
 
