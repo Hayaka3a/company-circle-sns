@@ -140,6 +140,16 @@ export default function IslandCreate() {
           .eq("status", false);
         const createdIslandId = data[0].id;
 
+        //　作成者のデータをuserEntryStatusへ挿入
+        const ownerData = {
+          userID: ownerID,
+          islandID: createdIslandId,
+          status: "false",
+        };
+        const { error: owner } = await supabase
+          .from("userEntryStatus")
+          .insert(ownerData);
+
         // postテーブルに島用ポスト作成
         const post = {
           islandID: createdIslandId,
@@ -239,7 +249,7 @@ export default function IslandCreate() {
                 </tr>
                 <tr className={styles.tr}>
                   <th className={styles.th}>サムネイル</th>
-                  <td className={styles.imgSide}>
+                  <td className={`${styles.imgSide}`}>
                     <img
                       className={styles.icon}
                       src={imageUrl || "/island/island_icon.png"}
@@ -278,6 +288,7 @@ export default function IslandCreate() {
           <button
             onClick={createHandler}
             disabled={!islandName.trim() || !detail.trim()}
+            className={styles.btn}
           >
             新しい島生活を始める
           </button>

@@ -6,6 +6,7 @@ import { Message } from "../types/entryPermit";
 
 export default function EntryPermit({ table }: { table: string }) {
   const [message, setMessage] = useState<Message>();
+  const [user, setUser] = useState([]);
 
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -21,24 +22,55 @@ export default function EntryPermit({ table }: { table: string }) {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    getUsers(message);
+  }, [message]);
+
   async function fetchData() {
     const { data, error } = await supabase
       .from("posts")
-      .select(`*,messages(*,applications(*),users(*))`)
+      .select(`*,messages!messages_postID_fkey(*,applications(*))`)
       .eq(`${table}ID`, paramsID)
-      .eq(`messages.isRead`, false)
-      .eq(`messages.isAnswered`, false)
       .eq("status", false);
     if (error) {
       console.log(error, "エラー");
     }
-
-    //applicationsが取得できたものだけで新たな配列を作成
-    const selectApp = data[0].messages.filter(
-      (message) => message.applications.length > 0,
-    );
-    setMessage(selectApp);
+    if (!data || data.length === 0) {
+      console.log("ポストまたはメッセージがみつかりませんでした");
+    } else {
+      //applicationsが取得できたものだけで新たな配列を作成
+      const selectApp = data[0].messages.filter(
+        (message) => message.applications.length > 0 && !message.isAnswered,
+      );
+      setMessage(selectApp);
+    }
   }
+
+  //messageを送ったユーザーを取得
+  const getUsers = async (data: any[]) => {
+    if (data) {
+      let promises = data.map(async (message) => {
+        const { data: userData, error: userError } = await supabase
+          .from("posts")
+          .select("*,users!posts_userID_fkey(*)")
+          .eq("id", message.postedBy);
+
+        if (userError) {
+          console.log(userError, "ユーザー取得エラー");
+        }
+
+        let arr = { ...message, users: userData[0].users };
+
+        return arr;
+      });
+      // Promise.all でまとめて待つ
+      let ret = await Promise.all(promises);
+
+      setUser(ret);
+      return ret;
+    }
+  };
 
   //OKボタンの処理
   async function OKButton(messageID: number, userID: number) {
@@ -131,49 +163,51 @@ export default function EntryPermit({ table }: { table: string }) {
       <button onClick={pageBack} className={styles.pageBack}>
         ←戻る
       </button>
-      <h2 className={styles.title}>許可待ちの住民申請</h2>
-      {message && message.length > 0 ? (
-        message.map((data) => {
-          return (
-            <div className={styles.box} key={data.id}>
-              <div className={styles.left}>
-                <img
-                  src={data.users.icon}
-                  className={styles.icon}
-                  alt="アイコン"
-                />
-              </div>
-              <div className={styles.right}>
-                <div className={styles.first}>
-                  <p className={styles.name}>
-                    {data.users.familyName + data.users.firstName}
-                  </p>
-                  <div className={styles.button}>
-                    <button
-                      className={styles.OK}
-                      onClick={() => OKButton(data.id, data.postedBy)}
-                      key={data.id}
-                    >
-                      許可
-                    </button>
-                    <button
-                      className={styles.NG}
-                      onClick={() => NGButton(data.id)}
-                    >
-                      却下
-                    </button>
+      <div className={styles.content}>
+        <h2 className={styles.title}>許可待ちの住民申請</h2>
+        {user && user.length > 0 ? (
+          user.map((data) => {
+            return (
+              <div className={styles.box} key={data.id}>
+                <div className={styles.left}>
+                  <img
+                    src={data.users.icon}
+                    className={styles.icon}
+                    alt="アイコン"
+                  />
+                </div>
+                <div className={styles.right}>
+                  <div className={styles.first}>
+                    <p className={styles.name}>
+                      {data.users.familyName + data.users.firstName}
+                    </p>
+                    <div className={styles.button}>
+                      <button
+                        className={styles.OK}
+                        onClick={() => OKButton(data.id, data.postedBy)}
+                        key={data.id}
+                      >
+                        許可
+                      </button>
+                      <button
+                        className={styles.NG}
+                        onClick={() => NGButton(data.id)}
+                      >
+                        却下
+                      </button>
+                    </div>
+                  </div>
+                  <div className={styles.second}>
+                    <p>{data.applications[0].message}</p>
                   </div>
                 </div>
-                <div className={styles.second}>
-                  <p>{data.applications[0].message}</p>
-                </div>
               </div>
-            </div>
-          );
-        })
-      ) : (
-        <p>住民申請はありません</p>
-      )}
+            );
+          })
+        ) : (
+          <p>住民申請はありません</p>
+        )}
+      </div>
     </div>
   );
 }

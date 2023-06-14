@@ -33,8 +33,10 @@ export default function MembersList({
 
   // DBからデータを取得
   useEffect(() => {
-    fetchData();
-  }, [entryUsers]);
+    if (!loginUser) {
+      fetchData();
+    }
+  }, [entryUsers, newEntryUsers]);
 
   async function fetchData() {
     //イベントの場合
@@ -68,7 +70,14 @@ export default function MembersList({
           ) as Entryusers[];
           //各島民と難民を一つの配列にしまう
           const conbined = tmpArry.concat(userData);
-          setEntryUsers(conbined);
+          const updatedData = conbined.map((item) => {
+            if (item.userID === displayData.ownerID) {
+              item.users.firstName += "(オーナー)";
+            }
+            return item;
+          });
+          setEntryUsers(updatedData);
+          getLoginUser();
         }
       }
     } else {
@@ -81,11 +90,26 @@ export default function MembersList({
         .eq(`status`, false);
       if (entryError || !entryData) {
         console.log(entryError, "entryError");
-      }
-      const userData = entryData.filter((user) => user.userID) as Entryusers[];
-      setEntryUsers(userData);
-    }
+      } else {
+        const userData = entryData.filter(
+          (user) => user.userID,
+        ) as Entryusers[];
 
+        const updatedData = userData.map((item) => {
+          if (item.userID === displayData.ownerID) {
+            item.users.firstName += "(オーナー)";
+          }
+          return item;
+        });
+
+        setEntryUsers(updatedData);
+        getLoginUser();
+      }
+    }
+  }
+
+  //ログインユーザーのデータを取得
+  const getLoginUser = async () => {
     //ログインしているユーザーのデータを取得
     const { data: login, error: loginError } = await supabase
       .from("users")
@@ -105,7 +129,7 @@ export default function MembersList({
       );
       setNewEntryUsers(filteredUsers.length > 0 ? filteredUsers : []);
     }
-  }
+  };
 
   // 自分以外のユーザーの一覧表示
   const anotherUser = (user: Entryusers) => {
@@ -114,8 +138,10 @@ export default function MembersList({
       return (
         <td className={styles.td}>
           <img src={user.users.icon} className={styles.icon} alt="アイコン" />
-          {user.users.familyName}
-          {user.users.firstName}&nbsp;({user.users.department})
+          <div className={styles.name}>
+            {user.users.familyName}
+            {user.users.firstName}&nbsp;({user.users.department})
+          </div>
         </td>
       );
     }
@@ -133,10 +159,11 @@ export default function MembersList({
                 className={styles.icon}
                 alt="アイコン"
               />
-              {loginUser.familyName}
-              {loginUser.firstName}&nbsp;({loginUser.department}) (オーナー)
+              <div className={styles.name}>
+                {loginUser.familyName}
+                {loginUser.firstName}&nbsp;({loginUser.department})(オーナー)
+              </div>
             </td>
-            <td className={styles.td}></td>
           </tr>
           {loginUser &&
             newEntryUsers.map((user) => {

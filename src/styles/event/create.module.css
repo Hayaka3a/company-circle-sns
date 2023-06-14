@@ -34,26 +34,21 @@ table {
   margin-bottom: 6%;
 }
 
-th,
-td {
-  border-bottom: 1px solid rgb(180, 180, 180);
-  text-align: left;
-}
-
-th:last-child,
-td:last-child {
-  border-right: none; /* 最後の列の縦線を非表示*/
-}
-
-tr {
+.tr {
   height: 10vh; /* 行の高さ */
 }
 
-td {
+.td {
   width: 100%;
+  border-bottom: 1px solid rgb(180, 180, 180);
+  text-align: left;
+  border-right: none; /* 最後の列の縦線を非表示*/
 }
 
-th {
+.th {
+  border-bottom: 1px solid rgb(180, 180, 180);
+  text-align: left;
+  border-right: none; /* 最後の列の縦線を非表示*/
   width: 50%;
 }
 
@@ -64,6 +59,8 @@ th {
 
 .imgSide {
   display: flex;
+  height: 18.5vh;
+  border-bottom: 1px solid rgb(180, 180, 180);
 }
 
 .faileCenter {
@@ -123,4 +120,22 @@ th {
 
 .th {
   width: 50%;
+}
+
+.btn {
+  padding: 0.3vh 1.5vh;
+  border: none;
+  border-radius: 2vh;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  margin-bottom: 1vh;
+  margin-left: 1vh;
+  background-color: rgba(194, 137, 66, 1);
+  color: white;
+}
+
+.btn:disabled {
+  background-color: rgba(209, 208, 206, 1);
+  color: white;
 }

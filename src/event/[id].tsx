@@ -1,105 +1,128 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MenubarEvent from "../components/menubarEvent";
 import styles from "../styles/island/islandDetail.module.css";
-import LogSt from "../components/cookie/logSt";
-import { useNavigate, useParams } from "react-router-dom";
+import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
+import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
-import EntryApplication from "../components/modalWindows/entry_application";
+import LogSt from "../components/cookie/logSt";
+import { Event } from "../types/members";
 import EventSendingMessage from "../components/modalWindows/eventSendingMessage";
-import { format } from 'date-fns';
-
+import GetCookieID from "../components/cookie/getCookieId";
 
 export default function EventDetail() {
   LogSt();
-  const eventID= useParams();
-  const eventIDValue = eventID["id"];
-
   const [isOpen, setIsOpen] = useState(false);
+  const [alreadyError, setAlreadyError] = useState("");
+  const [isResidentOpen, setIsResidentOpen] = useState(false);
   const navigate = useNavigate();
-  const [eventDetail, setEventDetail] = useState(null); // 取得したイベントの詳細情報を保持する状態変数
-  const [islandNames, setIslandNames] = useState([]); // 島名を保持する状態変数
-  const [entryAOpen, setEntryAOpen] = useState(false);
+  const eventId = useParams();
+  const userId = GetCookieID();
+  const [eventDetail, setEventDetail] = useState<Event>(null); // 取得した島の詳細情報を保持する状態変数
+  const [eventImage, setEventImage] = useState(
+    "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
+  );
 
-  const startDate = eventDetail ? format(new Date(eventDetail.startDate), 'yyyy年MM月dd日') : '';
-    // console.log("開始日時", startDate);
-  const endDate = eventDetail ? format(new Date(eventDetail.endDate), 'yyyy年MM月dd日') : '';   
-    // console.log("終了日時", endDate); 
-
-  // console.log(eventDetail)
+  const [islandArray, setIslandArray] = useState([]);
 
   useEffect(() => {
     fetchEventDetail();
-    entryIsland();
-  },[eventID]);
-
-  // イベント情報を取得
+    fetchIsland();
+    fetchEventPost();
+  }, []);
 
   const fetchEventDetail = async () => {
     const { data, error } = await supabase
       .from("events")
       .select("*")
-      .eq("id", eventIDValue) // イベントのIDに応じてフィルタリングする（eventID.idは該当する島のID）
-
+      .eq("id", eventId.id) // 島のIDに応じてフィルタリングする（eventId.idは該当する島のID）
+      .eq("status", false);
     if (error) {
-      console.log("イベントの詳細情報の取得に失敗しました", error);
+      console.error("fetchEventDetail:", error);
       return;
     }
     if (data.length === 0) {
-      console.log("該当するイベントの詳細情報が見つかりませんでした");
+      console.warn("該当する島の詳細情報が見つかりませんでした。");
       return;
     }
 
-    const eventDetail = data[0]; // 最初のデータを取得（仮定）
-    // console.log("イベントの詳細情報:", eventDetail); 
-
-    setEventDetail(eventDetail); // イベントの詳細情報を状態変数にセット
+    const eventDetail = data[0] as undefined; // 最初のデータを取得（仮定）
+    const tmpEve = eventDetail as Event;
+    setEventDetail(eventDetail); // 島の詳細情報を状態変数にセット
+    if (tmpEve.thumbnail) {
+      setEventImage(tmpEve.thumbnail);
+    }
   };
 
-  // 参加サークル情報を取得
-  const entryIsland = async () => {
-  const { data, error } = await supabase
-    .from("userEntryStatus")
-    .select("islandID")
-    .eq("eventID", eventIDValue);
-
-  if (error) {
-    console.log("イベントの詳細情報の取得に失敗しました", error);
-    return;
-  }
-  if (data.length === 0) {
-    console.log("該当するイベントの詳細情報が見つかりませんでした");
-    return;
-  }
-
-  const islandIDs = data.map((entry) => entry.islandID); // フィルタリングされたデータの島IDを抽出
-
-  // 島名、thumbnailを取得
-  const { data: islandData, error: islandError } = await supabase
-    .from("islands")
-    .select("*")
-    .in("id", islandIDs);
-
-  if (islandError) {
-    console.log("島名の取得に失敗しました", islandError);
-    return;
-  }
-
-  const islandNames = islandData.map((island) => island.islandName);
-  setIslandNames(islandNames); // 島名をセット
-
-  // console.log("島名:", islandNames);
-};
-
-  // イベント参加申請を押した際の小窓画面（モーダルウィンドウ）の開閉
-  // の値がtrueの時だけ小窓画面をレンダリング（表示）する
-  const openEntryModal = () => {
-    setEntryAOpen(true);
+  const fetchIsland = async () => {
+    const { data, error } = await supabase
+      .from("userEntryStatus")
+      .select("*,islands(*)")
+      .eq("eventID", eventId.id) // 島のIDに応じてフィルタリングする（eventId.idは該当する島のID）
+      .eq("status", false);
+    if (error) {
+      console.error("fetchIsland:", error);
+      return;
+    }
+    if (data.length === 0) {
+      console.warn("該当する島の詳細情報が見つかりませんでした。");
+      return;
+    } else {
+      const island = data.filter((data) => data.islandID);
+      setIslandArray(island);
+    }
   };
 
-  const closeEntryModal = () => {
-    setEntryAOpen(false);
+  // すでに住民申請を送っているか確認確認
+  const fetchEventPost = async () => {
+    // ユーザーのポスト番号取得
+    const { data, error } = await supabase
+      .from("posts")
+      .select("id")
+      .eq("userID", userId)
+      .eq("status", false);
+
+    if (error) {
+      console.log("ユーザーポスト番号取得失敗");
+    }
+    // ユーザーが送信したメッセージ取得
+    const { data: message, error: messageError } = await supabase
+      .from("messages")
+      .select("*")
+      .eq("postedBy", data[0].id);
+
+    const appMsg = message.filter((msg) => msg.message === "参加申請");
+
+    // イベントポスト番号取得
+    if (appMsg.length > 0) {
+      const { data: event, error: eventError } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("eventID", Number(eventId.id));
+
+      if (eventError) {
+        console.log("島ポスト番号取得失敗");
+      }
+
+      // イベントポスト番号が送信済みの参加申請のpostIDと同じだった場合に「住民申請」ボタンをグレーアウトし、「すでに申請済みです」のエラーを表示させる
+      const matchingAppMsg = appMsg.find((msg) => msg.postID === event[0].id);
+      if (matchingAppMsg) {
+        setAlreadyError("すでに住民許可申請を送っています");
+      }
+    }
+    if (messageError) {
+      console.log("ユーザー送信メッセージ一覧取得失敗");
+    }
   };
 
+  // 住民申請を押した際の小窓画面（モーダルウィンドウ）の開閉
+  // isResidentOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
+  const openResindentModal = () => {
+    setIsResidentOpen(true);
+  };
+  const closeResidentModal = () => {
+    setIsResidentOpen(false);
+  };
 
   // メッセージを送るを押した際の小窓画面（モーダルウィンドウ）の開閉
   // isOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
@@ -111,69 +134,101 @@ export default function EventDetail() {
   };
 
   const Handler = () => {
-    navigate(`/event/edit/${eventID.id}`);
+    navigate(`/event/edit/${eventId.id}`);
     window.location.reload();
   };
-
-
   return (
     <div className={styles.flex}>
       <MenubarEvent />
       <div className={styles.back}>
-        <div className={styles.event_detail}>
-          <h1>{eventDetail && eventDetail.eventName}</h1>
-            {eventDetail && (
-              <img 
-                src={eventDetail.thumbnail || "/event_icon.png"}
-                className={styles.eventIcon} 
-              />
-            )}            
-          <div>
-            <label className={styles.detail}>開催日時</label>
-            <p className={styles.center}>
-              {eventDetail && eventDetail.startDate && eventDetail.endDate && (
-                <>
-                  {format(new Date(eventDetail.startDate), 'yyyy年MM月dd日')} ~
-                  {format(new Date(eventDetail.endDate), 'yyyy年MM月dd日')}
-                </>
-              )}            
-            </p>
-          </div>
+        <div className={styles.detail}>
+          {eventDetail && (
+            <img src={eventImage} alt="アイコン" className={styles.icon} />
+          )}
+          <h2>{eventDetail && eventDetail.eventName}</h2>
+
+          <table className={styles.table}>
+            <tbody className={styles.tbody}>
+              <tr className={styles.tr}>
+                <th className={styles.th}>開催日時</th>
+                <td className={styles.td}>
+                  {eventDetail &&
+                    new Date(eventDetail.startDate).toLocaleDateString(
+                      "ja-JP",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      },
+                    )}
+                  ~
+                  {eventDetail &&
+                    new Date(eventDetail.endDate).toLocaleDateString("ja-JP", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                </td>
+              </tr>
+              <tr>
+                <th className={styles.th}>イベント詳細</th>
+                <td className={styles.td}>
+                  <p className={styles.textDetail}>
+                    {eventDetail && eventDetail.detail}
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th className={styles.th}>参加島</th>
+                <td className={styles.td}>
+                  {islandArray.map((data) => {
+                    return (
+                      <div key={data.islands.id}>
+                        <Link
+                          to={`/island/${data.islands.id}`}
+                          key={data.islands.id}
+                        >
+                          {data.islands.islandName}
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
           <div>
-            <label className={styles.detail}>イベント詳細</label>
-            <div>
-              <p className={styles.center}>
-               {eventDetail && eventDetail.detail}
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <label className={styles.detail}>参加島(サークル)</label>
-             {islandNames.map((name, index) => (
-              <p key={index} className={styles.center}>
-                {name}
-              </p>
-            ))}
-          </div>
-
-          <div className={styles.btn}>
-            <button onClick={openEntryModal}>参加申請</button>
-            {entryAOpen && (
-              <EntryApplication 
-                closeEntryModal={closeEntryModal} table="events"               
+            {alreadyError && (
+              <div>
+                <span className={styles.span}>{alreadyError}</span>
+              </div>
+            )}
+            <button
+              onClick={openResindentModal}
+              className={`${styles.btn1} ${alreadyError && styles.disabled}`}
+              disabled={alreadyError ? true : false}
+            >
+              住民申請
+            </button>
+            {isResidentOpen && (
+              <CreateResidentApplication
+                closeModal={closeResidentModal}
+                table="event"
               />
             )}
-            <button onClick={openModal}>メッセージを送る</button>
+            <button onClick={openModal} className={styles.btn2}>
+              メッセージを送る
+            </button>
             {isOpen && (
-              <EventSendingMessage closeModal={closeModal} table="island" />
+              <EventSendingMessage closeModal={closeModal} table="event" />
             )}
           </div>
-          <button id={styles.edit_btn} onClick={Handler}>
-            編集・削除
-          </button>
-
+          <div className={styles.editbox}>
+            <button id={styles.edit_btn} onClick={Handler}>
+              編集・削除
+            </button>
+          </div>
         </div>
       </div>
     </div>

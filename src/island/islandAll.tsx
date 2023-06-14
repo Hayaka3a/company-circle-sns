@@ -8,8 +8,10 @@ import { useEffect, useState } from "react";
 export default function IslandAll() {
   LogSt();
 
+  const navigate = useNavigate();
   const params = useParams();
   const paramsID = params.id;
+  console.log(paramsID);
 
   const [islands, setIslands] = useState([]);
 
@@ -46,21 +48,21 @@ export default function IslandAll() {
         <h2 className={styles.title}>島一覧</h2>
         <div className={styles.eventAll}>
           {islands.map((island) => (
-            <div key={island.id} className={styles.event1}>
-              <div className={styles.imgSide}>
-                <img
-                  className={styles.icon}
-                  src={island.thumbnail || "/island/island_icon.png"}
-                  alt="island Thumbnail"
-                ></img>
-              </div>
-              <div className={styles.eventInfo}>
-                <Link to={`/island/${paramsID}`}>
+            <Link to={`/island/${island.id}`} className={styles.link}>
+              <div key={island.id} className={styles.event1}>
+                <div className={styles.imgSide}>
+                  <img
+                    className={styles.icon}
+                    src={island.thumbnail || "/island/island_icon.png"}
+                    alt="island Thumbnail"
+                  ></img>
+                </div>
+                <div className={styles.eventInfo}>
                   <h2 className={styles.eventName}>{island.islandName}</h2>
-                </Link>
-                <p>{truncateString(island.detail, 100)}</p>
+                  <p>{truncateString(island.detail, 100)}</p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -78,6 +78,7 @@ export default function EventAll() {
     fetchIslandName();
     fetchEventData();
   }, [paramsID]);
+
   return (
     <div className={styles.flex2}>
       <MenubarIsland />
@@ -90,37 +91,38 @@ export default function EventAll() {
           {events
             .filter((event) => new Date(event.endDate) > currentDateTime)
             .map((event) => (
-              <div key={event.id} className={styles.event2}>
-                <div className={styles.imgSide2}>
-                  <img
-                    className={styles.icon3}
-                    src={
-                      event.thumbnail ||
-                      "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
-                    }
-                    alt="Event Thumbnail"
-                  ></img>
-                  <div className={styles.eventInfo}>
-                    <Link to={`/event/${paramsID}`}>
-                      <h2 className={styles.eventName2}>{event.eventName}</h2>
-                    </Link>
-                    <h3 className={styles.date}>
-                      開催期間 ：
-                      {new Date(event.startDate).toLocaleDateString("ja-JP", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}{" "}
-                      ～{" "}
-                      {new Date(event.endDate).toLocaleDateString("ja-JP", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </h3>
+              <Link to={`/event/${event.id}`} className={styles.link}>
+                <div key={event.id} className={styles.event2}>
+                  <div className={styles.imgSide}>
+                    <img
+                      className={styles.icon}
+                      src={
+                        event.thumbnail ||
+                        "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                      }
+                      alt="Event Thumbnail"
+                    ></img>
+                    <div className={styles.eventInfo}>
+                      <h2 className={styles.eventName}>{event.eventName}</h2>
+
+                      <h3 className={styles.date}>
+                        開催期間 ：
+                        {new Date(event.startDate).toLocaleDateString("ja-JP", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}{" "}
+                        ～{" "}
+                        {new Date(event.endDate).toLocaleDateString("ja-JP", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </h3>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>

@@ -13,6 +13,7 @@
   text-align: center;
   border-radius: 1%;
   width: 65%;
+  margin-bottom: 5vh;
 }
 .detail {
   width: auto;
@@ -69,16 +70,16 @@
 }
 
 #edit_btn {
-  color: rgba(145, 145, 145, 1);
-  border: 3px solid rgba(212, 212, 212, 1);
-  box-shadow: 0.7vh 0.7vh rgba(212, 212, 212, 1);
+  font-weight: bold;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(209, 182, 204, 1);
+  box-shadow: 0.7vh 0.7vh rgba(209, 182, 204, 1);
   height: 7vh;
   width: 20vh;
-  margin-top: 10vh;
+  margin-top: 5vh;
   border-radius: 10vh;
   transition: 0.3s ease-in-out;
   background-color: white;
-  margin-top: 10vh;
 }
 
 .icon {
@@ -98,15 +99,26 @@
   width: 90%;
 }
 .th {
-  text-align: center;
+  text-align: right;
   width: 20%;
   font-weight: bold;
 }
-.td2 {
+.td {
   width: 70%;
+  height: 10vh;
 }
 
 .textDetail {
   width: 90%;
   margin: auto;
+}
+
+/* すでに住民許可申請を送っている場合 */
+.span {
+  color: red;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }

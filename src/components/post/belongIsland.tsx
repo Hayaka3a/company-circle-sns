@@ -40,7 +40,7 @@ export default function BelongIsland() {
               return;
             }
 
-            for (const post of posts) {
+            posts.map(async (post) => {
               const { data: messages, error: messagesError } = await supabase
                 .from("messages")
                 .select("*")
@@ -55,13 +55,12 @@ export default function BelongIsland() {
 
               if (messagesError) {
                 console.error("データ3取得失敗", messagesError.message);
-                return;
               }
               if (messages.length > 0) {
                 setHasNewMessage(true);
-                return; // 最初の未読メッセージが見つかったらループを中断する
+                console.log("メッセージを見つけました");
               }
-            }
+            });
           } else {
             // islandIDがnullの場合はスキップ
             console.log("どこの島にも所属していません");

@@ -12,8 +12,8 @@ export default function CreateSendingMessage({
   table: string;
 }) {
   const [message, setMessage] = useState("");
-  const [postedID, setPostedID] = useState(0);
-  const [posts, setPosts] = useState(0);
+  const [postedID, setPostedID] = useState();
+  const [posts, setPosts] = useState();
   const [islandName, setIslandName] = useState("");
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -25,47 +25,29 @@ export default function CreateSendingMessage({
   }, []);
 
   const fetchPost = async () => {
-    // userIDから該当のPostIDを割り出す
+    // postID: postsテーブルにある送り先（島もしくはイベント）のポスト番号📫
     const { data: postsData, error: postError } = await supabase
 
       .from("posts")
       .select("id")
-      .eq("userID", userID)
+      .eq(`${table}ID`, paramsID)
       .eq("status", false);
 
-    // // islandIDから該当のPostIDを割り出す
-    // const { data: posts, error: postError } = await supabase
-    // .from("posts")
-    // .select("id")
-    // .eq("islandID", paramsID)
-    // .eq("status", false);
-
     if (postError) {
-      console.log(userID);
-      // console.log(paramsID);
       console.log(postError, "ポストエラー");
     }
-    setPosts(postsData[0]?.id || 0);
+    setPosts(postsData[0]?.id);
 
-
-    // PostedByに入れるため、送信する側のPostIDを取得する
-   const { data: postedBy, error: postedByError } = await supabase
+    // postedBy：postsテーブルにある送信者のポスト番号📫
+    const { data: postedBy, error: postedByError } = await supabase
       .from("posts")
       .select("id")
-      .eq("userID", userID);
-
+      .eq(`userID`, userID)
+      .eq("status", false);
     if (postedByError) {
       console.log(postedByError, "エラー");
     }
-
-    if (postedBy && postedBy.length > 0 && postedBy[0].id) {
-      setPostedID(postedBy[0].id);
-    } else {
-      console.log("PostedByIDが取得できません");
-    }
-
-    setPostedID(postedBy[0]?.id || 0);
-
+    setPostedID(postedBy[0]?.id);
   };
 
   const fetchIslandName = async () => {
@@ -83,20 +65,15 @@ export default function CreateSendingMessage({
   };
 
   const sendMessage = async () => {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString();
-
     const { data, error } = await supabase.from("messages").insert([
       {
-        postID: postedID,
+        postID: posts,
         message: message,
         scout: false,
         isRead: false,
         isAnswered: false,
-        postedBy: posts,
+        postedBy: postedID,
         status: false,
-
-        sendingDate: formattedDate,
       },
     ]);
 
@@ -106,10 +83,6 @@ export default function CreateSendingMessage({
       console.log("データが正常に送信されました");
       closeModal();
     }
-  };
-
-  const addHandler = () => {
-    sendMessage();
   };
 
   return (
@@ -140,7 +113,7 @@ export default function CreateSendingMessage({
                 </div>
               </div>
               <div>
-                <button onClick={addHandler} className={styles.btn}>
+                <button onClick={sendMessage} className={styles.btn}>
                   送信する
                 </button>
               </div>

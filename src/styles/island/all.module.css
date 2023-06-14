@@ -55,7 +55,7 @@
 .event2 {
   margin: 0 auto;
   display: flex;
-  background: rgb(250 255 198);
+  background-color: rgba(255, 247, 227, 0.8);
   margin-bottom: 3%;
   height: 22vh;
   width: 80%;
@@ -64,10 +64,9 @@
   z-index: 0;
   margin: 2em auto;
   padding: 5em;
-  border: dashed 0.5vh rgba(194, 209, 37, 1);
   border-radius: 1vh;
-  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.12), 0 2px 3px 0 rgba(0, 0, 0, 0.22);
   transition: 0.3s;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.12), 0 2px 3px 0 rgba(0, 0, 0, 0.22);
 }
 
 .title {
@@ -102,8 +101,6 @@
 }
 
 .button {
-  margin-left: 70%;
-
   height: 7vh;
   width: 31vh;
   border-radius: 3vh;
@@ -127,8 +124,8 @@
   justify-content: center;
   height: 100%;
   margin-left: 3%;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .side {
@@ -140,8 +137,7 @@
   width: 17vh;
   height: 17vh;
   border-radius: 50%; /*サムネイル円型*/
-  margin-left: 3%;
-  margin-right: 10%;
+  margin-left: 4vh;
   background-color: #ffbe5d;
   border: 9px double #f7a54e;
 }
@@ -170,7 +166,6 @@
 
 .eventInfo {
   margin-left: 9%;
-  height: 220px;
   margin-bottom: 1%;
   align-items: center;
 }
@@ -199,6 +194,10 @@
   }
 }
 
+.link {
+  text-decoration: none;
+}
+
 .flex2 {
   display: flex;
   justify-content: center;
@@ -212,7 +211,7 @@
   margin-left: auto;
   text-align: center;
   border-radius: 1%;
-  width: 80%;
+  width: 75%;
   min-height: 35vh;
 
   border: dashed 0.5vh rgba(138, 121, 98, 1);
