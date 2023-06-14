@@ -315,7 +315,6 @@ export default function EventEdit() {
           if (islandEventError) {
             console.error("共同開催島情報追加失敗");
           }
-          navigate(`/`);
           window.location.reload();
         })
       );
