@@ -143,13 +143,13 @@ export default function EventEdit() {
       setEndDate(event.endDate); // イベント終了日時（endDate）をendDateステートにセット
       setEventDetail(event.detail); // イベント詳細をeventDetailステートにセット      
     }
-  };
+  };    
 
 
   const entryIsland = async () => {
     const { data, error } = await supabase
       .from("userEntryStatus")
-      .select("islandID")
+      .select("islandID, status")
       .eq("eventID", fetchEventID);
   
     if (error) {
@@ -162,10 +162,16 @@ export default function EventEdit() {
       return;
     }
   
-    const joinIslandIDs = data.map((entry) => entry.islandID); // フィルタリングされたデータの島IDを抽出
+    const joinIslandIDs = data
+      .filter((entry) => entry.status === false) // statusがfalseのデータのみフィルタリング
+      .map((entry) => entry.islandID); // フィルタリングされたデータの島IDを抽出
+  
+    if (joinIslandIDs.length === 0) {
+      console.log("該当する参加サークルが見つかりませんでした");
+      return;
+    }
+  
     setIslandJoinID(joinIslandIDs[0]);
-
-    // console.log("サークルid", joinIslandIDs);
   
     // islandsテーブルからislandNameを取得
     const { data: islandData, error: islandError } = await supabase
@@ -184,15 +190,29 @@ export default function EventEdit() {
     }
   
     const islandNames = islandData.map((island) => island.islandName);
-    const joinedNames = islandNames.join(', '); // 配列の要素を結合した文字列を作成
-
-
-    setEventJoin(joinedNames);  // 参加サークルをeventJoinステートにセット
-
+    const joinedNames = islandNames.join(", "); // 配列の要素を結合した文字列を作成
+  
+    setEventJoin(joinedNames); // 参加サークルをeventJoinステートにセット
   };
+  
 
-
-
+  const handleHideEventJoin = async () => {
+    supabase
+    .from('userEntryStatus')
+    .update({ status: true })
+    .eq('eventID', fetchEventID)
+    .then(response => {
+      // データの更新が成功した場合
+      if (response.error) {
+        console.log('データの更新に失敗しました。', response.error);
+      } else {
+        // 参加サークル名を非表示にする
+        setEventJoin(null);
+      }
+    });
+  };
+    
+    
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
     let circleElement = document.getElementById("img");
@@ -368,7 +388,15 @@ export default function EventEdit() {
 
           <div>
           <label>参加島（サークル）</label>
-          {eventJoin}
+          {eventJoin && (
+            <div>
+              <p>{eventJoin}</p>
+              {editMode &&(
+                <button onClick={handleHideEventJoin}>×</button>
+              )}
+            </div>
+          )}
+
           {editMode && (
             <IslandSelected
               islandIDs={[islandJoinID]} // islandIDsを配列として初期化する
