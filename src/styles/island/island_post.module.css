@@ -64,7 +64,6 @@
 
 .h1 {
   font-weight: bold;
-  margin-top: 0;
 }
 
 /* 未読の場合のCSS */
@@ -90,6 +89,12 @@
 }
 
 .mss {
+  margin-top: 0;
+  width: 95%;
+  text-align: left;
+}
+
+.mss1 {
   margin-top: 0;
   width: 95%;
   text-align: left;

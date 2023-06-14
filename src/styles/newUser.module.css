@@ -100,6 +100,8 @@
 
 .imgSide {
   display: flex;
+  height: 18.5vh;
+  border-bottom: 1px solid rgb(180, 180, 180);
 }
 
 .faileCenter {

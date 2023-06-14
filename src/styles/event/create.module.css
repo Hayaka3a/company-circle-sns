@@ -59,6 +59,8 @@ table {
 
 .imgSide {
   display: flex;
+  height: 18.5vh;
+  border-bottom: 1px solid rgb(180, 180, 180);
 }
 
 .faileCenter {
@@ -118,4 +120,22 @@ table {
 
 .th {
   width: 50%;
+}
+
+.btn {
+  padding: 0.3vh 1.5vh;
+  border: none;
+  border-radius: 2vh;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  margin-bottom: 1vh;
+  margin-left: 1vh;
+  background-color: rgba(194, 137, 66, 1);
+  color: white;
+}
+
+.btn:disabled {
+  background-color: rgba(209, 208, 206, 1);
+  color: white;
 }

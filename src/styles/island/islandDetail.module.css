@@ -70,16 +70,16 @@
 }
 
 #edit_btn {
-  color: rgba(145, 145, 145, 1);
-  border: 3px solid rgba(212, 212, 212, 1);
-  box-shadow: 0.7vh 0.7vh rgba(212, 212, 212, 1);
+  font-weight: bold;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(209, 182, 204, 1);
+  box-shadow: 0.7vh 0.7vh rgba(209, 182, 204, 1);
   height: 7vh;
   width: 20vh;
-  margin-top: 10vh;
+  margin-top: 5vh;
   border-radius: 10vh;
   transition: 0.3s ease-in-out;
   background-color: white;
-  margin-top: 10vh;
 }
 
 .icon {
