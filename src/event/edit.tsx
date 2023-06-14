@@ -15,6 +15,8 @@ export default function EventEdit() {
   const id= useParams();
   const fetchEventID = id.id;
 
+  // console.log(fetchEventID)
+
   useEffect(() => {
     fetchEvent();
     entryIsland();
@@ -81,11 +83,12 @@ export default function EventEdit() {
 
 
 
-  // posts, eventsテーブルのstatusをtrueに変更
+  // posts, events,userEntryStatusテーブルのstatusをtrueに変更
   const { data, error } = await supabase
     .from("events")
     .select("eventName")
     .eq("id", eventID);
+
 
     if (error) {
       console.log("Error fetching events data", error);
@@ -104,11 +107,17 @@ export default function EventEdit() {
           .update({ status: "true" })
           .eq("id", eventID);
 
-        if (eventsError || postsError) {
+        const { error: userEntryStatusError } = await supabase
+          .from("userEntryStatus")
+          .update({ status: "true" })
+          .match({ eventID: fetchEventID })
+
+        if (eventsError || postsError || userEntryStatusError) {
           console.error(
             "Error changing status :",
-            eventsError || postsError,
+            eventsError || postsError || userEntryStatusError,
           );
+
           // Cookie情報の削除
           if (document.cookie !== "") {
             let expirationDate = new Date ("1999-12-31T23:59:59Z");
@@ -117,8 +126,7 @@ export default function EventEdit() {
           }
         }
 
-        console.log("Change status of events successfully.");
-        // navigate("/");
+        navigate("/");
         window.location.reload();
       }
     }
