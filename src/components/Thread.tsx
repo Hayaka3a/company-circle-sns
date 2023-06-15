@@ -29,15 +29,14 @@ function Thread({ thread }: { thread: thread[] }) {
     <div className={styles.content}>
       {thread.map((thread) => (
         <div className={styles.flexDelete}>
-          <div key={thread.id} className={styles.thread}>
-            <h2
-              className={styles.title}
-              onClick={() => {
-                navigate(`/chat/${thread.id}`);
-              }}
-            >
-              {thread.threadTitle}
-            </h2>
+          <div
+            key={thread.id}
+            className={styles.thread}
+            onClick={() => {
+              navigate(`/chat/${thread.id}`);
+            }}
+          >
+            <h2 className={styles.title}>{thread.threadTitle}</h2>
           </div>
           <div className={styles.buttonAligin}>
             <button

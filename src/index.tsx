@@ -84,78 +84,82 @@ export default function Index() {
       <div className={styles.all}>
         {/* ロゴ */}
 
-        <img src="/images/logo.png" className={styles.logo} />
+        <div className={styles.displayAll}>
+          <img src="/images/logo.png" className={styles.logo} />
 
-        <div className={styles.information}>
-          <h3 className={styles.news}>お知らせ</h3>
-          {/* 個人用ポスト */}
-          <PersonalPost
-            hasNewMessage={hasNewMessage}
-            setHasNewMessage={setHasNewMessage}
-          />
-          {/* 参加サークルポスト */}
-          <BelongIsland />
-          {/* 参加イベントポスト */}
-          <BelongEvent />
-        </div>
-        <div className={styles.main}>
-          <div className={styles.tabs}>
-            <button
-              className={`${tag === "islands" ? styles.active : ""} ${
-                styles.buttonA
-              }`}
-              onClick={() => changeTagHandler("islands")}
-            >
-              おすすめ島
-            </button>
-            <button
-              className={`${tag === "events" ? styles.active : ""} ${
-                styles.buttonB
-              }`}
-              onClick={() => changeTagHandler("events")}
-            >
-              新着イベント
-            </button>
+          <div className={styles.information}>
+            <h3 className={styles.news}>お知らせ</h3>
+            {/* 個人用ポスト */}
+            <PersonalPost
+              hasNewMessage={hasNewMessage}
+              setHasNewMessage={setHasNewMessage}
+            />
+            {/* 参加サークルポスト */}
+            <BelongIsland />
+            {/* 参加イベントポスト */}
+            <BelongEvent />
           </div>
-          <div className={styles.down}>
-            {tag === "islands" && (
-              <div className={styles.islands}>
-                {islands.slice(0, 6).map((island) => (
-                  <div key={island.id} className={styles.island}>
-                    <Link to={`/island/${island.id}`}>
-                      <img
-                        className={styles.icon}
-                        src={
-                          island.thumbnail ||
-                          "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
-                        }
-                        alt="Event Thumbnail"
-                      />
-                      <h3 className={styles.islandName}>{island.islandName}</h3>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            )}
-            {tag === "events" && (
-              <div className={styles.events}>
-                {events.slice(0, 6).map((event) => (
-                  <div key={event.id} className={styles.event}>
-                    <Link to={`/island/${event.id}`}>
-                      <img
-                        className={styles.icon}
-                        src={
-                          event.thumbnail ||
-                          "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
-                        }
-                        alt="Event Thumbnail"
-                      />
-                      <h3>{event.eventName}</h3>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className={styles.main}>
+            <div className={styles.tabs}>
+              <button
+                className={`${tag === "islands" ? styles.active : ""} ${
+                  styles.buttonA
+                }`}
+                onClick={() => changeTagHandler("islands")}
+              >
+                おすすめ島
+              </button>
+              <button
+                className={`${tag === "events" ? styles.active : ""} ${
+                  styles.buttonB
+                }`}
+                onClick={() => changeTagHandler("events")}
+              >
+                新着イベント
+              </button>
+            </div>
+            <div className={styles.down}>
+              {tag === "islands" && (
+                <div className={styles.islands}>
+                  {islands.slice(0, 6).map((island) => (
+                    <div key={island.id} className={styles.island}>
+                      <Link to={`/island/${island.id}`} className={styles.link}>
+                        <img
+                          className={styles.icon}
+                          src={
+                            island.thumbnail ||
+                            "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                          }
+                          alt="Event Thumbnail"
+                        />
+                        <h3 className={styles.islandName}>
+                          {island.islandName}
+                        </h3>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {tag === "events" && (
+                <div className={styles.events}>
+                  {events.slice(0, 6).map((event) => (
+                    <div key={event.id} className={styles.event}>
+                      <Link to={`/island/${event.id}`} className={styles.link}>
+                        <img
+                          className={styles.iconB}
+                          src={
+                            event.thumbnail ||
+                            "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                          }
+                          alt="Event Thumbnail"
+                        />
+                        <h3 className={styles.eventName}>{event.eventName}</h3>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
