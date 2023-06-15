@@ -91,11 +91,15 @@ export default function EventAll() {
           {events
             .filter((event) => new Date(event.endDate) > currentDateTime)
             .map((event) => (
-              <Link to={`/event/${event.id}`} className={styles.link}>
+              <Link
+                to={`/event/${event.id}`}
+                className={styles.link}
+                key={event.id}
+              >
                 <div key={event.id} className={styles.event2}>
                   <div className={styles.imgSide}>
                     <img
-                      className={styles.icon}
+                      className={styles.icon3}
                       src={
                         event.thumbnail ||
                         "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"

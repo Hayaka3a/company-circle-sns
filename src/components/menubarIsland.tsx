@@ -59,14 +59,16 @@ export default function MenubarIsland() {
     <>
       <div className={styles.menubar}>
         {island && (
-          <img
-            className={styles.icon}
-            src={
-              island.thumbnail ||
-              "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
-            }
-            alt="Event Thumbnail"
-          />
+          <Link to={`/island/${paramsID}`} className={styles.link}>
+            <img
+              className={styles.icon}
+              src={
+                island.thumbnail ||
+                "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+              }
+              alt="Event Thumbnail"
+            />
+          </Link>
         )}
 
         {/* 非同期関数で取得しているから、islandデータが取得される前にコンポーネント描画されて、islandデータが

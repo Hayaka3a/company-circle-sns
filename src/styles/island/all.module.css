@@ -133,13 +133,20 @@
   display: flex;
 }
 
-.icon {
+.icon1 {
   width: 17vh;
   height: 17vh;
   border-radius: 50%; /*サムネイル円型*/
   margin-left: 4vh;
   background-color: #ffbe5d;
   border: 9px double #f7a54e;
+}
+
+.icon3 {
+  width: 17vh;
+  height: 17vh;
+  border-radius: 50%; /*サムネイル円型*/
+  margin-left: 4vh;
 }
 
 .eventName {

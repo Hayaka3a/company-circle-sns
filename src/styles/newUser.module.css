@@ -173,6 +173,7 @@
 
 .addButton {
   height: 39px;
+  background-color: white;
 }
 
 .buttonSide {
@@ -201,4 +202,5 @@
 
 .loginPageButton {
   text-align: left;
+  background-color: white;
 }
