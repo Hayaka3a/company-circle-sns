@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { supabase } from './createClient';
 import { format } from 'date-fns';
 import { useCookies } from 'react-cookie';
@@ -26,6 +26,14 @@ export default function Message() {
   
   const [scoutEvent, setScoutEvent] = useState([]);
   const [scoutIsland, setScoutIsland] = useState([]);
+
+  const navi = useNavigate();
+
+  //ひとつ前のページに戻る
+  const pageBack = () => {
+    navi(-1);
+  };
+
   
   useEffect(() => {
     fetchUserMessages();
@@ -211,9 +219,9 @@ export default function Message() {
 
   return (
     <div className={styles.back}>
-      <Link to={`/island/post`}>
+       <button onClick={pageBack}>
         <img src="/island/close_btn.png" alt="閉じるボタン" className={styles.close_btn} />
-      </Link>
+       </button>
       <div className={styles.receive}>
         {userMessages.map((message) => {
           const post = posts.find((post) => post.id === message.postedBy);
@@ -273,7 +281,9 @@ export default function Message() {
           );
         })}
       </div>
+      {!showTextArea && !userMessages.some((message) => message.scout) && (
       <button onClick={openTextArea}>返信する</button>
+      )}      
       {showTextArea && (
         <div>
           {errorMessage && <p className={styles.error}>{errorMessage}</p>}
