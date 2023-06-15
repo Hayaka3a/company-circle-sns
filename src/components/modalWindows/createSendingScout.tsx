@@ -5,7 +5,6 @@ import { newUsersData } from "../../types/sendScout";
 import { useParams } from "react-router-dom";
 import ComboBoxUser from "../comboBoxUser";
 import ConvertKanaJ from "../changeKana";
-import { isReturnStatement } from "typescript";
 
 export default function CreateSendingScout({
   closeModal,

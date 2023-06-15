@@ -71,7 +71,19 @@
 }
 
 .btn {
-  margin-top: 1vh;
+  margin-top: 14vh;
+  height: 7vh;
+  width: 21vh;
+  border-radius: 3vh;
+  font-weight: bold;
+  color: rgba(94, 70, 44, 1);
+  border: 3px solid rgba(179, 209, 115, 1);
+  box-shadow: 0.7vh 0.7vh rgba(179, 209, 115, 1);
+  transition: 0.3s ease-in-out;
+  background-color: white;
+}
+.btn2 {
+  margin-top: 14vh;
   height: 7vh;
   width: 21vh;
   border-radius: 3vh;
@@ -84,6 +96,11 @@
 }
 
 .btn:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
+  color: rgba(94, 70, 44, 1);
+}
+.btn2:hover {
   box-shadow: none;
   transform: translate(5px, 5px);
   color: rgba(94, 70, 44, 1);
