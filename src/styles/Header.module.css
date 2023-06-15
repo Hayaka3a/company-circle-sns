@@ -154,7 +154,7 @@ header {
 }
 
 .menuGroupItemLink:hover {
-  color: rgb(52, 162, 12);
+  color: rgba(140, 135, 71, 1);
 }
 
 .menuGroupItemLink {
