@@ -97,3 +97,22 @@
   margin-top: 0;
   margin-bottom: 1vh;
 }
+
+.flexDelete {
+  display: flex;
+}
+
+.buttonAligin {
+  align-items: center;
+  margin-left: 4%;
+  width: 100px;
+}
+
+.deleteButton {
+  background-color: rgba(174, 52, 90, 1);
+  margin-top: 60%;
+  margin-bottom: 50%;
+  color: white;
+  height: 5vh;
+  width: 7vh;
+}
