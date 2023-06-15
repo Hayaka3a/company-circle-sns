@@ -21,11 +21,6 @@ export default function Login() {
     }
   }, []);
 
-  const newUser = () => {
-    navigate("/user/newUser");
-    window.location.reload();
-  };
-
   const loginHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
