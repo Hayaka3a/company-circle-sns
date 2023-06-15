@@ -5,6 +5,8 @@ import { format } from 'date-fns';
 import { useCookies } from 'react-cookie';
 import LogSt from './components/cookie/logSt';
 import styles from '../src/styles/message.module.css';
+import ScoutPostEvent from './components/scoutPostEvent';
+import ScoutPostIsland from './components/scoutPostIsland';
 
 export default function Message() {
   LogSt();
@@ -21,7 +23,10 @@ export default function Message() {
   const [isOpen, setIsOpen] = useState(false);
   const [showTextArea, setShowTextArea] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
+  
+  const [scoutEvent, setScoutEvent] = useState([]);
+  const [scoutIsland, setScoutIsland] = useState([]);
+  
   useEffect(() => {
     fetchUserMessages();
   }, []);
@@ -117,8 +122,10 @@ export default function Message() {
       return;
     }
 
-    if (events) {
+    if (events && events.length > 0) {
       setSender((prevSender) => [...prevSender, ...events]);
+      const scoutValues = events.map((event) => event.scout);
+      setScoutEvent(scoutValues.includes(true) ? [true] : []);
     }
   };
 
@@ -127,17 +134,19 @@ export default function Message() {
       .from('islands')
       .select('*')
       .in('id', islandIds);
-
+  
     if (islandsError) {
       console.log('islandsの取得エラー', islandsError);
       return;
     }
-
-    if (islands) {
+  
+    if (islands && islands.length > 0) {
       setSender((prevSender) => [...prevSender, ...islands]);
+      const scoutValues = islands.map((island) => island.scout);
+      setScoutIsland(scoutValues.includes(true) ? [true] : []);
     }
   };
-
+  
   const openTextArea = () => {
     setShowTextArea(true);
   };
@@ -211,7 +220,6 @@ export default function Message() {
           const user = sender.find((user) => user.id === post?.userID);
           const event = sender.find((event) => event.id === post?.eventID);
           const island = sender.find((island) => island.id === post?.islandID);
-
           return (
             <div key={message.id}>
               {user && (
@@ -226,6 +234,7 @@ export default function Message() {
                 </div>
               )}
               {event && (
+                <>
                 <div className={styles.flex}>
                   <p className={styles.from}>from:</p>
                   <img
@@ -234,9 +243,11 @@ export default function Message() {
                     alt="event Thumbnail"
                   />
                   <h3 className={styles.userName}>{event.eventName}</h3>
-                </div>
+                  </div>
+                </>
               )}
               {island && (
+                <>
                 <div className={styles.flex}>
                   <p className={styles.from}>from:</p>
                   <img
@@ -246,11 +257,18 @@ export default function Message() {
                   />
                   <h3 className={styles.userName}>{island.islandName}</h3>
                 </div>
+                </>
               )}
               <p className={styles.receiving_time}>
                 受信日時: {format(new Date(message.sendingDate), 'yyyy年MM月dd日 HH:mm')}
               </p>
-              <p className={styles.text_body}>{message.message}</p>
+              {message.scout && post?.eventID ? (
+                <ScoutPostEvent table={"event"} />
+              ) : message.scout && post?.islandID ? (
+                <ScoutPostIsland table={"island"} />
+              ) : (
+                <p className={styles.text_body}>{message.message}</p>
+              )}
             </div>
           );
         })}
