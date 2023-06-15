@@ -163,8 +163,7 @@
 .addButton {
   height: 4vh;
   margin: 1vh;
-
-  background-color: white;
+  width: 8vh;
 }
 
 .buttonSide {
