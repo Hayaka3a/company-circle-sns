@@ -165,18 +165,23 @@ export default function EventCreate() {
               <tr className={styles.tr}>
                 <th className={styles.th}>サムネイル</th>
                 <td className={styles.imgSide}>
-                  <img
-                    className={styles.icon}
-                    src={imageUrl || "/event/event_icon.png"}
-                    alt="Event Thumbnail"
-                  />
-                  <div className={styles.faileCenter}>
-                    <input
-                      type="file"
-                      id="thumbnail"
-                      className={styles.inputA}
-                      onChange={handleFileChange}
+                  <div className={styles.imgCenter}>
+                    <img
+                      className={styles.icon}
+                      src={imageUrl || "/event/event_icon.png"}
+                      alt="Event Thumbnail"
                     />
+                  </div>
+                  <div className={styles.faileCenter}>
+                    <label className={styles.fileLabel}>
+                      <input
+                        type="file"
+                        id="thumbnail"
+                        className={styles.file}
+                        onChange={handleFileChange}
+                      />
+                      ファイルを選択
+                    </label>
                   </div>
                 </td>
               </tr>

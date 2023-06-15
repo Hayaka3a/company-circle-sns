@@ -1,6 +1,6 @@
 .all {
   display: flex;
-  tex-align: center;
+  text-align: center;
 }
 
 .box {
@@ -18,6 +18,32 @@
 }
 
 /* 入力項目 */
+
+.eventName {
+  border: solid 0.3vh rgba(138, 121, 98, 1);
+  height: 5vh;
+  width: 30vw;
+  font-size: 1.2vw;
+  border-radius: 1vh;
+}
+
+.detail {
+  border: solid 0.3vh rgba(138, 121, 98, 1);
+  height: 20vh;
+  width: 30vw;
+  font-size: 1.2vw;
+  font-weight: lighter;
+  border-radius: 1vh;
+}
+
+.date {
+  border: solid 0.3vh rgba(138, 121, 98, 1);
+  height: 5vh;
+  width: 13.6vw;
+  font-size: 1.2vw;
+  border-radius: 1vh;
+}
+
 .tableCovered {
   display: flex;
   justify-content: center; /* 水平方向の中央揃え */
@@ -50,6 +76,7 @@ table {
   text-align: left;
   border-right: none; /* 最後の列の縦線を非表示*/
   width: 50%;
+  font-size: 2.5vh;
 }
 
 .allContents {
@@ -77,28 +104,114 @@ table {
   background-color: rgb(243, 187, 187);
 }
 
+.imgCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10vw;
+}
+
+.fileLabel {
+  width: 9vw;
+  padding: 4%;
+  color: #ffffff;
+  background-color: rgba(194, 137, 66, 1);
+  cursor: pointer;
+  border-radius: 3vh;
+  margin-left: 1.5vw;
+}
+
+input[type="file"] {
+  display: none;
+}
+
 .icon {
-  width: 100px;
-  height: 100px;
+  width: 16vh;
+  height: 16vh;
   border-radius: 50%; /*サムネイル円型*/
   margin-left: auto;
   margin-right: auto;
+  background-color: rgb(233, 184, 125);
+  border: 3px solid rgba(194, 137, 66, 1);
+}
+
+.delBtn {
+  background-color: white;
+  color: rgba(194, 137, 66, 1);
+}
+
+.selectedValue {
+  margin: 5px;
+  width: 8vw;
+  padding: 5px;
+  background-color: rgb(100, 207, 6);
+}
+
+.selectbox {
+  position: relative;
+}
+
+.selectbox::before,
+.selectbox::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.selectbox-::before {
+  right: 0;
+  display: inline-block;
+  width: 2.8em;
+  height: 2.8em;
+  border-radius: 0 3px 3px 0;
+  background-color: #2589d0;
+  content: "";
+}
+
+.selectbox::after {
+  position: absolute;
+  top: 50%;
+  right: 1.4em;
+  transform: translate(50%, -50%) rotate(45deg);
+  width: 6px;
+  height: 6px;
+  border-bottom: 3px solid #fff;
+  border-right: 3px solid #fff;
+  content: "";
+}
+
+.selectbox select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  min-width: 230px;
+  height: 2.8em;
+  padding: 0.4em 3.6em 0.4em 0.8em;
+  border: 2px solid #2589d0;
+  border-radius: 3px;
+  color: #333333;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.selectbox select:focus {
+  outline: 1px solid #2589d0;
 }
 
 .table {
   width: 85%;
   border-collapse: collapse;
   border-spacing: 0 6vh; /* 行間幅 */
-  border-top: 1px solid rgb(149, 149, 149);
+  border-top: 1px solid rgba(194, 137, 66, 1);
   margin-bottom: 6%;
 }
 
 .th {
-  border-bottom: 1px solid rgb(180, 180, 180);
+  border-bottom: 1px solid rgba(194, 137, 66, 1);
   text-align: left;
 }
 .td {
-  border-bottom: 1px solid rgb(180, 180, 180);
+  border-bottom: 1px solid rgba(194, 137, 66, 1);
   text-align: left;
 }
 

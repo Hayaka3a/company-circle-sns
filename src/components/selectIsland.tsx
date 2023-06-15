@@ -101,19 +101,25 @@ export default function SelectIsland({
       <div>共同開催する島がある場合は、ここから選択してください</div>
       <select
         name="islands"
-        multiple
         size={4}
         onChange={handleSelectChange} // 選択が変更されたときの処理を追加
+        className={styles.selectIsland}
       >
-        <optgroup label="島名">
+        <optgroup label="島名" className={styles.islansTitle}>
           {islands.map((island) => (
-            <option key={island.islandName} value={island.islandName}>
+            <option
+              key={island.islandName}
+              value={island.islandName}
+              className={styles.option}
+            >
               {island.islandName}
             </option>
           ))}
         </optgroup>
       </select>
-      <button onClick={addNameHandler}>追加</button>
+      <button onClick={addNameHandler} className={styles.add}>
+        追加
+      </button>
       {selectError && (
         <div>
           <span className={styles.span}>{selectError}</span>
@@ -129,7 +135,12 @@ export default function SelectIsland({
               <div className={styles.nameFlex}>
                 <span className={styles.nowrap}>{value}</span>
                 &nbsp;&nbsp;
-                <button onClick={() => deleteNameHandler(index)}>×</button>
+                <button
+                  onClick={() => deleteNameHandler(index)}
+                  className={styles.delBtn}
+                >
+                  ×
+                </button>
               </div>
             </div>,
           );

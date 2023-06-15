@@ -113,8 +113,37 @@
 
 .selectedValue {
   margin: 5px;
-  padding: 5px;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  padding-top: 0.2vw;
+  padding-bottom: 0.2vw;
   background-color: rgb(100, 207, 6);
+  border-radius: 1vh;
+}
+
+.delBtn {
+  background-color: white;
+  color: rgba(194, 137, 66, 1);
+  width: 2.9vh;
+  height: 2.9vh;
+}
+
+.selectIsland {
+  border: 2.5px solid rgba(138, 121, 98, 1);
+  width: 20vw;
+  height: 25vh;
+  color: rgb(105, 94, 79);
+  font-size: 2.5vh;
+}
+
+.islansTitle {
+  background-color: rgba(194, 137, 66, 1);
+  color: white;
+}
+
+.option {
+  background-color: white;
+  color: rgb(105, 94, 79);
 }
 
 .row {
@@ -205,6 +234,12 @@
   margin-left: 1vh;
   background-color: rgba(194, 137, 66, 1);
   color: white;
+}
+
+.add {
+  background-color: rgba(194, 137, 66, 1);
+  padding-right: 0.7vw;
+  padding-left: 0.7vw;
 }
 
 .btn:disabled {
