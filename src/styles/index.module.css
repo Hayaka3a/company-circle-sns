@@ -1,5 +1,6 @@
 .information {
   margin: 2%;
+  margin-top: 6vh;
   background-color: #ffebee;
   border: dashed 3px #e57373;
   box-shadow: 0 0 0 10px #ffebee, 0 0 0 25px #e57373;
@@ -80,8 +81,8 @@
 }
 
 .icon {
-  width: 9vw;
-  height: 9vw;
+  width: 8vw;
+  height: 8vw;
   border-radius: 50%;
   margin-left: 3%;
   margin-right: 10%;
@@ -110,8 +111,8 @@
 }
 
 .iconB {
-  width: 9vw;
-  height: 9vw;
+  width: 8vw;
+  height: 8vw;
   border-radius: 50%;
   margin-left: 3%;
   margin-right: 10%;
@@ -129,6 +130,10 @@
 .tab {
   display: flex;
   flex-wrap: wrap;
+}
+
+.tabs {
+  margin-bottom: 2vh;
 }
 
 .buttonA {
@@ -181,6 +186,7 @@
   transition: all 0.8s ease;
   cursor: pointer;
   color: rgb(209, 145, 25);
+  font-size: 2.5vh;
 }
 
 .islandName:hover {
@@ -195,6 +201,7 @@
   transition: all 0.8s ease;
   cursor: pointer;
   color: rgb(27, 157, 13);
+  font-size: 2.5vh;
 }
 
 .eventName:hover {
