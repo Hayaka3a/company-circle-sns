@@ -79,7 +79,14 @@ export default function BelongIsland() {
   return (
     <>
       {hasNewMessage && (
-        <p className={styles.p}>✴島ポストに新しいメッセージが届いています</p>
+        <div className={styles.flex}>
+          <img
+            src={"/images/light.png"}
+            alt="event"
+            className={styles.party}
+          ></img>
+          <p className={styles.p}>島ポストに新しいメッセージが届いています</p>
+        </div>
       )}
     </>
   );

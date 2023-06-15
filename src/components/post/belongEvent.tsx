@@ -124,9 +124,16 @@ export default function BelongEvent() {
   return (
     <>
       {hasNewMessage && (
-        <p className={styles.p}>
-          ✴イベントポストに新しいメッセージが届いています
-        </p>
+        <div className={styles.flex}>
+          <img
+            src={"/images/light.png"}
+            alt="event"
+            className={styles.party}
+          ></img>
+          <p className={styles.p}>
+            イベントポストに新しいメッセージが届いています
+          </p>
+        </div>
       )}
     </>
   );

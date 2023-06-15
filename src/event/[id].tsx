@@ -18,6 +18,7 @@ export default function EventDetail() {
   const navigate = useNavigate();
   const eventId = useParams();
   const userId = GetCookieID();
+  const [button, setButton] = useState(true);
   const [eventDetail, setEventDetail] = useState<Event>(null); // 取得した島の詳細情報を保持する状態変数
   const [eventImage, setEventImage] = useState(
     "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
@@ -40,6 +41,17 @@ export default function EventDetail() {
     if (error) {
       console.error("fetchEventDetail:", error);
       return;
+    }
+
+    const { data: user, error: userError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("id", data[0].ownerID);
+    const owner = user[0].id.toString();
+
+    // ownerじゃない人には「編集・削除」ボタン機能を表示させない
+    if (owner !== userId) {
+      setButton(false);
     }
     if (data.length === 0) {
       console.warn("該当する島の詳細情報が見つかりませんでした。");
@@ -204,13 +216,18 @@ export default function EventDetail() {
                 <span className={styles.span}>{alreadyError}</span>
               </div>
             )}
+
             <button
               onClick={openResindentModal}
-              className={`${styles.btn1} ${alreadyError && styles.disabled}`}
-              disabled={alreadyError ? true : false}
+              // 条件式 ? 真の場合の値 : 偽の場合の値
+              className={`${styles.btn1} ${
+                alreadyError || button ? styles.disabled : ""
+              }`}
+              disabled={alreadyError ? true : false || button}
             >
               住民申請
             </button>
+
             {isResidentOpen && (
               <CreateResidentApplication
                 closeModal={closeResidentModal}
@@ -224,11 +241,13 @@ export default function EventDetail() {
               <EventSendingMessage closeModal={closeModal} table="event" />
             )}
           </div>
-          <div className={styles.editbox}>
-            <button id={styles.edit_btn} onClick={Handler}>
-              編集・削除
-            </button>
-          </div>
+          {button && (
+            <div className={styles.editbox}>
+              <button id={styles.edit_btn} onClick={Handler}>
+                編集・削除
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
