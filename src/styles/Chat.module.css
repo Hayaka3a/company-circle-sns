@@ -20,6 +20,7 @@
   margin-block-end: 0em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+  font-size: 4vh;
 }
 
 .icon {
@@ -114,7 +115,6 @@
   height: 4vh;
   margin-left: 5px;
   margin-bottom: -3px;
-  border: 7px solid #60d4d6;
 }
 
 .link {

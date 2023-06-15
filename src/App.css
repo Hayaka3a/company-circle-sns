@@ -20,6 +20,9 @@ button {
   border-radius: 2vh;
   user-select: none;
   cursor: pointer;
+  background-color: rgba(220, 158, 108, 1);
+  color: white;
+  margin-left: 0.5vh;
 }
 button:hover {
   box-shadow: none;

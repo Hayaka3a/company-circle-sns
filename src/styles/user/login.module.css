@@ -64,6 +64,7 @@
   box-shadow: 5px 5px rgba(110, 148, 115, 1);
   transition: 0.3s ease-in-out;
   height: 7vh;
+  background-color: white;
 }
 
 .button:hover {

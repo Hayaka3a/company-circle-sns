@@ -28,7 +28,7 @@ function Thread({ thread }: { thread: thread[] }) {
   return (
     <div className={styles.content}>
       {thread.map((thread) => (
-        <div className={styles.flexDelete}>
+        <div className={styles.flexDelete} key={thread.id}>
           <div key={thread.id} className={styles.thread}>
             <h2
               className={styles.title}

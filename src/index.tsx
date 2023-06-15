@@ -141,7 +141,7 @@ export default function Index() {
               <div className={styles.events}>
                 {events.slice(0, 6).map((event) => (
                   <div key={event.id} className={styles.event}>
-                    <Link to={`/island/${event.id}`}>
+                    <Link to={`/event/${event.id}`}>
                       <img
                         className={styles.icon}
                         src={

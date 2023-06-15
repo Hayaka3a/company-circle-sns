@@ -149,8 +149,12 @@ export default function CreateSendingScout({
                 ></textarea>
               </div>
             </div>
-            <div className={styles.btn}>
-              <button onClick={addHandler} disabled={!islandMembers}>
+            <div>
+              <button
+                onClick={addHandler}
+                disabled={!islandMembers}
+                className={styles.btn}
+              >
                 送信
               </button>
             </div>
