@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { supabase } from './createClient';
 import { format } from 'date-fns';
-import GetCookieID from './components/cookie/getCookieId';
 import { useCookies } from 'react-cookie';
 import LogSt from './components/cookie/logSt';
-import styles from '../src/styles/message.module.css'
+import styles from '../src/styles/message.module.css';
 
 export default function Message() {
   LogSt();
@@ -13,14 +12,10 @@ export default function Message() {
   const { id } = useParams();
 
   const cookies = useCookies(["id"]);
-  const postedBy = cookies[0].id;
-
-  // console.log("Cookieから取得", postedBy);
-
-
+  const userCookie = cookies[0].id;
 
   const [userMessages, setUserMessages] = useState([]);
-  const [islands, setIslands] = useState([]);
+  const [sender, setSender] = useState([]);
   const [posts, setPosts] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -53,16 +48,16 @@ export default function Message() {
     if (messages) {
       setUserMessages(messages);
 
-      const islandIDs = messages.map((message) => message.postedBy);
-      fetchPosts(islandIDs);
+      const messagesPosteBy = messages.map((message) => message.postedBy);
+      fetchPosts(messagesPosteBy);
     }
   };
 
-  const fetchPosts = async (islandIDs) => {
+  const fetchPosts = async (messagesPosteBy) => {
     const { data: posts, error: postsError } = await supabase
       .from('posts')
-      .select('id, islandID')
-      .in('id', islandIDs);
+      .select('id, userID, islandID, eventID')
+      .in('id', messagesPosteBy);
 
     if (postsError) {
       console.log('postsの取得エラー', postsError);
@@ -72,16 +67,66 @@ export default function Message() {
     if (posts) {
       setPosts(posts);
 
-      const uniqueIslandIDs = Array.from(new Set(posts.map((post) => post.islandID)));
-      fetchIslands(uniqueIslandIDs);
+      const userIds = [];
+      const eventIds = [];
+      const islandIds = [];
+
+      // ユーザーID、イベントID、アイランドIDに基づいて送信者を分類
+      posts.forEach((post) => {
+        if (post.userID) {
+          userIds.push(post.userID);
+        }
+        if (post.eventID) {
+          eventIds.push(post.eventID);
+        }
+        if (post.islandID) {
+          islandIds.push(post.islandID);
+        }
+      });
+
+      fetchUsers(userIds);
+      fetchEvents(eventIds);
+      fetchIslands(islandIds);
     }
   };
 
-  const fetchIslands = async (islandIDs) => {
+  const fetchUsers = async (userIds) => {
+    const { data: users, error: usersError } = await supabase
+      .from('users')
+      .select('*')
+      .in('id', userIds);
+
+    if (usersError) {
+      console.log('usersの取得エラー', usersError);
+      return;
+    }
+
+    if (users) {
+      setSender((prevSender) => [...prevSender, ...users]);
+    }
+  };
+
+  const fetchEvents = async (eventIds) => {
+    const { data: events, error: eventsError } = await supabase
+      .from('events')
+      .select('*')
+      .in('id', eventIds);
+
+    if (eventsError) {
+      console.log('eventsの取得エラー', eventsError);
+      return;
+    }
+
+    if (events) {
+      setSender((prevSender) => [...prevSender, ...events]);
+    }
+  };
+
+  const fetchIslands = async (islandIds) => {
     const { data: islands, error: islandsError } = await supabase
       .from('islands')
       .select('*')
-      .in('id', islandIDs);
+      .in('id', islandIds);
 
     if (islandsError) {
       console.log('islandsの取得エラー', islandsError);
@@ -89,7 +134,7 @@ export default function Message() {
     }
 
     if (islands) {
-      setIslands(islands);
+      setSender((prevSender) => [...prevSender, ...islands]);
     }
   };
 
@@ -105,25 +150,18 @@ export default function Message() {
       return;
     }
 
-    // データベースクエリを実行して、postedByの値に基づいてuserIDを取得
     const { data, error } = await supabase
       .from('posts')
       .select('id')
-      .eq('userID', postedBy)
+      .eq('userID', userCookie)
       .single();
 
     if (error) {
       console.error('エラー:', error);
-      // エラーハンドリングを行う
       return;
     }
 
-    // 結果からidを取得
     const userId = data?.id;
-
-    // console.log("送信する側", userId)
-
-
 
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString();
@@ -170,15 +208,40 @@ export default function Message() {
       <div className={styles.receive}>
         {userMessages.map((message) => {
           const post = posts.find((post) => post.id === message.postedBy);
-          const island = islands.find((island) => island.id === post?.islandID);
+          const user = sender.find((user) => user.id === post?.userID);
+          const event = sender.find((event) => event.id === post?.eventID);
+          const island = sender.find((island) => island.id === post?.islandID);
+
           return (
             <div key={message.id}>
+              {user && (
+                <div className={styles.flex}>
+                  <p className={styles.from}>from:</p>
+                  <img
+                    id="img"
+                    src={user.thumbnail || 'https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351'}
+                    alt="user Thumbnail"
+                  />
+                  <h3 className={styles.userName}>{user.familyName}{user.firstName}</h3>
+                </div>
+              )}
+              {event && (
+                <div className={styles.flex}>
+                  <p className={styles.from}>from:</p>
+                  <img
+                    id="img"
+                    src={event.thumbnail || 'https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351'}
+                    alt="event Thumbnail"
+                  />
+                  <h3 className={styles.userName}>{event.eventName}</h3>
+                </div>
+              )}
               {island && (
                 <div className={styles.flex}>
                   <p className={styles.from}>from:</p>
                   <img
                     id="img"
-                    src={island.thumbnail || 'island/island_icon.png'}
+                    src={island.thumbnail || 'https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351'}
                     alt="island Thumbnail"
                   />
                   <h3 className={styles.userName}>{island.islandName}</h3>
