@@ -9,7 +9,6 @@ export default function ScoutPostIsland({ table }: { table: string }) {
   const params = useParams();
   const paramsID = parseInt(params.id);
 
-  const navi = useNavigate();
 
   //  データを取得
   useEffect(() => {

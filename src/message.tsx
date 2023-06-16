@@ -20,7 +20,6 @@ export default function Message() {
   const [sender, setSender] = useState([]);
   const [posts, setPosts] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
   const [showTextArea, setShowTextArea] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   
@@ -216,6 +215,21 @@ export default function Message() {
       return () => clearTimeout(timer);
     }
   }, [errorMessage]);
+
+  useEffect(() => {
+    const markMessageAsRead = async () => {
+      const { error } = await supabase
+        .from('messages')
+        .update({ isRead: true })
+        .eq('id', parseInt(id));
+
+      if (error) {
+        console.log('メッセージを既読にする際のエラー', error);
+      }
+    };
+
+    markMessageAsRead();
+  }, [id]);
 
   return (
     <div className={styles.back}>
