@@ -1,10 +1,15 @@
 .information {
   margin: 2%;
+  margin-top: 6vh;
   background-color: #ffebee;
   border: dashed 3px #e57373;
   box-shadow: 0 0 0 10px #ffebee, 0 0 0 25px #e57373;
   border-radius: 3vh;
   font-weight: 500;
+  width: 50vw;
+  justify-content: center;
+  color: rgb(131, 48, 47);
+  padding-bottom: 2%;
 }
 
 .logo {
@@ -14,75 +19,110 @@
 }
 
 .all {
-  padding-left: 10%;
-  padding-right: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
   text-align: center;
   width: auto;
   height: auto;
+  justify-content: center;
 }
 
 .news {
   margin: 1%;
   color: rgba(135, 69, 68, 1);
+  padding-bottom: 2%;
+  padding-top: 1.5%;
 }
 
 .islands {
-  background-color: rgba(250, 247, 235, 1);
-  padding-top: 2%;
+  background-color: rgb(244, 236, 207);
+  padding-top: 6%;
   padding-bottom: 3%;
-  padding-left: 3%;
+  padding-left: 1vw;
+  padding-right: 1vw;
   text-align: center;
   display: flex;
-  margin-bottom: 50px;
+  margin-bottom: 5vh;
   border: dashed 3px rgba(209, 190, 79, 1);
-  box-shadow: 0 0 0 10px rgba(250, 247, 235, 1),
-    0 0 0 25px rgba(209, 190, 79, 1);
+  box-shadow: 0 0 0 10px rgb(250, 241, 209), 0 0 0 25px rgba(209, 190, 79, 1);
   border-radius: 3vh;
+  width: 62vw;
 }
 
 .island {
   display: flex;
   flex-direction: column;
   flex-basis: calc(33.33% - 10px);
-  margin-right: 10px;
   margin-bottom: 10px;
   align-items: center;
 }
 
 .events {
-  background-color: rgba(250, 247, 235, 1);
-  padding-top: 2%;
+  background-color: rgb(237, 252, 212);
+  padding-top: 6%;
   padding-bottom: 3%;
-  padding-left: 3%;
+  padding-left: 1vw;
+  padding-right: 1vw;
   text-align: center;
   display: flex;
-  margin-bottom: 50px;
+  margin-bottom: 5vh;
   border: dashed 3px rgba(156, 194, 116, 1);
-  box-shadow: 0 0 0 10px rgba(250, 247, 235, 1),
-    0 0 0 25px rgba(156, 194, 116, 1);
+  box-shadow: 0 0 0 10px rgb(232, 250, 200), 0 0 0 25px rgba(156, 194, 116, 1);
   border-radius: 3vh;
+  width: 62vw;
 }
 
 .event {
   display: flex;
   flex-direction: column;
   flex-basis: calc(33.33% - 10px);
-  margin-right: 10px;
   margin-bottom: 10px;
   align-items: center;
 }
 
 .icon {
-  width: 11vh;
-  height: 11vh;
+  width: 8vw;
+  height: 8vw;
   border-radius: 50%;
   margin-left: 3%;
   margin-right: 10%;
   margin-top: auto;
   transition: 0.3s;
+  padding: 5px;
+  border: double 5px #eaa51c;
+  position: relative;
+}
+
+.icon::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: double 5px #eaa51c;
+  border-radius: 50%;
+  animation: 3s linear infinite rotation1;
 }
 
 .icon:hover {
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.iconB {
+  width: 8vw;
+  height: 8vw;
+  border-radius: 50%;
+  margin-left: 3%;
+  margin-right: 10%;
+  margin-top: auto;
+  transition: 0.3s;
+  padding: 5px;
+  border: double 5px #0bca04;
+}
+
+.iconB:hover {
   box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.1);
   transform: translateY(-4px);
 }
@@ -92,28 +132,43 @@
   flex-wrap: wrap;
 }
 
+.tabs {
+  margin-bottom: 2vh;
+}
+
 .buttonA {
   border: none;
   background-color: rgba(225, 195, 18, 1);
-  width: 18%;
-  height: 6vh;
+  width: 10vw;
+  height: 6.5vh;
   font-size: 100%;
-  border-radius: 3vh;
-  margin-border: 5%;
+  border-radius: 2.5vh;
+  color: white;
+  margin-bottom: 5%;
 }
 
 .buttonB {
   border: none;
   background-color: rgb(152, 205, 103);
-  width: 18%;
-  height: 6vh;
+  width: 10vw;
+  height: 6.5vh;
   font-size: 100%;
-  border-radius: 3vh;
+  border-radius: 2.5vh;
+  color: white;
+}
+
+.displayAll {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .main {
   margin-top: 8%;
   padding-bottom: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .p {
@@ -125,4 +180,58 @@
 }
 
 .islandName {
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0 50%;
+  transition: all 0.8s ease;
+  cursor: pointer;
+  color: rgb(209, 145, 25);
+  font-size: 2.5vh;
+}
+
+.islandName:hover {
+  background-size: 100% 40%;
+  color: rgb(254, 141, 36);
+}
+
+.eventName {
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0 50%;
+  transition: all 0.8s ease;
+  cursor: pointer;
+  color: rgb(27, 157, 13);
+  font-size: 2.5vh;
+}
+
+.eventName:hover {
+  background-size: 100% 40%;
+  color: rgb(23, 201, 3);
+}
+
+.link {
+  text-decoration: none;
+}
+
+.party {
+  width: 5vh;
+  height: 5.2vh;
+  animation: fuwafuwa 2s infinite;
+}
+
+@keyframes fuwafuwa {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
 }

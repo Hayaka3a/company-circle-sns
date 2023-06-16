@@ -198,7 +198,6 @@ export default function UserEdit() {
 
   return (
     <>
-      {" "}
       <div className="loginPageButton">
         <Link to={"/"}>
           <button>トップページへ</button>
@@ -381,18 +380,18 @@ export default function UserEdit() {
                           </p>
                         </td>
                       </tr>
+
                       <tr className={styles.tr}>
                         <th className={styles.th}>職種</th>
                         <td className={styles.td}>
                           <div className={styles.radio}>
                             {category.map((item) => {
                               return (
-                                <div key={item.name} className={styles.radio}>
+                                <div key={item.id} className={styles.radio}>
                                   <input
                                     id={item.id}
                                     type="radio"
                                     value={item.id}
-                                    key={item.id}
                                     defaultChecked={item.name === radio}
                                     disabled={!editMode}
                                     {...register("department")}

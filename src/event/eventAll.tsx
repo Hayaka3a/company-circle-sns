@@ -56,11 +56,15 @@ export default function EventEverything() {
           </div>
           <div className={styles.eventAll}>
             {events.map((event) => (
-              <Link to={`/event/${event.id}`} className={styles.link}>
+              <Link
+                to={`/event/${event.id}`}
+                className={styles.link}
+                key={event.id}
+              >
                 <div key={event.id} className={styles.event1}>
                   <div className={styles.imgSide}>
                     <img
-                      className={styles.icon}
+                      className={styles.icon1}
                       src={event.thumbnail || "/event/event_icon.png"}
                       alt="event Thumbnail"
                     ></img>

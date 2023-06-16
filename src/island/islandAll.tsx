@@ -8,10 +8,8 @@ import { useEffect, useState } from "react";
 export default function IslandAll() {
   LogSt();
 
-  const navigate = useNavigate();
   const params = useParams();
   const paramsID = params.id;
-  console.log(paramsID);
 
   const [islands, setIslands] = useState([]);
 
@@ -48,11 +46,15 @@ export default function IslandAll() {
         <h2 className={styles.title}>島一覧</h2>
         <div className={styles.eventAll}>
           {islands.map((island) => (
-            <Link to={`/island/${island.id}`} className={styles.link}>
+            <Link
+              to={`/island/${island.id}`}
+              className={styles.link}
+              key={island.id}
+            >
               <div key={island.id} className={styles.event1}>
                 <div className={styles.imgSide}>
                   <img
-                    className={styles.icon}
+                    className={styles.icon1}
                     src={island.thumbnail || "/island/island_icon.png"}
                     alt="island Thumbnail"
                   ></img>

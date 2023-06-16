@@ -133,7 +133,13 @@ export default function MenubarEvent() {
     <>
       <div className={styles.menubar}>
         {event && (
-          <img className={styles.icon} src={eventImage} alt="Event Thumbnail" />
+          <Link to={`/event/${paramsID}`} className={styles.link}>
+            <img
+              className={styles.icon}
+              src={eventImage}
+              alt="Event Thumbnail"
+            />
+          </Link>
         )}
         <h3 className={styles.title}>{event && event.eventName}</h3>
         {/* ユーザーがイベントに参加している場合 */}
@@ -165,12 +171,12 @@ export default function MenubarEvent() {
         {!isJoined && (
           <div className={styles.menuContents}>
             <div>
-              <Link to={`/event/members`} className={styles.link}>
+              <Link to={`/event/members/${paramsID}`} className={styles.link}>
                 参加者一覧
               </Link>
             </div>
             <div>
-              <Link to={`/event/[id]`} className={styles.link}>
+              <Link to={`/event/${paramsID}`} className={styles.link}>
                 イベント詳細
               </Link>
             </div>

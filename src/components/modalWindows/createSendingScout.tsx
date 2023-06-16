@@ -5,7 +5,6 @@ import { newUsersData } from "../../types/sendScout";
 import { useParams } from "react-router-dom";
 import ComboBoxUser from "../comboBoxUser";
 import ConvertKanaJ from "../changeKana";
-import { isReturnStatement } from "typescript";
 
 export default function CreateSendingScout({
   closeModal,
@@ -149,8 +148,12 @@ export default function CreateSendingScout({
                 ></textarea>
               </div>
             </div>
-            <div className={styles.btn}>
-              <button onClick={addHandler} disabled={!islandMembers}>
+            <div>
+              <button
+                onClick={addHandler}
+                disabled={!islandMembers}
+                className={styles.btn}
+              >
                 送信
               </button>
             </div>

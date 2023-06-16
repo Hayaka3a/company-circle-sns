@@ -155,7 +155,9 @@ export default function IslandDetail() {
             )}
             <button
               onClick={openResindentModal}
-              className={`${styles.btn1} ${alreadyError && styles.disabled}`}
+              className={`${styles.btn1} ${
+                alreadyError || button ? styles.disabled : ""
+              }`}
               disabled={alreadyError ? true : false}
             >
               住民申請

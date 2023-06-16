@@ -48,9 +48,16 @@ export default function PersonalPost({
   return (
     <>
       {hasNewMessage && (
-        <p className={styles.p}>
-          ✴あなたのポストに新しいメッセージが届いています
-        </p>
+        <div className={styles.flex}>
+          <img
+            src={"/images/light.png"}
+            alt="event"
+            className={styles.party}
+          ></img>
+          <p className={styles.p}>
+            あなたのポストに新しいメッセージが届いています
+          </p>
+        </div>
       )}
     </>
   );

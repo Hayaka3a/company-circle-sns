@@ -66,7 +66,6 @@ export default function UserPost() {
             .then((results) => {
               const Objects = results.filter((result) => result !== undefined);
 
-              console.log(Objects);
               setMessages(Objects);
             })
             .catch((error) => {

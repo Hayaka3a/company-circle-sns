@@ -95,7 +95,9 @@ export default function CreateThread({
               </div>
             </div>
             <div>
-              <button onClick={addHandler}>作成</button>
+              <button onClick={addHandler} className={styles.btn}>
+                作成
+              </button>
             </div>
           </div>
         </div>
