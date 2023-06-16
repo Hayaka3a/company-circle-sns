@@ -19,8 +19,7 @@ export default function IslandEdit() {
     fetchIsland();
   }, []);
 
-
-  const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+  const [imageUrl, setImageUrl] = useState("");
 
   const navigate = useNavigate();
   // 削除のモーダルウィンドウの開閉
@@ -28,10 +27,11 @@ export default function IslandEdit() {
   const [isDeleteCheckOpen, setIsDeleteCheckOpen] = useState(false);
   const [isAfterDeleteOpen, setIsAfterDeleteOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [chosenTag, setChosenTag] = useState([]);
 
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
-  const [tagName, setTagName] = useState("");
+  const [tagName, setTagName] = useState([]);
   const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandID, setIslandID] = useState<number>(); // islandIDステートを追加
 
@@ -41,8 +41,12 @@ export default function IslandEdit() {
     { id: number; Name: string; NameKana: string }[]
   >([]);
   const [tagNames, setTagNames] = useState<
-    { Name: string; NameKana: string }[]
+    { Name: string; NameKana: string; tagNameKana: string }[]
   >([]);
+
+  useEffect(() => {
+    setChosenTag(islandTags);
+  }, [islandTags]);
 
   // 島を沈没させてもよろしいですか？モーダルウィンドウを表示
   const openDeleteModal = () => {
@@ -124,6 +128,10 @@ export default function IslandEdit() {
   };
 
   // データベースからislands情報を取得
+  useEffect(() => {
+    fetchIsland();
+  }, []);
+
   const fetchIsland = async () => {
     const { data } = await supabase
       .from("islands")
@@ -132,67 +140,68 @@ export default function IslandEdit() {
       .eq("status", false);
 
     if (data) {
-      const island = data[0];
-      const fetchislandID = island.id;
+      const fetchislandID = data[0].id;
 
       setIslandID(fetchislandID); // islandIDステートに値をセット
-      setIslandName(island.islandName); // サークル名をislandNameステートにセット
-      setDetail(island.detail); // 活動内容をdetailステートにセット
+      setIslandName(data[0].islandName); // サークル名をislandNameステートにセット
+      setDetail(data[0].detail); // 活動内容をdetailステートにセット
 
       const { data: fetchTag, error: fetchTagError } = await supabase
         .from("tagStatus")
         .select("tagID")
-        .eq("islandID", islandID)
+        .eq("islandID", fetchIslandID)
         .eq("status", false);
 
       if (fetchTag) {
-        const tagIDs = fetchTag.map((island) => island.tagID);
+        const tagIDs = fetchTag.map((tg) => tg.tagID); // tagID の値の配列を作成
+
         const { data: fetchTagsData, error: fetchTagsError } = await supabase
           .from("tags")
-          .select("*")
-          .in("id", tagIDs)
+          .select("id, tagName, tagNameKana")
+          .in("id", tagIDs) // tagIDs を配列として渡す
           .eq("status", false);
 
-        if (fetchTagsData) {
-          const tags: {
-            id: number;
-            Name: string;
-            NameKana: string;
-            // NameKanaJ: string;
-          }[] = fetchTagsData.map((tag) => ({
+        setTagName(fetchTagsData);
+
+        const tagsAll: { id: number; Name: string; NameKana: string }[] =
+          fetchTagsData?.map((tag) => ({
             id: tag.id,
             Name: tag.tagName,
             NameKana: tag.tagNameKana,
-            // NameKanaJ: `${ConvertKanaJ(tag.tagNameKana)}`,
           }));
-          if (tags.length > 0) {
-            const tagNames = tags.map((tag) => ({
-              Name: tag.Name,
-              NameKana: tag.NameKana,
-            }));
-            setTagNames(tagNames);
-            // console.log(tagNames)
-          }
-        }
+
+        Promise.resolve(tagsAll)
+          .then((resolvedTagsAll) => {
+            setChosenTag(resolvedTagsAll);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       }
     }
   };
 
-  // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
-  useEffect(() => {
-    let circleElement = document.getElementById("img");
-    if (circleElement) {
-      circleElement.style.backgroundImage = `url('${imageUrl}')`;
-    }
-  }, [imageUrl]);
-
   // 画像ファイル選択したら、表示画像に反映
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!event.target.files || event.target.files.length == 0) {
+      // 画像が選択されていないのでreturn
+      return;
     }
+
+    const file = event.target.files?.[0];
+    const random = Math.floor(Math.random() * 10000);
+    const filePath = `${file.name}${random}`; // 画像の保存先のpathを指定
+    const { error } = await supabase.storage
+      .from("islandIcon")
+      .upload(filePath, file);
+    if (error) {
+      console.log(error, "画像追加エラー", filePath);
+    }
+
+    const { data } = supabase.storage.from("islandIcon").getPublicUrl(filePath);
+    setImageUrl(data.publicUrl);
   };
 
   // 編集ボタンを押下、島名を変更
@@ -201,12 +210,9 @@ export default function IslandEdit() {
   };
 
   // 編集ボタンを押下、活動内容を変更
-  const handelDetailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDetail(e.target.value);
+  const handleDetailChange = (newDetail) => {
+    setDetail(newDetail); // 修正: 新しい値を detail ステートに設定する
   };
-
-  // タグ追加
-  const addHandler = async () => {};
 
   // データベースから全タグ名取得
   useEffect(() => {
@@ -225,7 +231,6 @@ export default function IslandEdit() {
             NameKana: tag.tagNameKana,
           }));
         setTagOptions(tagsAll);
-        console.log(tagsAll);
       }
     };
 
@@ -238,30 +243,8 @@ export default function IslandEdit() {
     if (!editMode) {
       return;
     }
-    handleSave();
     createHandler();
-    // fetchislandID();
   };
-
-  const handleSave = async () => {
-    try {
-      await supabase
-        .from("islands")
-        .update([
-          {
-            islandName: islandName,
-            detail: detail,
-          },
-        ])
-        .eq("id", fetchIslandID);
-      console.log("Data updated successfully.");
-    } catch (error) {
-      console.error("Error updating data:", error.message);
-    }
-  };
-
-  // const island = data[0];
-  // const fetchislandID = island.id ;
 
   const createHandler = async () => {
     if (islandName.trim() === "" || detail.trim() === "") {
@@ -272,32 +255,67 @@ export default function IslandEdit() {
     const islandData = {
       islandName: islandName,
       detail: detail,
+      thumbnail: imageUrl,
       status: false,
     };
 
     try {
+      await supabase.from("islands").update(islandData).eq("id", fetchIslandID);
+
       // tagStatusテーブルへ挿入
-      const tgStatusData = islandTags.map((tag) => ({
-        tagID: tag.id,
-        islandID: fetchIslandID, // fetchIslandIDを使用してislandIDの値を設定
-        status: false,
-      }));
-      for (let tgS of tgStatusData) {
-        await supabase.from("tagStatus").insert(tgS);
-        // console.log("tagStatusが正常に更新されました");
-        // tagsテーブルへ挿入
-        try {
-          const tgNameData = tagNames.map((tagName) => ({
-            tagName: tagName.Name,
-            tagNameKana: tagName.NameKana,
-            status: false,
-          }));
-          for (let tg of tgNameData) {
+      if (islandTags.length > 0) {
+        const tgStatusData = islandTags.map((tag) => ({
+          tagID: tag.id,
+          islandID: fetchIslandID, // fetchIslandIDを使用してislandIDの値を設定
+          status: false,
+        }));
+        for (let tgS of tgStatusData) {
+          await supabase.from("tagStatus").update(tgS);
+        }
+      }
+
+      // tagsテーブルへ挿入
+      if (tagNames.length > 0) {
+        const tgNameData = tagNames.map((tagName) => ({
+          tagName: tagName.Name,
+          tagNameKana: tagName.NameKana,
+          status: false,
+        }));
+
+        for (let tg of tgNameData) {
+          const existingTag = await supabase
+            .from("tags")
+            .select("id")
+            .eq("tagName", tg.tagName)
+            .single();
+
+          if (existingTag.data) {
+            // 既存のデータがある場合は更新
+            await supabase
+              .from("tags")
+              .update(tg)
+              .eq("id", existingTag.data.id);
+          } else {
+            // 既存のデータがない場合は新規保存
             await supabase.from("tags").insert(tg);
-            console.log("tagsが正常に更新されました");
+
+            // tagStatusにも新規保存
+            const newtagName = await supabase
+              .from("tags")
+              .select("id")
+              .eq("tagName", tg.tagName)
+              .single();
+
+            const newT = {
+              tagID: newtagName.data.id,
+              islandID: fetchIslandID,
+              status: false,
+            };
+
+            if (newtagName.data) {
+              await supabase.from("tagStatus").insert(newT);
+            }
           }
-        } catch (error) {
-          console.log("tags挿入エラー");
         }
       }
     } catch (error) {
@@ -332,7 +350,7 @@ export default function IslandEdit() {
                   id="detail"
                   className={styles.detail}
                   value={detail}
-                  onChange={(e) => handelDetailChange} // 追加
+                  onChange={(event) => handleDetailChange(event.target.value)} // 修正: テキストエリアの値が変更されたら handleDetailChange 関数を呼び出す
                   readOnly={!editMode} // 編集モードでない場合は無効化する
                 />
               </td>
@@ -340,37 +358,40 @@ export default function IslandEdit() {
             <tr className={styles.tr}>
               <th className={styles.th}>サムネイル</th>
               <td className={styles.imgSide}>
+                <img
+                  className={styles.icon}
+                  src={imageUrl || "/island/island_icon.png"}
+                  alt="island Thumbnail"
+                />
                 <div className={styles.faileCenter}>
-                  <img
-                    className={styles.icon}
-                    src={imageUrl}
-                    alt="island Thumbnail"
-                  />
+                  {/* {editMode && ( */}
                   <input
                     type="file"
                     id="thumbnail"
                     className={styles.inputA}
                     onChange={handleFileChange}
                   />
+                  {/* )} */}
                 </div>
               </td>
             </tr>
             <tr className={styles.tr}>
               <th className={styles.th}>タグ</th>
               <td className={styles.td}>
-                {tagName}
+                {!editMode &&
+                  tagName.map((tag) => (
+                    <div key={tag.tagName}>{tag.tagName}</div>
+                  ))}
+
                 {editMode && (
                   <ComboBoxTag
                     tagOptions={tagOptions}
                     htmlFor="tag"
+                    chosenTag={chosenTag}
+                    islandTags={islandTags}
                     setIslandTags={setIslandTags}
                   />
                 )}
-                <div>
-                  {tagNames.map((tag, index) => (
-                    <div key={index}>{tag.Name}</div>
-                  ))}
-                </div>
               </td>
             </tr>
 

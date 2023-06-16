@@ -48,7 +48,7 @@ export default function EventName({
     <>
       <input
         type="text"
-        className={`${styles.islandName} ${NameError ? styles.errorInput : ""}`}
+        className={`${styles.eventName} ${NameError ? styles.errorInput : ""}`}
         maxLength={100}
         value={eventName}
         onChange={handleNameChange}

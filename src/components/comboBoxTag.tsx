@@ -5,17 +5,23 @@ import styles from "../styles/island/createIsland.module.css";
 export default function ComboBoxTag({
   tagOptions,
   htmlFor,
-
+  chosenTag,
+  islandTags,
   setIslandTags,
 }: {
   tagOptions: { id: number; Name: string; NameKana: string }[] | null;
   htmlFor: string;
+  chosenTag: { id: number; Name: string; NameKana: string }[] | null;
+  islandTags: { id: number; Name: string; NameKana: string }[] | null;
+
   setIslandTags: Dispatch<
     SetStateAction<{ id: number; Name: string; NameKana: string }[]>
   >;
 }) {
   const [inputValue, setInputValue] = useState("");
-  const [selectedValue, setSelectedValue] = useState<string[]>([]);
+  const [selectedValue, setSelectedValue] = useState<string[]>(
+    chosenTag ? chosenTag.map((tag) => tag.Name) : [],
+  );
   const [suggestedOptions, setSuggestedOptions] = useState<string[]>([]);
   const [newOptions, setNewOptions] = useState<
     { id: number; Name: string; NameKana: string }[]
@@ -26,7 +32,6 @@ export default function ComboBoxTag({
     setInputValue(value);
 
     // ユーザーの入力に基づいて選択肢をフィルタリングする
-    // ユーザー選択
     if (tagOptions) {
       const filteredOptions = tagOptions.filter(
         (ops) =>
