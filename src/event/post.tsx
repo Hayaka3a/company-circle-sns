@@ -89,7 +89,7 @@ export default function EventPost() {
     if (error) {
       console.error("Failed to update 'isRead' field:", error);
     } else {
-      navigate(`/island/message/islandPostMessage/${messageId}`);
+      navigate(`/message/${messageId}`);
     }
   };
   return (
