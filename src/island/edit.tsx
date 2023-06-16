@@ -19,7 +19,6 @@ export default function IslandEdit() {
     fetchIsland();
   }, []);
 
-  // console.log(fetchIslandID)
 
   const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
 
