@@ -67,8 +67,6 @@ export default function ScoutPostEvent({ table }: { table: string }) {
           return;
         }
 
-        console.log(event)
-
         // イベント名を設定
         setEventName(event.eventName);
         setEvent(event);
