@@ -6,6 +6,7 @@ import { supabase } from "../createClient";
 import UnsubscribeButton from "../components/unsubscribeButton";
 import GetCookieID from "../components/cookie/getCookieId";
 import SubFetchIsEve from "../components/hooks/SubFetchIsEve";
+import Message from "../message";
 
 export default function UserEdit() {
   const [imageUrl, setImageUrl] = useState("/user/tanukiti.png");

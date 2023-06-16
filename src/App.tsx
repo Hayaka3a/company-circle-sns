@@ -5,12 +5,13 @@ import "./App.css";
 // ヘッダー
 import Header from "./components/Header";
 
+// メッセージ全文表示
+import Message from "./message";
+
+
 // userフォルダ
 import UserPost from "./user/post";
 import Login from "./user/login";
-import IslandMessage from "./user/message/island_message";
-import ScoutMessage from "./user/message/scout_message";
-import OperationMessage from "./user/message/operation_message";
 import NewUser from "./user/newUser";
 import UserEdit from "./user";
 
@@ -32,7 +33,6 @@ import IslandThread from "./island/thread";
 import IslandCreate from "./island/create";
 import IslandMembers from "./island/members";
 import IslandPost from "./island/post";
-import IslandPostMessage from "./island/message/islandPostMessage";
 import IslandEntryPermitPage from "./island/post/entryPermitPage";
 import IslandAll from "./island/islandAll";
 
@@ -55,22 +55,14 @@ function App() {
         {showHeader && showNewUser && <Header />}
         <Routes>
           <Route path="/" element={<Index />} />
+
+          {/* メッセージ全文表示 */}
+          <Route path="/message/:id" element={<Message />} />
+
           {/* userフォルダ */}
           <Route path="/user" element={<UserEdit />} />
           <Route path="/user/post" element={<UserPost />} />
           <Route path="/user/login" element={<Login />} />
-          <Route
-            path="/user/message/island_message"
-            element={<IslandMessage />}
-          />
-          <Route
-            path="/user/message/scout_message"
-            element={<ScoutMessage />}
-          />
-          <Route
-            path="/user/message/operation_message"
-            element={<OperationMessage />}
-          />
           <Route path="/user/newUser" element={<NewUser />} />
           <Route path="/user/edit" element={<UserEdit />} />
 
@@ -87,10 +79,6 @@ function App() {
           <Route
             path="/island/post/entryPermit/:id"
             element={<IslandEntryPermitPage />}
-          />
-          <Route
-            path="/island/message/islandPostMessage/:id"
-            element={<IslandPostMessage />}
           />
           <Route path="/island/islandAll" element={<IslandAll />} />
           {/* eventフォルダ */}
