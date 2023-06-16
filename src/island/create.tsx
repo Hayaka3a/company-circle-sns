@@ -193,6 +193,22 @@ export default function IslandCreate() {
               }));
               for (let tg of tgNameData) {
                 await supabase.from("tags").insert(tg);
+                // 作成されたタグのidを取得
+                const { data: newTag } = await supabase
+                  .from("tags")
+                  .select("id")
+                  .eq("tagName", tg.tagName)
+                  .eq("status", false);
+                const createdTagId = newTag[0].id;
+
+                const tagInfo = {
+                  tagID: createdTagId,
+                  islandID: createdIslandId,
+                  status: false,
+                };
+
+                // tagStatusにタグ情報を挿入
+                await supabase.from("tagStatus").insert(tagInfo);
               }
             } catch (error) {
               console.log("tags挿入エラー");
@@ -271,6 +287,8 @@ export default function IslandCreate() {
                     <ComboBoxTag
                       tagOptions={tagOptions}
                       htmlFor="tag"
+                      chosenTag={null}
+                      islandTags={null}
                       setIslandTags={setIslandTags}
                     />
                   </td>
