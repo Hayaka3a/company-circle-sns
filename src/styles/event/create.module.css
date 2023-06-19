@@ -121,6 +121,10 @@ table {
   margin-left: 1.5vw;
 }
 
+.file {
+  display: none;
+}
+
 .icon {
   width: 16vh;
   height: 16vh;
