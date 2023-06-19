@@ -121,7 +121,7 @@ table {
   margin-left: 1.5vw;
 }
 
-input[type="file"] {
+.file {
   display: none;
 }
 
