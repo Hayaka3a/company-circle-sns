@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "../../styles/island/createIsland.module.css";
+import styles from "../../styles/event/create.module.css";
 
 export default function EventDetail({
   detail,
@@ -27,10 +27,9 @@ export default function EventDetail({
   };
   return (
     <>
-      <input
-        type="text"
-        className={`${styles.inputA} ${error ? styles.errorInput : ""}`}
-        maxLength={300}
+      <textarea
+        className={`${styles.detail} ${error ? styles.errorInput : ""} `}
+        maxLength={250}
         value={detail}
         onChange={handleIslandNameChange}
         onBlur={handleIslandNameBlur}

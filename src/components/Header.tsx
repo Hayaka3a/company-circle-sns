@@ -73,36 +73,54 @@ const Header = () => {
       </Link>
       {/* 検索箇所 */}
       <div className={styles.search}>
-        <input
-          type="radio"
-          name="select"
-          id="all"
-          value="all"
-          onChange={onRadioBtnChanged}
-        />
-        <label htmlFor="all">すべて検索</label>
-        <input
-          type="radio"
-          name="select"
-          id="island"
-          value="island"
-          onChange={onRadioBtnChanged}
-        />
-        <label htmlFor="island">島のみ</label>
-        <input
-          type="radio"
-          name="select"
-          id="event"
-          value="event"
-          onChange={onRadioBtnChanged}
-        />
-        <label htmlFor="event">イベントのみ</label>
+        <label>
+          <input
+            type="radio"
+            name="select"
+            id="all"
+            value="all"
+            onChange={onRadioBtnChanged}
+            className={styles.searchInput}
+          />
+          <span className={styles.radioName}>
+            <span className={styles.radioText}>すべて検索</span>
+          </span>
+        </label>
+        &nbsp; &nbsp;
+        <label>
+          <input
+            type="radio"
+            name="select"
+            id="island"
+            value="island"
+            onChange={onRadioBtnChanged}
+            className={styles.searchInput}
+          />
+          <span className={styles.radioName}>
+            <span className={styles.radioText}>島のみ</span>
+          </span>
+        </label>
+        &nbsp; &nbsp;
+        <label>
+          <input
+            type="radio"
+            name="select"
+            id="event"
+            value="event"
+            onChange={onRadioBtnChanged}
+            className={styles.searchInput}
+          />
+          <span className={styles.radioName}>
+            <span className={styles.radioText}>イベントのみ</span>
+          </span>
+        </label>
         <br />
         <input
           type="text"
           maxLength={22}
           onChange={onInputChanged}
           className={styles.input}
+          placeholder="入力してください"
         />
         <Link
           to={`/search?word=${encodeURIComponent(
@@ -152,6 +170,7 @@ const Header = () => {
                   onClick={() => setIsOpenIslandList(!isOpenIslandList)}
                 >
                   <span className={styles.menuGroupItemLink}>参加島</span>
+                  <hr className={styles.hr} />
                 </div>
                 <ul
                   className={
@@ -191,6 +210,7 @@ const Header = () => {
                   onClick={() => setIsOpenEventList(!isOpenEventList)}
                 >
                   <span className={styles.menuGroupItemLink}>参加イベント</span>
+                  <hr className={styles.hr} />
                 </div>
                 <ul
                   className={
@@ -224,16 +244,22 @@ const Header = () => {
                   新規サークル作成
                 </a>
               </li>
+              <hr className={styles.hr} />
+
               <li className={styles.menuGroupItem}>
                 <a className={styles.menuGroupItemLink} href="/user">
                   アカウント情報
                 </a>
               </li>
+              <hr className={styles.hr} />
+
               <li className={styles.menuGroupItem}>
                 <a className={styles.menuGroupItemLink} href={`/user/post`}>
                   あなたのポスト
                 </a>
               </li>
+              <hr className={styles.hr} />
+
               <li className={styles.menuGroupItem}>
                 <a
                   className={styles.menuGroupItemLink}
@@ -242,6 +268,8 @@ const Header = () => {
                   島一覧
                 </a>
               </li>
+              <hr className={styles.hr} />
+
               <li className={styles.menuGroupItem}>
                 <a className={styles.menuGroupItemLink} href="/event/eventAll">
                   イベント一覧

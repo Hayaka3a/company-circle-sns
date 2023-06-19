@@ -170,32 +170,48 @@ export default function IslandCreate() {
           for (let entry of enStatusData) {
             await supabase.from("userEntryStatus").insert(entry);
             console.log("userEntryStatusが正常に作成されました");
-            // tagStatusテーブルへ挿入
+          }
+          // tagStatusテーブルへ挿入
+          if (islandTags.length > 0) {
+            const tgStatusData = islandTags.map((tag) => ({
+              tagID: tag.id,
+              islandID: createdIslandId,
+              status: false,
+            }));
+            for (let tgS of tgStatusData) {
+              await supabase.from("tagStatus").insert(tgS);
+              console.log("tagStatusが正常に作成されました");
+            }
+          }
+          // tagsテーブルへ挿入
+          if (tagNames.length > 0) {
             try {
-              const tgStatusData = islandTags.map((tag) => ({
-                tagID: tag.id,
-                islandID: createdIslandId,
+              const tgNameData = tagNames.map((tagName) => ({
+                tagName: tagName.Name,
+                tagNameKana: tagName.NameKana,
                 status: false,
               }));
-              for (let tgS of tgStatusData) {
-                await supabase.from("tagStatus").insert(tgS);
-                console.log("tagStatusが正常に作成されました");
-                // tagsテーブルへ挿入
-                try {
-                  const tgNameData = tagNames.map((tagName) => ({
-                    tagName: tagName.Name,
-                    tagNameKana: tagName.NameKana,
-                    status: false,
-                  }));
-                  for (let tg of tgNameData) {
-                    await supabase.from("tags").insert(tg);
-                  }
-                } catch (error) {
-                  console.log("tags挿入エラー");
-                }
+              for (let tg of tgNameData) {
+                await supabase.from("tags").insert(tg);
+                // 作成されたタグのidを取得
+                const { data: newTag } = await supabase
+                  .from("tags")
+                  .select("id")
+                  .eq("tagName", tg.tagName)
+                  .eq("status", false);
+                const createdTagId = newTag[0].id;
+
+                const tagInfo = {
+                  tagID: createdTagId,
+                  islandID: createdIslandId,
+                  status: false,
+                };
+
+                // tagStatusにタグ情報を挿入
+                await supabase.from("tagStatus").insert(tagInfo);
               }
             } catch (error) {
-              console.log("tagStatus挿入エラー");
+              console.log("tags挿入エラー");
             }
           }
         } catch (error) {
@@ -271,6 +287,8 @@ export default function IslandCreate() {
                     <ComboBoxTag
                       tagOptions={tagOptions}
                       htmlFor="tag"
+                      chosenTag={null}
+                      islandTags={null}
                       setIslandTags={setIslandTags}
                     />
                   </td>

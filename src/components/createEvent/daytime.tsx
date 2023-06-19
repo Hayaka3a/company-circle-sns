@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "../../styles/island/createIsland.module.css";
+import styles from "../../styles/event/create.module.css";
 
 export default function Daytime({
   startDate,
@@ -41,16 +41,16 @@ export default function Daytime({
     <>
       <input
         type="date"
-        className={`${styles.inputA} ${error ? styles.errorInput : ""}`}
+        className={`${styles.date} ${error ? styles.errorInput : ""}`}
         maxLength={300}
         value={startDate}
         onChange={handleStartChange}
         onBlur={handleBlur}
       />
-      ～
+      &nbsp; ～ &nbsp;
       <input
         type="date"
-        className={`${styles.inputA} ${error ? styles.errorInput : ""}`}
+        className={`${styles.date} ${error ? styles.errorInput : ""}`}
         maxLength={300}
         value={endDate}
         onChange={handleEndChange}
