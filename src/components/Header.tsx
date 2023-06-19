@@ -159,16 +159,16 @@ const Header = () => {
                   }
                 >
                   {result &&
-                    result.islands.map((island) => (
+                    result.islands.map((island, index) => (
                       <div
-                        key={island.id}
+                        key={index}
                         className={styles.listItem}
                         onClick={() => {
                           navigate(`/island/${island.id}`);
                           window.location.reload();
                         }}
                       >
-                        <li>
+                        <li key={island.id}>
                           {island.islandName}
                           {island.msgLength > 0 && (
                             <span className={styles.msgIcon}>
@@ -198,16 +198,16 @@ const Header = () => {
                   }
                 >
                   {result &&
-                    result.events.map((event) => (
+                    result.events.map((event, index) => (
                       <div
-                        key={event.id}
+                        key={index}
                         className={styles.listItem}
                         onClick={() => {
                           navigate(`/event/${event.id}`);
                           window.location.reload();
                         }}
                       >
-                        <li>
+                        <li key={event.id}>
                           {event.eventName}
                           {event.msgLength > 0 && (
                             <span className={styles.msgIcon}>

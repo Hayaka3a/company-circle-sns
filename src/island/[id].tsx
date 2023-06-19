@@ -20,11 +20,13 @@ export default function IslandDetail() {
   const [islandDetail, setIslandDetail] = useState(null); // 取得した島の詳細情報を保持する状態変数
   const [islandImage, setIslandImage] = useState(
     "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-05T07%3A40%3A07.886Z",
-  ); // 取得した島の詳細情報を保持する状態変数
+  );
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     fetchIslandDetail();
     fetchIslandPost();
+    fetchTags();
   }, []);
 
   const fetchIslandDetail = async () => {
@@ -107,6 +109,21 @@ export default function IslandDetail() {
     }
   };
 
+  const fetchTags = async () => {
+    const { data: tag, error: tagError } = await supabase
+      .from("tagStatus")
+      .select("*,tags(*)")
+      .eq("islandID", Number(islandId.id));
+    if (tagError) {
+      console.log(tagError, "タグの取得に失敗しました");
+    }
+    if (!tag) {
+      console.log("タグは見つかりませんでした");
+    } else {
+      setTags(tag);
+    }
+  };
+
   // 住民申請を押した際の小窓画面（モーダルウィンドウ）の開閉
   // isResidentOpenの値がtrueの時だけ小窓画面をレンダリング（表示）する
   const openResindentModal = () => {
@@ -143,7 +160,18 @@ export default function IslandDetail() {
               className={styles.icon}
             />
           )}
-          <h2>{islandDetail && islandDetail.islandName}島</h2>
+          <h2 className={styles.title}>
+            {islandDetail && islandDetail.islandName}島
+          </h2>
+          <div className={styles.tagArea}>
+            {tags.map((tag) => {
+              return (
+                <div className={styles.ribbon3} key={tag.id}>
+                  <h3>{tag.tags.tagName}</h3>
+                </div>
+              );
+            })}
+          </div>
           <p className={styles.textDetail}>
             {islandDetail && islandDetail.detail}
           </p>

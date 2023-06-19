@@ -111,7 +111,7 @@ export default function IslandPost() {
             <p>受信メッセージはありません</p>
           ) : (
             messages.map((message) => (
-              <div className={styles.message}>
+              <div className={styles.message} key={message.id}>
                 <div className={styles.flex}>
                   <img
                     src={
