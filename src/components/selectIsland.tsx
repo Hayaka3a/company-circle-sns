@@ -33,6 +33,7 @@ export default function SelectIsland({
 
   useEffect(() => {
     fetchIslands();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 選択項目
