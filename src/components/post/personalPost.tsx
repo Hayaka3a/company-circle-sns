@@ -37,7 +37,9 @@ export default function PersonalPost({
           console.error("メッセージ情報取得失敗", messagesError.message);
         }
 
-        setHasNewMessage(true);
+        if (messages.length > 0) {
+          setHasNewMessage(true);
+        }
       } catch (error) {
         console.error("メッセージ情報取得失敗2", error.message);
       }
