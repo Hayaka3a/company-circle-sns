@@ -24,7 +24,6 @@ export default function EventCreate() {
   >([]);
 
   const params = useParams();
-  const paramsID = parseInt(params.id);
   const islandID = params.id;
   const ownerID = GetCookieID();
 
