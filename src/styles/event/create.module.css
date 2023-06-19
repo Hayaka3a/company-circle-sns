@@ -121,10 +121,6 @@ table {
   margin-left: 1.5vw;
 }
 
-input[type="file"] {
-  display: none;
-}
-
 .icon {
   width: 16vh;
   height: 16vh;

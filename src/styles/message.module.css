@@ -1,81 +1,106 @@
 .back {
-    background-color: rgb(204, 244, 230);
-    padding-bottom: 50px;
-  }
-  
-  .close_btn {
-    width: 20px;
-    height: 20px;
-    margin: 10px 0 0 100px;
-  }
-  
-  .receive {
-    background-color: white;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .flex {
-    display: flex;
-  }
-  
-  .from {
-    margin-left: 150px;
-  }
-  
-  .flex img {
-    width: 55px;
-    height: 55px;
-    padding-top: 20px;
-    margin: 0 0 0 40px;
-  }
-  
-  .userName {
-    margin: 0 0 0 50px;
-    padding-top: 35px;
-  }
-  
-  .receiving_time {
-    padding-top: 35px;
-    margin: 0 0 0 300px;
-  }
-  
-  .text_body {
-    text-align: center;
-  }
-  
-  .reply {
-    /* border: 2px solid black; */
-    background-color: white;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .reply_btn {
-    margin-left: 100px;
-    padding-top: 40px;
-  }
-  
-  .send_to {
-    margin-left: 60px;
-  }
-  
-  .reply_userName {
-    margin: 0 0 0 40px;
-    padding-top: 36px;
-  }
-  
-  textarea {
-    width: 800px;
-    height: 400px;
-  }
-  
-  #text_area {
-    text-align: center;
-    padding-bottom: 50px;
-  }
-  
+  padding-bottom: 5vh;
+  margin: auto;
+}
+
+.back button {
+  background-color: #6c978c;
+  color: white;
+  font: 2.7vh bold;
+}
+
+.btnArea {
+  width: 80%;
+  margin: auto;
+  margin-top: 2vh;
+}
+
+.flexBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+}
+
+.messageArea {
+  width: 80%;
+  background-color: rgba(255, 254, 245, 1);
+  border-radius: 5vh;
+  padding: 5vh;
+  margin: 1vh auto;
+  margin-bottom: 4vh;
+  border: dashed 0.5vh rgba(138, 121, 98, 1);
+  box-shadow: 0 0 0 1vh rgba(250, 248, 242, 1), 0 0 0 2vh rgba(138, 121, 98, 1);
+}
+
+.close_btn {
+  width: 2.5vh;
+  height: 2.5vh;
+  margin: auto;
+  padding: 1vh;
+}
+
+.receive {
+  width: 80%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.btn {
+  width: 15vh;
+  height: 6vh;
+}
+
+.flex img {
+  width: 12vh;
+  height: 12vh;
+  margin: 0 0 0 2vh;
+  border-radius: 50%;
+}
+
+.userName {
+  margin: auto 2vh;
+}
+
+.text_body {
+  text-align: center;
+  width: 80%;
+  margin: 2vh auto;
+}
+
+.sendBtn {
+  margin-top: 2vh;
+}
+
+.reply {
+  /* border: 2px solid black; */
+  background-color: white;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reply_userName {
+  margin: 0 0 0 40px;
+  padding-top: 36px;
+}
+
+.receiving_time {
+  font-weight: bold;
+}
+
+.textArea {
+  width: 80%;
+  height: 20vh;
+  font-size: 2.5vh;
+  padding: 4vh;
+  margin-top: 0;
+  border-radius: 5vh;
+}
