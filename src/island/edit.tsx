@@ -262,16 +262,45 @@ export default function IslandEdit() {
     try {
       await supabase.from("islands").update(islandData).eq("id", fetchIslandID);
 
+      console.log(islandTags);
+      console.log(tagName);
+
       // tagStatusテーブルへ挿入
       if (islandTags.length > 0) {
         const tgStatusData = islandTags.map((tag) => ({
           tagID: tag.id,
-          islandID: fetchIslandID, // fetchIslandIDを使用してislandIDの値を設定
+          islandID: fetchIslandID,
           status: false,
         }));
-        for (let tgS of tgStatusData) {
-          await supabase.from("tagStatus").update(tgS);
-        }
+
+        const existingTagStatuses = [];
+
+        // tgStatusDataの処理
+        await Promise.all(
+          tgStatusData.map(async (tgS) => {
+            const existingTagStatusArray = await supabase
+              .from("tagStatus")
+              .select("tagID")
+              .eq("islandID", tgS.islandID)
+              .limit(1) // 1つのレコードを取得
+              .then(({ data }) => data); // データのみを取得する
+
+            if (existingTagStatusArray.length === 0) {
+              // tgSにはあるがtagStatusには存在しない場合、新規保存
+              await supabase.from("tagStatus").insert(tgS);
+            } else {
+              existingTagStatuses.push(...existingTagStatusArray);
+            }
+          }),
+        );
+        console.log(existingTagStatuses);
+        const uniques = tagName.filter((uniqueE) => {
+          return !existingTagStatuses.some(
+            (unique) => unique.id === uniqueE.id,
+          );
+        });
+
+        console.log(uniques);
       }
 
       // tagsテーブルへ挿入
@@ -364,14 +393,12 @@ export default function IslandEdit() {
                   alt="island Thumbnail"
                 />
                 <div className={styles.faileCenter}>
-                  {/* {editMode && ( */}
                   <input
                     type="file"
                     id="thumbnail"
                     className={styles.inputA}
                     onChange={handleFileChange}
                   />
-                  {/* )} */}
                 </div>
               </td>
             </tr>
@@ -388,7 +415,6 @@ export default function IslandEdit() {
                     tagOptions={tagOptions}
                     htmlFor="tag"
                     chosenTag={chosenTag}
-                    islandTags={islandTags}
                     setIslandTags={setIslandTags}
                   />
                 )}
