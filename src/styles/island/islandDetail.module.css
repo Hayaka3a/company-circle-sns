@@ -111,6 +111,7 @@
 .textDetail {
   width: 90%;
   margin: auto;
+  margin-top: 5vh;
 }
 
 /* すでに住民許可申請を送っている場合 */
@@ -121,4 +122,35 @@
 .disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.tagArea {
+  width: 90%;
+  height: auto;
+  margin: auto;
+}
+
+.ribbon3 {
+  display: inline-block;
+  position: relative;
+  height: 6vh;
+  text-align: center;
+  padding: 0.7vh 0;
+  margin: 0 1vh;
+  background: #d7a31a;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.ribbon3 h3 {
+  padding: 0px 2vh;
+  border-top: dashed 0.5vh rgba(255, 255, 255, 0.5);
+  border-bottom: dashed 0.5vh rgba(255, 255, 255, 0.5);
+  line-height: 3.8vh;
+  font-size: 2.5vh;
+  margin: 0;
+}
+
+.title {
+  margin-bottom: 1vh;
 }

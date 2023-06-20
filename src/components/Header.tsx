@@ -15,7 +15,7 @@ const Header = () => {
   const navigate = useNavigate();
   const userID = GetCookieID();
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen] = useState(false);
 
   // ユーザーアイコンとユーザー名の取得
   // 非同期の処理をuseEffect内で行う場合、コールバック関数を定義してその中で非同期処理を行う
@@ -35,6 +35,7 @@ const Header = () => {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -69,7 +70,7 @@ const Header = () => {
     <header>
       {/* ロゴ */}
       <Link to={"/"}>
-        <img src="/images/logo.png" className={styles.logo} />
+        <img src="/images/logo.png" className={styles.logo} alt="logo" />
       </Link>
       {/* 検索箇所 */}
       <div className={styles.search}>
@@ -178,16 +179,16 @@ const Header = () => {
                   }
                 >
                   {result &&
-                    result.islands.map((island) => (
+                    result.islands.map((island, index) => (
                       <div
-                        key={island.id}
+                        key={index}
                         className={styles.listItem}
                         onClick={() => {
                           navigate(`/island/${island.id}`);
                           window.location.reload();
                         }}
                       >
-                        <li>
+                        <li key={island.id}>
                           {island.islandName}
                           {island.msgLength > 0 && (
                             <span className={styles.msgIcon}>
@@ -218,16 +219,16 @@ const Header = () => {
                   }
                 >
                   {result &&
-                    result.events.map((event) => (
+                    result.events.map((event, index) => (
                       <div
-                        key={event.id}
+                        key={index}
                         className={styles.listItem}
                         onClick={() => {
                           navigate(`/event/${event.id}`);
                           window.location.reload();
                         }}
                       >
-                        <li>
+                        <li key={event.id}>
                           {event.eventName}
                           {event.msgLength > 0 && (
                             <span className={styles.msgIcon}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LogSt from "../components/cookie/logSt";
 import styles from "../styles/event/create.module.css";
 import EventName from "../components/createEvent/eventName";
@@ -31,7 +31,7 @@ export default function EventCreate() {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (!event.target.files || event.target.files.length == 0) {
+    if (!event.target.files || event.target.files.length === 0) {
       // 画像が選択されていないのでreturn
       return;
     }

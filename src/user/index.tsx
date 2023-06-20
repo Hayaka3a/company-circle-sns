@@ -6,7 +6,6 @@ import { supabase } from "../createClient";
 import UnsubscribeButton from "../components/unsubscribeButton";
 import GetCookieID from "../components/cookie/getCookieId";
 import SubFetchIsEve from "../components/hooks/SubFetchIsEve";
-import Message from "../message";
 
 export default function UserEdit() {
   const [imageUrl, setImageUrl] = useState("/user/tanukiti.png");
@@ -45,6 +44,7 @@ export default function UserEdit() {
     setTimeout(() => {
       setFocus("conPw");
     }, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);
 
   const fetchUsers = async () => {
@@ -118,7 +118,7 @@ export default function UserEdit() {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (!event.target.files || event.target.files.length == 0) {
+    if (!event.target.files || event.target.files.length === 0) {
       // 画像が選択されていないのでreturn
       return;
     }
@@ -140,7 +140,7 @@ export default function UserEdit() {
   };
 
   //職種選択用データ
-  const [category, setCategory] = useState([
+  const [category] = useState([
     { id: "Java", name: "Java" },
     { id: "ML", name: "ML" },
     { id: "CL", name: "CL" },
@@ -439,35 +439,37 @@ export default function UserEdit() {
                           <div className={styles.joinBox}>
                             <div className={styles.joinList}>
                               <p>参加している島</p>
-                              {combi.map((item) => {
+                              {combi.map((item, index) => {
                                 if (item.islands) {
                                   return (
                                     <Link
                                       to={`/island/${item.islands.id}`}
                                       className={styles.link}
-                                      key={item.id}
+                                      key={index}
                                     >
                                       {item.islands.islandName}
                                     </Link>
                                   );
                                 }
+                                return <></>;
                               })}
                             </div>
                             <br />
                             <div className={styles.joinList}>
                               <p>参加しているイベント</p>
-                              {combi.map((item) => {
+                              {combi.map((item, index) => {
                                 if (item.events) {
                                   return (
                                     <Link
                                       to={`/event/${item.events.id}`}
                                       className={styles.link}
-                                      key={item.id}
+                                      key={index}
                                     >
                                       {item.events.eventName}
                                     </Link>
                                   );
                                 }
+                                return <></>;
                               })}
                             </div>
                           </div>

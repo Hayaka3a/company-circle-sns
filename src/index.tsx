@@ -23,8 +23,6 @@ reportWebVitals();
 
 export default function Index() {
   LogSt();
-  const params = useParams();
-  const paramsID = Number(params.id);
   const [islands, setIslands] = useState([]);
   const [events, setEvents] = useState([]);
   const [tag, setTag] = useState("islands");
