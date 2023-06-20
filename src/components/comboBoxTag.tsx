@@ -6,14 +6,11 @@ export default function ComboBoxTag({
   tagOptions,
   htmlFor,
   chosenTag,
-  islandTags,
   setIslandTags,
 }: {
   tagOptions: { id: number; Name: string; NameKana: string }[] | null;
   htmlFor: string;
   chosenTag: { id: number; Name: string; NameKana: string }[] | null;
-  islandTags: { id: number; Name: string; NameKana: string }[] | null;
-
   setIslandTags: Dispatch<
     SetStateAction<{ id: number; Name: string; NameKana: string }[]>
   >;
@@ -23,9 +20,12 @@ export default function ComboBoxTag({
     chosenTag ? chosenTag.map((tag) => tag.Name) : [],
   );
   const [suggestedOptions, setSuggestedOptions] = useState<string[]>([]);
+  // const [newOptions, setNewOptions] = useState<
+  //   { id: number; Name: string; NameKana: string }[]
+  // >([]);
   const [newOptions, setNewOptions] = useState<
     { id: number; Name: string; NameKana: string }[]
-  >([]);
+  >(chosenTag ? chosenTag : []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -84,6 +84,10 @@ export default function ComboBoxTag({
       updatedOptions.splice(index, 1);
       return updatedOptions;
     });
+
+    const tags = [...newOptions];
+    tags.splice(index, 1);
+    setIslandTags(tags);
   };
 
   const handleSuggestionSelect = (option: string) => {

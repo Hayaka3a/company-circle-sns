@@ -292,7 +292,6 @@ export default function IslandCreate() {
                       tagOptions={tagOptions}
                       htmlFor="tag"
                       chosenTag={null}
-                      islandTags={null}
                       setIslandTags={setIslandTags}
                     />
                   </td>
