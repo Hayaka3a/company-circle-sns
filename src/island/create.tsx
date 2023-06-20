@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/island/createIsland.module.css";
 import { supabase } from "../createClient";
 import ConvertKanaJ from "../components/changeKana";
@@ -93,7 +93,7 @@ export default function IslandCreate() {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (!event.target.files || event.target.files.length == 0) {
+    if (!event.target.files || event.target.files.length === 0) {
       // 画像が選択されていないのでreturn
       return;
     }
@@ -149,6 +149,10 @@ export default function IslandCreate() {
         const { error: owner } = await supabase
           .from("userEntryStatus")
           .insert(ownerData);
+
+        if (owner) {
+          console.log(owner, "オーナーデータ挿入失敗");
+        }
 
         // postテーブルに島用ポスト作成
         const post = {

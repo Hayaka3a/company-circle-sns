@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { supabase } from "../../createClient";
 import GetCookieID from "../cookie/getCookieId";
 import styles from "../../styles/index.module.css";

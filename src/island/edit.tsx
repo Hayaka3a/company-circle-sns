@@ -17,6 +17,7 @@ export default function IslandEdit() {
 
   useEffect(() => {
     fetchIsland();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [imageUrl, setImageUrl] = useState("");
@@ -130,6 +131,7 @@ export default function IslandEdit() {
   // データベースからislands情報を取得
   useEffect(() => {
     fetchIsland();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchIsland = async () => {
@@ -146,7 +148,7 @@ export default function IslandEdit() {
       setIslandName(data[0].islandName); // サークル名をislandNameステートにセット
       setDetail(data[0].detail); // 活動内容をdetailステートにセット
 
-      const { data: fetchTag, error: fetchTagError } = await supabase
+      const { data: fetchTag } = await supabase
         .from("tagStatus")
         .select("tagID")
         .eq("islandID", fetchIslandID)
@@ -155,7 +157,7 @@ export default function IslandEdit() {
       if (fetchTag) {
         const tagIDs = fetchTag.map((tg) => tg.tagID); // tagID の値の配列を作成
 
-        const { data: fetchTagsData, error: fetchTagsError } = await supabase
+        const { data: fetchTagsData } = await supabase
           .from("tags")
           .select("id, tagName, tagNameKana")
           .in("id", tagIDs) // tagIDs を配列として渡す
@@ -185,7 +187,7 @@ export default function IslandEdit() {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (!event.target.files || event.target.files.length == 0) {
+    if (!event.target.files || event.target.files.length === 0) {
       // 画像が選択されていないのでreturn
       return;
     }
