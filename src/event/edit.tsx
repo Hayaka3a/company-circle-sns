@@ -38,7 +38,7 @@ export default function EventEdit() {
   const [endDate, setEndDate] = useState("");
   const [eventDetail, setEventDetail] = useState(""); // 取得したイベントの詳細情報を保持する状態変数
   const [eventJoin, setEventJoin] = useState("");
-  const [imageUrl, setImageUrl] = useState("/login/loginCounter.png");
+  const [imageUrl, setImageUrl] = useState("");
   const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandJoinID, setIslandJoinID] = useState("");
 
@@ -129,6 +129,8 @@ export default function EventEdit() {
       setStartDate(event.startDate); // イベント開始日時（startDate）をstartDateステートにセット
       setEndDate(event.endDate); // イベント終了日時（endDate）をendDateステートにセット
       setEventDetail(event.detail); // イベント詳細をeventDetailステートにセット
+      setImageUrl(event.thumbnail); // サムネイルをthumbnailステートにセット
+
     }
   };
 
@@ -205,13 +207,28 @@ export default function EventEdit() {
     }
   }, [imageUrl]);
 
+
   // 画像ファイル選択したら、表示画像に反映
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!event.target.files || event.target.files.length === 0) {
+      // 画像が選択されていないのでreturn
+      return;
     }
+
+    const file = event.target.files?.[0];
+    const random = Math.floor(Math.random() * 10000);
+    const filePath = `${file.name}${random}`; // 画像の保存先のpathを指定
+    const { error } = await supabase.storage
+      .from("islandIcon")
+      .upload(filePath, file);
+    if (error) {
+      console.log(error, "画像追加エラー", filePath);
+    }
+
+    const { data } = supabase.storage.from("islandIcon").getPublicUrl(filePath);
+    setImageUrl(data.publicUrl);
   };
 
   // 編集ボタンを押下、イベント名を変更
@@ -259,6 +276,7 @@ export default function EventEdit() {
           startDate: startDate,
           endDate: endDate,
           detail: eventDetail,
+          thumbnail: imageUrl,
         },
       ])
       .eq("id", fetchEventID);
@@ -333,6 +351,11 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>サムネイル</th>
                 <td className={styles.td}>
+                  <img 
+                    className={styles.icon}
+                    src={imageUrl || "/event/party.png"}
+                    alt="event Thumbnail" 
+                  />
                   <input
                     type="file"
                     id="thumbnail"
