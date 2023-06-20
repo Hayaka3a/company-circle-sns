@@ -43,10 +43,17 @@ export default function AddTag({
     if (inputValue == "") {
       setTagNameError("タグ名を入力してください");
     }
-    if (inputValueK == "") {
+    if (inputValueK === "") {
       setTagNameKanaError("タグ名かなを入力してください");
     }
-    if (inputValue !== "" && inputValueK !== "") {
+    if (/^[ァ-ヶーa-zA-Z0-9]+$/.test(inputValueK)) {
+      setTagNameKanaError("ひらがなで入力してください");
+    }
+    if (
+      inputValue !== "" &&
+      inputValueK !== "" &&
+      !/^[ァ-ヶーa-zA-Z0-9]+$/.test(inputValueK)
+    ) {
       setSelectedValue((value) => [...value, inputValue]);
       // タグデータ作成
       const newTag = { Name: inputValue, NameKana: inputValueK };
@@ -84,7 +91,7 @@ export default function AddTag({
             <span className={styles.spanTg}>{tagNameError}</span>
           </div>
         )}
-        <label htmlFor="tagNameKana">ふりがな：</label>
+        <label htmlFor="tagNameKana">タグ名かな：</label>
         <input
           type="text"
           value={inputValueK}
