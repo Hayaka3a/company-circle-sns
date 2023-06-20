@@ -10,7 +10,7 @@ export default function Detail({
 }) {
   const [error, setError] = useState("");
 
-  const handleIslandNameChange = (e) => {
+  const handleIslandDetailChange = (e) => {
     setDetail(e.target.value);
     // 一文字でも入力されたらエラー削除
     if (error) {
@@ -27,12 +27,11 @@ export default function Detail({
   };
   return (
     <>
-      <input
-        type="text"
-        className={`${styles.inputA} ${error ? styles.errorInput : ""}`}
-        maxLength={300}
+      <textarea
+        className={`${styles.detail} ${error ? styles.errorInput : ""} `}
+        maxLength={250}
         value={detail}
-        onChange={handleIslandNameChange}
+        onChange={handleIslandDetailChange}
         onBlur={handleIslandNameBlur}
       />
       {error && (
