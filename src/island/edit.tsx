@@ -264,9 +264,6 @@ export default function IslandEdit() {
     try {
       await supabase.from("islands").update(islandData).eq("id", fetchIslandID);
 
-      console.log(islandTags);
-      console.log(tagName);
-
       // tagStatusテーブルへ挿入
       if (islandTags.length > 0) {
         const tgStatusData = islandTags.map((tag) => ({
@@ -295,14 +292,40 @@ export default function IslandEdit() {
             }
           }),
         );
-        console.log(existingTagStatuses);
         const uniques = tagName.filter((uniqueE) => {
-          return !existingTagStatuses.some(
-            (unique) => unique.id === uniqueE.id,
-          );
+          return !islandTags.some((unique) => unique.id === uniqueE.id);
         });
 
-        console.log(uniques);
+        const uniquesAdd = islandTags.filter((uniqueE) => {
+          return !tagName.some((unique) => unique.id === uniqueE.id);
+        });
+
+        if (uniquesAdd.length > 0) {
+          await Promise.all(
+            uniquesAdd.map(async (unique) => {
+              const add = {
+                tagID: unique.id,
+                islandID: fetchIslandID,
+                status: false,
+              };
+              const { error } = await supabase.from("tagStatus").insert(add);
+              if (error) {
+                console.error("追加エラー");
+              }
+            }),
+          );
+        }
+
+        if (uniques.length > 0) {
+          await Promise.all(
+            uniques.map(async (unique) => {
+              await supabase
+                .from("tagStatus")
+                .update({ status: true })
+                .eq("tagID", unique.id);
+            }),
+          );
+        }
       }
 
       // tagsテーブルへ挿入
@@ -349,6 +372,7 @@ export default function IslandEdit() {
           }
         }
       }
+      window.location.reload();
     } catch (error) {
       console.log("tagStatus挿入エラー");
     }
