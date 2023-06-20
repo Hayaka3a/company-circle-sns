@@ -10,7 +10,7 @@ export default function EventDetail({
 }) {
   const [error, setError] = useState("");
 
-  const handleIslandNameChange = (e) => {
+  const handleEventDetailChange = (e) => {
     setDetail(e.target.value);
     // 一文字でも入力されたらエラー削除
     if (error) {
@@ -31,7 +31,7 @@ export default function EventDetail({
         className={`${styles.detail} ${error ? styles.errorInput : ""} `}
         maxLength={250}
         value={detail}
-        onChange={handleIslandNameChange}
+        onChange={handleEventDetailChange}
         onBlur={handleIslandNameBlur}
       />
       {error && (

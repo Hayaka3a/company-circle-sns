@@ -171,7 +171,7 @@ export default function EventCreate() {
                       alt="Event Thumbnail"
                     />
                   </div>
-                  <div className={styles.faileCenter}>
+                  <div className={styles.fileCenter}>
                     <label className={styles.fileLabel}>
                       <input
                         type="file"
