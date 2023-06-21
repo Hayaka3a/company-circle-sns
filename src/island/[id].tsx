@@ -83,7 +83,8 @@ export default function IslandDetail() {
     const { data: message, error: messageError } = await supabase
       .from("messages")
       .select("*")
-      .eq("postedBy", data[0].id);
+      .eq("postedBy", data[0].id)
+      .eq("status", false);
 
     const appMsg = message.filter((msg) => msg.message === "参加申請");
 
@@ -92,7 +93,8 @@ export default function IslandDetail() {
       const { data: island, error: islandError } = await supabase
         .from("posts")
         .select("*")
-        .eq("islandID", Number(islandId.id));
+        .eq("islandID", Number(islandId.id))
+        .eq("status", false);
 
       if (islandError) {
         console.log("島ポスト番号取得失敗");

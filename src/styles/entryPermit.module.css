@@ -68,6 +68,7 @@
   box-shadow: 0.7vh 0.7vh rgba(255, 182, 112, 1);
   transition: 0.3s ease-in-out;
   height: 6vh;
+  background-color: white;
 }
 .OK:hover {
   box-shadow: none;
@@ -85,6 +86,7 @@
   box-shadow: 0.7vh 0.7vh #27acd9;
   transition: 0.3s ease-in-out;
   height: 6vh;
+  background-color: white;
 }
 .NG:hover {
   box-shadow: none;

@@ -257,7 +257,6 @@ export default function MembersList({
               return (
                 <tr key={user.id} className={styles.tr}>
                   {anotherUser(user)}
-                  <td className={styles.td}></td>
                 </tr>
               );
             })}
