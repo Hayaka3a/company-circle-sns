@@ -184,7 +184,7 @@ const Header = () => {
                         key={index}
                         className={styles.listItem}
                         onClick={() => {
-                          navigate(`/island/post/${island.id}`);
+                          navigate(`/island/${island.id}`);
                           window.location.reload();
                         }}
                       >
@@ -224,7 +224,7 @@ const Header = () => {
                         key={index}
                         className={styles.listItem}
                         onClick={() => {
-                          navigate(`/event/post/${event.id}`);
+                          navigate(`/event/${event.id}`);
                           window.location.reload();
                         }}
                       >
