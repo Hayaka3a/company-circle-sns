@@ -101,7 +101,8 @@ export default function EventDetail() {
     const { data: message, error: messageError } = await supabase
       .from("messages")
       .select("*")
-      .eq("postedBy", data[0].id);
+      .eq("postedBy", data[0].id)
+      .eq("status", false);
 
     const appMsg = message.filter((msg) => msg.message === "参加申請");
 
@@ -110,7 +111,8 @@ export default function EventDetail() {
       const { data: event, error: eventError } = await supabase
         .from("posts")
         .select("*")
-        .eq("eventID", Number(eventId.id));
+        .eq("eventID", Number(eventId.id))
+        .eq("status", false);
 
       if (eventError) {
         console.log("島ポスト番号取得失敗");

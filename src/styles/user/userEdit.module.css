@@ -68,7 +68,7 @@
 
 /*　各入力項目 */
 .address {
-  width: 85%;
+  width: 95%;
   height: 3vh;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .th {
-  width: 20%;
+  width: 18%;
 }
 
 .buttonbox {
@@ -111,12 +111,12 @@
 
 .inputA {
   height: 3vh;
-  width: 40%;
+  width: 46%;
 }
 .inputB {
   height: 3vh;
-  width: 40%;
-  margin-left: 4%;
+  width: 46%;
+  margin-left: 2%;
 }
 
 .allContents {

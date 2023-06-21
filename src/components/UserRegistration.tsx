@@ -115,7 +115,7 @@ export default function UserRegistration() {
   };
 
   //職種選択用データ
-  const [category, setCategory] = useState([
+  const [category] = useState([
     { id: "Java", name: "Java" },
     { id: "ML", name: "ML" },
     { id: "CL", name: "CL" },
@@ -148,7 +148,7 @@ export default function UserRegistration() {
                       <input
                         type="text"
                         className={`${styles.inputA}`}
-                        maxLength={300}
+                        maxLength={12}
                         onSubmit={onSubmit}
                         {...register("familyName", {
                           required: "氏名(姓)は必須項目です。",
@@ -157,7 +157,7 @@ export default function UserRegistration() {
                       <input
                         type="text"
                         className={`${styles.inputB} `}
-                        maxLength={300}
+                        maxLength={12}
                         onSubmit={onSubmit}
                         {...register("firstName", {
                           required: "氏名(名)は必須項目です。",
@@ -177,7 +177,7 @@ export default function UserRegistration() {
                       <input
                         type="text"
                         className={`${styles.inputA}`}
-                        maxLength={300}
+                        maxLength={12}
                         onSubmit={onSubmit}
                         {...register("familyNameKana", {
                           required: "カナ(姓)は必須項目です。",
@@ -186,7 +186,7 @@ export default function UserRegistration() {
                       <input
                         type="text"
                         className={`${styles.inputB} `}
-                        maxLength={300}
+                        maxLength={12}
                         onSubmit={onSubmit}
                         {...register("firstNameKana", {
                           required: "カナ(名)は必須項目です。",
@@ -207,7 +207,7 @@ export default function UserRegistration() {
                       <input
                         type="text"
                         className={styles.address}
-                        maxLength={100}
+                        maxLength={250}
                         onSubmit={onSubmit}
                         {...register("mailAddress", {
                           validate: {

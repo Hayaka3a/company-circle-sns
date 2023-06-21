@@ -65,7 +65,7 @@ header {
 }
 
 .logout {
-  height: 7.5vh;
+  height: 6.5vh;
   margin: 0 3vh;
   cursor: pointer;
 }
@@ -154,11 +154,11 @@ header {
 }
 
 .menuGroupItemLink:hover {
-  color: rgba(140, 135, 71, 1);
+  color: rgb(173 158 142);
 }
 
 .menuGroupItemLink {
-  color: rgb(193, 115, 31);
+  color: rgb(147 108 66);
   padding: 0.5em 0.5em;
   text-align: center;
 
@@ -188,7 +188,7 @@ header {
   margin-right: 9vh;
   position: relative;
   width: 6.5vh;
-  height: 7vh;
+  height: 6.5vh;
   background: none;
   border: none;
   appearance: none;
@@ -198,7 +198,7 @@ header {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 1vh;
+  height: 0.7vh;
   background-color: rgba(207, 135, 56, 1);
   border-radius: 4vh;
 }

@@ -44,14 +44,11 @@
 }
 
 .input {
-  align-items: flex-start; /* 垂直方向 */
-  justify-content: center; /* 水平方向 */
-  display: flex;
 }
 
 .main {
   height: 25vh;
-  width: 70%;
+  width: 83%;
 }
 
 .title {
@@ -70,9 +67,10 @@
 
 .text {
   outline: solid 0.3vh rgba(209, 227, 172, 1);
+  width: 60vh;
 }
 .name {
-  margin-right: 2vh;
+  text-align: left;
 }
 
 .btn {

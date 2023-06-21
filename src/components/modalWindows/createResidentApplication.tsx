@@ -157,6 +157,7 @@ export default function CreateResidentApplication({
                   <br />
                   <textarea
                     name="text"
+                    maxLength={200}
                     className={styles.textSending}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}

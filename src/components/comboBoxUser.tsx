@@ -113,6 +113,7 @@ export default function ComboBoxUser({
         <div className={styles.inputContainer}>
           <input
             type="text"
+            maxLength={24}
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}

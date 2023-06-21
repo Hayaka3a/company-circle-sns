@@ -6,7 +6,7 @@
 .box {
   margin: 10vh auto;
   padding: 3vh 0;
-  width: 60%;
+  width: 68%;
   background-color: rgba(255, 254, 245, 1);
   height: auto;
   text-align: center;
@@ -75,7 +75,7 @@ table {
   border-bottom: 1px solid rgb(180, 180, 180);
   text-align: left;
   border-right: none; /* 最後の列の縦線を非表示*/
-  width: 50%;
+  width: 35%;
   font-size: 2.5vh;
 }
 
@@ -86,8 +86,9 @@ table {
 
 .imgSide {
   display: flex;
+  align-items: center;
   height: 18.5vh;
-  border-bottom: 1px solid rgb(180, 180, 180);
+  border-bottom: 1px solid rgb(137 119 119);
 }
 
 .fleCenter {
@@ -112,13 +113,12 @@ table {
 }
 
 .fileLabel {
-  width: 9vw;
-  padding: 4%;
   color: #ffffff;
-  background-color: rgba(194, 137, 66, 1);
+  background-color: rgb(166 153 131);
   cursor: pointer;
   border-radius: 3vh;
   margin-left: 1.5vw;
+  padding: 0.5vh 1vh;
 }
 
 .file {
@@ -132,12 +132,12 @@ table {
   margin-left: auto;
   margin-right: auto;
   background-color: rgb(233, 184, 125);
-  border: 3px solid rgba(194, 137, 66, 1);
+  border: 3px solid rgb(137 119 119);
 }
 
 .delBtn {
   background-color: white;
-  color: rgba(194, 137, 66, 1);
+  color: rgb(217 112 112);
 }
 
 .selectedValue {
@@ -202,16 +202,16 @@ table {
   width: 85%;
   border-collapse: collapse;
   border-spacing: 0 6vh; /* 行間幅 */
-  border-top: 1px solid rgba(194, 137, 66, 1);
+  border-top: 1px solid rgb(137 119 119);
   margin-bottom: 6%;
 }
 
 .th {
-  border-bottom: 1px solid rgba(194, 137, 66, 1);
+  border-bottom: 1px solid rgb(137 119 119);
   text-align: left;
 }
 .td {
-  border-bottom: 1px solid rgba(194, 137, 66, 1);
+  border-bottom: 1px solid rgb(137 119 119);
   text-align: left;
 }
 
@@ -231,10 +231,6 @@ table {
   padding: 4vh 0;
 }
 
-.th {
-  width: 50%;
-}
-
 .btn {
   padding: 0.3vh 1.5vh;
   border: none;
@@ -244,11 +240,11 @@ table {
   cursor: pointer;
   margin-bottom: 1vh;
   margin-left: 1vh;
-  background-color: rgba(194, 137, 66, 1);
+  background-color: rgb(217 112 112);
   color: white;
 }
 
 .btn:disabled {
-  background-color: rgba(209, 208, 206, 1);
+  background-color: rgb(189 187 187);
   color: white;
 }
