@@ -101,17 +101,22 @@ export default function IslandEdit() {
         const { error: islandsTagError } = await supabase
           .from("tagStatus")
           .update({ status: "true" })
-          .eq("id", islandID);
+          .eq("islandID", islandID);
+
+        const { error: islandStatusError } = await supabase
+          .from("userEntryStatus")
+          .update({ status: "true" })
+          .eq("islandID", islandID);
 
         const { error: postsError } = await supabase
           .from("posts")
           .update({ status: "true" })
-          .eq("id", islandID);
+          .eq("islandID", islandID);
 
-        if (islandsError || islandsTagError || postsError) {
+        if (islandsError || islandsTagError || islandStatusError || postsError) {
           console.error(
             "Error changing status :",
-            islandsError || islandsTagError || postsError,
+            islandsError || islandsTagError || islandStatusError || postsError,
           );
           // Cookie情報の削除
           if (document.cookie !== "") {
