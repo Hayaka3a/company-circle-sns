@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../../styles/createThread.module.css";
+import styles from "../../styles/createAfterDelete.module.css";
 
 export default function CreateAfterDelete({ done }: { done: () => void }) {
   // 現在のウィンドウを非表示にし、島作成画面（新規サークル作成画面）へ遷移する
