@@ -122,7 +122,7 @@ export default function IslandEdit() {
         }
 
         console.log("Change status of islands successfully.");
-        navigate("/island/create");
+        navigate("/index");
         window.location.reload();
       }
     }
