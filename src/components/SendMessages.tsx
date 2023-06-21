@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { firestore } from "../firebase";
 import firebase from "firebase/compat/app";
 import styles from "../styles/Chat.module.css";

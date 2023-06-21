@@ -20,7 +20,7 @@
   margin-block-end: 0em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  font-size: 4vh;
+  font-size: 2.8vh;
 }
 
 .icon {
@@ -166,6 +166,7 @@
   width: 10vh;
   font-size: 3.2vh;
   cursor: pointer;
+  background-color: #b9b560;
 }
 
 .btnWrapper {

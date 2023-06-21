@@ -44,7 +44,6 @@
   border: solid 0.3vh rgba(138, 121, 98, 1);
   height: 5vh;
   width: 28.5vw;
-  font-size: 1.2vw;
   border-radius: 1vh;
 }
 
@@ -52,7 +51,6 @@
   border: solid 0.3vh rgba(138, 121, 98, 1);
   height: 20vh;
   width: 30vw;
-  font-size: 1.2vw;
   font-weight: lighter;
   border-radius: 1vh;
 }
@@ -60,16 +58,14 @@
 .comboBoxUser {
   border: solid 0.3vh rgba(138, 121, 98, 1);
   height: 5vh;
-  width: 25vw;
-  font-size: 1.2vw;
+  width: 23vw;
   border-radius: 1vh;
 }
 
 .Addtag {
   border: solid 0.3vh rgba(138, 121, 98, 1);
   height: 5vh;
-  width: 28.5vw;
-  font-size: 1.2vw;
+  width: 23vw;
   border-radius: 1vh;
 }
 
@@ -145,6 +141,7 @@
 
 .imgSide {
   display: flex;
+  align-items: center;
   height: 18.5vh;
   border-bottom: 1px solid rgb(180, 180, 180);
 }
@@ -187,7 +184,7 @@
 }
 
 .islansTitle {
-  background-color: rgba(194, 137, 66, 1);
+  background-color: rgb(166 153 131);
   color: white;
 }
 
@@ -286,7 +283,7 @@
 }
 
 .add {
-  background-color: rgba(194, 137, 66, 1);
+  background-color: rgb(166 153 131);
   padding-right: 0.7vw;
   padding-left: 0.7vw;
 }

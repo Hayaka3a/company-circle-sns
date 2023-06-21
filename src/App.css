@@ -13,6 +13,8 @@
 
 input {
   font-size: 2.5vh;
+  border-radius: 1vh;
+  padding-left: 0.5vh;
 }
 button {
   font-size: 2.5vh;

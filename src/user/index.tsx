@@ -219,7 +219,7 @@ export default function UserEdit() {
                             type="text"
                             className={`${styles.inputA}`}
                             disabled={!editMode}
-                            maxLength={300}
+                            maxLength={12}
                             onSubmit={onSubmit}
                             {...register("familyName", {
                               required: "氏名(姓)は必須項目です。",
@@ -229,7 +229,7 @@ export default function UserEdit() {
                             type="text"
                             className={`${styles.inputB} `}
                             disabled={!editMode}
-                            maxLength={300}
+                            maxLength={12}
                             onSubmit={onSubmit}
                             {...register("firstName", {
                               required: "氏名(名)は必須項目です。",
@@ -248,7 +248,7 @@ export default function UserEdit() {
                             type="text"
                             className={`${styles.inputA}`}
                             disabled={!editMode}
-                            maxLength={300}
+                            maxLength={12}
                             onSubmit={onSubmit}
                             {...register("familyNameKana", {
                               required: "カナ(姓)は必須項目です。",
@@ -258,7 +258,7 @@ export default function UserEdit() {
                             type="text"
                             className={`${styles.inputB} `}
                             disabled={!editMode}
-                            maxLength={300}
+                            maxLength={12}
                             onSubmit={onSubmit}
                             {...register("firstNameKana", {
                               required: "カナ(名)は必須項目です。",
@@ -277,7 +277,7 @@ export default function UserEdit() {
                             type="text"
                             className={styles.address}
                             disabled={!editMode}
-                            maxLength={100}
+                            maxLength={250}
                             onSubmit={onSubmit}
                             {...register("mailAddress", {
                               validate: {

@@ -25,6 +25,19 @@
   padding-bottom: 2vh;
 }
 
+.input {
+  width: 75vh;
+  border: solid 0.3vh rgba(138, 121, 98, 1);
+  border-radius: 1vh;
+}
+
+.imgSide {
+  display: flex;
+  align-items: center;
+  height: 19vh;
+  border-bottom: 1px solid #b4b4b4;
+}
+
 .inputs {
   display: flex;
   flex-direction: column;
@@ -35,11 +48,13 @@
   margin-right: auto;
 }
 .detail {
-  width: 73vh;
+  width: 75vh;
   height: 17vh;
   font-size: 2.2vh;
   margin: 3vh 0;
   text-align: left;
+  border: solid 0.3vh rgba(138, 121, 98, 1);
+  border-radius: 1vh;
 }
 
 .islandName {
@@ -55,6 +70,7 @@
   border-radius: 50%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 1vh;
 }
 
 .tag {
@@ -147,5 +163,4 @@
 
 .faileCenter {
   padding: 3vh;
-  border-bottom: 1px solid rgb(180, 180, 180);
 }
