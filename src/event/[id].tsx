@@ -134,6 +134,7 @@ export default function EventDetail() {
   };
   const closeResidentModal = () => {
     setIsResidentOpen(false);
+    window.location.reload();
   };
 
   // メッセージを送るを押した際の小窓画面（モーダルウィンドウ）の開閉
