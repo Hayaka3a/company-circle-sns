@@ -276,12 +276,15 @@ export default function IslandCreate() {
                       alt="island Thumbnail"
                     />
                     <div className={styles.faileCenter}>
-                      <input
-                        type="file"
-                        id="thumbnail"
-                        className={styles.inputA}
-                        onChange={handleFileChange}
-                      />
+                      <label className={styles.fileLabel}>
+                        <input
+                          type="file"
+                          id="thumbnail"
+                          className={styles.file}
+                          onChange={handleFileChange}
+                        />
+                        ファイルを選択
+                      </label>
                     </div>
                   </td>
                 </tr>

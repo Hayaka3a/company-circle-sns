@@ -81,7 +81,7 @@ export default function AddTag({
           type="text"
           value={inputValue}
           onChange={handleChangeName}
-          className={`${styles.inputA} ${
+          className={`${styles.Addtag} ${
             tagNameError ? styles.errorInputTg : ""
           }`}
           id="tagName"
@@ -96,7 +96,7 @@ export default function AddTag({
           type="text"
           value={inputValueK}
           onChange={handleChangeNameKana}
-          className={`${styles.inputA} ${
+          className={`${styles.Addtag} ${
             tagNameKanaError ? styles.errorInputTg : ""
           }`}
           id="tagNameKana"

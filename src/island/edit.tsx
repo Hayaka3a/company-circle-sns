@@ -75,7 +75,7 @@ export default function IslandEdit() {
     setIsDeleteCheckOpen(false);
   };
 
-  // 削除完了ウィンドウを閉じると、データが論理削除されて新規登録画面に遷移する
+  // 削除完了ウィンドウを閉じると、データが論理削除されてトップ画面に遷移する
   const done = async () => {
     setIsAfterDeleteOpen(false);
 
@@ -127,7 +127,7 @@ export default function IslandEdit() {
         }
 
         console.log("Change status of islands successfully.");
-        navigate("/island/create");
+        navigate("/");
         window.location.reload();
       }
     }
@@ -400,6 +400,7 @@ export default function IslandEdit() {
                   value={islandName}
                   onChange={handleIslandNameChange}
                   readOnly={!editMode}
+                  maxLength={100}
                 />
               </td>
             </tr>
@@ -410,6 +411,7 @@ export default function IslandEdit() {
                   id="detail"
                   className={styles.detail}
                   value={detail}
+                  maxLength={300}
                   onChange={(event) => handleDetailChange(event.target.value)} // 修正: テキストエリアの値が変更されたら handleDetailChange 関数を呼び出す
                   readOnly={!editMode} // 編集モードでない場合は無効化する
                 />

@@ -117,6 +117,7 @@ export default function ComboBoxUser({
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             id={htmlFor}
+            className={styles.comboBoxUser}
           />
           {/* サジェストオプションを表示 */}
           {inputValue !== "" && suggestedOptions.length > 0 && (
