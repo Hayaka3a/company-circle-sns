@@ -75,7 +75,7 @@ export default function IslandEdit() {
     setIsDeleteCheckOpen(false);
   };
 
-  // 削除完了ウィンドウを閉じると、データが論理削除されて新規登録画面に遷移する
+  // 削除完了ウィンドウを閉じると、データが論理削除されてトップ画面に遷移する
   const done = async () => {
     setIsAfterDeleteOpen(false);
 
@@ -122,7 +122,7 @@ export default function IslandEdit() {
         }
 
         console.log("Change status of islands successfully.");
-        navigate("/island/create");
+        navigate("/");
         window.location.reload();
       }
     }

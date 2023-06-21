@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../../styles/createDeletePage.module.css";
+import styles from "../../styles/createThread.module.css";
 
 // closeDeleteModalは×ボタンを押下したときの関数、nextOpenは完了系ボタン（島を沈没（削除）させる）を押したときの関数
 export default function CreateDeletePage({
@@ -9,7 +9,6 @@ export default function CreateDeletePage({
   closeDeleteModal: () => void;
   nextOpen: () => void;
 }) {
-
   // 現在のウィンドウを非表示にし、入力ボックスウィンドウを表示する
   const nextHandler = () => {
     nextOpen();
@@ -32,7 +31,9 @@ export default function CreateDeletePage({
               </div>
             </div>
             <div>
-              <button onClick={nextHandler} id={styles.delete_btn}>島を沈没（削除）させる</button>
+              <button onClick={nextHandler} id={styles.delete_btn}>
+                島を沈没（削除）させる
+              </button>
             </div>
           </div>
         </div>

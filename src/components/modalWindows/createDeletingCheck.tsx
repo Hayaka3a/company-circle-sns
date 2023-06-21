@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "../../styles/createDeletingCheck.module.css";
+
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
 
@@ -84,13 +85,15 @@ export default function CreateDeleteCheck({
                 </p>
                 <p>※スペースを入れずに入力してください</p>
               </div>
-              <input
-                type="text"
-                id={styles.deleteCheck}
-                value={inputValue}
-                onChange={handleInputChange}
-              />
-
+              <div className={styles.flex}>
+                <input
+                  type="text"
+                  id={styles.deleteCheck}
+                  value={inputValue}
+                  onChange={handleInputChange}
+                />
+                島
+              </div>
               {emptyChara && (
                 <div>
                   <span>{emptyChara}</span>
