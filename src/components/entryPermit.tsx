@@ -149,6 +149,7 @@ export default function EntryPermit({ table }: { table: string }) {
       .update({
         isRead: true,
         isAnswered: true,
+        status: false,
       })
       .eq(`id`, messageID);
     if (updateError) {
