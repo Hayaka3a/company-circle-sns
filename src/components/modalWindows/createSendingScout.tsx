@@ -142,7 +142,7 @@ export default function CreateSendingScout({
 
   const messageBlur = () => {
     if (message.trim() === "") {
-      setmessageError("※メッセージは入力必須項目です");
+      setmessageError("※コメントは入力必須項目です");
     } else {
       setmessageError("");
     }
