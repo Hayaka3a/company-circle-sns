@@ -84,6 +84,7 @@ export default function IslandDetail() {
       .from("messages")
       .select("*")
       .eq("postedBy", data[0].id)
+      .eq("isAnswered", false)
       .eq("status", false);
 
     const appMsg = message.filter((msg) => msg.message === "参加申請");
