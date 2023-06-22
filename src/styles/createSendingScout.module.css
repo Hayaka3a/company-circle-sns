@@ -112,7 +112,10 @@
   background-color: rgb(243, 187, 187);
 }
 
-/* .btn:disabled {
+.btn:disabled {
   background-color: rgb(189 187 187);
   color: white;
-} */
+  border: none;
+  transform: none;
+  box-shadow: none;
+}
