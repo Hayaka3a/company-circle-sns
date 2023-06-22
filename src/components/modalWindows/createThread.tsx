@@ -14,6 +14,12 @@ export default function CreateThread({
   const [threadTitle, setThreadTitle] = useState("");
   const [islandName, setIslandName] = useState("");
   const [eventName, setEventName] = useState("");
+  const [isThreadTitleEmpty, setIsThreadTitleEmpty] = useState(true);
+
+  useEffect(() => {
+    // スレッド名の入力状態に応じてisThreadTitleEmptyの値を更新
+    setIsThreadTitleEmpty(threadTitle.trim().length === 0);
+  }, [threadTitle]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,7 +101,11 @@ export default function CreateThread({
               </div>
             </div>
             <div>
-              <button onClick={addHandler} className={styles.btn}>
+              <button
+                onClick={addHandler}
+                className={styles.btn}
+                disabled={isThreadTitleEmpty}
+              >
                 作成
               </button>
             </div>
