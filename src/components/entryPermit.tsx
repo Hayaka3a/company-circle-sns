@@ -74,7 +74,7 @@ export default function EntryPermit({ table }: { table: string }) {
 
   //OKボタンの処理
   async function OKButton(messageID: number, userID: number) {
-    const { data: updateData, error: updateError } = await supabase
+    const { error: updateError } = await supabase
       .from("messages")
       .update({
         isRead: true,
@@ -88,7 +88,7 @@ export default function EntryPermit({ table }: { table: string }) {
 
     //島の場合
     if (table === "island") {
-      const { data: entryPost, error: entryPostError } = await supabase
+      const { error: entryPostError } = await supabase
         .from("userEntryStatus")
         .insert({ userID: userID, islandID: paramsID, status: false });
 
@@ -96,15 +96,14 @@ export default function EntryPermit({ table }: { table: string }) {
         console.log(entryPostError, "エラー");
       } else {
         // 難民のeventIDを取得
-        const { data: existingEntryStatus, error: existingEntryStatusError } =
-          await supabase
-            .from("userEntryStatus")
-            .select("id, eventID")
-            .eq("userID", userID)
-            .eq("status", false);
+        const { data: existingEntryStatus } = await supabase
+          .from("userEntryStatus")
+          .select("id, eventID")
+          .eq("userID", userID)
+          .eq("status", false);
 
         // 島の開催イベントIDを取得
-        const { data: islandEvent, error: islandEventError } = await supabase
+        const { data: islandEvent } = await supabase
           .from("userEntryStatus")
           .select("id, eventID")
           .eq("islandID", paramsID)
@@ -132,7 +131,7 @@ export default function EntryPermit({ table }: { table: string }) {
 
     //イベントの場合
     else {
-      const { data: entryPost, error: entryPostError } = await supabase
+      const { error: entryPostError } = await supabase
         .from("userEntryStatus")
         .insert({ userID: userID, eventID: paramsID, status: false });
       if (entryPostError) {
@@ -144,7 +143,7 @@ export default function EntryPermit({ table }: { table: string }) {
   }
 
   async function NGButton(messageID: number) {
-    const { data: updateData, error: updateError } = await supabase
+    const { error: updateError } = await supabase
       .from("messages")
       .update({
         isRead: true,
@@ -185,7 +184,9 @@ export default function EntryPermit({ table }: { table: string }) {
                     <div className={styles.button}>
                       <button
                         className={styles.OK}
-                        onClick={() => OKButton(data.id, data.postedBy)}
+                        onClick={() => {
+                          OKButton(data.id, data.users.id);
+                        }}
                         key={data.id}
                       >
                         許可

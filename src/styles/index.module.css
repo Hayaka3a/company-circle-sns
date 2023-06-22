@@ -36,8 +36,7 @@
 
 .islands {
   background-color: rgb(244, 236, 207);
-  padding-top: 6%;
-  padding-bottom: 3%;
+  padding-top: 2vh;
   padding-left: 1vw;
   padding-right: 1vw;
   text-align: center;
@@ -59,8 +58,7 @@
 
 .events {
   background-color: rgb(237, 252, 212);
-  padding-top: 6%;
-  padding-bottom: 3%;
+  padding-top: 2vh;
   padding-left: 1vw;
   padding-right: 1vw;
   text-align: center;

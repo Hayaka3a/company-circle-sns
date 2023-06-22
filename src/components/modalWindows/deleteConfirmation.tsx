@@ -36,7 +36,7 @@ export default function DeleteComfirmation({
         }
       };
       return (
-        <button onClick={handler} className={styles.btn}>
+        <button onClick={handler} className={styles.btn3}>
           はい
         </button>
       );
@@ -57,7 +57,7 @@ export default function DeleteComfirmation({
         }
       };
       return (
-        <button onClick={handler} className={styles.btn}>
+        <button onClick={handler} className={styles.btn3}>
           はい
         </button>
       );
@@ -78,7 +78,7 @@ export default function DeleteComfirmation({
       };
 
       return (
-        <button onClick={handler} className={styles.btn}>
+        <button onClick={handler} className={styles.btn3}>
           はい
         </button>
       );
@@ -96,7 +96,7 @@ export default function DeleteComfirmation({
               onClick={closeModal}
               className={styles.close}
             />
-            <div className={styles.main}>
+            <div className={styles.main2}>
               <div className={styles.title}>
                 <p className={styles.messageName}>{text}</p>
               </div>
