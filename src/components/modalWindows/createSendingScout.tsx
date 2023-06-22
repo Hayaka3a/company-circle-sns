@@ -163,11 +163,14 @@ export default function CreateSendingScout({
               <div>
                 <label htmlFor="sendUser" className="label">
                   送るユーザー (1人追加してください)
+                  <span className={styles.span}>【必須】</span>
                 </label>
                 <ComboBoxUserScout
                   nameOptions={users}
                   htmlFor={"sedUser"}
-                  setIslandMembers={setIslandMembers}
+                  setIslandMembers={(data: newUsersData) =>
+                    setIslandMembers(data)
+                  }
                 />
                 {empty && (
                   <div>
@@ -182,7 +185,7 @@ export default function CreateSendingScout({
               </div>
               <div className={styles.box}>
                 <label htmlFor="text" className="label">
-                  コメント
+                  コメント<span className={styles.span}>【必須】</span>
                 </label>
                 <br />
                 <textarea
@@ -205,10 +208,11 @@ export default function CreateSendingScout({
             <div>
               <button
                 onClick={addHandler}
-                disabled={islandMembers.length === 0 || !message.trim()}
+                disabled={islandMembers.length === 0 || message.trim() === ""}
                 className={`${styles.btn} ${
-                  (islandMembers.length === 0 || !message.trim()) &&
-                  styles.disabled
+                  islandMembers.length === 0 || message.trim() === ""
+                    ? styles.disabled
+                    : ""
                 }`}
               >
                 送信

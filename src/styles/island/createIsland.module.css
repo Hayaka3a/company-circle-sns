@@ -285,7 +285,7 @@
   padding-left: 0.7vw;
 }
 
-.btn:disabled {
+.disabled {
   background-color: rgba(209, 208, 206, 1);
   color: white;
 }
