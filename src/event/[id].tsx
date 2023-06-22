@@ -42,27 +42,39 @@ export default function EventDetail() {
       console.error("fetchEventDetail:", error);
       return;
     }
-
-    const { data: user, error: userError } = await supabase
-      .from("users")
-      .select("id")
-      .eq("id", data[0].ownerID);
-    const owner = user[0].id.toString();
-
-    // ownerじゃない人には「編集・削除」ボタン機能を表示させない
-    if (owner !== userId) {
-      setButton(false);
-    }
-    if (data.length === 0) {
-      console.warn("該当する島の詳細情報が見つかりませんでした。");
+    if (!data) {
+      console.log(error, "イベント取得エラー");
       return;
-    }
+    } else {
+      const { data: user, error: userError } = await supabase
+        .from("users")
+        .select("id")
+        .eq("id", data[0].ownerID);
 
-    const eventDetail = data[0] as undefined; // 最初のデータを取得（仮定）
-    const tmpEve = eventDetail as Event;
-    setEventDetail(eventDetail); // 島の詳細情報を状態変数にセット
-    if (tmpEve.thumbnail) {
-      setEventImage(tmpEve.thumbnail);
+      if (userError) {
+        console.log(userError, "ユーザーエラー");
+      }
+      if (!user) {
+        console.log("ユーザーが見つかりません");
+      } else {
+        const owner = user[0].id.toString();
+
+        // ownerじゃない人には「編集・削除」ボタン機能を表示させない
+        if (owner !== userId) {
+          setButton(false);
+        }
+        if (data.length === 0) {
+          console.warn("該当する島の詳細情報が見つかりませんでした。");
+          return;
+        }
+
+        const eventDetail = data[0] as undefined; // 最初のデータを取得（仮定）
+        const tmpEve = eventDetail as Event;
+        setEventDetail(eventDetail); // 島の詳細情報を状態変数にセット
+        if (tmpEve.thumbnail) {
+          setEventImage(tmpEve.thumbnail);
+        }
+      }
     }
   };
 

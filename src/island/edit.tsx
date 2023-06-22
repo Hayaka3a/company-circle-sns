@@ -113,7 +113,12 @@ export default function IslandEdit() {
           .update({ status: "true" })
           .eq("islandID", islandID);
 
-        if (islandsError || islandsTagError || islandStatusError || postsError) {
+        if (
+          islandsError ||
+          islandsTagError ||
+          islandStatusError ||
+          postsError
+        ) {
           console.error(
             "Error changing status :",
             islandsError || islandsTagError || islandStatusError || postsError,
@@ -387,7 +392,7 @@ export default function IslandEdit() {
     <div className={styles.all}>
       <MenubarIsland />
       <div className={styles.back}>
-        <h1 className={styles.name}>島情報編集・削除</h1>
+        <h2 className={styles.name}>島情報編集・削除</h2>
         <table className={styles.table}>
           <tbody className={styles.tbody}>
             <tr className={styles.tr}>
@@ -472,7 +477,7 @@ export default function IslandEdit() {
 
         <div className={styles.delete}>
           <button onClick={openDeleteModal} className={styles.delete_btn}>
-            アカウントを削除
+            島を削除
           </button>
         </div>
         {isDeleteOpen && (

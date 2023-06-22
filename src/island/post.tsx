@@ -97,7 +97,7 @@ export default function IslandPost() {
     <div className={styles.all}>
       <MenubarIsland />
       <div className={styles.islandPostBack}>
-        <h1 className={styles.h1}>POST</h1>
+        <h2 className={styles.h1}>POST</h2>
         <Link to={`/island/post/entryPermit/${paramsID}`}>
           <button className={styles.btn2}>住民許可待ち申請</button>
         </Link>

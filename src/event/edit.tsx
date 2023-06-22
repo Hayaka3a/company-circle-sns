@@ -130,7 +130,6 @@ export default function EventEdit() {
       setEndDate(event.endDate); // イベント終了日時（endDate）をendDateステートにセット
       setEventDetail(event.detail); // イベント詳細をeventDetailステートにセット
       setImageUrl(event.thumbnail); // サムネイルをthumbnailステートにセット
-
     }
   };
 
@@ -206,7 +205,6 @@ export default function EventEdit() {
       circleElement.style.backgroundImage = `url('${imageUrl}')`;
     }
   }, [imageUrl]);
-
 
   // 画像ファイル選択したら、表示画像に反映
   const handleFileChange = async (
@@ -332,7 +330,7 @@ export default function EventEdit() {
       <MenubarEvent />
       <div className={styles.back}>
         <div className={styles.event_detail}>
-          <h1>イベント編集・削除</h1>
+          <h2>イベント編集・削除</h2>
 
           <table className={styles.table}>
             <tbody className={styles.tbody}>
@@ -351,10 +349,10 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>サムネイル</th>
                 <td className={styles.td}>
-                  <img 
+                  <img
                     className={styles.icon}
                     src={imageUrl || "/event/party.png"}
-                    alt="event Thumbnail" 
+                    alt="event Thumbnail"
                   />
                   <input
                     type="file"
