@@ -182,7 +182,7 @@ export default function MembersList({
                         islandName={`displayData.${table}Name`}
                         table={table}
                         params={displayData.id}
-                        user={user.id}
+                        user={user.userID}
                       />
                     )}
                     <button onClick={open2} className={styles.exileBtn}>

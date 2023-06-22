@@ -22,7 +22,7 @@ export default function DeleteComfirmation({
     if (category === "脱退する") {
       const handler = async () => {
         // 自分が脱退する;
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from("userEntryStatus")
           .update({ status: true })
           .eq(`userID`, user)
@@ -44,7 +44,7 @@ export default function DeleteComfirmation({
     } else if (category === "追放") {
       const handler = async () => {
         //メンバーを削除
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from("userEntryStatus")
           .update({ status: true })
           .eq(`userID`, user)
@@ -64,7 +64,7 @@ export default function DeleteComfirmation({
     } else if (category === "譲渡") {
       //オーナー権限を譲渡する
       const handler = async () => {
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from(`${table}s`)
           .update({ ownerID: user })
           .eq("id", params);

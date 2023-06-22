@@ -82,7 +82,7 @@ export default function IslandEdit() {
     // posts, islands, tagStatusテーブルのstatusをtrueに変更
     const { data, error } = await supabase
       .from("islands")
-      .select("islandName")
+      .select("islandName,ownerID")
       .eq("id", islandID)
       .eq("status", false);
 
@@ -91,6 +91,7 @@ export default function IslandEdit() {
     }
     if (data && data.length > 0) {
       const islandName = data[0].islandName;
+      const owner = data[0].ownerID;
 
       if (islandName === inputValue) {
         const { error: islandsError } = await supabase
@@ -113,11 +114,17 @@ export default function IslandEdit() {
           .update({ status: "true" })
           .eq("islandID", islandID);
 
+        const { error: eventError } = await supabase
+          .from("events")
+          .update({ status: "true" })
+          .eq("ownerID", owner);
+
         if (
           islandsError ||
           islandsTagError ||
           islandStatusError ||
-          postsError
+          postsError ||
+          eventError
         ) {
           console.error(
             "Error changing status :",
