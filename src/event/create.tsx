@@ -25,7 +25,6 @@ export default function EventCreate() {
 
   const params = useParams();
   const islandID = params.id;
-  const ownerID = GetCookieID();
 
   // 画像ファイル選択したら、表示画像に反映
   const handleFileChange = async (
@@ -52,12 +51,21 @@ export default function EventCreate() {
 
   // イベント作成する
   const createHandler = async () => {
+    const { data: island, error: islandError } = await supabase
+      .from("islands")
+      .select("ownerID")
+      .eq("id", Number(islandID));
+
+    if (islandError) {
+      console.error("見つかりません");
+    }
+
     const eventData = {
       eventName: eventName,
       detail: detail,
       startDate: new Date(startDate).toISOString(),
       endDate: new Date(endDate).toISOString(),
-      ownerID: ownerID,
+      ownerID: island[0].ownerID,
       status: false,
       createdBy: "システム",
       thumbnail: imageUrl,
