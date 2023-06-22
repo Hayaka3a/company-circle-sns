@@ -22,6 +22,7 @@ export default function ComboBoxUser({
   const [newOptions, setNewOptions] = useState<
     { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
   >([]);
+  const [error, setError] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -59,7 +60,12 @@ export default function ComboBoxUser({
         setSelectedValue((value) => [...value, inputValue]);
         setNewOptions((options) => [...options, existingOption]);
         const members = [...newOptions, existingOption];
-        setIslandMembers(members);
+
+        if (members.length > 1) {
+          setError("送信先は1人のみ選択可能です。");
+        } else {
+          setIslandMembers(members);
+        }
 
         setInputValue("");
         return setIslandMembers;
@@ -92,6 +98,7 @@ export default function ComboBoxUser({
     const users = [...newOptions];
     users.splice(index, 1);
     setIslandMembers(users);
+    setError("");
   };
 
   const handleSuggestionSelect = (option: string) => {
@@ -165,6 +172,11 @@ export default function ComboBoxUser({
             {row}
           </div>
         ))}
+      {error && (
+        <div>
+          <span className={styles.span}>{error}</span>
+        </div>
+      )}
     </div>
   );
 }

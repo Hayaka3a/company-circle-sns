@@ -102,3 +102,12 @@
 .box {
   margin-top: 5vh;
 }
+
+.span {
+  color: red;
+}
+
+/* .btn:disabled {
+  background-color: rgb(189 187 187);
+  color: white;
+} */
