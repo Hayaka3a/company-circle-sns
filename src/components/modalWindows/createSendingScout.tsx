@@ -3,7 +3,7 @@ import { supabase } from "../../createClient";
 import { useEffect, useState } from "react";
 import { newUsersData } from "../../types/sendScout";
 import { useParams } from "react-router-dom";
-import ComboBoxUser from "../comboBoxUser";
+import ComboBoxUserScout from "../comboBoxUserScout";
 import ConvertKanaJ from "../changeKana";
 
 export default function CreateSendingScout({
@@ -18,7 +18,9 @@ export default function CreateSendingScout({
   const [post, setPost] = useState(0);
   const [postBy, setPostBy] = useState(0);
   const [islandName, setIslandName] = useState("");
-  const [islandMembers, setIslandMembers] = useState<newUsersData>();
+  const [islandMembers, setIslandMembers] = useState<newUsersData>([]);
+  const [error, setError] = useState("");
+  const [empty, setEmpty] = useState("");
 
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -79,37 +81,61 @@ export default function CreateSendingScout({
   };
 
   const fetchPost = async () => {
-    if (islandMembers) {
-      //コンボボックスから返されたUserIDから該当のPostIDを割り出す
-      const { data: posts, error: postError } = await supabase
-        .from("posts")
-        .select("id")
-        .eq("userID", islandMembers[0].id)
-        .eq("status", false);
-      if (postError) {
-        console.log(postError, "エラー");
+    try {
+      if (islandMembers && islandMembers.length > 0) {
+        const { data: sentUser, error: sentUserError } = await supabase
+          .from("messages")
+          .select("*")
+          .eq("postID", post)
+          .eq("scout", true)
+          .eq("postedBy", postBy);
+
+        if (sentUserError) {
+          console.error("ユーザー情報取得に失敗しました。");
+        }
+
+        if (sentUser.length > 0) {
+          setError("このユーザーには既に送信済みです。");
+        } else {
+          // コンボボックスから返されたUserIDから該当のPostIDを割り出す
+          const { data: posts, error: postError } = await supabase
+            .from("posts")
+            .select("id")
+            .eq("userID", islandMembers[0].id)
+            .eq("status", false);
+          if (postError) {
+            console.log(postError, "エラー");
+          }
+          setPost(posts[0].id);
+        }
+      } else {
+        setError("");
       }
-      setPost(posts[0].id);
-    } else {
-      return;
+    } catch (error) {
+      console.error("エラー発生");
     }
   };
 
   //スカウトを送る
   const addHandler = async () => {
-    const { data, error } = await supabase.from("messages").insert({
-      postID: post,
-      message: message,
-      scout: true,
-      isRead: false,
-      isAnswered: false,
-      postedBy: postBy,
-      status: false,
-    });
-    if (error) {
-      console.log(error, "エラー");
+    console.log(islandMembers);
+    if (!islandMembers || islandMembers.length === 0) {
+      setEmpty("「追加」ボタンを押下してユーザーを選択してください。");
     } else {
-      closeModal();
+      const { error } = await supabase.from("messages").insert({
+        postID: post,
+        message: message,
+        scout: true,
+        isRead: false,
+        isAnswered: false,
+        postedBy: postBy,
+        status: false,
+      });
+      if (error) {
+        console.log(error, "エラー");
+      } else {
+        closeModal();
+      }
     }
   };
 
@@ -130,11 +156,21 @@ export default function CreateSendingScout({
                 <label htmlFor="sendUser" className="label">
                   送るユーザー (1人追加してください)
                 </label>
-                <ComboBoxUser
+                <ComboBoxUserScout
                   nameOptions={users}
                   htmlFor={"sedUser"}
                   setIslandMembers={setIslandMembers}
                 />
+                {empty && (
+                  <div>
+                    <span className={styles.span}>{empty}</span>
+                  </div>
+                )}
+                {error && (
+                  <div>
+                    <span className={styles.span}>{error}</span>
+                  </div>
+                )}
               </div>
               <div className={styles.box}>
                 <label htmlFor="text" className="label">
@@ -153,8 +189,11 @@ export default function CreateSendingScout({
             <div>
               <button
                 onClick={addHandler}
-                disabled={!islandMembers}
-                className={styles.btn}
+                disabled={islandMembers.length === 0 || !message.trim()}
+                className={`${styles.btn} ${
+                  (islandMembers.length === 0 || !message.trim()) &&
+                  styles.disabled
+                }`}
               >
                 送信
               </button>
