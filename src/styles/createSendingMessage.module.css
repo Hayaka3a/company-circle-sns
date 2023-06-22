@@ -13,6 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .modal {
@@ -36,21 +37,17 @@
 }
 
 .allContents {
-  justify-content: center; /* 水平方向 */
-  align-items: center; /* 垂直方向 */
-  flex-direction: column; /* 縦方向 */
-  display: flex;
+  height: 70vh;
+  width: 72vh;
+  display: inline-block;
 }
 
 .main {
   height: 25vh;
-  width: 70%;
 }
 
 .title {
-  align-items: center; /* 垂直方向 */
-  justify-content: center; /* 水平方向 */
-  flex-direction: column; /* 縦方向 */
+  margin: auto;
 }
 
 .h3 {
@@ -63,15 +60,17 @@
 
 .textSending {
   outline: solid 0.3vh rgba(209, 227, 172, 1);
-  width: 64vh;
-  height: 18vh;
+  width: 71vh;
+  height: 16vh;
+  padding: 2vh;
+  border-radius: 3vh;
 }
 .name {
   margin-right: 2vh;
 }
 
 .btn {
-  margin-top: 14vh;
+  margin-top: 12vh;
   height: 7vh;
   width: 21vh;
   border-radius: 3vh;

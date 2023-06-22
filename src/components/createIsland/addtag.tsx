@@ -80,6 +80,7 @@ export default function AddTag({
         <input
           type="text"
           value={inputValue}
+          maxLength={20}
           onChange={handleChangeName}
           className={`${styles.Addtag} ${
             tagNameError ? styles.errorInputTg : ""

@@ -35,7 +35,7 @@
 
 .allContents {
   height: 70vh;
-  width: 90vh;
+  width: 72vh;
   justify-content: center; /* 水平方向 */
   align-items: center; /* 垂直方向 */
   flex-direction: column; /* 縦方向 */
@@ -59,7 +59,7 @@
   justify-content: center; /* 水平方向 */
   flex-direction: column; /* 縦方向 */
   margin-bottom: 3vh;
-  margin-top: 0;
+  margin-top: 5vh;
 }
 
 .h3 {
@@ -72,7 +72,7 @@
 }
 
 .btn {
-  margin-top: 1vh;
+  margin-top: 5vh;
   height: 7vh;
   width: 21vh;
   border-radius: 3vh;
@@ -91,10 +91,14 @@
 }
 
 .textSending {
-  width: -webkit-fill-available;
-  height: 33vh;
+  width: 65vh;
+  height: 11vh;
   border-radius: 3vh;
   transition: 0.3s ease;
   color: #868283;
-  padding: 1.5vh;
+  padding: 4.4vh;
+  font-size: 2.5vh;
+}
+.box {
+  margin-top: 5vh;
 }

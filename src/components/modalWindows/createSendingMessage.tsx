@@ -99,8 +99,8 @@ export default function CreateSendingMessage({
               />
               <div className={styles.main}>
                 <div className={styles.title}>
-                  <h3 className={styles.h3}>{islandName}</h3>
-                  <p className={styles.messageName}>メッセージ</p>
+                  <h3 className={styles.h3}>{islandName}島</h3>
+                  <p className={styles.messageName}>メッセージを送る</p>
                 </div>
                 <div className={styles.input}>
                   <label htmlFor="threadName">コメント</label>

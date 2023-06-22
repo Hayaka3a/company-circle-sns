@@ -140,7 +140,9 @@ export default function CreateSendingScout({
                 <label htmlFor="text" className="label">
                   コメント
                 </label>
+                <br />
                 <textarea
+                  maxLength={100}
                   name="text"
                   className={styles.textSending}
                   value={message}

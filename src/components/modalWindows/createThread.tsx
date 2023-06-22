@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/createThread.module.css";
 import { supabase } from "../../createClient";
 
@@ -50,7 +50,7 @@ export default function CreateThread({
   const addHandler = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("threads")
       .insert({ threadTitle, islandID, eventID, status: false });
     if (error) {
@@ -82,9 +82,9 @@ export default function CreateThread({
                 <p className={styles.p}>新規スレッド作成</p>
               </div>
               <div className={styles.input}>
-                <label htmlFor="threadName" className={styles.name}>
-                  スレッド名
-                </label>
+                <div className={styles.name}>
+                  <label htmlFor="threadName">スレッド名</label>
+                </div>
                 <input
                   className={styles.text}
                   type="text"

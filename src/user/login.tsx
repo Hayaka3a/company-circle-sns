@@ -71,6 +71,7 @@ export default function Login() {
             type="email"
             id="email"
             placeholder="ログインID（登録メールアドレス）"
+            maxLength={250}
             className={styles.inputA}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -83,6 +84,7 @@ export default function Login() {
             type="password"
             id="pass"
             placeholder="パスワード"
+            maxLength={16}
             className={styles.inputB}
             onChange={(e) => {
               setPassword(e.target.value);

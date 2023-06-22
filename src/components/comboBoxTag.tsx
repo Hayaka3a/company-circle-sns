@@ -114,6 +114,7 @@ export default function ComboBoxTag({
           <input
             type="text"
             value={inputValue}
+            maxLength={20}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             id={htmlFor}
