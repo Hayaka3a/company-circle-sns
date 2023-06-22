@@ -45,7 +45,7 @@ export default function UserRegistration() {
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
   } = useForm({
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const onSubmit = async (sendData: any) => {
@@ -181,6 +181,10 @@ export default function UserRegistration() {
                         onSubmit={onSubmit}
                         {...register("familyNameKana", {
                           required: "カナ(姓)は必須項目です。",
+                          pattern: {
+                            value: /^[ァ-ヶー]*$/,
+                            message: "カタカナのみで入力してください",
+                          },
                         })}
                       />
                       <input
@@ -190,6 +194,10 @@ export default function UserRegistration() {
                         onSubmit={onSubmit}
                         {...register("firstNameKana", {
                           required: "カナ(名)は必須項目です。",
+                          pattern: {
+                            value: /^[ァ-ヶー]*$/,
+                            message: "カタカナのみで入力してください",
+                          },
                         })}
                       />
                       <p className={styles.error}>
