@@ -81,34 +81,38 @@ export default function CreateSendingScout({
   };
 
   const fetchPost = async () => {
-    if (islandMembers && islandMembers.length > 0) {
-      const { data: sentUser, error: sentUserError } = await supabase
-        .from("messages")
-        .select("*")
-        .eq("postID", post)
-        .eq("scout", true)
-        .eq("postedBy", postBy);
+    try {
+      if (islandMembers && islandMembers.length > 0) {
+        const { data: sentUser, error: sentUserError } = await supabase
+          .from("messages")
+          .select("*")
+          .eq("postID", post)
+          .eq("scout", true)
+          .eq("postedBy", postBy);
 
-      if (sentUserError) {
-        console.error("ユーザー情報取得に失敗しました。");
-      }
-
-      if (sentUser.length > 0) {
-        setError("このユーザーには既に送信済みです。");
-      } else {
-        // コンボボックスから返されたUserIDから該当のPostIDを割り出す
-        const { data: posts, error: postError } = await supabase
-          .from("posts")
-          .select("id")
-          .eq("userID", islandMembers[0].id)
-          .eq("status", false);
-        if (postError) {
-          console.log(postError, "エラー");
+        if (sentUserError) {
+          console.error("ユーザー情報取得に失敗しました。");
         }
-        setPost(posts[0].id);
+
+        if (sentUser.length > 0) {
+          setError("このユーザーには既に送信済みです。");
+        } else {
+          // コンボボックスから返されたUserIDから該当のPostIDを割り出す
+          const { data: posts, error: postError } = await supabase
+            .from("posts")
+            .select("id")
+            .eq("userID", islandMembers[0].id)
+            .eq("status", false);
+          if (postError) {
+            console.log(postError, "エラー");
+          }
+          setPost(posts[0].id);
+        }
+      } else {
+        setError("");
       }
-    } else {
-      setError("");
+    } catch (error) {
+      console.error("エラー発生");
     }
   };
 
