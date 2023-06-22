@@ -21,6 +21,7 @@ export default function CreateSendingScout({
   const [islandMembers, setIslandMembers] = useState<newUsersData>([]);
   const [error, setError] = useState("");
   const [empty, setEmpty] = useState("");
+  const [messageError, setmessageError] = useState("");
 
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -139,6 +140,14 @@ export default function CreateSendingScout({
     }
   };
 
+  const messageBlur = () => {
+    if (message.trim() === "") {
+      setmessageError("※メッセージは入力必須項目です");
+    } else {
+      setmessageError("");
+    }
+  };
+
   return (
     <>
       <div className={styles.overlay}>
@@ -180,10 +189,18 @@ export default function CreateSendingScout({
                 <textarea
                   maxLength={100}
                   name="text"
-                  className={styles.textSending}
+                  className={`${styles.textSending} ${
+                    messageError ? styles.errorInput : ""
+                  }`}
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
+                  onBlur={messageBlur}
                 ></textarea>
+                {messageError && (
+                  <div>
+                    <span className={styles.span}>{messageError}</span>
+                  </div>
+                )}
               </div>
             </div>
             <div>
