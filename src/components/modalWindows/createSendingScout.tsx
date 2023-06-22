@@ -119,7 +119,6 @@ export default function CreateSendingScout({
 
   //スカウトを送る
   const addHandler = async () => {
-    console.log(islandMembers);
     if (!islandMembers || islandMembers.length === 0) {
       setEmpty("「追加」ボタンを押下してユーザーを選択してください。");
     } else {
