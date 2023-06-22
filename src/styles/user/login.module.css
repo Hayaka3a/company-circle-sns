@@ -73,6 +73,14 @@
   color: rgba(94, 70, 44, 0.6);
 }
 
+.button:disabled {
+  color: white;
+  background-color: rgba(199, 199, 199, 1);
+  border: 3px solid rgba(199, 199, 199, 1);
+  box-shadow: none;
+  transform: none;
+}
+
 .buttonBox {
   display: inline-block;
 }

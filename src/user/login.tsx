@@ -103,7 +103,11 @@ export default function Login() {
           >
             ユーザーが見つかりません。もう一度入力してください。
           </h3>
-          <button onClick={loginHandler} className={styles.button}>
+          <button
+            onClick={loginHandler}
+            className={styles.button}
+            disabled={!email || !password}
+          >
             ログイン
           </button>
         </div>
