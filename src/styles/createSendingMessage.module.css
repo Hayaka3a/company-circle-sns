@@ -43,7 +43,8 @@
 }
 
 .main {
-  height: 25vh;
+  height: 7vh;
+  margin-top: 19vh;
 }
 
 .title {
@@ -107,4 +108,8 @@
 
 .input {
   text-align: left;
+}
+
+.messageName {
+  margin: auto;
 }

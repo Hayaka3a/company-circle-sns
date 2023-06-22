@@ -93,7 +93,7 @@ export default function EventEdit() {
         const { error: postsError } = await supabase
           .from("posts")
           .update({ status: "true" })
-          .eq("id", eventID);
+          .eq("eventID", eventID);
 
         const { error: userEntryStatusError } = await supabase
           .from("userEntryStatus")
