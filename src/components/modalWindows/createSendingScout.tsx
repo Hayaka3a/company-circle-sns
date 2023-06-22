@@ -185,8 +185,11 @@ export default function CreateSendingScout({
             <div>
               <button
                 onClick={addHandler}
-                disabled={!islandMembers}
-                className={styles.btn}
+                disabled={islandMembers.length === 0 || !message.trim()}
+                className={`${styles.btn} ${
+                  (islandMembers.length === 0 || !message.trim()) &&
+                  styles.disabled
+                }`}
               >
                 送信
               </button>
