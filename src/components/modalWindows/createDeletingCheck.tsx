@@ -3,6 +3,7 @@ import styles from "../../styles/createDeletingCheck.module.css";
 
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
+import { text } from "stream/consumers";
 
 export default function CreateDeleteCheck({
   close2Modal,
@@ -79,7 +80,7 @@ export default function CreateDeleteCheck({
                 </h3>
               </div>
               <div>
-                <p>
+                <p className={styles.text}>
                   削除するために下記のテキストボックスに
                   <br /> 島名を入力してください
                 </p>
