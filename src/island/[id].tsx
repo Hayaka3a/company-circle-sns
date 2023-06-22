@@ -86,7 +86,6 @@ export default function IslandDetail() {
         .from("messages")
         .select("*")
         .eq("postedBy", data[0].id)
-        .eq("isAnswered", false)
         .eq("status", false);
 
       if (!message) {

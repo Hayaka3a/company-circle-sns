@@ -21,7 +21,7 @@
   padding: 1em;
   background: #fff;
   text-align: center;
-  height: 70vh;
+  height: 75vh;
   position: relative;
   margin-top: 12vh;
 }
@@ -101,4 +101,21 @@
 }
 .box {
   margin-top: 5vh;
+}
+
+.span {
+  color: red;
+}
+
+/* 未入力時に背景色を変更 */
+.errorInput {
+  background-color: rgb(243, 187, 187);
+}
+
+.btn:disabled {
+  background-color: rgb(189 187 187);
+  color: white;
+  border: none;
+  transform: none;
+  box-shadow: none;
 }
