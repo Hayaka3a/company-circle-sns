@@ -91,3 +91,11 @@
   transform: translate(5px, 5px);
   color: rgba(94, 70, 44, 1);
 }
+
+.btn:disabled {
+  background-color: rgb(189 187 187);
+  color: white;
+  border: none;
+  transform: none;
+  box-shadow: none;
+}
