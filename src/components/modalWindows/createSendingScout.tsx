@@ -21,6 +21,7 @@ export default function CreateSendingScout({
   const [islandMembers, setIslandMembers] = useState<newUsersData>([]);
   const [error, setError] = useState("");
   const [empty, setEmpty] = useState("");
+  const [messageError, setmessageError] = useState("");
 
   const params = useParams();
   const paramsID = parseInt(params.id);
@@ -118,7 +119,6 @@ export default function CreateSendingScout({
 
   //スカウトを送る
   const addHandler = async () => {
-    console.log(islandMembers);
     if (!islandMembers || islandMembers.length === 0) {
       setEmpty("「追加」ボタンを押下してユーザーを選択してください。");
     } else {
@@ -139,6 +139,14 @@ export default function CreateSendingScout({
     }
   };
 
+  const messageBlur = () => {
+    if (message.trim() === "") {
+      setmessageError("※コメントは入力必須項目です");
+    } else {
+      setmessageError("");
+    }
+  };
+
   return (
     <>
       <div className={styles.overlay}>
@@ -155,11 +163,14 @@ export default function CreateSendingScout({
               <div>
                 <label htmlFor="sendUser" className="label">
                   送るユーザー (1人追加してください)
+                  <span className={styles.span}>【必須】</span>
                 </label>
                 <ComboBoxUserScout
                   nameOptions={users}
                   htmlFor={"sedUser"}
-                  setIslandMembers={setIslandMembers}
+                  setIslandMembers={(data: newUsersData) =>
+                    setIslandMembers(data)
+                  }
                 />
                 {empty && (
                   <div>
@@ -174,25 +185,34 @@ export default function CreateSendingScout({
               </div>
               <div className={styles.box}>
                 <label htmlFor="text" className="label">
-                  コメント
+                  コメント<span className={styles.span}>【必須】</span>
                 </label>
                 <br />
                 <textarea
                   maxLength={100}
                   name="text"
-                  className={styles.textSending}
+                  className={`${styles.textSending} ${
+                    messageError ? styles.errorInput : ""
+                  }`}
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
+                  onBlur={messageBlur}
                 ></textarea>
+                {messageError && (
+                  <div>
+                    <span className={styles.span}>{messageError}</span>
+                  </div>
+                )}
               </div>
             </div>
             <div>
               <button
                 onClick={addHandler}
-                disabled={islandMembers.length === 0 || !message.trim()}
+                disabled={islandMembers.length === 0 || message.trim() === ""}
                 className={`${styles.btn} ${
-                  (islandMembers.length === 0 || !message.trim()) &&
-                  styles.disabled
+                  islandMembers.length === 0 || message.trim() === ""
+                    ? styles.disabled
+                    : ""
                 }`}
               >
                 送信

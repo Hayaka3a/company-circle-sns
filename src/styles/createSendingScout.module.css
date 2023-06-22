@@ -107,6 +107,11 @@
   color: red;
 }
 
+/* 未入力時に背景色を変更 */
+.errorInput {
+  background-color: rgb(243, 187, 187);
+}
+
 /* .btn:disabled {
   background-color: rgb(189 187 187);
   color: white;
