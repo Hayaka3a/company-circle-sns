@@ -99,7 +99,7 @@ export default function UserPost() {
     <>
       <div className={styles.all}>
         <div className={styles.islandPostBack}>
-          <h1>POST</h1>
+          <h2>POST</h2>
           <div className={styles.postMessageBack}>
             <h2>受信メッセージ✉️</h2>
 

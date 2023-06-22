@@ -82,7 +82,7 @@ export default function IslandEdit() {
     // posts, islands, tagStatusテーブルのstatusをtrueに変更
     const { data, error } = await supabase
       .from("islands")
-      .select("islandName")
+      .select("islandName,ownerID")
       .eq("id", islandID)
       .eq("status", false);
 
@@ -91,6 +91,7 @@ export default function IslandEdit() {
     }
     if (data && data.length > 0) {
       const islandName = data[0].islandName;
+      const owner = data[0].ownerID;
 
       if (islandName === inputValue) {
         const { error: islandsError } = await supabase
@@ -113,7 +114,18 @@ export default function IslandEdit() {
           .update({ status: "true" })
           .eq("islandID", islandID);
 
-        if (islandsError || islandsTagError || islandStatusError || postsError) {
+        const { error: eventError } = await supabase
+          .from("events")
+          .update({ status: "true" })
+          .eq("ownerID", owner);
+
+        if (
+          islandsError ||
+          islandsTagError ||
+          islandStatusError ||
+          postsError ||
+          eventError
+        ) {
           console.error(
             "Error changing status :",
             islandsError || islandsTagError || islandStatusError || postsError,
@@ -387,7 +399,7 @@ export default function IslandEdit() {
     <div className={styles.all}>
       <MenubarIsland />
       <div className={styles.back}>
-        <h1 className={styles.name}>島情報編集・削除</h1>
+        <h2 className={styles.name}>島情報編集・削除</h2>
         <table className={styles.table}>
           <tbody className={styles.tbody}>
             <tr className={styles.tr}>
@@ -472,7 +484,7 @@ export default function IslandEdit() {
 
         <div className={styles.delete}>
           <button onClick={openDeleteModal} className={styles.delete_btn}>
-            アカウントを削除
+            島を削除
           </button>
         </div>
         {isDeleteOpen && (
