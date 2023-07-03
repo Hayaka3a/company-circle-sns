@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../styles/island/createIsland.module.css";
 import { supabase } from "../../createClient";
+import HandleNameBlur from "./handleNameBlur";
+import HandleIslandNameChange from "./handleIslandNameChange";
 
 export default function IslandName({
   islandName,
@@ -12,38 +14,14 @@ export default function IslandName({
   const [islandNameError, setIslandNameError] = useState("");
   const [nameAlreadyError, setNameAlreadyError] = useState("");
 
-  const handleIslandNameChange = (e) => {
-    setIslandName(e.target.value);
-    // 一文字でも入力されたらエラー削除
-    if (islandNameError) {
-      setIslandNameError("");
-    }
-    // 重複エラーも非表示にする
-    if (nameAlreadyError) {
-      setNameAlreadyError("");
-    }
-  };
+  const handleIslandNameChange = HandleIslandNameChange({
+    islandNameError,
+    setIslandName,
+    setIslandNameError,
+    setNameAlreadyError,
+    nameAlreadyError,
+  });
 
-  const handleIslandNameBlur = async () => {
-    if (islandName.trim() === "") {
-      setIslandNameError("※島名は入力必須項目です");
-    } else {
-      setIslandNameError("");
-      // クエリを実行してislandNameの重複チェック
-      const { data, error } = await supabase
-        .from("islands")
-        .select("*")
-        .eq("islandName", islandName)
-        .eq("status", false);
-      if (error) {
-        console.error("クエリエラー:", error.message);
-      } else {
-        if (data.length > 0) {
-          setNameAlreadyError("※島名が既に存在します");
-        }
-      }
-    }
-  };
   return (
     <>
       <input
@@ -54,7 +32,13 @@ export default function IslandName({
         maxLength={100}
         value={islandName}
         onChange={handleIslandNameChange}
-        onBlur={handleIslandNameBlur}
+        onBlur={() => {
+          HandleNameBlur({
+            islandName,
+            setIslandNameError,
+            setNameAlreadyError,
+          });
+        }}
       />
       <span className={styles.islandNameText}>&nbsp;島</span>
       {islandNameError && (
@@ -67,6 +51,11 @@ export default function IslandName({
           <span className={styles.span}>{nameAlreadyError}</span>
         </div>
       )}
+      <HandleNameBlur
+        islandName={islandName}
+        setIslandNameError={setIslandNameError}
+        setNameAlreadyError={setNameAlreadyError}
+      />
     </>
   );
 }

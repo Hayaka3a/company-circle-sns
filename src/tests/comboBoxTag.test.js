@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import ComboBoxTag from "../components/comboBoxTag";
+import { BrowserRouter } from "react-router-dom";
 
 describe("ComboBoxTag", () => {
   const tagOptions = [
@@ -10,13 +11,17 @@ describe("ComboBoxTag", () => {
   ];
 
   it("should render the ComboBoxTag component", () => {
+    // render(): コンポーネントが正しく描画され、表示される要素やふるまいをテストする
     render(
-      <ComboBoxTag
-        tagOptions={tagOptions}
-        htmlFor="test-input"
-        chosenTag={null}
-        setIslandTags={() => {}}
-      />,
+      <BrowserRouter>
+        <ComboBoxTag
+          tagOptions={tagOptions}
+          htmlFor="test-input"
+          chosenTag={null}
+          setIslandTags={() => {}}
+        />
+        ,
+      </BrowserRouter>,
     );
 
     // 必要な要素がレンダリングされていることを確認する

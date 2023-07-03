@@ -18,7 +18,7 @@ export default function EventDetail({
     }
   };
 
-  const handleIslandNameBlur = () => {
+  const handleEventNameBlur = () => {
     if (detail.trim() === "") {
       setError("※詳細内容は入力必須項目です");
     } else {
@@ -32,7 +32,7 @@ export default function EventDetail({
         maxLength={250}
         value={detail}
         onChange={handleEventDetailChange}
-        onBlur={handleIslandNameBlur}
+        onBlur={handleEventNameBlur}
       />
       {error && (
         <div>

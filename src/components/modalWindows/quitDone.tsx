@@ -11,7 +11,7 @@ export default function QuitDone({ done }: { done: () => void }) {
         <div className={styles.modal}>
           <div className={styles.allContents}>
             <div className={styles.main}>
-              <div className={styles.title}>アカウントを削除が完了しました</div>
+              <div className={styles.title}>アカウント削除が完了しました</div>
             </div>
             <div>
               <button onClick={deleteHandler}>OK</button>

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../styles/event/create.module.css";
 import { supabase } from "../../createClient";
+import HandleNameBlur from "./handleNameBlur";
 
 export default function EventName({
   eventName,
@@ -24,26 +25,6 @@ export default function EventName({
     }
   };
 
-  const handleNameBlur = async () => {
-    if (eventName.trim() === "") {
-      setNameError("※イベント名は入力必須項目です");
-    } else {
-      setNameError("");
-      // クエリを実行してislandNameの重複チェック
-      const { data, error } = await supabase
-        .from("events")
-        .select("*")
-        .eq("eventName", eventName)
-        .eq("status", false);
-      if (error) {
-        console.error("クエリエラー:", error.message);
-      } else {
-        if (data.length > 0) {
-          setNameAlreadyError("※イベント名が既に存在します");
-        }
-      }
-    }
-  };
   return (
     <>
       <input
@@ -52,7 +33,13 @@ export default function EventName({
         maxLength={100}
         value={eventName}
         onChange={handleNameChange}
-        onBlur={handleNameBlur}
+        onBlur={() => {
+          HandleNameBlur({
+            eventName,
+            setNameError,
+            setNameAlreadyError,
+          });
+        }}
       />
       <span className={styles.islandNameText}></span>
       {NameError && (
@@ -65,6 +52,11 @@ export default function EventName({
           <span className={styles.span}>{nameAlreadyError}</span>
         </div>
       )}
+      <HandleNameBlur
+        eventName={eventName}
+        setNameError={setNameError}
+        setNameAlreadyError={setNameAlreadyError}
+      />
     </>
   );
 }
