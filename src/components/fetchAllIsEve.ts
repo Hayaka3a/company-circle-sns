@@ -1,8 +1,5 @@
 import { supabase } from "../createClient";
-import {
-  Event,
-  Island,
-} from "/home/hayaka3a/src/company-circle-sns/src/types/members";
+import { Event, Island } from "../types/members";
 
 //該当する島かイベントの情報を取得する関数
 export async function fetchAllIsEve({
@@ -13,11 +10,7 @@ export async function fetchAllIsEve({
 }: {
   table: string;
   paramsID: number;
-  setEventData?: React.Dispatch<
-    React.SetStateAction<
-      import("/home/hayaka3a/src/company-circle-sns/src/types/members").Event
-    >
-  >;
+  setEventData?: React.Dispatch<React.SetStateAction<Event>>;
   setIslandData?: React.Dispatch<React.SetStateAction<Island>>;
 }) {
   //島かイベントかをtablePropsで判断してデータ取得
