@@ -6,7 +6,7 @@ import { supabase } from "../createClient";
 import styles from "../styles/island/island_post.module.css";
 import { format } from "date-fns";
 import classNames from "classnames";
-import CreateSendingScout from "../components/modalWindows/createSendingScout";
+import CreateSendingScout from "../components/modalWindows/sendingScout/createSendingScout";
 
 export default function EventPost() {
   LogSt();
