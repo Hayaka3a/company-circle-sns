@@ -23,8 +23,8 @@ export default function SubFetchIsEve({
       const joinIsArray = data
         .filter((data) => data.islands)
         .map(
-          (data: { events: Event | null; islands: Island | null }) =>
-            data.islands.id,
+          (data: { events: Event[] | null; islands: Island[] | null }) =>
+            data.islands[0].id,
         );
       let { data: eveData, error: eveError } = await supabase
         .from("userEntryStatus")
@@ -42,8 +42,8 @@ export default function SubFetchIsEve({
             events: data.events,
             islands: null,
           })) as {
-          events: Event | null;
-          islands: Island | null;
+          events: Event[] | null;
+          islands: Island[] | null;
         }[];
         tmpEve.map((data) => tmpIs.push(data));
 
