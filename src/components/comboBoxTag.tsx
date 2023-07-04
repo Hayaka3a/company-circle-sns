@@ -20,9 +20,7 @@ export default function ComboBoxTag({
     chosenTag ? chosenTag.map((tag) => tag.Name) : [],
   );
   const [suggestedOptions, setSuggestedOptions] = useState<string[]>([]);
-  // const [newOptions, setNewOptions] = useState<
-  //   { id: number; Name: string; NameKana: string }[]
-  // >([]);
+
   const [newOptions, setNewOptions] = useState<
     { id: number; Name: string; NameKana: string }[]
   >(chosenTag ? chosenTag : []);
@@ -146,13 +144,13 @@ export default function ComboBoxTag({
             rows.push([]);
           }
           rows[rows.length - 1].push(
-            <p key={index} className={styles.selectedValue}>
+            <div key={index} className={styles.selectedValue}>
               <div className={styles.nameFlex}>
                 <span className={styles.nowrap}>{value}</span>
                 &nbsp;&nbsp;
                 <button onClick={() => deleteNameHandler(index)}>×</button>
               </div>
-            </p>,
+            </div>,
           );
           return rows;
         }, [])

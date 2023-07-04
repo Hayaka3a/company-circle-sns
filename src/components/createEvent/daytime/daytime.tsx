@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "../../styles/event/create.module.css";
+import styles from "../../../styles/event/create.module.css";
 
 export default function Daytime({
   startDate,
@@ -44,6 +44,7 @@ export default function Daytime({
         className={`${styles.date} ${error ? styles.errorInput : ""}`}
         maxLength={300}
         value={startDate}
+        id="startDate"
         onChange={handleStartChange}
         onBlur={handleBlur}
       />
@@ -53,6 +54,7 @@ export default function Daytime({
         className={`${styles.date} ${error ? styles.errorInput : ""}`}
         maxLength={300}
         value={endDate}
+        id="endDate"
         onChange={handleEndChange}
         onBlur={handleBlur}
       />
