@@ -1,14 +1,14 @@
 import { useState } from "react";
 import styles from "../styles/user/userEdit.module.css";
-import LogSt from "../components/cookie/logSt";
-import QuitUser from "../components/modalWindows/quitUser";
-import QuitConf from "../components/modalWindows/quitConf";
+import LogSt from "./cookie/logSt";
+import QuitUser from "./modalWindows/quitUser";
+import QuitConf from "./modalWindows/quitConf";
 import { useNavigate } from "react-router-dom";
-import QuitDone from "../components/modalWindows/quitDone";
-import GetCookieID from "../components/cookie/getCookieId";
+import QuitDone from "./modalWindows/quitDone";
+import GetCookieID from "./cookie/getCookieId";
 import { supabase } from "../createClient";
 
-export default function UnsubscribeButton() {
+export default function DeleteButton() {
   LogSt();
 
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import styles from "../styles/island/islandEdit.module.css";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
 import { supabase } from "../createClient";
 import ComboBoxTag from "../components/comboBoxTag";
-import AddTag from "../components/createIsland/addtag";
+import AddTag from "../components/createIsland/addtag/addtag";
 import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";

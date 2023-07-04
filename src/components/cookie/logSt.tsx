@@ -8,10 +8,14 @@ export default function LogSt() {
 
   // 未ログイン時、ログイン画面にリダイレクト
   useEffect(() => {
+    checkLoginStatus(loginStatus, navigate);
+  }, []);
+
+  const checkLoginStatus = (loginStatus, navigate) => {
     const status = loginStatus.loginSt;
     if (!status) {
       navigate("/user/login");
       window.location.reload();
     }
-  }, []);
+  };
 }
