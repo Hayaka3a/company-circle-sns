@@ -21,12 +21,14 @@ export default function SubFetchIsEve({
       return;
     } else {
       const tmpIs = data;
+      console.log(data);
       //島が参加しているイベント取得
       const joinIsArray = data
         .filter((data) => data.islands)
         .map(
           (data: { events: Event[] | null; islands: Island[] | null }) =>
-            data.islands[0].id,
+            console.log(data.islands),
+          // data.islands.id,
         );
 
       let { data: eveData, error: eveError } = await supabase
