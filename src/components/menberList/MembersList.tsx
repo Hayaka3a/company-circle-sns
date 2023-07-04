@@ -1,9 +1,10 @@
-import styles from "../styles/membersList.module.css";
+import styles from "../../styles/membersList.module.css";
 import { useEffect, useState } from "react";
-import { Event, Island, Entryusers, User } from "../types/members";
-import { supabase } from "../createClient.js";
-import DeleteComfirmation from "./modalWindows/deleteConfirmation";
-import GetCookieID from "./cookie/getCookieId";
+import { Event, Island, Entryusers, User } from "../../types/members";
+import { supabase } from "../../createClient.js";
+import DeleteComfirmation from "../modalWindows/deleteConfirmation";
+import GetCookieID from "../cookie/getCookieId";
+import { fetchMembers } from "./fetchMembers";
 
 export default function MembersList({
   table,
@@ -34,102 +35,17 @@ export default function MembersList({
   // DBからデータを取得
   useEffect(() => {
     if (!loginUser) {
-      fetchData();
+      fetchMembers({
+        table,
+        displayData,
+        setEntryUsers,
+        loginID,
+        setLoginUser,
+        entryUsers,
+        setNewEntryUsers,
+      });
     }
   }, [entryUsers, newEntryUsers]);
-
-  async function fetchData() {
-    //イベントの場合
-    if (table === "event") {
-      //イベントに参加しているサークル・難民を取り出す
-      const { data, error } = await supabase
-        .from("userEntryStatus")
-        .select(`*,users(*)`)
-        .eq("eventID", displayData.id)
-        .eq(`status`, false);
-      if (error || !data) {
-        console.log(error, "eventFetchError");
-      } else {
-        //島ID・難民データをそれぞれ配列にしまう
-        const tmpArry = data.filter((user) => user.userID) as Entryusers[];
-        const islandArry = data
-          .filter((ent) => ent.islandID)
-          .map((is) => is.islandID);
-
-        //各島のメンバーを取得
-        const { data: entryData, error: entryError } = await supabase
-          .from("userEntryStatus")
-          .select(`*,users(*)`)
-          .in("islandID", islandArry)
-          .eq(`status`, false);
-        if (entryError || !entryData) {
-          console.log(entryError, "entryError");
-        } else {
-          const userData = entryData.filter(
-            (user) => user.userID,
-          ) as Entryusers[];
-          //各島民と難民を一つの配列にしまう
-          const conbined = tmpArry.concat(userData);
-          const updatedData = conbined.map((item) => {
-            if (item.userID === displayData.ownerID) {
-              item.users.firstName += "(オーナー)";
-            }
-            return item;
-          });
-          setEntryUsers(updatedData);
-          getLoginUser();
-        }
-      }
-    } else {
-      //島の場合
-      //島民全員のデータを取得
-      const { data: entryData, error: entryError } = await supabase
-        .from("userEntryStatus")
-        .select(`*,users(*)`)
-        .eq(`${table}ID`, displayData.id)
-        .eq(`status`, false);
-      if (entryError || !entryData) {
-        console.log(entryError, "entryError");
-      } else {
-        const userData = entryData.filter(
-          (user) => user.userID,
-        ) as Entryusers[];
-
-        const updatedData = userData.map((item) => {
-          if (item.userID === displayData.ownerID) {
-            item.users.firstName += "(オーナー)";
-          }
-          return item;
-        });
-
-        setEntryUsers(updatedData);
-        getLoginUser();
-      }
-    }
-  }
-
-  //ログインユーザーのデータを取得
-  const getLoginUser = async () => {
-    //ログインしているユーザーのデータを取得
-    const { data: login, error: loginError } = await supabase
-      .from("users")
-      .select(`*`)
-      .eq(`id`, loginID)
-      .eq("status", false);
-
-    if (loginError || !login) {
-      console.log(loginError, "loginError");
-    } else {
-      const logData = login[0] as User;
-      setLoginUser(logData);
-
-      // ログインユーザーが参加者の場合、ログインユーザーを抜いた配列を新たに作る
-      const filteredUsers = entryUsers.filter(
-        (user) => user.userID !== loginID && user.userID,
-      );
-      setNewEntryUsers(filteredUsers.length > 0 ? filteredUsers : []);
-    }
-  };
 
   // 自分以外のユーザーの一覧表示
   const anotherUser = (user: Entryusers) => {
