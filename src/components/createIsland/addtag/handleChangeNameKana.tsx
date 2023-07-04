@@ -1,4 +1,4 @@
-// タグ名： 一文字でも入力されたら、エラー表示を解除
+// タグ名かな： 一文字でも入力されたら、エラー表示を解除
 import { Dispatch, SetStateAction, useState } from "react";
 
 export default function HandleChangeNameKana({

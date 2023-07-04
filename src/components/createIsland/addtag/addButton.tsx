@@ -1,7 +1,6 @@
 import React from "react";
-import styles from "../../../styles/island/createIsland.module.css";
 
-function AddButton({
+export default function AddButton({
   inputValue,
   inputValueK,
   setTagNames,
@@ -30,11 +29,6 @@ function AddButton({
     }
   };
 
-  return (
-    <button onClick={addHandler} className={styles.addButton}>
-      追加
-    </button>
-  );
+  addHandler();
+  return null;
 }
-
-export default AddButton;

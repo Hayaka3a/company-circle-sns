@@ -1,3 +1,5 @@
+// JSX表示のみコンポーネント
+
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../../styles/island/createIsland.module.css";
 import HandleDetailChange from "./handleIslandDetailChange";
