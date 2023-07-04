@@ -27,6 +27,7 @@ export default function EntryPermit({ table }: { table: string }) {
     getUsers(message);
   }, [message]);
 
+  //分割
   async function fetchData() {
     const { data, error } = await supabase
       .from("posts")
@@ -47,6 +48,7 @@ export default function EntryPermit({ table }: { table: string }) {
     }
   }
 
+  //分割
   //messageを送ったユーザーを取得
   const getUsers = async (data: any[]) => {
     if (data) {
@@ -72,6 +74,7 @@ export default function EntryPermit({ table }: { table: string }) {
     }
   };
 
+  //分割
   //OKボタンの処理
   async function OKButton(messageID: number, userID: number) {
     const { error: updateError } = await supabase
@@ -142,6 +145,7 @@ export default function EntryPermit({ table }: { table: string }) {
     }
   }
 
+  //分割
   async function NGButton(messageID: number) {
     const { error: updateError } = await supabase
       .from("messages")
