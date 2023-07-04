@@ -48,7 +48,7 @@ export default function CreateSendingScout({
       console.log("postが見つかりません");
     } else {
       setPostBy(post[0].id);
-      const islandN = post[0].islands as { islandName: string };
+      const islandN = post[0].islands[0] as { islandName: string };
       setIslandName(islandN.islandName);
     }
   };
