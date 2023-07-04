@@ -1,10 +1,12 @@
-import styles from "../../styles/createSendingScout.module.css";
-import { supabase } from "../../createClient";
+import styles from "../../../styles/createSendingScout.module.css";
+import { supabase } from "../../../createClient";
 import { useEffect, useState } from "react";
-import { newUsersData } from "../../types/sendScout";
+import { newUsersData } from "../../../types/sendScout";
 import { useParams } from "react-router-dom";
-import ComboBoxUserScout from "../comboBoxUserScout";
-import ConvertKanaJ from "../changeKana";
+import ComboBoxUserScout from "../../comboBoxUserScout";
+import ConvertKanaJ from "../../changeKana";
+import { scoutHandler } from "./scoutHandler";
+import { scoutMessageBlur } from "./scoutMessageBlur";
 
 export default function CreateSendingScout({
   closeModal,
@@ -42,9 +44,13 @@ export default function CreateSendingScout({
     if (postError) {
       console.log(postError, "エラー");
     }
-    setPostBy(post[0].id);
-    const islandN = post[0].islands as { islandName: string };
-    setIslandName(islandN.islandName);
+    if (!post) {
+      console.log("postが見つかりません");
+    } else {
+      setPostBy(post[0].id);
+      const islandN = post[0].islands as { islandName: string };
+      setIslandName(islandN.islandName);
+    }
   };
 
   const comboBoxData = async () => {
@@ -57,28 +63,36 @@ export default function CreateSendingScout({
     if (entryError) {
       console.log(entryError, "エラー");
     }
-    const entryArray = entryUser.map((user) => user.userID);
+    if (!entryUser) {
+      console.log("ユーザーが見つかりません");
+    } else {
+      const entryArray = entryUser.map((user) => user.userID);
 
-    //コンボボックス用の全ユーザデータ取得
-    const { data: users, error: usersError } = await supabase
-      .from("users")
-      .select(`id,familyName,firstName,familyNameKana,firstNameKana`)
-      .eq("status", false);
-    if (usersError) {
-      console.log(usersError, "エラー");
+      //コンボボックス用の全ユーザデータ取得
+      const { data: users, error: usersError } = await supabase
+        .from("users")
+        .select(`id,familyName,firstName,familyNameKana,firstNameKana`)
+        .eq("status", false);
+      if (usersError) {
+        console.log(usersError, "エラー");
+      }
+      if (!users) {
+        console.log("全ユーザーが見つかりません");
+      } else {
+        //全ユーザデータからすでに参加している人は抜き出して新たな配列を作る
+        const newUsersData = users
+          .map((user) => ({
+            id: user.id,
+            Name: user.familyName + user.firstName,
+            NameKana: user.familyNameKana + user.firstNameKana,
+            NameKanaJ: `${ConvertKanaJ(user.familyNameKana)}+ ${ConvertKanaJ(
+              user.firstNameKana,
+            )}`,
+          }))
+          .filter((user) => !entryArray.includes(user.id));
+        setUsers(newUsersData);
+      }
     }
-    //全ユーザデータからすでに参加している人は抜き出して新たな配列を作る
-    const newUsersData = users
-      .map((user) => ({
-        id: user.id,
-        Name: user.familyName + user.firstName,
-        NameKana: user.familyNameKana + user.firstNameKana,
-        NameKanaJ: `${ConvertKanaJ(user.familyNameKana)}+ ${ConvertKanaJ(
-          user.firstNameKana,
-        )}`,
-      }))
-      .filter((user) => !entryArray.includes(user.id));
-    setUsers(newUsersData);
   };
 
   const fetchPost = async () => {
@@ -116,35 +130,19 @@ export default function CreateSendingScout({
       console.error("エラー発生");
     }
   };
-
-  //スカウトを送る
-  const addHandler = async () => {
-    if (!islandMembers || islandMembers.length === 0) {
-      setEmpty("「追加」ボタンを押下してユーザーを選択してください。");
-    } else {
-      const { error } = await supabase.from("messages").insert({
-        postID: post,
-        message: message,
-        scout: true,
-        isRead: false,
-        isAnswered: false,
-        postedBy: postBy,
-        status: false,
-      });
-      if (error) {
-        console.log(error, "エラー");
-      } else {
-        closeModal();
-      }
-    }
+  const click = () => {
+    scoutHandler({
+      islandMembers,
+      setEmpty,
+      post,
+      message,
+      postBy,
+      closeModal,
+    });
   };
 
-  const messageBlur = () => {
-    if (message.trim() === "") {
-      setmessageError("※コメントは入力必須項目です");
-    } else {
-      setmessageError("");
-    }
+  const errorMessage = () => {
+    scoutMessageBlur({ message, setmessageError });
   };
 
   return (
@@ -162,12 +160,12 @@ export default function CreateSendingScout({
             <div className={styles.input}>
               <div>
                 <label htmlFor="sendUser" className="label">
-                  送るユーザー (1人追加してください)
+                  送るユーザー(1人追加してください)
                   <span className={styles.span}>【必須】</span>
                 </label>
                 <ComboBoxUserScout
                   nameOptions={users}
-                  htmlFor={"sedUser"}
+                  htmlFor={"sendUser"}
                   setIslandMembers={(data: newUsersData) =>
                     setIslandMembers(data)
                   }
@@ -184,19 +182,21 @@ export default function CreateSendingScout({
                 )}
               </div>
               <div className={styles.box}>
-                <label htmlFor="text" className="label">
+                <label htmlFor="comment" className="label">
                   コメント<span className={styles.span}>【必須】</span>
                 </label>
+                comment
                 <br />
                 <textarea
                   maxLength={100}
-                  name="text"
+                  name="comment"
+                  id="comment"
                   className={`${styles.textSending} ${
                     messageError ? styles.errorInput : ""
                   }`}
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
-                  onBlur={messageBlur}
+                  onBlur={errorMessage}
                 ></textarea>
                 {messageError && (
                   <div>
@@ -207,7 +207,7 @@ export default function CreateSendingScout({
             </div>
             <div>
               <button
-                onClick={addHandler}
+                onClick={click}
                 disabled={islandMembers.length === 0 || message === ""}
                 className={styles.btn}
               >

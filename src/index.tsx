@@ -9,7 +9,7 @@ import { supabase } from "./createClient";
 import PersonalPost from "./components/post/personalPost";
 import BelongIsland from "./components/post/belongIsland";
 import BelongEvent from "./components/post/belongEvent";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
