@@ -6,7 +6,7 @@ import { supabase } from "../../../createClient";
 import HandleNameBlur from "./handleNameBlur";
 import HandleIslandNameChange from "./handleIslandNameChange";
 
-export default function NameInput({
+export default function InputName({
   islandName,
   setIslandName,
 }: {
