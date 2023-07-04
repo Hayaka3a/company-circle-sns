@@ -1,8 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../../styles/island/createIsland.module.css";
-import HandleDetailChange from "./handleDetailChange";
+import HandleDetailChange from "./handleIslandDetailChange";
 import HandleNameBlur from "./handleBlur";
-import { devToolsEnhancer } from "@reduxjs/toolkit/dist/devtoolsExtension";
 
 export default function InputDetail({
   detail,
@@ -20,7 +19,6 @@ export default function InputDetail({
         maxLength={250}
         value={detail}
         onChange={HandleDetailChange({
-          detail,
           error,
           setDetail,
           setError,
