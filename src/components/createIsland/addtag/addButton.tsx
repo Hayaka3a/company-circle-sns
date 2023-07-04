@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/island/createIsland.module.css";
+import styles from "../../../styles/island/createIsland.module.css";
 
 function AddButton({
   inputValue,
@@ -11,22 +11,15 @@ function AddButton({
   setTagNameError,
   setTagNameKanaError,
 }) {
-  //タグをどんどん追加していく
+  // タグをどんどん追加していく
   const addHandler = () => {
-    if (inputValue == "") {
+    if (inputValue === "") {
       setTagNameError("タグ名を入力してください");
-    }
-    if (inputValueK === "") {
+    } else if (inputValueK === "") {
       setTagNameKanaError("タグ名かなを入力してください");
-    }
-    if (/^[ァ-ヶーa-zA-Z0-9]+$/.test(inputValueK)) {
+    } else if (!/^[\u3040-\u309Fー]+$/u.test(inputValueK)) {
       setTagNameKanaError("ひらがなで入力してください");
-    }
-    if (
-      inputValue !== "" &&
-      inputValueK !== "" &&
-      !/^[ァ-ヶーa-zA-Z0-9]+$/.test(inputValueK)
-    ) {
+    } else {
       setSelectedValue((value) => [...value, inputValue]);
       // タグデータ作成
       const newTag = { Name: inputValue, NameKana: inputValueK };

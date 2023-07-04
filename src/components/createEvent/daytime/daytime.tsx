@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "../../styles/event/create.module.css";
+import styles from "../../../styles/event/create.module.css";
 
 export default function Daytime({
   startDate,

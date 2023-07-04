@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import EventName from "../../components/createEvent/eventName";
+import EventName from "../../components/createEvent/eventName/eventName";
 import userEvent from "@testing-library/user-event";
 
 describe("EventName", () => {

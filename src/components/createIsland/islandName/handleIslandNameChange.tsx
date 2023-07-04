@@ -1,3 +1,5 @@
+// 一文字でもinputタグに入力されたらエラーを解消
+
 import { Dispatch, SetStateAction } from "react";
 
 export default function HandleIslandNameChange({

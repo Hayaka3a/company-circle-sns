@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Daytime from "../../components/createEvent/daytime";
+import Daytime from "../../components/createEvent/daytime/daytime";
 
 describe("daytime", () => {
   test("input type='date'要素が2つあること", () => {

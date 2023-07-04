@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import IslandName from "../../components/createIsland/islandName";
+import IslandName from "../../components/createIsland/islandName/islandName";
 
 describe("IslandName", () => {
   test("入力ボックスが表示されるかどうか", () => {

@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "../../styles/island/createIsland.module.css";
+import styles from "../../../styles/island/createIsland.module.css";
+import HandleChangeName from "./handleChangeName";
+import HandleChangeNameKana from "./handleChangeNameKana";
 
 export default function AddTag({
   setTagNames,
@@ -12,48 +14,15 @@ export default function AddTag({
   const [tagNameError, setTagNameError] = useState("");
   const [tagNameKanaError, setTagNameKanaError] = useState("");
 
-  // タグ名（一文字でも入力されたらエラー表示削除）
-  const handleChangeName = (e) => {
-    setInputValue(e.target.value);
-    noErrorHandlerName(e);
-  };
-
-  const noErrorHandlerName = (e) => {
-    setInputValue(e.target.value);
-    if (tagNameError) {
-      setTagNameError("");
-    }
-  };
-
-  // タグ名かな（一文字でも入力されたらエラー表示削除
-  const handleChangeNameKana = (e) => {
-    setInputValueK(e.target.value);
-    noErrorHandlerKana(e);
-  };
-
-  const noErrorHandlerKana = (e) => {
-    setInputValueK(e.target.value);
-    if (tagNameKanaError) {
-      setTagNameKanaError("");
-    }
-  };
-
   //タグをどんどん追加していく
   const addHandler = () => {
-    if (inputValue == "") {
+    if (inputValue === "") {
       setTagNameError("タグ名を入力してください");
-    }
-    if (inputValueK === "") {
+    } else if (inputValueK === "") {
       setTagNameKanaError("タグ名かなを入力してください");
-    }
-    if (/^[ァ-ヶーa-zA-Z0-9]+$/.test(inputValueK)) {
+    } else if (!/^[\u3040-\u309Fー]+$/u.test(inputValueK)) {
       setTagNameKanaError("ひらがなで入力してください");
-    }
-    if (
-      inputValue !== "" &&
-      inputValueK !== "" &&
-      !/^[ァ-ヶーa-zA-Z0-9]+$/.test(inputValueK)
-    ) {
+    } else {
       setSelectedValue((value) => [...value, inputValue]);
       // タグデータ作成
       const newTag = { Name: inputValue, NameKana: inputValueK };
@@ -81,7 +50,11 @@ export default function AddTag({
           type="text"
           value={inputValue}
           maxLength={20}
-          onChange={handleChangeName}
+          onChange={HandleChangeName({
+            tagNameError,
+            setInputValue,
+            setTagNameError,
+          })}
           className={`${styles.Addtag} ${
             tagNameError ? styles.errorInputTg : ""
           }`}
@@ -96,7 +69,11 @@ export default function AddTag({
         <input
           type="text"
           value={inputValueK}
-          onChange={handleChangeNameKana}
+          onChange={HandleChangeNameKana({
+            tagNameKanaError,
+            setInputValueK,
+            setTagNameKanaError,
+          })}
           className={`${styles.Addtag} ${
             tagNameKanaError ? styles.errorInputTg : ""
           }`}

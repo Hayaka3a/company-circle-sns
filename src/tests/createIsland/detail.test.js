@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import Detail from "../../components/createIsland/detail";
+import Detail from "../../components/createIsland/detail/detail";
 
 describe("Detail", () => {
   test("テキストエリアが表示されるかどうか", () => {

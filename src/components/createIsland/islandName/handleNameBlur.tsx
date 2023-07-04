@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../../createClient";
+// カーソル外したときに未入力だったらエラー表示
+
+import React, { useEffect } from "react";
+import { supabase } from "../../../createClient";
 
 export default function HandleNameBlur({
   islandName,

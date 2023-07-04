@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "../../styles/island/createIsland.module.css";
+import styles from "../../../styles/event/create.module.css";
 
-export default function Detail({
+export default function EventDetail({
   detail,
   setDetail,
 }: {
@@ -10,7 +10,7 @@ export default function Detail({
 }) {
   const [error, setError] = useState("");
 
-  const handleIslandDetailChange = (e) => {
+  const handleEventDetailChange = (e) => {
     setDetail(e.target.value);
     // 一文字でも入力されたらエラー削除
     if (error) {
@@ -18,9 +18,9 @@ export default function Detail({
     }
   };
 
-  const handleIslandNameBlur = () => {
+  const handleEventNameBlur = () => {
     if (detail.trim() === "") {
-      setError("※活動内容は入力必須項目です");
+      setError("※詳細内容は入力必須項目です");
     } else {
       setError("");
     }
@@ -31,8 +31,8 @@ export default function Detail({
         className={`${styles.detail} ${error ? styles.errorInput : ""} `}
         maxLength={250}
         value={detail}
-        onChange={handleIslandDetailChange}
-        onBlur={handleIslandNameBlur}
+        onChange={handleEventDetailChange}
+        onBlur={handleEventNameBlur}
       />
       {error && (
         <div>
