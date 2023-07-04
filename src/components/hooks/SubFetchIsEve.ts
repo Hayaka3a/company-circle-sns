@@ -20,7 +20,9 @@ export default function SubFetchIsEve({
       const tmpIs = data;
 
       //島が参加しているイベント取得
-      const joinIsArray = data
+      const joinIsArray = data;
+      console
+        .log(data)
         .filter((data) => data.islands)
         .map(
           (data: { events: Event[] | null; islands: Island[] | null }) =>
