@@ -1,17 +1,17 @@
 // 一文字でもinputタグに入力されたらエラーを解消
 
-export default function HandleIslandNameChange({
-  islandNameError,
-  setIslandName,
-  setIslandNameError,
+export default function HandleNameChange({
+  NameError,
+  setName,
+  setNameError,
   setNameAlreadyError,
   nameAlreadyError,
 }) {
-  const handleIslandNameChange = (e) => {
-    setIslandName(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
     // 一文字でも入力されたらエラー削除
-    if (islandNameError) {
-      setIslandNameError("");
+    if (NameError) {
+      setNameError("");
     }
     // 重複エラーも非表示にする
     if (nameAlreadyError) {
@@ -19,5 +19,5 @@ export default function HandleIslandNameChange({
     }
   };
 
-  return handleIslandNameChange;
+  return handleNameChange;
 }
