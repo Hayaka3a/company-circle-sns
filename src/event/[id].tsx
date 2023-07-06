@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MenubarEvent from "../components/menubarEvent";
+import MenubarEvent from "../components/menubar/menubarEvent";
 import styles from "../styles/island/islandDetail.module.css";
 import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
 import CreateResidentApplication from "../components/modalWindows/createResidentApplication";

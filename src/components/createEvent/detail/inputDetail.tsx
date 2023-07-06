@@ -2,8 +2,8 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../../styles/event/create.module.css";
-import HandleDetailBlur from "./handleDetailBlur";
-import HandleChange from "./handleChange";
+import HandleDetailBlur from "../../createIsland/detail/handleBlur";
+import HandleDetailChange from "../../createIsland/detail/handleDetailChange";
 
 export default function InputDetail({
   detail,
@@ -20,14 +20,14 @@ export default function InputDetail({
         className={`${styles.detail} ${error ? styles.errorInput : ""} `}
         maxLength={250}
         value={detail}
-        onChange={HandleChange({ setDetail, error, setError })}
+        onChange={HandleDetailChange({ setDetail, error, setError })}
       />
       {error && (
         <div>
           <span className={styles.span}>{error}</span>
         </div>
       )}
-      <HandleDetailBlur detail={detail} setError={setError} />
+      <HandleDetailBlur detail={detail} setError={setError} type={"event"} />
     </>
   );
 }

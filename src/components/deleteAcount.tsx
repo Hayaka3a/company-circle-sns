@@ -2,13 +2,13 @@ import { useState } from "react";
 import styles from "../styles/user/userEdit.module.css";
 import LogSt from "./cookie/logSt";
 import QuitUser from "./modalWindows/quitUser";
-import QuitConf from "./modalWindows/quitConf";
+import QuitConf from "./modalWindows/quitConf/quitConf";
 import { useNavigate } from "react-router-dom";
 import QuitDone from "./modalWindows/quitDone";
 import GetCookieID from "./cookie/getCookieId";
 import { supabase } from "../createClient";
 
-export default function DeleteButton() {
+export default function DeleteAcount() {
   LogSt();
 
   const navigate = useNavigate();
@@ -86,14 +86,14 @@ export default function DeleteButton() {
             "Error changing status :",
             usersError || userEnError || postsError,
           );
-          // cookie情報の削除
-          if (document.cookie !== "") {
-            let expirationDate = new Date("1999-12-31T23:59:59Z");
-            document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
-            document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
-          }
         }
-        navigate("/user/newUser");
+        // cookie情報の削除
+        if (document.cookie !== "") {
+          let expirationDate = new Date("1999-12-31T23:59:59Z");
+          document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
+          document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
+        }
+        navigate("/user/login");
         window.location.reload();
       }
     }

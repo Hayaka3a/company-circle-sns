@@ -2,15 +2,15 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../../styles/event/create.module.css";
-import HandleNameBlur from "./handleNameBlur";
-import HandleNameChange from "./handleNameChange";
+import HandleNameBlur from "../../createIsland/islandName/handleNameBlur";
+import HandleNameChange from "../../createIsland/islandName/handleNameChange";
 
 export default function InputEventName({
   eventName,
-  setEventName,
+  setName,
 }: {
   eventName: string;
-  setEventName: Dispatch<SetStateAction<string>>;
+  setName: Dispatch<SetStateAction<string>>;
 }) {
   const [NameError, setNameError] = useState("");
   const [nameAlreadyError, setNameAlreadyError] = useState("");
@@ -23,19 +23,12 @@ export default function InputEventName({
         maxLength={100}
         value={eventName}
         onChange={HandleNameChange({
-          setEventName,
           NameError,
+          setName,
           setNameError,
-          nameAlreadyError,
           setNameAlreadyError,
+          nameAlreadyError,
         })}
-        onBlur={() => {
-          HandleNameBlur({
-            eventName,
-            setNameError,
-            setNameAlreadyError,
-          });
-        }}
       />
       <span className={styles.islandNameText}></span>
       {NameError && (
@@ -49,9 +42,10 @@ export default function InputEventName({
         </div>
       )}
       <HandleNameBlur
-        eventName={eventName}
+        Name={eventName}
         setNameError={setNameError}
         setNameAlreadyError={setNameAlreadyError}
+        type={"event"}
       />
     </>
   );

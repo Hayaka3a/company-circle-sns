@@ -3,7 +3,7 @@ import LogSt from "../components/cookie/logSt";
 import styles from "../styles/island/all.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
-import MenubarIsland from "../components/menubarIsland";
+import MenubarIsland from "../components/menubar/menubarIsland";
 
 export default function EventAll() {
   LogSt();

@@ -3,10 +3,10 @@ import { supabase } from "../../../createClient";
 import { useEffect, useState } from "react";
 import { newUsersData } from "../../../types/sendScout";
 import { useParams } from "react-router-dom";
-import ComboBoxUserScout from "../../comboBoxUserScout";
 import ConvertKanaJ from "../../changeKana";
 import { scoutHandler } from "./scoutHandler";
 import { scoutMessageBlur } from "./scoutMessageBlur";
+import ComboBoxUserScout from "../../comboBox/comboBoxUserScout";
 
 export default function CreateSendingScout({
   closeModal,

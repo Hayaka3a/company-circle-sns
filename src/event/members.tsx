@@ -1,5 +1,5 @@
 import MembersList from "../components/menberList/MembersList";
-import MenubarEvent from "../components/menubarEvent";
+import MenubarEvent from "../components/menubar/menubarEvent";
 import { useEffect, useState } from "react";
 import styles from "../styles/membersList.module.css";
 import { Event } from "../types/members";

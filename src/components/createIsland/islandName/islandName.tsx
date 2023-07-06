@@ -10,7 +10,7 @@ export default function IslandName({
 }) {
   return (
     <>
-      <InputName islandName={islandName} setIslandName={setIslandName} />
+      <InputName islandName={islandName} setName={setIslandName} />
     </>
   );
 }

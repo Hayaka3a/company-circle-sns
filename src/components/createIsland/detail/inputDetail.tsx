@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../../styles/island/createIsland.module.css";
-import HandleDetailChange from "./handleIslandDetailChange";
+import HandleDetailChange from "./handleDetailChange";
 import HandleNameBlur from "./handleBlur";
 
 export default function InputDetail({
@@ -31,7 +31,7 @@ export default function InputDetail({
           <span className={styles.span}>{error}</span>
         </div>
       )}
-      <HandleNameBlur detail={detail} setError={setError} />
+      <HandleNameBlur detail={detail} setError={setError} type={"island"} />
     </>
   );
 }

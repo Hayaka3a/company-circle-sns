@@ -2,41 +2,38 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../../styles/island/createIsland.module.css";
-import { supabase } from "../../../createClient";
 import HandleNameBlur from "./handleNameBlur";
-import HandleIslandNameChange from "./handleIslandNameChange";
+import HandleNameChange from "./handleNameChange";
 
 export default function InputName({
   islandName,
-  setIslandName,
+  setName,
 }: {
   islandName: string;
-  setIslandName: Dispatch<SetStateAction<string>>;
+  setName: Dispatch<SetStateAction<string>>;
 }) {
-  const [islandNameError, setIslandNameError] = useState("");
+  const [NameError, setNameError] = useState("");
   const [nameAlreadyError, setNameAlreadyError] = useState("");
 
   return (
     <>
       <input
         type="text"
-        className={`${styles.islandName} ${
-          islandNameError ? styles.errorInput : ""
-        }`}
+        className={`${styles.islandName} ${NameError ? styles.errorInput : ""}`}
         maxLength={100}
         value={islandName}
-        onChange={HandleIslandNameChange({
-          islandNameError,
-          setIslandName,
-          setIslandNameError,
+        onChange={HandleNameChange({
+          NameError,
+          setName,
+          setNameError,
           setNameAlreadyError,
           nameAlreadyError,
         })}
       />
       <span className={styles.islandNameText}>&nbsp;島</span>
-      {islandNameError && (
+      {NameError && (
         <div>
-          <span className={styles.span}>{islandNameError}</span>
+          <span className={styles.span}>{NameError}</span>
         </div>
       )}
       {nameAlreadyError && (
@@ -46,9 +43,10 @@ export default function InputName({
       )}
       {/* onBlur実行 */}
       <HandleNameBlur
-        islandName={islandName}
-        setIslandNameError={setIslandNameError}
+        Name={islandName}
+        setNameError={setNameError}
         setNameAlreadyError={setNameAlreadyError}
+        type={"island"}
       />
     </>
   );

@@ -1,15 +1,23 @@
 // カーソル外したときに未入力だったらエラー表示
+// eventでも使用
 
 import React, { useEffect } from "react";
-import { supabase } from "../../../createClient";
 
-export default function HandleNameBlur({ detail, setError }) {
+export default function HandleDetailBlur({ detail, setError, type }) {
   useEffect(() => {
     async function handleNameBlur() {
-      if (detail.trim() === "") {
-        setError("※活動内容は入力必須項目です");
-      } else {
-        setError("");
+      if (type === "island") {
+        if (detail.trim() === "") {
+          setError("※活動内容は入力必須項目です");
+        } else {
+          setError("");
+        }
+      } else if (type === "event") {
+        if (detail.trim() === "") {
+          setError("※詳細内容は入力必須項目です");
+        } else {
+          setError("");
+        }
       }
     }
 

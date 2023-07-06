@@ -1,4 +1,4 @@
-import MenubarIsland from "../../components/menubarIsland";
+import MenubarIsland from "../../components/menubar/menubarIsland";
 import EntryPermit from "../../components/entryPermit/entryPermit";
 import styles from "../../styles/entryPermit.module.css";
 import LogSt from "../../components/cookie/logSt";
