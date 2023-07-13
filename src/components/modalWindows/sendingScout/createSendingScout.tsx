@@ -156,7 +156,7 @@ export default function CreateSendingScout({
               onClick={closeModal}
               className={styles.close}
             />
-            <h3 className={styles.title}>{islandName}島へ招待する</h3>
+            <h3 className={styles.title}>{islandName}招待を送る</h3>
             <div className={styles.input}>
               <div>
                 <label htmlFor="sendUser" className="label">

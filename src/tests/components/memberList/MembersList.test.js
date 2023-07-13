@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
-import MembersList from "../../components/menberList/MembersList";
+import MembersList from "../../../components/menberList/MembersList";
 import styles from "../../styles/membersList.module.css";
 
-jest.mock("../../components/menberList/ButtonSwiching.tsx", () => ({
+jest.mock("../../../components/menberList/ButtonSwiching.tsx", () => ({
   ButtonSwitching: jest.fn(() => <div data-testid="mocked-button-switching" />),
 }));
 
