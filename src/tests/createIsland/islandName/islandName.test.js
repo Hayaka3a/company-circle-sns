@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import IslandName from "../../../components/createIsland/islandName/islandName";
+import IslandName from "./islandName";
 
 test("renders text box", () => {
   render(<IslandName islandName="" setName={() => {}} />);

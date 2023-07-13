@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import ConvertKanaJ from "../components/changeKana";
+import ConvertKanaJ from "../../components/changeKana";
 
 describe("changeKana", () => {
   test("カタカナがひらがなに変換されること", () => {
