@@ -3,7 +3,7 @@ import styles from "../styles/user/userEdit.module.css";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { supabase } from "../createClient";
-import UnsubscribeButton from "../components/unsubscribeButton";
+import DeleteButton from "../components/deleteAcount";
 import GetCookieID from "../components/cookie/getCookieId";
 import SubFetchIsEve from "../components/hooks/SubFetchIsEve";
 
@@ -482,7 +482,7 @@ export default function UserEdit() {
               </div>
             </div>
             <div className={styles.unsub}>
-              <UnsubscribeButton />
+              <DeleteButton />
             </div>
           </div>
         </form>

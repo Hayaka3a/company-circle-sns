@@ -1,5 +1,5 @@
-import MenubarEvent from "../../components/menubarEvent";
-import EntryPermit from "../../components/entryPermit";
+import MenubarEvent from "../../components/menubar/menubarEvent";
+import EntryPermit from "../../components/entryPermit/entryPermit";
 import styles from "../../styles/entryPermit.module.css";
 import LogSt from "../../components/cookie/logSt";
 

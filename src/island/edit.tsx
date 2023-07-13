@@ -2,13 +2,13 @@ import React, { useState, useEffect, SyntheticEvent } from "react";
 import styles from "../styles/island/islandEdit.module.css";
 import CreateDeletePage from "../components/modalWindows/createDeletePage";
 import { supabase } from "../createClient";
-import ComboBoxTag from "../components/comboBoxTag";
-import AddTag from "../components/createIsland/addtag";
+import ComboBoxTag from "../components/comboBox/comboBoxTag";
+import AddTag from "../components/createIsland/addtag/addtag";
 import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
-import MenubarIsland from "../components/menubarIsland";
+import MenubarIsland from "../components/menubar/menubarIsland";
 
 export default function IslandEdit() {
   LogSt();

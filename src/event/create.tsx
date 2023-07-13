@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import LogSt from "../components/cookie/logSt";
 import styles from "../styles/event/create.module.css";
-import EventName from "../components/createEvent/eventName";
+import EventName from "../components/createEvent/eventName/eventName";
 import { useNavigate, useParams } from "react-router-dom";
-import EventDetail from "../components/createEvent/detail";
-import Daytime from "../components/createEvent/daytime";
+import EventDetail from "../components/createEvent/detail/detail";
+import Daytime from "../components/createEvent/daytime/daytime";
 import { supabase } from "../createClient";
 import SelectIsland from "../components/selectIsland";
-import MenubarIsland from "../components/menubarIsland";
+import MenubarIsland from "../components/menubar/menubarIsland";
 import GetCookieID from "../components/cookie/getCookieId";
 
 export default function EventCreate() {

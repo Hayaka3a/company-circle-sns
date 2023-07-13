@@ -1,8 +1,8 @@
 import styles from "../styles/island/island_post.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import CreateSendingScout from "../components/modalWindows/createSendingScout";
+import CreateSendingScout from "../components/modalWindows/sendingScout/createSendingScout";
 import { useEffect, useState } from "react";
-import MenubarIsland from "../components/menubarIsland";
+import MenubarIsland from "../components/menubar/menubarIsland";
 import LogSt from "../components/cookie/logSt";
 import { supabase } from "../createClient";
 import { format } from "date-fns";

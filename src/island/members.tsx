@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
-import MembersList from "../components/MembersList";
-import MenubarIsland from "../components/menubarIsland";
+import MembersList from "../components/menberList/MembersList";
+import MenubarIsland from "../components/menubar/menubarIsland";
 import styles from "../styles/membersList.module.css";
-import { supabase } from "../createClient.js";
 import { Island } from "../types/members";
 import { useParams } from "react-router-dom";
 import LogSt from "../components/cookie/logSt";
+import { fetchAllIsEve } from "../components/fetchAllIsEve";
 
 export default function IslandMembers() {
   LogSt();
-  const [displayData, setDisplayData] = useState<Island>();
+  const [islandData, setIslandData] = useState<Island>();
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
 
   // DBからデータを取得
   const params = useParams();
   const paramsID = parseInt(params.id);
+
+  const table = "island";
+
   useEffect(() => {
-    fetchData();
+    fetchAllIsEve({ table, paramsID, setIslandData });
   }, [paramsID]);
 
   const openModal = () => {
@@ -32,33 +35,15 @@ export default function IslandMembers() {
   const closeModal2 = () => {
     setModal2(false);
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
-  async function fetchData() {
-    const { data, error } = await supabase
-      .from("islands")
-      .select("*")
-      .eq(`id`, paramsID)
-      .eq(`status`, false);
 
-    // データ取得時のエラー処理
-    if (!data) return;
-    if (error) {
-      console.log(error);
-    }
-
-    const island = data[0] as Island;
-    setDisplayData(island);
-  }
   return (
     <>
-      {displayData && (
+      {islandData && (
         <div className={styles.display}>
           <MenubarIsland />
           <MembersList
             table="island"
-            displayData={displayData}
+            displayData={islandData}
             open={openModal}
             close={closeModal}
             close2={closeModal2}

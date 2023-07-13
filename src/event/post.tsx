@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import LogSt from "../components/cookie/logSt";
-import MenubarEvent from "../components/menubarEvent";
+import MenubarEvent from "../components/menubar/menubarEvent";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import styles from "../styles/island/island_post.module.css";
 import { format } from "date-fns";
 import classNames from "classnames";
-import CreateSendingScout from "../components/modalWindows/createSendingScout";
+import CreateSendingScout from "../components/modalWindows/sendingScout/createSendingScout";
 
 export default function EventPost() {
   LogSt();
