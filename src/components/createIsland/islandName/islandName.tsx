@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import NameInput from "./nameInput";
+import InputName from "./inputName";
 
 export default function IslandName({
   islandName,
@@ -10,7 +10,7 @@ export default function IslandName({
 }) {
   return (
     <>
-      <NameInput islandName={islandName} setIslandName={setIslandName} />
+      <InputName islandName={islandName} setName={setIslandName} />
     </>
   );
 }

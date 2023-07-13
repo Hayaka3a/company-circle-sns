@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import styles from "../styles/island/createIsland.module.css";
+import styles from "../../styles/island/createIsland.module.css";
 
 // tagOptionsにはタグ配列、nameOptiosにはメンバー配列、htmlForには<label>のhtmlFor属性の値
 export default function ComboBoxTag({

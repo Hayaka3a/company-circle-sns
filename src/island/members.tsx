@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MembersList from "../components/menberList/MembersList";
-import MenubarIsland from "../components/menubarIsland";
+import MenubarIsland from "../components/menubar/menubarIsland";
 import styles from "../styles/membersList.module.css";
 import { Island } from "../types/members";
 import { useParams } from "react-router-dom";

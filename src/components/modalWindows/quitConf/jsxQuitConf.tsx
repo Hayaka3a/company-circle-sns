@@ -1,7 +1,8 @@
-import { useState } from "react";
-import styles from "../../styles/modalWindows/quit.module.css";
-import GetCookieID from "../cookie/getCookieId";
-import { supabase } from "../../createClient";
+import { useEffect, useState } from "react";
+import styles from "../../../styles/modalWindows/quit.module.css";
+import HandleIslandNameChange from "./handleInputChange";
+import NextHandler from "./nextHandler";
+import GetCookieID from "../../cookie/getCookieId";
 
 export default function QuitConf({
   close2Modal,
@@ -15,43 +16,17 @@ export default function QuitConf({
   // React.Dispatch<>は、<>の値を引数として受け取る
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const userId = GetCookieID();
   const [emptyChara, setEmptyChara] = useState("");
   const [notExist, setNotExist] = useState("");
+  const userId = GetCookieID();
 
-  const nextHandler = async () => {
-    if (inputValue) {
-      const { data } = await supabase
-        .from("users")
-        .select("familyName, firstName")
-        .eq("id", userId)
-        .eq("status", false);
-
-      if (data && data.length > 0) {
-        const familyName = data[0].familyName;
-        const firstName = data[0].firstName;
-
-        const fullName = familyName + firstName;
-
-        if (fullName !== inputValue) {
-          setNotExist("入力された名前が間違っています");
-        } else {
-          nextOpen2();
-        }
-      }
-    }
-  };
-
-  const handleInputChange = async (event) => {
-    const value = event.target.value;
-    if (/\s/.test(value)) {
-      // 空白文字（\s）を入れようとした場合、エラーメッセージを表示
-      setEmptyChara("空白文字は入力できません");
-      setNotExist("");
-    } else {
-      setInputValue(value);
-      setEmptyChara("");
-    }
+  const nextHandler = () => {
+    NextHandler({
+      inputValue,
+      nextOpen2,
+      setNotExist,
+      userId,
+    });
   };
 
   return (
@@ -79,7 +54,11 @@ export default function QuitConf({
                 <input
                   type="text"
                   value={inputValue}
-                  onChange={handleInputChange}
+                  onChange={HandleIslandNameChange({
+                    setEmptyChara,
+                    setNotExist,
+                    setInputValue,
+                  })}
                 ></input>
 
                 {emptyChara && (
