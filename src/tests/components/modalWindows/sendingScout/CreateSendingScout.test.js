@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/react";
-import CreateSendingScout from "../../../components/modalWindows/sendingScout/createSendingScout";
+import CreateSendingScout from "../../../../components/modalWindows/sendingScout/createSendingScout";
 
 describe("CreateSendingScout", () => {
   const closeModal = jest.fn();
