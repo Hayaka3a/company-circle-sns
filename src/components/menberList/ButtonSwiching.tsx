@@ -25,7 +25,8 @@ export function ButtonSwitching({
             <img src={loginUser.icon} className={styles.icon} alt="アイコン" />
             <div className={styles.name}>
               {loginUser.familyName}
-              {loginUser.firstName}&nbsp;({loginUser.department})(オーナー)
+              {loginUser.firstName}&nbsp;({loginUser.department}
+              )(オーナー)
             </div>
           </td>
         </tr>
@@ -78,11 +79,17 @@ export function ButtonSwitching({
         <tr key={loginID} className={styles.tr}>
           <td className={styles.td}>
             <img src={loginUser.icon} className={styles.icon} alt="アイコン" />
-            {loginUser.familyName}
-            {loginUser.firstName}&nbsp;({loginUser.department})
+            <div className={styles.name}>
+              {loginUser.familyName}
+              {loginUser.firstName}&nbsp;({loginUser.department})
+            </div>
           </td>
           <td className={styles.td2}>
-            <button onClick={open} className={styles.unsubBtn}>
+            <button
+              onClick={open}
+              className={styles.unsubBtn}
+              name="島を抜ける"
+            >
               島を抜ける
             </button>
             {modal && (

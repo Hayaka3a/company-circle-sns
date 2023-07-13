@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import FetchJoindIslandEvent from "./hooks/FetchJoindIslandEvent";
@@ -14,29 +14,28 @@ const Header = () => {
   const [isOpenEventList, setIsOpenEventList] = useState(false);
   const navigate = useNavigate();
   const userID = GetCookieID();
-
   const [isMenuOpen] = useState(false);
 
   // ユーザーアイコンとユーザー名の取得
   // 非同期の処理をuseEffect内で行う場合、コールバック関数を定義してその中で非同期処理を行う
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data: user } = await supabase
-          .from("users")
-          .select("*")
-          .eq("id", userID)
-          .eq("status", false);
-
-        setUserData(user);
-      } catch (error) {
-        console.error("データ取得失敗", error.message);
-      }
-    };
-
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const { data: user } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", userID)
+        .eq("status", false);
+
+      setUserData(user);
+    } catch (error) {
+      console.error("データ取得失敗", error.message);
+    }
+  };
 
   useEffect(() => {
     // メニューが開かれたときにスクロールバーを非表示にする
@@ -62,7 +61,7 @@ const Header = () => {
     window.location.reload();
   };
 
-  //検索
+  //検索条件をセット
   const onRadioBtnChanged = (e) => setSelectedRadio(e.target.value);
   const onInputChanged = (e) => setSearchWord(e.target.value);
 
@@ -128,7 +127,9 @@ const Header = () => {
             searchWord,
           )}&radio=${encodeURIComponent(selectedRadio)}`}
         >
-          <button className={styles.btn}>検索 </button>
+          <button className={styles.btn} name="検索">
+            検索
+          </button>
         </Link>
       </div>
 

@@ -15,29 +15,28 @@ export default function UserRegistration() {
 
   //メールアドレスと社員番号が既に登録されているか確認するために取得する
   useEffect(() => {
-    const fetchUsers = async () => {
-      const { data: users, error: usersError } = await supabase
-        .from("users")
-        .select(`mailAddress,employeeCode`)
-        .eq("status", false);
-      if (usersError) {
-        console.log(usersError, "fetchUsersError");
-      } else {
-        //メールアドレスを抜き出してstateに保存
-        const mail = users.map((user) => user.mailAddress);
-        setUsersMail(mail);
-
-        //社員番号を抜き出してJSONに変換してから保存
-        const stringData = users.map((user) =>
-          JSON.stringify(user.employeeCode),
-        );
-        setEmpCode(stringData);
-      }
-    };
     fetchUsers();
 
     //ReactHookFormで使用
   }, []);
+
+  const fetchUsers = async () => {
+    const { data: users, error: usersError } = await supabase
+      .from("users")
+      .select(`mailAddress,employeeCode`)
+      .eq("status", false);
+    if (usersError) {
+      console.log(usersError, "fetchUsersError");
+    } else {
+      //メールアドレスを抜き出してstateに保存
+      const mail = users.map((user) => user.mailAddress);
+      setUsersMail(mail);
+
+      //社員番号を抜き出してJSONに変換してから保存
+      const stringData = users.map((user) => JSON.stringify(user.employeeCode));
+      setEmpCode(stringData);
+    }
+  };
 
   const {
     register,
@@ -108,10 +107,10 @@ export default function UserRegistration() {
       .upload(filePath, file);
     if (error) {
       console.log(error, "画像追加エラー", filePath);
+    } else {
+      const { data } = supabase.storage.from("userIcon").getPublicUrl(filePath);
+      setImageUrl(data.publicUrl);
     }
-
-    const { data } = supabase.storage.from("userIcon").getPublicUrl(filePath);
-    setImageUrl(data.publicUrl);
   };
 
   //職種選択用データ
@@ -133,7 +132,11 @@ export default function UserRegistration() {
           <button>ログインページへ戻る</button>
         </Link>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.form}
+        role="form"
+      >
         <div className={styles.box}>
           <div className={styles.allContents}>
             <h2>新規登録</h2>
@@ -146,6 +149,8 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
+                        role="textbox"
+                        name="name"
                         type="text"
                         className={`${styles.inputA}`}
                         maxLength={12}
@@ -155,6 +160,8 @@ export default function UserRegistration() {
                         })}
                       />
                       <input
+                        role="textbox"
+                        name="name"
                         type="text"
                         className={`${styles.inputB} `}
                         maxLength={12}
@@ -175,6 +182,8 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
+                        role="textbox"
+                        name="kana"
                         type="text"
                         className={`${styles.inputA}`}
                         maxLength={12}
@@ -188,6 +197,7 @@ export default function UserRegistration() {
                         })}
                       />
                       <input
+                        role="textbox"
                         type="text"
                         className={`${styles.inputB} `}
                         maxLength={12}
@@ -213,6 +223,7 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
+                        role="textbox"
                         type="text"
                         className={styles.address}
                         maxLength={250}
@@ -248,6 +259,7 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
+                        role="textbox"
                         type="password"
                         className={`${styles.inputA} `}
                         maxLength={16}
@@ -282,6 +294,7 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
+                        role="textbox"
                         type="password"
                         className={`${styles.inputA} `}
                         maxLength={16}
@@ -326,6 +339,7 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
+                        role="textbox"
                         type="text"
                         className={`${styles.inputA} `}
                         maxLength={10}

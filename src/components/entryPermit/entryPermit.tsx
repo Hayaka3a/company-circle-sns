@@ -1,166 +1,32 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../createClient";
 import styles from "../../styles/entryPermit.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Message } from "../../types/entryPermit";
+import { fetchData } from "./fetchData";
+import { getUsers } from "./getUsers";
+import { OKButton } from "./OKButton";
+import { NGButton } from "./NGButton";
 
 export default function EntryPermit({ table }: { table: string }) {
   const [message, setMessage] = useState<Message>();
   const [user, setUser] = useState([]);
-
   const params = useParams();
   const paramsID = parseInt(params.id);
 
-  const navi = useNavigate();
-
   //ひとつ前のページに戻る
+  const navi = useNavigate();
   const pageBack = () => {
     navi(-1);
   };
 
   //  データを取得
   useEffect(() => {
-    fetchData();
+    fetchData({ table: table, paramsID: paramsID, setMessage: setMessage });
   }, []);
 
   useEffect(() => {
-    getUsers(message);
+    getUsers({ message, setUser });
   }, [message]);
-
-  //分割
-  async function fetchData() {
-    const { data, error } = await supabase
-      .from("posts")
-      .select(`*,messages!messages_postID_fkey(*,applications(*))`)
-      .eq(`${table}ID`, paramsID)
-      .eq("status", false);
-    if (error) {
-      console.log(error, "エラー");
-    }
-    if (!data || data.length === 0) {
-      console.log("ポストまたはメッセージがみつかりませんでした");
-    } else {
-      //applicationsが取得できたものだけで新たな配列を作成
-      const selectApp = data[0].messages.filter(
-        (message) => message.applications.length > 0 && !message.isAnswered,
-      );
-      setMessage(selectApp);
-    }
-  }
-
-  //分割
-  //messageを送ったユーザーを取得
-  const getUsers = async (data: any[]) => {
-    if (data) {
-      let promises = data.map(async (message) => {
-        const { data: userData, error: userError } = await supabase
-          .from("posts")
-          .select("*,users!posts_userID_fkey(*)")
-          .eq("id", message.postedBy);
-
-        if (userError) {
-          console.log(userError, "ユーザー取得エラー");
-        }
-
-        let arr = { ...message, users: userData[0].users };
-
-        return arr;
-      });
-      // Promise.all でまとめて待つ
-      let ret = await Promise.all(promises);
-
-      setUser(ret);
-      return ret;
-    }
-  };
-
-  //分割
-  //OKボタンの処理
-  async function OKButton(messageID: number, userID: number) {
-    const { error: updateError } = await supabase
-      .from("messages")
-      .update({
-        isRead: true,
-        isAnswered: true,
-      })
-      .eq(`id`, messageID);
-
-    if (updateError) {
-      console.log(updateError, "エラー");
-    }
-
-    //島の場合
-    if (table === "island") {
-      const { error: entryPostError } = await supabase
-        .from("userEntryStatus")
-        .insert({ userID: userID, islandID: paramsID, status: false });
-
-      if (entryPostError) {
-        console.log(entryPostError, "エラー");
-      } else {
-        // 難民のeventIDを取得
-        const { data: existingEntryStatus } = await supabase
-          .from("userEntryStatus")
-          .select("id, eventID")
-          .eq("userID", userID)
-          .eq("status", false);
-
-        // 島の開催イベントIDを取得
-        const { data: islandEvent } = await supabase
-          .from("userEntryStatus")
-          .select("id, eventID")
-          .eq("islandID", paramsID)
-          .eq("status", false);
-
-        for (const existingEntry of existingEntryStatus) {
-          const matchingEntry = islandEvent.find(
-            (event) => event.eventID === existingEntry.eventID,
-          );
-
-          if (matchingEntry && matchingEntry.eventID !== null) {
-            const { id } = existingEntry;
-
-            // existingEntryデータのidごとにデータを更新
-            await supabase
-              .from("userEntryStatus")
-              .update({ status: true })
-              .eq("id", id);
-          }
-        }
-
-        window.location.reload();
-      }
-    }
-
-    //イベントの場合
-    else {
-      const { error: entryPostError } = await supabase
-        .from("userEntryStatus")
-        .insert({ userID: userID, eventID: paramsID, status: false });
-      if (entryPostError) {
-        console.log(entryPostError, "エラー");
-      } else {
-        window.location.reload();
-      }
-    }
-  }
-
-  //分割
-  async function NGButton(messageID: number) {
-    const { error: updateError } = await supabase
-      .from("messages")
-      .update({
-        isRead: true,
-        isAnswered: true,
-        status: false,
-      })
-      .eq(`id`, messageID);
-    if (updateError) {
-      console.log(updateError, "エラー");
-    } else {
-      window.location.reload();
-    }
-  }
 
   return (
     <div className={styles.main}>
@@ -189,7 +55,7 @@ export default function EntryPermit({ table }: { table: string }) {
                       <button
                         className={styles.OK}
                         onClick={() => {
-                          OKButton(data.id, data.users.id);
+                          OKButton(data.id, data.users.id, table, paramsID);
                         }}
                         key={data.id}
                       >

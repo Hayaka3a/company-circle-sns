@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import QuitUser from "../../components/modalWindows/quitUser";
+import QuitUser from "../../../components/modalWindows/quitUser";
 
 describe("quitUser", () => {
   test("quitUserを実行", () => {
