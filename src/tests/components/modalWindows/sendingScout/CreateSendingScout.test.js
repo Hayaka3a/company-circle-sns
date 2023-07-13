@@ -1,25 +1,24 @@
-import { render, fireEvent, getByRole } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import CreateSendingScout from "../../../components/modalWindows/sendingScout/createSendingScout";
 
 describe("CreateSendingScout", () => {
   const closeModal = jest.fn();
   const table = "island";
-  const islandName = "";
 
-  test("コンポーネントが正しくレンダリングされること", () => {
+  test("コンポーネントを正しくレンダリング", () => {
     const { getByText, getByLabelText, getByRole } = render(
       <CreateSendingScout closeModal={closeModal} table={table} />,
     );
 
     // 要素が正しくレンダリングされているか確認する
     expect(getByRole("img", { name: /×ボタン/ })).toBeInTheDocument();
-    expect(getByText(`${islandName}島へ招待する`)).toBeInTheDocument();
+    expect(getByText(/招待を送る/)).toBeInTheDocument();
     expect(getByLabelText(/送るユーザー/)).toBeInTheDocument();
     expect(getByLabelText(/コメント/)).toBeInTheDocument();
     expect(getByText(/送信/)).toBeInTheDocument();
   });
 
-  test("クローズボタンがクリックされたときにcloseModalが呼ばれること", () => {
+  test("クローズボタンがクリックされたときにcloseModalが呼ばれる", () => {
     const { getByRole } = render(
       <CreateSendingScout closeModal={closeModal} table={table} />,
     );
@@ -29,6 +28,4 @@ describe("CreateSendingScout", () => {
 
     expect(closeModal).toHaveBeenCalledTimes(1);
   });
-
-  // 他の機能やユーザーの操作に関するテストケースを追加してください
 });

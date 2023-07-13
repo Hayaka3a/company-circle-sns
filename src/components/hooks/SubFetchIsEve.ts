@@ -1,5 +1,5 @@
 import { supabase } from "../../createClient";
-import { Island } from "../../types/members";
+import { Island, Event } from "../../types/members";
 export default function SubFetchIsEve({
   userID,
   setCombi,

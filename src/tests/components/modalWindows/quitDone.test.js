@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import QuitDone from "../../components/modalWindows/quitDone";
+import QuitDone from "../../../components/modalWindows/quitDone";
 
 describe("quitDone", () => {
   test("quitDoneを実行", () => {
