@@ -4,8 +4,9 @@ import firebase from "firebase/compat/app";
 import styles from "../styles/Chat.module.css";
 import GetCookieID from "./cookie/getCookieId";
 import { supabase } from "../createClient";
+import FetchUser from "./fetchUser";
 
-const SendMessages = ({ threadID }: { threadID: number }) => {
+export default function SendMessages({ threadID }: { threadID: number }) {
   const [text, setText] = useState("");
   const [user, setUser] = useState<UserData | undefined>(undefined);
 
@@ -19,17 +20,12 @@ const SendMessages = ({ threadID }: { threadID: number }) => {
   }
 
   useEffect(() => {
-    const fetchUser = async () => {
-      let { data: userData } = (await supabase
-        .from("users")
-        .select("*")
-        .eq("status", false)
-        .eq("id", userID)) as { data: UserData[] };
-
-      setUser(userData[0]);
-    };
-    fetchUser();
+    fetchUserData();
   }, []);
+
+  const fetchUserData = async () => {
+    FetchUser(userID, setUser);
+  };
 
   // userがundefinedの場合エラーを回避
   const userName = `${user?.familyName}${user?.firstName}`;
@@ -76,5 +72,3 @@ const SendMessages = ({ threadID }: { threadID: number }) => {
     </div>
   );
 };
-
-export default SendMessages;

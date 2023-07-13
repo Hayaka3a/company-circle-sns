@@ -1,6 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { supabase } from "../createClient";
 import styles from "../styles/island/createIsland.module.css";
+import FetchIsland from "./fetchIsland";
+import { handleSelectChange } from "./handleSelectChange";
+import { addNameHandler } from "./addNameHandler";
+import { deleteNameHandler } from "./deleteNameHandler";
 
 export default function SelectIsland({
   islandID,
@@ -17,84 +21,40 @@ export default function SelectIsland({
   const islandID_N = Number(islandID);
 
   // selectタグの選択項目を取得
-  const fetchIslands = async () => {
-    const { data, error } = await supabase
-      .from("islands")
-      .select("id, islandName")
-      .eq("status", false);
-    if (error) {
-      console.error(error);
-    } else {
-      // 今開いている島は選択項目から除外する
-      const filteredData = data.filter((island) => island.id !== islandID_N);
-      setIslands(filteredData);
-    }
+  const fetchIslandData = async () => {
+    await FetchIsland(setIslands, islandID);
   };
 
   useEffect(() => {
-    fetchIslands();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchIslandData();
   }, []);
 
   // 選択項目
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value,
-    );
-    setTempSelectedValues(selectedOptions); // 一時的な選択値を更新する
-  };
+  const handleSelectChangeData = (e) => {
+    handleSelectChange(e, setTempSelectedValues); // handleSelectChange関数を呼び出す
+  } ;
 
-  // 追加ボタン押されたらタグを追加
-  const addNameHandler = () => {
-    // 既に追加されている値を選択しようとした場合にエラーメッセージを表示
-    const duplicates = tempSelectedValues.filter((selectedValue) =>
-      selectedValues.some((value) => value === selectedValue),
-    );
-    if (duplicates.length > 0) {
-      setSelectError("選択された値は既に追加されています。");
-      return;
-    }
-
-    tempSelectedValues.forEach((selectedValue) => {
-      const existingOption = islands.find(
-        (island) => island.islandName === selectedValue,
-      );
-
-      if (existingOption) {
-        // 配列にオブジェクトを追加していく
-        setIslandTags((prevTags) => [...prevTags, existingOption]);
-      }
-    });
-
-    // タグを追加
-    setSelectedValues((prevSelectedValues) => [
-      ...prevSelectedValues,
-      ...tempSelectedValues,
-    ]);
-
-    setSelectError(""); // エラーメッセージをリセットする
-  };
+// 追加ボタン押されたらタグを追加
+const addNameHandlerData = () => {
+  addNameHandler(
+    tempSelectedValues,
+    selectedValues,
+    islands,
+    setIslandTags,
+    setSelectedValues,
+    setSelectError
+  ); // addNameHandler関数を呼び出す
+};
 
   // タグの削除
-  const deleteNameHandler = (index) => {
-    // 削除されたタグの名前を配列の中へ格納
-    const updatedValues = [...selectedValues];
-    // その配列を空にする
-    updatedValues.splice(index, 1);
-    setSelectedValues(updatedValues);
-
-    // 削除されたタグのオブジェクトを取り出す
-    const deletedOption = islands.find(
-      (island) => island.islandName === selectedValues[index],
-    );
-
-    if (deletedOption) {
-      // フィルタリングして排除する
-      setIslandTags((prevTags) =>
-        prevTags.filter((tag) => tag.id !== deletedOption.id),
-      );
-    }
+  const deleteNameHandlerData = (index) => {
+    deleteNameHandler(
+      index,
+      selectedValues,
+      setSelectedValues,
+      islands,
+      setIslandTags
+    ); // deleteNameHandler関数を呼び出す
   };
 
   return (
@@ -103,7 +63,7 @@ export default function SelectIsland({
       <select
         name="islands"
         size={4}
-        onChange={handleSelectChange} // 選択が変更されたときの処理を追加
+        onChange={handleSelectChangeData} // 選択が変更されたときの処理を追加
         className={styles.selectIsland}
       >
         <optgroup label="島名" className={styles.islansTitle}>
@@ -118,7 +78,7 @@ export default function SelectIsland({
           ))}
         </optgroup>
       </select>
-      <button onClick={addNameHandler} className={styles.add}>
+      <button onClick={addNameHandlerData} className={styles.add}>
         追加
       </button>
       {selectError && (
@@ -137,7 +97,7 @@ export default function SelectIsland({
                 <span className={styles.nowrap}>{value}</span>
                 &nbsp;&nbsp;
                 <button
-                  onClick={() => deleteNameHandler(index)}
+                  onClick={() => deleteNameHandlerData(index)}
                   className={styles.delBtn}
                 >
                   ×

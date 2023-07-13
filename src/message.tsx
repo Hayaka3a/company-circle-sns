@@ -186,16 +186,18 @@ export default function Message() {
 
     const { error: messageError } = await supabase.from("messages").insert([
       {
-        postID: posts[0].id,
+        postID: userMessages[0].postedBy,
         message: messageText,
         scout: false,
         isRead: false,
         isAnswered: false,
-        postedBy: userId,
+        postedBy: userMessages[0].postID,
         status: false,
         sendingDate: formattedDate,
       },
     ]);
+
+    console.log(posts[0].id)
 
     if (messageError) {
       console.error("メッセージの送信中にエラーが発生しました:", error);

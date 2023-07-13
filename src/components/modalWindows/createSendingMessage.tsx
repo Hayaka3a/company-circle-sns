@@ -3,6 +3,9 @@ import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
 import GetCookieID from "../cookie/getCookieId";
+import FetchPost from "./fetchPost";
+import FetchIslandName from "./fetchIslandName";
+import SendMessage from "./sendMessage";
 
 export default function CreateSendingMessage({
   closeModal,
@@ -12,77 +15,38 @@ export default function CreateSendingMessage({
   table: string;
 }) {
   const [message, setMessage] = useState("");
+  const [postID, setPostID] = useState();
   const [postedID, setPostedID] = useState();
-  const [posts, setPosts] = useState();
   const [islandName, setIslandName] = useState("");
   const params = useParams();
   const paramsID = parseInt(params.id);
   const userID = GetCookieID();
 
   useEffect(() => {
-    fetchPost();
-    fetchIslandName();
+    fetchPostData();
+    fetchIslandNameData();
   }, []);
 
-  const fetchPost = async () => {
-    // postID: postsテーブルにある送り先（島もしくはイベント）のポスト番号📫
-    const { data: postsData, error: postError } = await supabase
-
-      .from("posts")
-      .select("id")
-      .eq(`${table}ID`, paramsID)
-      .eq("status", false);
-
-    if (postError) {
-      console.log(postError, "ポストエラー");
-    }
-    setPosts(postsData[0]?.id);
-
-    // postedBy：postsテーブルにある送信者のポスト番号📫
-    const { data: postedBy, error: postedByError } = await supabase
-      .from("posts")
-      .select("id")
-      .eq(`userID`, userID)
-      .eq("status", false);
-    if (postedByError) {
-      console.log(postedByError, "エラー");
-    }
-    setPostedID(postedBy[0]?.id);
+  // posts, postedByに入れるため、送信する側のpostIDを取得する
+  const fetchPostData = async () => {
+    await FetchPost(userID, setPostedID);
   };
 
-  const fetchIslandName = async () => {
-    const { data: island, error: islandError } = await supabase
-      .from("islands")
-      .select("islandName")
-      .eq("id", paramsID)
-      .eq("status", false);
-
-    if (islandError) {
-      console.log(islandError, "アイランドエラー");
-    } else if (island && island.length > 0) {
-      setIslandName(island[0].islandName);
-    }
+  // 島名を取得してモーダルウィンドウに表示
+  const fetchIslandNameData = async () => {
+    await FetchIslandName(supabase, paramsID, setIslandName);
   };
 
-  const sendMessage = async () => {
-    const { data, error } = await supabase.from("messages").insert([
-      {
-        postID: posts,
-        message: message,
-        scout: false,
-        isRead: false,
-        isAnswered: false,
-        postedBy: postedID,
-        status: false,
-      },
-    ]);
+  // messagesテーブルにメッセージを保存
+  const sendMessageData = async () => {
+    await SendMessage(postID, message, postedID, closeModal);
+    console.log(postedID)
+  };
 
-    if (error) {
-      console.error(error, "メッセージの送信中にエラーが発生しました:");
-    } else {
-      console.log("データが正常に送信されました");
-      closeModal();
-    }
+
+  // メッセージを送信するための処理を実行
+  const addHandler = () => {
+    sendMessageData();
   };
 
   return (
@@ -113,7 +77,7 @@ export default function CreateSendingMessage({
                 </div>
               </div>
               <div>
-                <button onClick={sendMessage} className={styles.btn}>
+                <button onClick={addHandler} className={styles.btn}>
                   送信する
                 </button>
               </div>
@@ -124,3 +88,4 @@ export default function CreateSendingMessage({
     </>
   );
 }
+
