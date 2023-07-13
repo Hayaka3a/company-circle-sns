@@ -1,4 +1,4 @@
-import { scoutMessageBlur } from "../../../components/modalWindows/sendingScout/scoutMessageBlur";
+import { scoutMessageBlur } from "../../../../components/modalWindows/sendingScout/scoutMessageBlur";
 
 describe("scoutMessageBlur", () => {
   test("メッセージが未入力の場合", () => {

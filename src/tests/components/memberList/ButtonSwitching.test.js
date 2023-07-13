@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { ButtonSwitching } from "../../components/menberList/ButtonSwiching";
+import { ButtonSwitching } from "../../../components/menberList/ButtonSwiching";
 
 describe("ButtonSwiching", () => {
   const entryUsers = [

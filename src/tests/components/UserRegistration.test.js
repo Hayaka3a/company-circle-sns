@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import UserRegistration from "../components/UserRegistration";
+import UserRegistration from "../../components/UserRegistration";
 
 test("UserRegistrationのレンダリングテスト", () => {
   render(
