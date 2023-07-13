@@ -245,7 +245,7 @@ export default function IslandCreate() {
                   <td className={styles.td}>
                     <IslandName
                       islandName={islandName}
-                      setIslandName={setIslandName}
+                      setName={setIslandName}
                     />
                   </td>
                 </tr>

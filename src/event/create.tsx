@@ -142,10 +142,7 @@ export default function EventCreate() {
                   イベント名<span className={styles.span}>【必須】</span>
                 </th>
                 <td className={styles.td}>
-                  <EventName
-                    eventName={eventName}
-                    setEventName={setEventName}
-                  />
+                  <EventName eventName={eventName} setName={setEventName} />
                 </td>
               </tr>
               <tr className={styles.tr}>
