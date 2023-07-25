@@ -21,6 +21,7 @@ export default function EventDetail({
         maxLength={250}
         value={detail}
         onChange={HandleDetailChange({ setDetail, error, setError })}
+        id="textBox"
       />
       {error && (
         <div>

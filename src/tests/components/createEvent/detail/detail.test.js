@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import EventDetail from "../../../components/createEvent/detail/detail";
+import EventDetail from "../../../../components/createEvent/detail/detail";
 
 describe("Detail", () => {
   test("テキストエリアが表示されること", () => {

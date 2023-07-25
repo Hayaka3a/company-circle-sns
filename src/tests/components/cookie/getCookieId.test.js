@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { useCookies } from "react-cookie";
-import GetCookieID from "./getCookieId";
+import GetCookieID from "../../../components/cookie/getCookieId";
 import { createRoot } from "react-dom/client";
 
 // useCookies関数のモックを作成（実際のcookieの値に依存せずテスト実行するため）

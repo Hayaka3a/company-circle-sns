@@ -7,7 +7,7 @@ import EventDetail from "../components/createEvent/detail/detail";
 import Daytime from "../components/createEvent/daytime/daytime";
 import { supabase } from "../createClient";
 import SelectIsland from "../components/selectIsland";
-import MenubarIsland from "../components/menubar/menubarIsland";
+import MenubarIsland from "../components/menubar/menubarIsland/menubarIsland";
 import GetCookieID from "../components/cookie/getCookieId";
 
 export default function EventCreate() {

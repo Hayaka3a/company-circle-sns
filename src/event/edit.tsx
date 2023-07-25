@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MenubarEvent from "../components/menubar/menubarEvent";
+import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
 import styles from "../styles/eventDetail.module.css";
 import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";

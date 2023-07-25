@@ -8,7 +8,7 @@ import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
-import MenubarIsland from "../components/menubar/menubarIsland";
+import MenubarIsland from "../components/menubar/menubarIsland/menubarIsland";
 
 export default function IslandEdit() {
   LogSt();

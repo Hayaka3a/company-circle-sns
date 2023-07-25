@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import styles from "../../styles/menubar.module.css";
+import styles from "../../../styles/menubar.module.css";
 import { Link, useParams } from "react-router-dom";
-import GetCookieID from "../cookie/getCookieId";
-import { supabase } from "../../createClient";
+import GetCookieID from "../../cookie/getCookieId";
+import { supabase } from "../../../createClient";
+import FetchIslandData from "./fetchIslandData";
+import CheckUserJoinedCircleProps from "./IslandJoinStatus";
+import IslandJoinStatus from "./IslandJoinStatus";
+import PartUseEffectIsland from "./partUseEffectIsland";
 
 export default function MenubarIsland() {
   interface Island {
@@ -16,47 +20,16 @@ export default function MenubarIsland() {
 
   const userID = GetCookieID();
 
-  // 表示している島の情報をislandに挿入
-  const fetchIslandData = async () => {
-    const { data, error } = await supabase
-      .from("islands")
-      .select("islandName, thumbnail")
-      .eq("id", paramsID)
-      .eq("status", false);
-
-    if (error) {
-      console.error("islandsテーブルデータ情報取得失敗", error);
-      return;
-    }
-
-    if (data && data.length > 0) {
-      setIsland(data[0]);
-    }
+  const setIslandDataReceived = (islandData) => {
+    setIsland(islandData);
   };
-
-  // ユーザーが表示している島に参加しているかどうかチェック
-  const fetchData = async () => {
-    const { data, error } = await supabase
-      .from("userEntryStatus")
-      .select("*")
-      .eq("userID", userID)
-      .eq("islandID", paramsID)
-      .eq("status", false);
-    if (error) {
-      console.log(error);
-      // ユーザーがサークルに参加してるとき
-    } else if (data && data.length > 0) {
-      setIsJoined(true);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    fetchIslandData();
-  }, []);
 
   return (
     <>
+      <PartUseEffectIsland
+        paramsID={paramsID}
+        onIslandDataFetched={setIslandDataReceived}
+      />
       <div className={styles.menubar}>
         {island && (
           <Link to={`/island/${paramsID}`} className={styles.link}>
@@ -70,6 +43,12 @@ export default function MenubarIsland() {
             />
           </Link>
         )}
+
+        <IslandJoinStatus
+          userID={userID}
+          paramsID={paramsID}
+          setIsJoined={setIsJoined}
+        />
 
         {/* 非同期関数で取得しているから、islandデータが取得される前にコンポーネント描画されて、islandデータが
         nullで返ってきちゃうから */}

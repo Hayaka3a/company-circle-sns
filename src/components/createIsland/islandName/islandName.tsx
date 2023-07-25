@@ -29,14 +29,12 @@ export default function IslandName({
           setNameAlreadyError,
           nameAlreadyError,
         })}
-        onBlur={() => {
-          HandleNameBlur({
-            Name: islandName,
-            setNameError,
-            setNameAlreadyError,
-            type: "island",
-          });
-        }}
+        onBlur={HandleNameBlur({
+          Name: islandName,
+          setNameError,
+          setNameAlreadyError,
+          type: "island",
+        })}
       />
       <span className={styles.islandNameText}>&nbsp;島</span>
       {NameError && (
