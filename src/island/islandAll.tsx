@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LogSt from "../components/cookie/logSt";
 import styles from "../styles/island/all.module.css";
 import { supabase } from "../createClient";
@@ -7,9 +7,6 @@ import { useEffect, useState } from "react";
 
 export default function IslandAll() {
   LogSt();
-
-  const params = useParams();
-  const paramsID = params.id;
 
   const [islands, setIslands] = useState([]);
 

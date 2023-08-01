@@ -8,7 +8,6 @@ import Header from "./components/Header";
 // メッセージ全文表示
 import Message from "./message";
 
-
 // userフォルダ
 import UserPost from "./user/post";
 import Login from "./user/login";
@@ -40,8 +39,7 @@ import IslandAll from "./island/islandAll";
 import Search from "./search";
 
 // chat
-import Chat from "./components/Chat";
-import LogSt from "./components/cookie/logSt";
+import Chat from "./components/chat/Chat";
 import Index from ".";
 
 function App() {

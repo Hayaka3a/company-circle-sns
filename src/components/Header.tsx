@@ -138,7 +138,7 @@ const Header = () => {
         <div className={styles.userDataFlex}>
           <img
             src={
-              userData.length > 0
+              userData && userData.length > 0
                 ? userData[0].icon || "/user/tanukiti.png"
                 : "/user/tanukiti.png"
             }
@@ -146,7 +146,10 @@ const Header = () => {
             className={styles.icon}
           />
           <p className={styles.userName}>
-            <span>{userData.length > 0 ? userData[0].familyName : ""}さん</span>
+            <span>
+              {userData && userData.length > 0 ? userData[0].familyName : ""}
+              さん
+            </span>
           </p>
         </div>
         <div className={styles.imgWrapper} onClick={logOutHandler}>
@@ -191,9 +194,9 @@ const Header = () => {
                       >
                         <li key={island.id}>
                           {island.islandName}
-                          {island.msgLength > 0 && (
+                          {island && island.msgLength > 0 && (
                             <span className={styles.msgIcon}>
-                              {island.msgLength}
+                              {island && island.msgLength}
                             </span>
                           )}
                         </li>
@@ -231,9 +234,9 @@ const Header = () => {
                       >
                         <li key={event.id}>
                           {event.eventName}
-                          {event.msgLength > 0 && (
+                          {event && event.msgLength > 0 && (
                             <span className={styles.msgIcon}>
-                              {event.msgLength}
+                              {event && event.msgLength}
                             </span>
                           )}
                         </li>

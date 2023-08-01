@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/island/island_post.module.css";
 import { supabase } from "../createClient";
 import GetCookieID from "../components/cookie/getCookieId";
