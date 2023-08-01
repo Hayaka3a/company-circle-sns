@@ -1,4 +1,5 @@
 // 一文字でも入力されたらエラー解消
+// eventでも使用
 
 export default function HandleDetailChange({ setDetail, error, setError }) {
   const handleIslandDetailChange = (e) => {

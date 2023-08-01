@@ -1,9 +1,9 @@
 // JSX表示のみコンポーネント
 
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "../../../styles/island/createIsland.module.css";
-import HandleDetailChange from "./handleDetailChange";
-import HandleNameBlur from "./handleBlur";
+import styles from "../../../styles/event/create.module.css";
+import HandleDetailBlur from "../../createIsland/detail/handleBlur";
+import HandleDetailChange from "../../createIsland/detail/handleDetailChange";
 
 export default function InputDetail({
   detail,
@@ -20,18 +20,14 @@ export default function InputDetail({
         className={`${styles.detail} ${error ? styles.errorInput : ""} `}
         maxLength={250}
         value={detail}
-        onChange={HandleDetailChange({
-          error,
-          setDetail,
-          setError,
-        })}
+        onChange={HandleDetailChange({ setDetail, error, setError })}
       />
       {error && (
         <div>
           <span className={styles.span}>{error}</span>
         </div>
       )}
-      <HandleNameBlur detail={detail} setError={setError} type={"island"} />
+      <HandleDetailBlur detail={detail} setError={setError} type={"event"} />
     </>
   );
 }

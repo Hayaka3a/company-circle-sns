@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MenubarEvent from "../components/menubarEvent";
+import MenubarEvent from "../components/menubar/menubarEvent";
 import styles from "../styles/island/islandDetail.module.css";
 import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
 import { Link, useNavigate, useParams } from "react-router-dom";

@@ -1,5 +1,6 @@
 import { supabase } from "../../createClient";
 import { Island, Event } from "../../types/members";
+
 export default function SubFetchIsEve({
   userID,
   setCombi,
@@ -8,7 +9,7 @@ export default function SubFetchIsEve({
   setCombi: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
   const fetch = async () => {
-    //参加している島と、難民として参加しているイベントを取得
+    // 参加している島と、難民として参加しているイベントを取得
     let { data, error } = await supabase
       .from("userEntryStatus")
       .select("islands(*), events(*)")

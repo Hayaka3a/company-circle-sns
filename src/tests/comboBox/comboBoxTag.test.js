@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
-import ComboBoxTag from "../components/comboBoxTag";
+import ComboBoxTag from "../../components/comboBox/comboBoxTag";
 import { BrowserRouter } from "react-router-dom";
 
 describe("ComboBoxTag", () => {
