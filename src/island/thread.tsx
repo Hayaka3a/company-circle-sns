@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CreateThread from "../components/modalWindows/createThread";
+import CreateThread from "../components/modalWindows/createThread/createThread";
 import FetchIslandThreads from "../components/hooks/FetchIslandThreads";
 import Thread from "../components/Thread";
 import MenubarIsland from "../components/menubar/menubarIsland/menubarIsland";

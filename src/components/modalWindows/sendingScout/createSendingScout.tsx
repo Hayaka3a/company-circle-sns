@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import ConvertKanaJ from "../../changeKana";
 import { scoutHandler } from "./scoutHandler";
 import { scoutMessageBlur } from "./scoutMessageBlur";
-import ComboBoxUserScout from "../../comboBox/comboBoxUserScout";
+import ComboBoxUserScout from "../../comboBox/comboBoxUserScout/comboBoxUserScout";
 
 export default function CreateSendingScout({
   closeModal,

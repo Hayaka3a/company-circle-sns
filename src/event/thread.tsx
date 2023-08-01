@@ -2,7 +2,7 @@ import Thread from "../components/Thread";
 import FetchEventThreads from "../components/hooks/FetchEventThreads";
 import styles from "../styles/thread.module.css";
 import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
-import CreateThread from "../components/modalWindows/createThread";
+import CreateThread from "../components/modalWindows/createThread/createThread";
 import { useState } from "react";
 import LogSt from "../components/cookie/logSt";
 import { useParams } from "react-router-dom";

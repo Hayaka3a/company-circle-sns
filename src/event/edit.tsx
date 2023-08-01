@@ -7,7 +7,7 @@ import { supabase } from "../createClient";
 import CreateDeletePage from "../components/modalWindows/deleteEvent";
 import CreateDeleteCheck from "../components/modalWindows/deleteEventCheck";
 import CreateAfterDelete from "../components/modalWindows/deleteEventAfter";
-import IslandSelected from "../components/islandSelected";
+import IslandSelected from "../components/islandSelected/islandSelected";
 
 export default function EventEdit() {
   LogSt();
@@ -347,6 +347,19 @@ export default function EventEdit() {
                 </td>
               </tr>
               <tr className={styles.tr}>
+                <th className={styles.th}>イベント詳細</th>
+                <td className={styles.td}>
+                  <input
+                    type="text"
+                    id="eventDetail"
+                    className={styles.center}
+                    value={eventDetail}
+                    onChange={handleEventDetailChange}
+                    readOnly={!editMode}
+                  />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
                 <th className={styles.th}>サムネイル</th>
                 <td className={styles.td}>
                   <img
@@ -380,19 +393,6 @@ export default function EventEdit() {
                     className={styles.center}
                     value={endDate}
                     onChange={handleEndDateChange}
-                    readOnly={!editMode}
-                  />
-                </td>
-              </tr>
-              <tr className={styles.tr}>
-                <th className={styles.th}>イベント詳細</th>
-                <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="eventDetail"
-                    className={styles.center}
-                    value={eventDetail}
-                    onChange={handleEventDetailChange}
                     readOnly={!editMode}
                   />
                 </td>
