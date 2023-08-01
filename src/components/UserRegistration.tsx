@@ -95,7 +95,7 @@ export default function UserRegistration() {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (!event.target.files || event.target.files.length == 0) {
+    if (!event.target.files || event.target.files.length === 0) {
       // 画像が選択されていないのでreturn
       return;
     }

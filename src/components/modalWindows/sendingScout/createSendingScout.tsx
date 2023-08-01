@@ -36,20 +36,27 @@ export default function CreateSendingScout({
 
   //island(event)のポストIDを取得
   const getPost = async () => {
-    const { data: post, error: postError } = await supabase
+    const { data: posts, error: postError } = await supabase
       .from("posts")
       .select(`id,islands(islandName)`)
       .eq(`${table}ID`, paramsID)
       .eq("status", false);
+
     if (postError) {
       console.log(postError, "エラー");
     }
-    if (!post) {
+
+    if (!posts || posts.length === 0) {
       console.log("postが見つかりません");
     } else {
-      setPostBy(post[0].id);
-      const islandN = post[0].islands[0] as { islandName: string };
-      setIslandName(islandN.islandName);
+      const post = posts[0];
+      setPostBy(post.id);
+      if (post.islands && post.islands.length > 0) {
+        const islandN = post.islands[0] as { islandName: string };
+        setIslandName(islandN.islandName);
+      } else {
+        console.log("islandNameが見つかりません");
+      }
     }
   };
 
@@ -185,7 +192,6 @@ export default function CreateSendingScout({
                 <label htmlFor="comment" className="label">
                   コメント<span className={styles.span}>【必須】</span>
                 </label>
-                comment
                 <br />
                 <textarea
                   maxLength={100}

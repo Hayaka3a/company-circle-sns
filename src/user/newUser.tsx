@@ -10,7 +10,7 @@ export default function NewUser() {
   // ログイン済みの場合、トップページにリダイレクト
   useEffect(() => {
     const status = loginStatus.loginSt;
-    if (status == "true") {
+    if (status === "true") {
       navigate("/");
       window.location.reload();
     }

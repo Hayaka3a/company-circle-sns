@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import LogSt from "./components/cookie/logSt";
+import { default as LogSt } from "./components/cookie/logSt";
 import styles from "./styles/index.module.css";
 import PersonalPost from "./components/post/personalPost/personalPost";
 import BelongIsland from "./components/post/belongIsland/belongIsland";
@@ -11,10 +11,7 @@ import BelongEvent from "./components/post/belongEvent/belongEvent";
 import FetchIslands from "./components/index/fetchIslands";
 import FetchEvents from "./components/index/fetchEvents";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
-);
-root.render(
+render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
@@ -67,6 +64,8 @@ export default function Index() {
                   styles.buttonB
                 }`}
                 onClick={() => changeTagHandler("events")}
+                name="新着イベント"
+                data-testid="newEvent"
               >
                 新着イベント
               </button>

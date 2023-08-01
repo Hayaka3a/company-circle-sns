@@ -39,8 +39,7 @@ import IslandAll from "./island/islandAll/islandAll";
 import Search from "./search";
 
 // chat
-import Chat from "./components/Chat";
-import LogSt from "./components/cookie/logSt";
+import Chat from "./components/chat/Chat";
 import Index from ".";
 
 function App() {

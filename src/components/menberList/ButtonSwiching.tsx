@@ -1,5 +1,5 @@
 import styles from "../../styles/membersList.module.css";
-import DeleteComfirmation from "../modalWindows/deleteConfirmation";
+import DeleteComfirmation from "../modalWindows/deleteConfirmation/deleteConfirmation";
 
 export function ButtonSwitching({
   loginUser,
@@ -44,7 +44,6 @@ export function ButtonSwitching({
                       closeModal={close}
                       category={"譲渡"}
                       text={`本当に権限を譲渡しますか？`}
-                      islandName={`displayData.${table}Name`}
                       table={table}
                       params={displayData.id}
                       user={user.userID}
@@ -58,7 +57,6 @@ export function ButtonSwitching({
                       closeModal={close2}
                       category={"追放"}
                       text={`本当に追放しますか？`}
-                      islandName={`displayData.${table}Name`}
                       table={table}
                       params={displayData.id}
                       user={user.users.id}
@@ -97,7 +95,6 @@ export function ButtonSwitching({
                 closeModal={close}
                 category={"脱退する"}
                 text={`本当に島を抜けますか？`}
-                islandName={`displayData.${table}Name`}
                 table={table}
                 params={displayData.id}
                 user={loginID}

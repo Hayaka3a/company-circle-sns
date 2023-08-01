@@ -16,7 +16,7 @@ export default function Login() {
   // ログイン済みの場合、トップページにリダイレクト
   useEffect(() => {
     const status = loginStatus.loginSt;
-    if (status == "true") {
+    if (status === "true") {
       navigate("/");
       window.location.reload();
     }
@@ -25,7 +25,7 @@ export default function Login() {
   return (
     <div className={styles.box}>
       <div className={styles.board}>
-        <img src="/images/logo.png" className={styles.logo} />
+        <img src="/images/logo.png" className={styles.logo} alt="logo" />
 
         <div>
           <input

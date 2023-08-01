@@ -1,29 +1,11 @@
-import React from "react";
 import { thread } from "../types/thread";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/thread.module.css";
 import { supabase } from "../createClient";
+import { deleteThread } from "./deleteThread";
 
 function Thread({ thread }: { thread: thread[] }) {
   const navigate = useNavigate();
-
-  // スレッド削除
-  const deleteThread = async (threadId) => {
-    try {
-      const { error } = await supabase
-        .from("threads")
-        .update({ status: true })
-        .eq("id", threadId);
-
-      if (error) {
-        console.error("Error updating thread:", error);
-      } else {
-        window.location.reload();
-      }
-    } catch (error) {
-      console.error("Error updating thread:", error);
-    }
-  };
 
   return (
     <div className={styles.content}>
@@ -41,6 +23,7 @@ function Thread({ thread }: { thread: thread[] }) {
             <button
               onClick={() => deleteThread(thread.id)}
               className={styles.deleteButton}
+              data-testid="delete"
             >
               削除
             </button>
