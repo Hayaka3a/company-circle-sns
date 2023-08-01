@@ -22,37 +22,36 @@ export default function CreateThread({
   }, [threadTitle]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // サークル（島）のスレッド作成の場合
-      if (islandID) {
-        const { data } = await supabase
-          .from("islands")
-          .select("islandName")
-          .eq("id", islandID)
-          .eq("status", false)
-          .single();
-        if (data) {
-          setIslandName(data.islandName);
-        }
-        // イベントのスレッド作成の場合
-      } else if (eventID) {
-        const { data } = await supabase
-          .from("events")
-          .select("eventName")
-          .eq("id", eventID)
-          .eq("status", false)
-          .single();
-        if (data) {
-          setEventName(data.eventName);
-        }
-      }
-    };
-
     fetchData();
   }, [islandID, eventID]);
 
+  const fetchData = async () => {
+    // サークル（島）のスレッド作成の場合
+    if (islandID) {
+      const { data } = await supabase
+        .from("islands")
+        .select("islandName")
+        .eq("id", islandID)
+        .eq("status", false)
+        .single();
+      if (data) {
+        setIslandName(data.islandName);
+      }
+      // イベントのスレッド作成の場合
+    } else if (eventID) {
+      const { data } = await supabase
+        .from("events")
+        .select("eventName")
+        .eq("id", eventID)
+        .eq("status", false)
+        .single();
+      if (data) {
+        setEventName(data.eventName);
+      }
+    }
+  };
+
   // スレッド作成送信
-  // insert()メソッドはPromiseを返す非同期関数だからasync/awaitが必要
   const addHandler = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 

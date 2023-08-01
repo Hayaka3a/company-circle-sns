@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "../../../styles/event/create.module.css";
-import { supabase } from "../../../createClient";
 import HandleNameBlur from "./handleNameBlur";
 
 export default function EventName({

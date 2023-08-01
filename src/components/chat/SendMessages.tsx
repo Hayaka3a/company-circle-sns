@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { firestore } from "../firebase";
+import { firestore } from "../../firebase";
 import firebase from "firebase/compat/app";
-import styles from "../styles/Chat.module.css";
-import GetCookieID from "./cookie/getCookieId";
-import { supabase } from "../createClient";
+import styles from "../../styles/Chat.module.css";
+import GetCookieID from "../cookie/getCookieId";
+import { supabase } from "../../createClient";
 
 const SendMessages = ({ threadID }: { threadID: number }) => {
   const [text, setText] = useState("");
@@ -39,13 +39,13 @@ const SendMessages = ({ threadID }: { threadID: number }) => {
   function handleClick(e: { preventDefault: () => void }) {
     e.preventDefault();
 
-    firestore.collection("chats").add({
-      text: text,
-      postedBy: userName,
-      postedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      threadID: threadID,
-      icon: icon,
-    });
+    // firestore.collection("chats").add({
+    //   text: text,
+    //   postedBy: userName,
+    //   postedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //   threadID: threadID,
+    //   icon: icon,
+    // });
     setText("");
   }
   return (
@@ -61,12 +61,14 @@ const SendMessages = ({ threadID }: { threadID: number }) => {
               setText(e.target.value);
             }}
             value={text}
+            data-testid="message"
           />
           <div className={styles.btnWrapper}>
             <button
               onClick={handleClick}
               className={styles.btn}
               disabled={text === "" && true}
+              data-testid="sendButton"
             >
               送信
             </button>

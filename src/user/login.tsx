@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/user/login.module.css";
 import { Link } from "react-router-dom";
 import { supabase } from "../createClient";
@@ -15,7 +15,7 @@ export default function Login() {
   // ログイン済みの場合、トップページにリダイレクト
   useEffect(() => {
     const status = loginStatus.loginSt;
-    if (status == "true") {
+    if (status === "true") {
       navigate("/");
       window.location.reload();
     }
@@ -64,7 +64,7 @@ export default function Login() {
   return (
     <div className={styles.box}>
       <div className={styles.board}>
-        <img src="/images/logo.png" className={styles.logo} />
+        <img src="/images/logo.png" className={styles.logo} alt="logo" />
 
         <div>
           <input
@@ -93,7 +93,6 @@ export default function Login() {
             required
             pattern=".{8,16}"
             title="8文字以上16文字以下"
-            autoComplete="off"
           />
         </div>
         <div className={styles.buttonBox}>

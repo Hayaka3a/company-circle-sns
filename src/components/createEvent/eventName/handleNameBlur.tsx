@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "../../../createClient";
 
 export default function HandleNameBlur({

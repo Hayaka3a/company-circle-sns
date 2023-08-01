@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import LogSt from "./components/cookie/logSt";
+import { default as LogSt } from "./components/cookie/logSt";
 import styles from "./styles/index.module.css";
-import { supabase } from "./createClient";
 import PersonalPost from "./components/post/personalPost";
 import BelongIsland from "./components/post/belongIsland";
 import BelongEvent from "./components/post/belongEvent";
 import { Link } from "react-router-dom";
+import { fetchIslands } from "./components/index/fetchIslands";
+import { fetchEvents } from "./components/index/fetchEvents";
+import { render } from "@testing-library/react";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
-);
-root.render(
+render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
@@ -22,7 +20,6 @@ root.render(
 reportWebVitals();
 
 export default function Index() {
-  LogSt();
   const [islands, setIslands] = useState([]);
   const [events, setEvents] = useState([]);
   const [tag, setTag] = useState("islands");
@@ -33,48 +30,10 @@ export default function Index() {
     setTag(selectedTag);
   };
 
-  // 島データ取得
-  const fetchIslands = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("islands")
-        .select("*")
-        .eq("status", false);
-
-      if (error) {
-        console.error("島情報取得失敗", error.message);
-      } else {
-        // データをランダムに並び替える
-        const shuffledData = data.sort(() => Math.random() - 0.5);
-        setIslands(shuffledData);
-      }
-    } catch (error) {
-      console.error("島情報取得失敗", error.message);
-      setIslands([]);
-    }
-  };
-
-  // イベントデータ取得
-  const fetchEvents = async () => {
-    const { data, error } = await supabase
-      .from("events")
-      .select("*")
-      .eq("status", false)
-      .order("createdAt", { ascending: false })
-      .limit(6);
-
-    if (error) {
-      console.error("イベント情報取得失敗", error.message);
-    } else {
-      // createdAtフィールドで降順にソート
-      const sortedData = data.sort((a, b) => b.createdAt - a.createdAt);
-      setEvents(sortedData);
-    }
-  };
-
   useEffect(() => {
-    fetchIslands();
-    fetchEvents();
+    // LogSt();
+    fetchIslands(setIslands);
+    fetchEvents(setEvents);
   }, []);
 
   return (
@@ -112,6 +71,8 @@ export default function Index() {
                   styles.buttonB
                 }`}
                 onClick={() => changeTagHandler("events")}
+                name="新着イベント"
+                data-testid="newEvent"
               >
                 新着イベント
               </button>
@@ -139,22 +100,30 @@ export default function Index() {
                 </div>
               )}
               {tag === "events" && (
-                <div className={styles.events}>
-                  {events.slice(0, 6).map((event) => (
-                    <div key={event.id} className={styles.event}>
-                      <Link to={`/island/${event.id}`} className={styles.link}>
-                        <img
-                          className={styles.iconB}
-                          src={
-                            event.thumbnail ||
-                            "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
-                          }
-                          alt="Event Thumbnail"
-                        />
-                        <h3 className={styles.eventName}>{event.eventName}</h3>
-                      </Link>
-                    </div>
-                  ))}
+                <div>
+                  <div className={styles.events}>
+                    {events.slice(0, 6).map((event) => (
+                      <div key={event.id} className={styles.event}>
+                        <Link
+                          to={`/island/${event.id}`}
+                          className={styles.link}
+                          data-testid="eventLink"
+                        >
+                          <img
+                            className={styles.iconB}
+                            src={
+                              event.thumbnail ||
+                              "https://tfydnlbfauusrsxxhaps.supabase.co/storage/v1/object/public/userIcon/tanuki.PNG1351?t=2023-06-08T07%3A12%3A33.854Z"
+                            }
+                            alt="Event Thumbnail"
+                          />
+                          <h3 className={styles.eventName}>
+                            {event.eventName}
+                          </h3>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
