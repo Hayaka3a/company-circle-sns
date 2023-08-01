@@ -9,31 +9,31 @@ import Header from "./components/Header";
 import Message from "./message";
 
 // userフォルダ
-import UserPost from "./user/post";
-import Login from "./user/login";
+import UserPost from "./user/post/post";
+import Login from "./user/login/login";
 import NewUser from "./user/newUser";
 import UserEdit from "./user";
 
 // eventフォルダ
 import EventDetail from "./event/[id]";
-import EventCreate from "./event/create";
+import EventCreate from "./event/create/create";
 import EventEdit from "./event/edit";
 import EventThread from "./event/thread";
 import EventPost from "./event/post";
 import EventMembers from "./event/members";
 import EventEntryPermitPage from "./event/post/entryPermitPage";
-import EventEverything from "./event/eventAll";
+import EventEverything from "./event/eventAll/eventAll";
 
 // islandフォルダ
 import IslandDetail from "./island/[id]";
 import IslandEdit from "./island/edit";
-import EventAll from "./island/eventAll";
+import EventAll from "./island/eventAll/eventAll";
 import IslandThread from "./island/thread";
-import IslandCreate from "./island/create";
+import IslandCreate from "./island/create/create";
 import IslandMembers from "./island/members";
 import IslandPost from "./island/post";
 import IslandEntryPermitPage from "./island/post/entryPermitPage";
-import IslandAll from "./island/islandAll";
+import IslandAll from "./island/islandAll/islandAll";
 
 // searchフォルダ
 import Search from "./search";

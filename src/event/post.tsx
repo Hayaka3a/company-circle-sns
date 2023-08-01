@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LogSt from "../components/cookie/logSt";
-import MenubarEvent from "../components/menubar/menubarEvent";
+import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import styles from "../styles/island/island_post.module.css";

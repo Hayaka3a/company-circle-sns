@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CreateThread from "../components/modalWindows/createThread";
 import FetchIslandThreads from "../components/hooks/FetchIslandThreads";
 import Thread from "../components/Thread";
-import MenubarIsland from "../components/menubar/menubarIsland";
+import MenubarIsland from "../components/menubar/menubarIsland/menubarIsland";
 import styles from "../styles/thread.module.css";
 import LogSt from "../components/cookie/logSt";
 import { useParams } from "react-router-dom";
