@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { firestore } from "../../firebase";
-import firebase from "firebase/compat/app";
 import styles from "../../styles/Chat.module.css";
 import GetCookieID from "../cookie/getCookieId";
-import { supabase } from "../../createClient";
+import fetchUser from "../fetchUser";
 
 export default function SendMessages({ threadID }: { threadID: number }) {
   const [text, setText] = useState("");
@@ -23,7 +21,7 @@ export default function SendMessages({ threadID }: { threadID: number }) {
   }, []);
 
   const fetchUserData = async () => {
-    FetchUser(userID, setUser);
+    fetchUser(userID, setUser);
   };
 
   // userがundefinedの場合エラーを回避
@@ -72,4 +70,4 @@ export default function SendMessages({ threadID }: { threadID: number }) {
       </div>
     </div>
   );
-};
+}

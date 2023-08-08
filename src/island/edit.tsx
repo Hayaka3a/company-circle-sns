@@ -9,6 +9,9 @@ import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 import MenubarIsland from "../components/menubar/menubarIsland/menubarIsland";
 import ComboBoxTag from "../components/comboBox/comboBoxTag/comboBoxTag";
+import IslandDone from "../components/islandDone";
+import FetchIslandEdit from "../components/fetchIslandEdit";
+import FetchUsers from "../components/fetchUsers";
 
 export default function IslandEdit() {
   LogSt();
@@ -78,10 +81,17 @@ export default function IslandEdit() {
     fetchIslandEditData();
     fetchData();
   }, []);
-  
+
   // データベースからislands情報を取得
   const fetchIslandEditData = async () => {
-    await FetchIslandEdit(fetchIslandID, setIslandID, setIslandName, setDetail, setTagName, setChosenTag);
+    await FetchIslandEdit(
+      fetchIslandID,
+      setIslandID,
+      setIslandName,
+      setDetail,
+      setTagName,
+      setChosenTag,
+    );
   };
 
   // 画像ファイル選択したら、表示画像に反映
@@ -120,7 +130,7 @@ export default function IslandEdit() {
   // データベースから全タグ名取得
   const fetchData = async () => {
     await FetchUsers(setTagOptions);
-  };  
+  };
 
   // 保存処理の実装
   const handleSaveClick = (e: SyntheticEvent) => {
