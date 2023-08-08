@@ -1,6 +1,3 @@
-// カーソル外したときに未入力だったらエラー表示
-//　新規イベント入力画面でも使用
-
 import React, { useEffect } from "react";
 import { supabase } from "../../../createClient";
 
@@ -12,49 +9,52 @@ export default function HandleNameBlur({
 }) {
   useEffect(() => {
     async function handleNameBlur() {
+      let error = "";
+      let duplicateError = "";
       if (type === "island") {
         if (Name.trim() === "") {
-          setNameError("※島名は入力必須項目です");
+          error = "※島名は入力必須項目です";
         } else {
-          setNameError("");
           // クエリを実行してislandNameの重複チェック
-          const { data, error } = await supabase
+          const { data, error: queryError } = await supabase
             .from("islands")
             .select("*")
             .eq("islandName", Name)
             .eq("status", false);
-          if (error) {
-            console.error("クエリエラー:", error.message);
+          if (queryError) {
+            console.error("クエリエラー:", queryError.message);
           } else {
             if (data.length > 0) {
-              setNameAlreadyError("※島名が既に存在します");
+              duplicateError = "※島名が既に存在します";
             }
           }
         }
       } else if (type === "event") {
         if (Name.trim() === "") {
-          setNameError("※イベント名は入力必須項目です");
+          error = "※イベント名は入力必須項目です";
         } else {
-          setNameError("");
-          // クエリを実行してislandNameの重複チェック
-          const { data, error } = await supabase
+          // クエリを実行してeventNameの重複チェック
+          const { data, error: queryError } = await supabase
             .from("events")
             .select("*")
             .eq("eventName", Name)
             .eq("status", false);
-          if (error) {
-            console.error("クエリエラー:", error.message);
+          if (queryError) {
+            console.error("クエリエラー:", queryError.message);
           } else {
             if (data.length > 0) {
-              setNameAlreadyError("※イベント名が既に存在します");
+              duplicateError = "※イベント名が既に存在します";
             }
           }
         }
       }
+
+      setNameError(error);
+      setNameAlreadyError(duplicateError);
     }
 
     handleNameBlur();
-  }, [Name, setNameError, setNameAlreadyError]);
+  }, [Name, setNameError, setNameAlreadyError, type]);
 
   return null;
 }

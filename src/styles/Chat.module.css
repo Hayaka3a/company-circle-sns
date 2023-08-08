@@ -5,7 +5,7 @@
 
 .title {
   font-weight: bold;
-  font-size: 5vh;
+  font-size: 3vh;
   padding-left: 4vh;
 }
 
@@ -99,7 +99,7 @@
   outline: none;
   border-bottom: 1px solid #b4b4b4;
   font-weight: bold;
-  font-size: 5vh;
+  font-size: 3vh;
   padding-left: 4vh;
   color: #858585;
 }
@@ -167,6 +167,10 @@
   font-size: 3.2vh;
   cursor: pointer;
   background-color: #b9b560;
+}
+.btn:disabled {
+  background-color: gray;
+  color: black;
 }
 
 .btnWrapper {

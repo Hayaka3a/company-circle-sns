@@ -1,7 +1,7 @@
 import Thread from "../components/Thread";
 import FetchEventThreads from "../components/hooks/FetchEventThreads";
 import styles from "../styles/thread.module.css";
-import MenubarEvent from "../components/menubar/menubarEvent";
+import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
 import CreateThread from "../components/modalWindows/createThread";
 import { useState } from "react";
 import LogSt from "../components/cookie/logSt";

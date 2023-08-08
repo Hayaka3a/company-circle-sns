@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MenubarEvent from "../components/menubar/menubarEvent";
+import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
 import styles from "../styles/eventDetail.module.css";
 import LogSt from "../components/cookie/logSt";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,13 +7,7 @@ import { supabase } from "../createClient";
 import CreateDeletePage from "../components/modalWindows/deleteEvent";
 import CreateDeleteCheck from "../components/modalWindows/deleteEventCheck";
 import CreateAfterDelete from "../components/modalWindows/deleteEventAfter";
-import IslandSelected from "../components/islandSelected";
-import FetchEvent from "../components/fetchEvent";
-import EntryIsland from "../components/entryIsland";
-import HandleHideEventJoin from "../components/handleHideEventJoin";
-import HandleFileChange from "../components/handleFileChange";
-import HandleSave from "../components/handleSave";
-import EventDone from "../components/eventDone";
+import IslandSelected from "../components/islandSelected/islandSelected";
 
 export default function EventEdit() {
   LogSt();
@@ -212,6 +206,19 @@ export default function EventEdit() {
                 </td>
               </tr>
               <tr className={styles.tr}>
+                <th className={styles.th}>イベント詳細</th>
+                <td className={styles.td}>
+                  <input
+                    type="text"
+                    id="eventDetail"
+                    className={styles.center}
+                    value={eventDetail}
+                    onChange={handleEventDetailChange}
+                    readOnly={!editMode}
+                  />
+                </td>
+              </tr>
+              <tr className={styles.tr}>
                 <th className={styles.th}>サムネイル</th>
                 <td className={styles.td}>
                   <img
@@ -245,19 +252,6 @@ export default function EventEdit() {
                     className={styles.center}
                     value={endDate}
                     onChange={handleEndDateChange}
-                    readOnly={!editMode}
-                  />
-                </td>
-              </tr>
-              <tr className={styles.tr}>
-                <th className={styles.th}>イベント詳細</th>
-                <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="eventDetail"
-                    className={styles.center}
-                    value={eventDetail}
-                    onChange={handleEventDetailChange}
                     readOnly={!editMode}
                   />
                 </td>
