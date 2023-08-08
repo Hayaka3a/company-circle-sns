@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "../../styles/createDeletingCheck.module.css";
-
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
-import { text } from "stream/consumers";
+import HandleInputChange from "./handleInputChange";
+import NextIslandHandler from "./nextIslnadHandler";
 
 export default function CreateDeleteCheck({
   close2Modal,
@@ -23,43 +23,12 @@ export default function CreateDeleteCheck({
   // パスの最後のIDを取得する
   const { id } = useParams();
 
-  const nextHandler = async () => {
-    if (inputValue) {
-      // IDに対応する島の情報を取得する
-      const { data, error } = await supabase
-        .from("islands")
-        .select("islandName")
-        .eq("id", id)
-        .eq("status", false);
+  //　島名が間違っている場合
+  const nextHandler = NextIslandHandler(inputValue, id, nextOpen2, setNotExist);
 
-      if (error) {
-        // エラーハンドリング
-        console.error(error);
-        return;
-      }
-
-      if (data && data.length > 0) {
-        const islandName = data[0].islandName;
-
-        if (islandName !== inputValue) {
-          setNotExist("入力された島名が間違っています");
-        } else {
-          nextOpen2();
-        }
-      }
-    }
-  };
-
-  const handleInputChange = async (event) => {
-    const value = event.target.value;
-    if (/\s/.test(value)) {
-      // 空白文字（\s）を入れようとした場合、エラーメッセージを表示
-      setEmptyChara("空白文字は入力できません");
-      setNotExist("");
-    } else {
-      setInputValue(value);
-      setEmptyChara("");
-    }
+  // 島名が空白文字の場合
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    HandleInputChange(event, setEmptyChara, setNotExist, setInputValue);
   };
 
   return (

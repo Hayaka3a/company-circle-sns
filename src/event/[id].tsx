@@ -8,6 +8,9 @@ import LogSt from "../components/cookie/logSt";
 import { Event } from "../types/members";
 import EventSendingMessage from "../components/modalWindows/eventSendingMessage";
 import GetCookieID from "../components/cookie/getCookieId";
+import FetchEventDetail from "../components/fetchEventDetail";
+import FetchIsland from "../components/fetchIsland_id";
+import FetchEventPosts from "../components/fetchEventPosts";
 
 export default function EventDetail() {
   LogSt();
@@ -26,118 +29,24 @@ export default function EventDetail() {
   const [islandArray, setIslandArray] = useState([]);
 
   useEffect(() => {
-    fetchEventDetail();
-    fetchIsland();
-    fetchEventPost();
-  }, []);
+    fetchEventDetailData(); 
+    fetchIslandData(eventId);
+    fetchEventPostData();
+  }, [eventId, userId]);
 
-  const fetchEventDetail = async () => {
-    const { data, error } = await supabase
-      .from("events")
-      .select("*")
-      .eq("id", eventId.id) // 島のIDに応じてフィルタリングする（eventId.idは該当する島のID）
-      .eq("status", false);
-    if (error) {
-      console.error("fetchEventDetail:", error);
-      return;
-    }
-    if (!data) {
-      console.log(error, "イベント取得エラー");
-      return;
-    } else {
-      const { data: user, error: userError } = await supabase
-        .from("users")
-        .select("id")
-        .eq("id", data[0].ownerID);
 
-      if (userError) {
-        console.log(userError, "ユーザーエラー");
-      }
-      if (!user) {
-        console.log("ユーザーが見つかりません");
-      } else {
-        const owner = user[0].id.toString();
-
-        // ownerじゃない人には「編集・削除」ボタン機能を表示させない
-        if (owner !== userId) {
-          setButton(false);
-        }
-        if (data.length === 0) {
-          console.warn("該当する島の詳細情報が見つかりませんでした。");
-          return;
-        }
-
-        const eventDetail = data[0] as undefined; // 最初のデータを取得（仮定）
-        const tmpEve = eventDetail as Event;
-        setEventDetail(eventDetail); // 島の詳細情報を状態変数にセット
-        if (tmpEve.thumbnail) {
-          setEventImage(tmpEve.thumbnail);
-        }
-      }
-    }
+  const fetchEventDetailData = async () => {
+    await FetchEventDetail(eventId, userId, setButton, setEventDetail, setEventImage);
   };
 
-  const fetchIsland = async () => {
-    const { data, error } = await supabase
-      .from("userEntryStatus")
-      .select("*,islands(*)")
-      .eq("eventID", eventId.id) // 島のIDに応じてフィルタリングする（eventId.idは該当する島のID）
-      .eq("status", false);
-    if (error) {
-      console.error("fetchIsland:", error);
-      return;
-    }
-    if (data.length === 0) {
-      console.warn("該当する島の詳細情報が見つかりませんでした。");
-      return;
-    } else {
-      const island = data.filter((data) => data.islandID);
-      setIslandArray(island);
-    }
+  const fetchIslandData = async (eventId) => {
+    const islands = await FetchIsland(eventId);
+    setIslandArray(islands || []);
   };
 
   // すでに住民申請を送っているか確認確認
-  const fetchEventPost = async () => {
-    // ユーザーのポスト番号取得
-    const { data, error } = await supabase
-      .from("posts")
-      .select("id")
-      .eq("userID", userId)
-      .eq("status", false);
-
-    if (error) {
-      console.log("ユーザーポスト番号取得失敗");
-    }
-    // ユーザーが送信したメッセージ取得
-    const { data: message, error: messageError } = await supabase
-      .from("messages")
-      .select("*")
-      .eq("postedBy", data[0].id)
-      .eq("status", false);
-
-    const appMsg = message.filter((msg) => msg.message === "参加申請");
-
-    // イベントポスト番号取得
-    if (appMsg.length > 0) {
-      const { data: event, error: eventError } = await supabase
-        .from("posts")
-        .select("*")
-        .eq("eventID", Number(eventId.id))
-        .eq("status", false);
-
-      if (eventError) {
-        console.log("島ポスト番号取得失敗");
-      }
-
-      // イベントポスト番号が送信済みの参加申請のpostIDと同じだった場合に「住民申請」ボタンをグレーアウトし、「すでに申請済みです」のエラーを表示させる
-      const matchingAppMsg = appMsg.find((msg) => msg.postID === event[0].id);
-      if (matchingAppMsg) {
-        setAlreadyError("すでに住民許可申請を送っています");
-      }
-    }
-    if (messageError) {
-      console.log("ユーザー送信メッセージ一覧取得失敗");
-    }
+  const fetchEventPostData = async () => {
+    await FetchEventPosts(userId, eventId, setAlreadyError);
   };
 
   // 住民申請を押した際の小窓画面（モーダルウィンドウ）の開閉

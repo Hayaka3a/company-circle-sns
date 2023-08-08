@@ -3,6 +3,10 @@ import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
 import GetCookieID from "../cookie/getCookieId";
+import FetchPost from "./fetchPost";
+import FetchIslandName from "./fetchIslandName";
+import FetchIslandPost from "./fetchIslandPost";
+import SaveMessage from "./saveMessage";
 
 export default function CreateResidentApplication({
   closeModal,
@@ -25,114 +29,28 @@ export default function CreateResidentApplication({
   const [postID, setPostID] = useState(null);
 
   useEffect(() => {
-    fetchPost();
-    fetchislnadName();
-    fetchIslandPost();
+    fetchPostData();
+    fetchislnadNameData();
+    fetchIslandPostData();
   }, []);
 
   //ログインユーザーのポストIDを取得し、postByに格納
-  const fetchPost = async () => {
-    const { data: postedBy, error: postedByError } = await supabase
-      .from("posts")
-      .select("id")
-      .eq("userID", userID);
-
-    if (postedByError) {
-      console.log(postedByError, "エラー");
-    }
-    if (postedBy && postedBy.length > 0 && postedBy[0].id) {
-      setPostedID(postedBy[0].id);
-    } else {
-      console.log("PostedByIDが取得できません");
-    }
+  const fetchPostData = async () => {
+    await FetchPost(userID, setPostedID);
   };
 
   //現在の島・イベントの名前を取得
-  const fetchislnadName = async () => {
-    if (table === "island") {
-      const { data: island, error: islandError } = await supabase
-        .from("islands")
-        .select("islandName")
-        .eq("id", paramsID)
-        .eq("status", false);
-
-      if (islandError) {
-        console.log(islandError, "エラーが発生しました");
-      } else if (island && island.length > 0) {
-        setIslandName(island[0].islandName + "島");
-      }
-    } else {
-      const { data: event, error: eventError } = await supabase
-        .from("events")
-        .select("eventName")
-        .eq("id", paramsID)
-        .eq("status", false);
-
-      if (eventError) {
-        console.log(eventError, "エラーが発生しました");
-      } else if (event && event.length > 0) {
-        setIslandName(event[0].eventName);
-      }
-    }
+  const fetchislnadNameData = async () => {
+    await FetchIslandName(supabase, paramsID, setIslandName);
   };
 
   //島かイベントのポストを取得、postIDに格納
-  const fetchIslandPost = async () => {
-    const { data: post, error: postError } = await supabase
-      .from("posts")
-      .select("id")
-      .eq(`${table}ID`, paramsID);
-
-    if (postError) {
-      console.error(postError, "エラー");
-    }
-
-    if (post && post.length > 0) {
-      const postId = post[0].id;
-      setPostID(postId);
-    } else {
-      console.log("該当するポストが見つかりませんでした");
-    }
+  const fetchIslandPostData = async () => {
+    await FetchIslandPost(table, paramsID, setPostID);
   };
 
-  const saveMessage = async () => {
-    const { error } = await supabase.from("messages").insert([
-      {
-        postID: postID,
-        message: "参加申請",
-        scout: false,
-        isRead: false,
-        isAnswered: false,
-        postedBy: postedID,
-        status: false,
-      },
-    ]);
-    if (error) {
-      console.log(error, "メッセージ追加エラー");
-    } else {
-      const { data: messageID, error: messageIDError } = await supabase
-        .from("messages")
-        .select("id")
-        .eq("postID", postID)
-        .eq("postedBy", postedID)
-        .eq("status", false);
-      if (messageIDError) {
-        console.log(messageIDError, "メッセージID取得エラー");
-      } else {
-        const { error } = await supabase.from("applications").insert([
-          {
-            messageID: messageID[0].id,
-            message: message,
-            status: false,
-          },
-        ]);
-        if (error) {
-          console.log(error, "アプリケーションズ追加エラー");
-        } else {
-          closeModal();
-        }
-      }
-    }
+  const saveMessageData = async () => {
+    await SaveMessage(postID, postedID, message, closeModal);
   };
 
   return (
@@ -165,7 +83,7 @@ export default function CreateResidentApplication({
                 </div>
               </div>
               <div>
-                <button onClick={saveMessage} className={styles.btn}>
+                <button onClick={saveMessageData} className={styles.btn}>
                   送信する
                 </button>
               </div>
