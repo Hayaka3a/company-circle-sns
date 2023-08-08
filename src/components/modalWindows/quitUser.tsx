@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/modalWindows/quit.module.css";
-import QuitConf from "./quitConf/quitConf";
+import QuitConf from "./quitConf/jsxQuitConf";
 
 // closeModalは×ボタン押したときの関数、nextOpenは完了系ボタン（アカウントを削除する）を押したときの関数
 export default function QuitUser({

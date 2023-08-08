@@ -15,8 +15,8 @@ export default function EventEdit() {
   const fetchEventID = id.id;
 
   useEffect(() => {
-    fetchEvent();
-    entryIsland();
+    fetchEventData();
+    entryIslandData();
     // addIsland();
   }, []);
 
@@ -68,134 +68,23 @@ export default function EventEdit() {
     setIsDeleteCheckOpen(false);
   };
 
-  // 削除完了ウィンドウを閉じると、データが論理削除されて新規イベント作成画面に遷移する
-  const done = async () => {
-    setIsAfterDeleteOpen(false);
-
-    // posts, events,userEntryStatusテーブルのstatusをtrueに変更
-    const { data, error } = await supabase
-      .from("events")
-      .select("eventName")
-      .eq("id", eventID);
-
-    if (error) {
-      console.log("Error fetching events data", error);
-    }
-    if (data && data.length > 0) {
-      const eventName = data[0].eventName;
-
-      if (eventName === inputValue) {
-        const { error: eventsError } = await supabase
-          .from("events")
-          .update({ status: "true" })
-          .eq("id", eventID);
-
-        const { error: postsError } = await supabase
-          .from("posts")
-          .update({ status: "true" })
-          .eq("eventID", eventID);
-
-        const { error: userEntryStatusError } = await supabase
-          .from("userEntryStatus")
-          .update({ status: "true" })
-          .match({ eventID: fetchEventID });
-
-        if (eventsError || postsError || userEntryStatusError) {
-          console.error(
-            "Error changing status :",
-            eventsError || postsError || userEntryStatusError,
-          );
-        }
-
-        navigate("/");
-        window.location.reload();
-      }
-    }
+  // 削除完了ウィンドウを閉じると、データが論理削除されてトップ画面に遷移する
+  const handleDone = async () => {
+    await EventDone(eventID, inputValue, fetchEventID, setIsAfterDeleteOpen, navigate);
   };
+
 
   // データベースからevents情報を取得
-  const fetchEvent = async () => {
-    const { data } = await supabase
-      .from("events")
-      .select("*")
-      .eq("id", fetchEventID);
-
-    if (data) {
-      const event = data[0];
-      const fetcheventID = event.id;
-
-      setEventID(fetcheventID); // eventIDステートに値をセット
-      setEventName(event.eventName); // イベント名をeventNameステートにセット
-      setStartDate(event.startDate); // イベント開始日時（startDate）をstartDateステートにセット
-      setEndDate(event.endDate); // イベント終了日時（endDate）をendDateステートにセット
-      setEventDetail(event.detail); // イベント詳細をeventDetailステートにセット
-      setImageUrl(event.thumbnail); // サムネイルをthumbnailステートにセット
-    }
+  const fetchEventData = async () => {
+    await FetchEvent(fetchEventID, setEventID, setEventName, setStartDate, setEndDate, setEventDetail, setImageUrl);
   };
 
-  const entryIsland = async () => {
-    const { data, error } = await supabase
-      .from("userEntryStatus")
-      .select("islandID, status")
-      .eq("eventID", fetchEventID);
-
-    if (error) {
-      console.log("参加サークル取得に失敗しました", error);
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      console.log("該当する参加サークルが見つかりませんでした");
-      return;
-    }
-
-    const joinIslandIDs = data
-      .filter((entry) => entry.status === false) // statusがfalseのデータのみフィルタリング
-      .map((entry) => entry.islandID); // フィルタリングされたデータの島IDを抽出
-
-    if (joinIslandIDs.length === 0) {
-      console.log("該当する参加サークルが見つかりませんでした");
-      return;
-    }
-
-    setIslandJoinID(joinIslandIDs[0]);
-
-    // islandsテーブルからislandNameを取得
-    const { data: islandData, error: islandError } = await supabase
-      .from("islands")
-      .select("islandName, id")
-      .in("id", joinIslandIDs);
-
-    if (islandError) {
-      console.log("島名取得に失敗しました", islandError);
-      return;
-    }
-
-    if (!islandData || islandData.length === 0) {
-      console.log("該当する島が見つかりませんでした");
-      return;
-    }
-
-    const islandNames = islandData.map((island) => island.islandName);
-    const joinedNames = islandNames.join(", "); // 配列の要素を結合した文字列を作成
-
-    setEventJoin(joinedNames); // 参加サークルをeventJoinステートにセット
+  const entryIslandData = async () => {
+    await EntryIsland(fetchEventID, setIslandJoinID, setEventJoin);
   };
 
-  const handleHideEventJoin = async () => {
-    supabase
-      .from("userEntryStatus")
-      .update({ status: true })
-      .eq("eventID", fetchEventID)
-      .then((response) => {
-        // データの更新が成功した場合
-        if (response.error) {
-          console.log("データの更新に失敗しました。", response.error);
-        } else {
-          // 参加サークル名を非表示にする
-          setEventJoin(null);
-        }
-      });
+  const handleHideEventJoinData = async () => {
+    await HandleHideEventJoin(fetchEventID, setEventJoin);
   };
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
@@ -207,28 +96,10 @@ export default function EventEdit() {
   }, [imageUrl]);
 
   // 画像ファイル選択したら、表示画像に反映
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    if (!event.target.files || event.target.files.length === 0) {
-      // 画像が選択されていないのでreturn
-      return;
-    }
-
-    const file = event.target.files?.[0];
-    const random = Math.floor(Math.random() * 10000);
-    const filePath = `${file.name}${random}`; // 画像の保存先のpathを指定
-    const { error } = await supabase.storage
-      .from("islandIcon")
-      .upload(filePath, file);
-    if (error) {
-      console.log(error, "画像追加エラー", filePath);
-    }
-
-    const { data } = supabase.storage.from("islandIcon").getPublicUrl(filePath);
-    setImageUrl(data.publicUrl);
-  };
-
+  const handleFileChangeData = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    await HandleFileChange(event, setImageUrl);  
+  }  
+  
   // 編集ボタンを押下、イベント名を変更
   const handleEventNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEventName(e.target.value);
@@ -260,25 +131,13 @@ export default function EventEdit() {
     if (!editMode) {
       return;
     }
-    handleSave();
+    handleSaveData();
     createHandler();
     addIsland();
   };
 
-  const handleSave = async () => {
-    await supabase
-      .from("events")
-      .update([
-        {
-          eventName: eventName,
-          startDate: startDate,
-          endDate: endDate,
-          detail: eventDetail,
-          thumbnail: imageUrl,
-        },
-      ])
-      .eq("id", fetchEventID);
-    console.log("Data updated successfuly.");
+  const handleSaveData  = async () => {
+    await HandleSave(eventName, startDate, endDate, eventDetail, imageUrl, fetchEventID);
   };
 
   const createHandler = async () => {
@@ -371,7 +230,7 @@ export default function EventEdit() {
                     type="file"
                     id="thumbnail"
                     className={styles.eventIcon}
-                    onChange={handleFileChange}
+                    onChange={handleFileChangeData}
                     disabled={!editMode}
                   />
                 </td>
@@ -405,7 +264,7 @@ export default function EventEdit() {
                     <div>
                       <p>{eventJoin}</p>
                       {editMode && (
-                        <button onClick={handleHideEventJoin}>×</button>
+                        <button onClick={handleHideEventJoinData}>×</button>
                       )}
                     </div>
                   )}
@@ -446,7 +305,7 @@ export default function EventEdit() {
               setInputValue={setInputValue}
             />
           )}
-          {isAfterDeleteOpen && <CreateAfterDelete done={done} />}
+          {isAfterDeleteOpen && <CreateAfterDelete done={handleDone} />}
         </div>
       </div>
     </div>
