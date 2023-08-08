@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { firestore } from "../../firebase";
+import firebase from "firebase/compat/app";
 import styles from "../../styles/Chat.module.css";
 import GetCookieID from "../cookie/getCookieId";
-import fetchUser from "../fetchUser";
+import { supabase } from "../../createClient";
 
-export default function SendMessages({ threadID }: { threadID: number }) {
+const SendMessages = ({ threadID }: { threadID: number }) => {
   const [text, setText] = useState("");
   const [user, setUser] = useState<UserData | undefined>(undefined);
 
@@ -17,12 +19,17 @@ export default function SendMessages({ threadID }: { threadID: number }) {
   }
 
   useEffect(() => {
-    fetchUserData();
-  }, []);
+    const fetchUser = async () => {
+      let { data: userData } = (await supabase
+        .from("users")
+        .select("*")
+        .eq("status", false)
+        .eq("id", userID)) as { data: UserData[] };
 
-  const fetchUserData = async () => {
-    fetchUser(userID, setUser);
-  };
+      setUser(userData[0]);
+    };
+    fetchUser();
+  }, []);
 
   // userがundefinedの場合エラーを回避
   const userName = `${user?.familyName}${user?.firstName}`;
@@ -32,13 +39,13 @@ export default function SendMessages({ threadID }: { threadID: number }) {
   function handleClick(e: { preventDefault: () => void }) {
     e.preventDefault();
 
-    // firestore.collection("chats").add({
-    //   text: text,
-    //   postedBy: userName,
-    //   postedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    //   threadID: threadID,
-    //   icon: icon,
-    // });
+    firestore.collection("chats").add({
+      text: text,
+      postedBy: userName,
+      postedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      threadID: threadID,
+      icon: icon,
+    });
     setText("");
   }
   return (
@@ -54,14 +61,12 @@ export default function SendMessages({ threadID }: { threadID: number }) {
               setText(e.target.value);
             }}
             value={text}
-            data-testid="message"
           />
           <div className={styles.btnWrapper}>
             <button
               onClick={handleClick}
               className={styles.btn}
               disabled={text === "" && true}
-              data-testid="sendButton"
             >
               送信
             </button>
@@ -70,4 +75,6 @@ export default function SendMessages({ threadID }: { threadID: number }) {
       </div>
     </div>
   );
-}
+};
+
+export default SendMessages;

@@ -12,7 +12,7 @@ import EventDone from "../components/eventDone";
 import FetchEvent from "../components/fetchEvent";
 import EntryIsland from "../components/entryIsland";
 import HandleHideEventJoin from "../components/handleHideEventJoin";
-import HandleFileChange from "./create/handleFileChange";
+import HandleFileChange from "../components/handleFileChange";
 import HandleSave from "../components/handleSave";
 
 export default function EventEdit() {
