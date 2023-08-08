@@ -9,6 +9,9 @@ import CreateDeleteCheck from "../components/modalWindows/createDeletingCheck";
 import CreateAfterDelete from "../components/modalWindows/createAfterDelete";
 import MenubarIsland from "../components/menubar/menubarIsland/menubarIsland";
 import ComboBoxTag from "../components/comboBox/comboBoxTag/comboBoxTag";
+import FetchUsers from "../components/fetchUsers";
+import IslandDone from "../components/islandDone";
+import FetchIslandEdit from "../components/fetchIslandEdit";
 
 export default function IslandEdit() {
   LogSt();
