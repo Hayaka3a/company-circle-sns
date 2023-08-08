@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "../../../styles/menubar.module.css";
 import { Link, useParams } from "react-router-dom";
 import GetCookieID from "../../cookie/getCookieId";
-import { supabase } from "../../../createClient";
-import FetchIslandData from "./fetchIslandData";
-import CheckUserJoinedCircleProps from "./IslandJoinStatus";
 import IslandJoinStatus from "./IslandJoinStatus";
 import PartUseEffectIsland from "./partUseEffectIsland";
 

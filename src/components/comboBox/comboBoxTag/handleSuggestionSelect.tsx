@@ -27,7 +27,9 @@ export default function SuggestionSelectHandler({
         tagOptions.some(
           (ops) =>
             ops.Name === option &&
+            // newOptions配列の中にすでに同じNameプロパティを持つ要素が存在しないこと
             !newOptions.some((option) => option.Name === ops.Name) &&
+            // selectedValue配列にも含まれていないこと
             !selectedValue.includes(ops.Name),
         )
       ) {

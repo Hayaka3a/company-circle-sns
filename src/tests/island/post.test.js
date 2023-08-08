@@ -3,7 +3,10 @@ import { BrowserRouter } from "react-router-dom";
 import IslandPost from "../../island/post";
 
 jest.mock("../../components/cookie/logSt");
-jest.mock("../../components/menubarIsland", () => () => {});
+jest.mock(
+  "../../components/menubar/menubarIsland/menubarIsland",
+  () => () => {},
+);
 
 describe("IslandPost", () => {
   //表示させるダミーメッセージの設定

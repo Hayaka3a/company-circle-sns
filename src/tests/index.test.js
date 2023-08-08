@@ -25,13 +25,13 @@ describe("Index", () => {
     jest.mock("../components/cookie/logSt", () => {
       return jest.fn();
     });
-    jest.mock("../components/post/belongIsland", () => {
+    jest.mock("../components/post/belongIsland/belongIsland", () => {
       return jest.fn();
     });
-    jest.mock("../components/post/belongEvent", () => {
+    jest.mock("../components/post/belongEvent/belongEvent", () => {
       return jest.fn();
     });
-    jest.mock("../components/post/personalPost", () => {
+    jest.mock("../components/post/personalPost/personalPost", () => {
       return jest.fn();
     });
   });
