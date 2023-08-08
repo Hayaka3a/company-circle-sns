@@ -3,6 +3,10 @@ import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
 import GetCookieID from "../cookie/getCookieId";
+import FetchEventPost from "./fetchEventPost";
+import FetchEventName from "./fetchEventName";
+import SendMessage from "./sendMessage";
+import FetchPost from "./fetchPost";
 
 export default function EventSendingMessage({
   closeModal,
@@ -21,86 +25,34 @@ export default function EventSendingMessage({
   const userID = GetCookieID();
 
   useEffect(() => {
-    fetchPost();
-    fetchEventName();
-    fetchEventPost();
+    fetchPostData();
+    fetchEventNameData();
+    fetchEventPostData();
   }, []);
 
-  const fetchPost = async () => {
-    // PostedByに入れるため、送信する側のPostIDを取得する
-    const { data: postedBy, error: postedByError } = await supabase
-      .from("posts")
-      .select("id")
-      .eq("userID", userID);
-
-    if (postedByError) {
-      console.log(postedByError, "エラー");
-    }
-
-    if (postedBy && postedBy.length > 0 && postedBy[0].id) {
-      setPostedID(postedBy[0].id);
-    } else {
-      console.log("PostedByIDが取得できません");
-    }
+  // postedByに入れるため、送信する側のpostIDを取得する
+  const fetchPostData = async () => {
+    await FetchPost(userID, setPostedID);
   };
 
   // イベント名を取得してモーダルウィンドウに表示
-  const fetchEventName = async () => {
-    const { data: event, error: eventError } = await supabase
-      .from("events")
-      .select("eventName")
-      .eq("id", paramsID)
-      .eq("status", false);
-
-    if (eventError) {
-      console.log(eventError, "エラーが発生しました");
-    } else if (event && event.length > 0) {
-      setEventName(event[0].eventName);
-      console.log(eventName);
-    }
+  const fetchEventNameData = async () => {
+    await FetchEventName(supabase, paramsID, setEventName);
   };
 
-  const fetchEventPost = async () => {
-    const { data: post, error: postError } = await supabase
-      .from("posts")
-      .select("id")
-      .eq("eventID", paramsID);
-
-    if (postError) {
-      console.error(postError, "エラー");
-    }
-
-    if (post && post.length > 0) {
-      const postId = post[0].id; // ローカルの変数名をpostIdに修正
-      setPostID(postId);
-    } else {
-      console.log("該当する投稿が見つかりませんでした");
-    }
+  // paramsIDに基づいて、該当のメッセージのIDを取得する
+  const fetchEventPostData = async () => {
+    await FetchEventPost(paramsID, setPostID);
   };
 
   // messagesテーブルにメッセージを保存
-  const sendMessage = async () => {
-    const { data, error } = await supabase.from("messages").insert([
-      {
-        postID: postID,
-        message: message,
-        scout: false,
-        isRead: false,
-        isAnswered: false,
-        postedBy: postedID,
-        status: false,
-      },
-    ]);
-    if (error) {
-      console.error("メッセージの送信中にエラーが発生しました:");
-    } else {
-      console.log("データが正常に送信されました");
-      closeModal();
-    }
+  const sendMessageData = async () => {
+    await SendMessage(postID, message, postedID, closeModal);
   };
 
+  // メッセージを送信するための処理を実行
   const addHandler = () => {
-    sendMessage();
+    sendMessageData();
   };
 
   return (
@@ -142,3 +94,4 @@ export default function EventSendingMessage({
     </>
   );
 }
+
