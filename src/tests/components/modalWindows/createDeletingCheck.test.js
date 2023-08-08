@@ -1,7 +1,6 @@
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
-import CreateDeleteCheck from "../../components/modalWindows/createDeletingCheck";
+import CreateDeleteCheck from "../../../components/modalWindows/createDeletingCheck";
 import { useParams } from "react-router-dom";
-import { supabase } from "../../createClient";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),

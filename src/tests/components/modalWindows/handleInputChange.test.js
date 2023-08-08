@@ -1,5 +1,5 @@
 // 必要なモジュールをインポート
-import HandleInputChange from '../../components/modalWindows/handleInputChange';
+import HandleInputChange from '../../../components/modalWindows/handleInputChange';
 
 // ダミーの関数を作成
 const setEmptyChara = jest.fn();

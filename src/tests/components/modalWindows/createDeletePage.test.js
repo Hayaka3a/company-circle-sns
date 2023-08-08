@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
-import CreateDeletePage from "../../components/modalWindows/createDeletePage";
+import CreateDeletePage from "../../../components/modalWindows/createDeletePage";
 
 describe("CreateDeletePage", () => {
   test("×ボタンが押されたときに closeDeleteModal 関数が呼ばれること", () => {

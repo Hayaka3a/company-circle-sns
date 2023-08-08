@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import CreateAfterDelete from "../../components/modalWindows/createAfterDelete";
+import CreateAfterDelete from "../../../components/modalWindows/createAfterDelete";
 
 describe("CreateAfterDelete", () => {
   test("モーダルウィンドウが正しく表示され、ボタンが正常に作動すること", () => {

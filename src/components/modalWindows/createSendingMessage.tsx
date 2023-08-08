@@ -3,9 +3,9 @@ import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
 import GetCookieID from "../cookie/getCookieId";
-import FetchPost from "./fetchPost";
 import FetchIslandName from "./fetchIslandName";
 import SendMessage from "./sendMessage";
+import FetchPostIslands from "./fetchPostIslands";
 
 export default function CreateSendingMessage({
   closeModal,
@@ -27,9 +27,11 @@ export default function CreateSendingMessage({
     fetchIslandNameData();
   }, []);
 
+  
+
   // posts, postedByに入れるため、送信する側のpostIDを取得する
   const fetchPostData = async () => {
-    await FetchPost(userID, setPostedID);
+    await FetchPostIslands(table, paramsID, setPostID, userID, setPostedID);
   };
 
   // 島名を取得してモーダルウィンドウに表示
@@ -37,10 +39,11 @@ export default function CreateSendingMessage({
     await FetchIslandName(supabase, paramsID, setIslandName);
   };
 
+
   // messagesテーブルにメッセージを保存
   const sendMessageData = async () => {
     await SendMessage(postID, message, postedID, closeModal);
-    console.log(postedID)
+    console.log(postID, message, postedID, closeModal)
   };
 
 
@@ -87,5 +90,9 @@ export default function CreateSendingMessage({
       )}
     </>
   );
+}
+
+function FetchPostIsland(table: string, paramsID: number, setPostID: React.Dispatch<(prevState: undefined) => undefined>, userID: any, setPostedID: React.Dispatch<(prevState: undefined) => undefined>) {
+  throw new Error("Function not implemented.");
 }
 

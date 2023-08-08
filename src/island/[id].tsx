@@ -7,6 +7,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../createClient";
 import LogSt from "../components/cookie/logSt";
 import GetCookieID from "../components/cookie/getCookieId";
+import FetchIslandDetail from "../components/fetchIslandDetail";
+import FetchIslandPosts from "../components/fetchIslandPost";
+import FetchTags from "../components/fetchTags";
 
 export default function IslandDetail() {
   LogSt();
@@ -24,118 +27,22 @@ export default function IslandDetail() {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
-    fetchIslandDetail();
-    fetchIslandPost();
-    fetchTags();
+    fetchIslandDetailData();
+    fetchIslandPostData();
+    fetchTagsData();
   }, []);
 
-  const fetchIslandDetail = async () => {
-    const { data, error } = await supabase
-      .from("islands")
-      .select("*")
-      .eq("id", islandId.id) // 島のIDに応じてフィルタリングする（islandId.idは該当する島のID）
-      .eq("status", false);
-
-    const { data: user, error: userError } = await supabase
-      .from("users")
-      .select("id")
-      .eq("id", data[0].ownerID);
-
-    const owner = user[0].id.toString();
-
-    // ownerじゃない人には「編集・削除」ボタン機能を表示させない
-    if (owner !== userId) {
-      setButton(false);
-    }
-    if (userError) {
-      console.error("owner情報の取得に失敗しました:", error);
-    }
-
-    if (error) {
-      console.error("島の詳細情報の取得に失敗しました:", error);
-      return;
-    }
-    if (data.length === 0) {
-      console.warn("該当する島の詳細情報が見つかりませんでした。");
-      return;
-    }
-
-    const islandDetail = data[0]; // 最初のデータを取得（仮定）
-    setIslandDetail(islandDetail); // 島の詳細情報を状態変数にセット
-    if (islandDetail.thumbnail) {
-      setIslandImage(islandDetail.thumbnail);
-    }
+  const fetchIslandDetailData = async () => {
+    await FetchIslandDetail(islandId, userId, setButton, setIslandDetail, setIslandImage);
   };
 
   // すでに住民申請を送っているか確認確認
-  const fetchIslandPost = async () => {
-    // ユーザーのポスト番号取得
-    const { data, error } = await supabase
-      .from("posts")
-      .select("id")
-      .eq("userID", userId)
-      .eq("status", false);
-
-    if (error) {
-      console.log("ユーザーポスト番号取得失敗");
-    }
-    if (!data) {
-      console.log("データがありません");
-    } else {
-      const { data: message, error: messageError } = await supabase
-        .from("messages")
-        .select("*")
-        .eq("postedBy", data[0].id)
-        .eq("status", false);
-
-      if (!message) {
-        console.log("データがありません。");
-      } else {
-        const appMsg = message.filter((msg) => msg.message === "参加申請");
-
-        // 島ポスト番号取得
-        if (appMsg.length > 0) {
-          const { data: island, error: islandError } = await supabase
-            .from("posts")
-            .select("*")
-            .eq("islandID", Number(islandId.id))
-            .eq("status", false);
-
-          if (islandError) {
-            console.log("島ポスト番号取得失敗");
-          }
-          if (!island) {
-            console.log("取得できませんでした");
-          } else {
-            // 島ポスト番号が送信済みの参加申請のpostIDと同じだった場合に「住民申請」ボタンをグレーアウトし、「すでに申請済みです」のエラーを表示させる
-            const matchingAppMsg = appMsg.find(
-              (msg) => msg.postID === island[0].id,
-            );
-            if (matchingAppMsg) {
-              setAlreadyError("すでに住民許可申請を送っています");
-            }
-          }
-          if (messageError) {
-            console.log("ユーザー送信メッセージ一覧取得失敗");
-          }
-        }
-      }
-    }
+  const fetchIslandPostData = async () => {
+    await FetchIslandPosts(userId, islandId, setAlreadyError);
   };
 
-  const fetchTags = async () => {
-    const { data: tag, error: tagError } = await supabase
-      .from("tagStatus")
-      .select("*,tags(*)")
-      .eq("islandID", Number(islandId.id));
-    if (tagError) {
-      console.log(tagError, "タグの取得に失敗しました");
-    }
-    if (!tag) {
-      console.log("タグは見つかりませんでした");
-    } else {
-      setTags(tag);
-    }
+  const fetchTagsData = async () => {
+    await FetchTags(islandId, setTags);
   };
 
   // 住民申請を押した際の小窓画面（モーダルウィンドウ）の開閉

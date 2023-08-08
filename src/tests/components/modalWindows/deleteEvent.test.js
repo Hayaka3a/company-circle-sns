@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import CreateDeletePage from "../../components/modalWindows/deleteEvent";
+import CreateDeletePage from "../../../components/modalWindows/deleteEvent";
 
 describe("CreateDeletePage", () => {
   test("モーダルウィンドウが正しく表示され、ボタンが正常に動作すること", () => {

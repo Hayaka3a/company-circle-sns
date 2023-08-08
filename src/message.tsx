@@ -7,6 +7,8 @@ import LogSt from "./components/cookie/logSt";
 import styles from "../src/styles/message.module.css";
 import ScoutPostEvent from "./components/scoutPostEvent";
 import ScoutPostIsland from "./components/scoutPostIsland";
+import FetchUserMessages from "./components/fetchUserMessages";
+import markMessageAsRead from "./components/markMessageAsRead";
 
 export default function Message() {
   LogSt();
@@ -34,9 +36,12 @@ export default function Message() {
   };
 
   useEffect(() => {
-    fetchUserMessages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchUserMessagesData();
   }, []);
+
+  const fetchUserMessagesData = async () => {
+    await FetchUserMessages(id, setUserMessages, fetchPosts);
+  };
 
   useEffect(() => {
     let circleElement = document.getElementById("img");
@@ -45,27 +50,8 @@ export default function Message() {
     }
   }, [imageUrl]);
 
-  const fetchUserMessages = async () => {
-    const { data: messages, error: messagesError } = await supabase
-      .from("messages")
-      .select("*")
-      .eq("id", parseInt(id))
-      .eq("status", false);
 
-    if (messagesError) {
-      console.log("messagesの取得エラー", messagesError);
-      return;
-    }
-
-    if (messages) {
-      setUserMessages(messages);
-
-      const messagesPosteBy = messages.map((message) => message.postedBy);
-      fetchPosts(messagesPosteBy);
-    }
-  };
-
-  const fetchPosts = async (messagesPosteBy) => {
+  const fetchPosts = async (messagesPosteBy) => {    
     const { data: posts, error: postsError } = await supabase
       .from("posts")
       .select("id, userID, islandID, eventID")
@@ -221,18 +207,7 @@ export default function Message() {
   }, [errorMessage]);
 
   useEffect(() => {
-    const markMessageAsRead = async () => {
-      const { error } = await supabase
-        .from("messages")
-        .update({ isRead: true })
-        .eq("id", parseInt(id));
-
-      if (error) {
-        console.log("メッセージを既読にする際のエラー", error);
-      }
-    };
-
-    markMessageAsRead();
+    markMessageAsRead(id);
   }, [id]);
 
   return (
