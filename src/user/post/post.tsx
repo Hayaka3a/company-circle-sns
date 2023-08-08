@@ -33,7 +33,11 @@ export default function UserPost() {
               <p>受信メッセージはありません</p>
             ) : (
               messages.map((message) => (
-                <div className={styles.message} key={message.id}>
+                <div
+                  className={styles.message}
+                  key={message.id}
+                  data-testid="message"
+                >
                   <div className={styles.flex}>
                     <img
                       className={styles.icon}

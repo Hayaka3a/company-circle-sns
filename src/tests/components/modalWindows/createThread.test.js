@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import CreateThread from "../../../components/modalWindows/createThread/createThread";
+import CreateThread from "../../../components/modalWindows/createThread";
 describe("CreateThread", () => {
   test("表示テスト", async () => {
     const closeModal = jest.fn();

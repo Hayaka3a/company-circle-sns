@@ -6,7 +6,7 @@ import SuggestionSelectHandler from "../comboBoxTag/handleSuggestionSelect";
 import DeleteHandler from "../comboBoxTag/deleteHandler";
 
 // tagOptionsにはタグ配列、nameOptiosにはメンバー配列、htmlForには<label>のhtmlFor属性の値
-export default function ComboBoxUser({
+export default function ComboBoxUserScout({
   nameOptions,
   htmlFor,
   setIslandMembers,
