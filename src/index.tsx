@@ -31,7 +31,7 @@ export default function Index() {
   };
 
   useEffect(() => {
-    // LogSt();
+    LogSt();
     fetchIslands(setIslands);
     fetchEvents(setEvents);
   }, []);
