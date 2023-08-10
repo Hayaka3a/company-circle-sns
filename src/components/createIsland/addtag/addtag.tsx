@@ -60,23 +60,6 @@ export default function AddTag({
           </div>
         )}
       </div>
-      <button
-        onClick={() => {
-          AddButton({
-            inputValue,
-            inputValueK,
-            setTagNames,
-            setSelectedValue,
-            setInputValue,
-            setInputValueK,
-            setTagNameError,
-            setTagNameKanaError,
-          });
-        }}
-        className={styles.addButton}
-      >
-        追加
-      </button>
       {/* タグの追加 */}
       {selectedValue
         .reduce((rows, value, index) => {
