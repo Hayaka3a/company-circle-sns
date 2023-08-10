@@ -385,7 +385,9 @@ export default function UserRegistration() {
                                 id={item.id}
                                 type="radio"
                                 value={item.id}
-                                {...register("department")}
+                                {...register("department", {
+                                  required: "職種は必須項目です",
+                                })}
                               />
                               <label htmlFor={item.id} className="label">
                                 {item.name}
@@ -402,7 +404,11 @@ export default function UserRegistration() {
                 </tbody>
               </table>
             </div>
-            <button type="submit" disabled={!isValid || isSubmitting}>
+            <button
+              type="submit"
+              disabled={!isValid || isSubmitting}
+              className={styles.submitButton}
+            >
               登録
             </button>
           </div>
