@@ -76,13 +76,26 @@ export default function EventEdit() {
 
   // 削除完了ウィンドウを閉じると、データが論理削除されてトップ画面に遷移する
   const handleDone = async () => {
-    await EventDone(eventID, inputValue, fetchEventID, setIsAfterDeleteOpen, navigate);
+    await EventDone(
+      eventID,
+      inputValue,
+      fetchEventID,
+      setIsAfterDeleteOpen,
+      navigate,
+    );
   };
-
 
   // データベースからevents情報を取得
   const fetchEventData = async () => {
-    await FetchEvent(fetchEventID, setEventID, setEventName, setStartDate, setEndDate, setEventDetail, setImageUrl);
+    await FetchEvent(
+      fetchEventID,
+      setEventID,
+      setEventName,
+      setStartDate,
+      setEndDate,
+      setEventDetail,
+      setImageUrl,
+    );
   };
 
   const entryIslandData = async () => {
@@ -102,10 +115,12 @@ export default function EventEdit() {
   }, [imageUrl]);
 
   // 画像ファイル選択したら、表示画像に反映
-  const handleFileChangeData = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    await HandleFileChange(event, setImageUrl);  
-  }  
-  
+  const handleFileChangeData = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    await HandleFileChange(event, setImageUrl);
+  };
+
   // 編集ボタンを押下、イベント名を変更
   const handleEventNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEventName(e.target.value);
@@ -142,8 +157,15 @@ export default function EventEdit() {
     addIsland();
   };
 
-  const handleSaveData  = async () => {
-    await HandleSave(eventName, startDate, endDate, eventDetail, imageUrl, fetchEventID);
+  const handleSaveData = async () => {
+    await HandleSave(
+      eventName,
+      startDate,
+      endDate,
+      eventDetail,
+      imageUrl,
+      fetchEventID,
+    );
   };
 
   const createHandler = async () => {

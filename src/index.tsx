@@ -31,7 +31,7 @@ export default function Index() {
   };
 
   useEffect(() => {
-    LogSt();
+    // LogSt();
     fetchIslands(setIslands);
     fetchEvents(setEvents);
   }, []);
@@ -80,7 +80,7 @@ export default function Index() {
             <div className={styles.down}>
               {tag === "islands" && (
                 <div className={styles.islands}>
-                  {islands.slice(0, 6).map((island) => (
+                  {islands.slice(0, 5).map((island) => (
                     <div key={island.id} className={styles.island}>
                       <Link to={`/island/${island.id}`} className={styles.link}>
                         <img
@@ -102,7 +102,7 @@ export default function Index() {
               {tag === "events" && (
                 <div>
                   <div className={styles.events}>
-                    {events.slice(0, 6).map((event) => (
+                    {events.slice(0, 5).map((event) => (
                       <div key={event.id} className={styles.event}>
                         <Link
                           to={`/island/${event.id}`}
