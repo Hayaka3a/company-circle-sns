@@ -24,9 +24,8 @@ export default function ScoutPostEvent({ table }: { table: string }) {
   const id = cookies.id;
 
   const [eventName, setEventName] = useState("");
-  const [event, setEvent] = useState<any>(null)
+  const [event, setEvent] = useState<any>(null);
   const [isButtonsVisible, setIsButtonsVisible] = useState(true);
-
 
   const navigate = useNavigate();
 
@@ -36,7 +35,7 @@ export default function ScoutPostEvent({ table }: { table: string }) {
 
   // 参加するボタンがクリックされた時の処理
   const handleJoinClick = () => {
-    HandleEventJoin(paramsID, id, setIsButtonsVisible)   
+    HandleEventJoin(paramsID, id, setIsButtonsVisible);
   };
 
   // 拒否ボタンがクリックされた時の処理
@@ -49,7 +48,6 @@ export default function ScoutPostEvent({ table }: { table: string }) {
     navigate(`/event/${event?.id}`);
   };
 
-
   return (
     <div>
       <div className={styles.text_body}>
@@ -60,9 +58,7 @@ export default function ScoutPostEvent({ table }: { table: string }) {
             <button onClick={handleRejectClick}>拒否する</button>
           </>
         )}
-        {!isButtonsVisible && (
-          <p>回答しました</p>
-        )}        
+        {!isButtonsVisible && <p>回答しました</p>}
         <Link onClick={handleGoToEvent} to={`/event/${event?.id}`}>
           <h4>{eventName}を見に行く</h4>
         </Link>
