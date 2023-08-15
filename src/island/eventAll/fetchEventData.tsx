@@ -29,11 +29,22 @@ export default function FetchEventDataIsland({ paramsID, setEvents, events }) {
       if (eventError) {
         console.error("Eventsテーブルデータ情報取得失敗", eventError);
       }
-      return eventData[0];
+
+      if (eventData && eventData.length > 0) {
+        return eventData[0];
+      } else {
+        console.log("イベント無し");
+        return null;
+      }
     };
-    const eventPromises = eventIds.map((eventId) => fetchEventDetails(eventId));
+
+    const eventPromises = eventIds.map(async (eventId) => {
+      return await fetchEventDetails(eventId);
+    });
+
     const fetchedEvents = await Promise.all(eventPromises);
 
+    // イベントデータがあるもののみ、setEvents で設定
     setEvents(fetchedEvents.filter((event) => event !== null));
   };
   fetchEventData();

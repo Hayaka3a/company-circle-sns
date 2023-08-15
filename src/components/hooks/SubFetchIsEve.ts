@@ -21,7 +21,6 @@ export default function SubFetchIsEve({
     if (!data) {
       return;
     } else {
-      console.log(data);
       const tmpUnknown = data as unknown;
       const tmpIs = tmpUnknown as {
         islands: Island;

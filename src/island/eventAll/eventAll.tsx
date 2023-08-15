@@ -28,6 +28,7 @@ export default function EventAll() {
     FetchEventDataIsland({ paramsID, setEvents, events });
   }, [paramsID]);
 
+  console.log(events);
   return (
     <div className={styles.flex2}>
       <MenubarIsland />
