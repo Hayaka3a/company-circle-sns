@@ -65,7 +65,6 @@ export default function ComboBoxUserScout({
             </ul>
           )}
         </div>
-        <button onClick={() => AddHandler}>追加</button>
       </div>
       {/* タグの追加 */}
       {selectedValue

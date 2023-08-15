@@ -64,8 +64,6 @@ export default function ComboBoxUser({
             </ul>
           )}
         </div>
-
-        <button onClick={() => AddHandler}>追加</button>
       </div>
       {/* タグの追加 */}
       {selectedValue

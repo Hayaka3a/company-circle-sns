@@ -252,6 +252,10 @@ export default function UserEdit() {
                             onSubmit={onSubmit}
                             {...register("familyNameKana", {
                               required: "カナ(姓)は必須項目です。",
+                              pattern: {
+                                value: /^[ァ-ヶー]*$/,
+                                message: "カタカナのみで入力してください",
+                              },
                             })}
                           />
                           <input
@@ -262,6 +266,10 @@ export default function UserEdit() {
                             onSubmit={onSubmit}
                             {...register("firstNameKana", {
                               required: "カナ(名)は必須項目です。",
+                              pattern: {
+                                value: /^[ァ-ヶー]*$/,
+                                message: "カタカナのみで入力してください",
+                              },
                             })}
                           />
                           <p className={styles.error}>
