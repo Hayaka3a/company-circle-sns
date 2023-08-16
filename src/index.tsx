@@ -105,7 +105,7 @@ export default function Index() {
                     {events.slice(0, 5).map((event) => (
                       <div key={event.id} className={styles.event}>
                         <Link
-                          to={`/island/${event.id}`}
+                          to={`/event/${event.id}`}
                           className={styles.link}
                           data-testid="eventLink"
                         >
