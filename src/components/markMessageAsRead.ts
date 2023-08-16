@@ -8,5 +8,5 @@ export default async function markMessageAsRead(id) {
 
       if (error) {
         console.log("メッセージを既読にする際のエラー", error);
-      }
+      } 
 };

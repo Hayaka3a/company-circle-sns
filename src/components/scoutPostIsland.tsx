@@ -32,13 +32,17 @@ export default function ScoutPostIsland({ table }: { table: string }) {
 
 
   useEffect(() => {
-    FetchIslandData(paramsID, setIslandName, setIsland, setIsButtonsVisible)  
+    FetchIslandData(paramsID, setIslandName, setIsland, setIsButtonsVisible)
   }, [paramsID]);
 
 
   // 参加するボタンがクリックされた時の処理
   const handleJoinClick = () => {
-    HandleIslandJoin(paramsID, id, setIsButtonsVisible)   
+    HandleIslandJoin(paramsID, id, setIsButtonsVisible); 
+    setIsButtonsVisible(false); // ボタンを非表示にする
+    setTimeout(() => {
+      window.location.reload(); // 5秒後に画面をリロード
+    }, 3000);
   };
 
   // 拒否ボタンがクリックされた時の処理
