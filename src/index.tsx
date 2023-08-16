@@ -20,21 +20,22 @@ render(
 reportWebVitals();
 
 export default function Index() {
+  LogSt();
+
   const [islands, setIslands] = useState([]);
   const [events, setEvents] = useState([]);
   const [tag, setTag] = useState("islands");
   const [hasNewMessage, setHasNewMessage] = useState(false);
 
+  useEffect(() => {
+    fetchIslands(setIslands);
+    fetchEvents(setEvents);
+  }, []);
+
   // 島とイベント表示タブ切り替え
   const changeTagHandler = (selectedTag) => {
     setTag(selectedTag);
   };
-
-  useEffect(() => {
-    // LogSt();
-    fetchIslands(setIslands);
-    fetchEvents(setEvents);
-  }, []);
 
   return (
     <>
