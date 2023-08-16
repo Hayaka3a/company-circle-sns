@@ -105,7 +105,7 @@ export default function EventPost() {
             イベントに招待する
           </button>
           {modal && (
-            <CreateSendingScout closeModal={closeModal} table="island" />
+            <CreateSendingScout closeModal={closeModal} table="event" />
           )}
           <div className={styles.postMessageBack}>
             <h2>受信メッセージ✉️</h2>
