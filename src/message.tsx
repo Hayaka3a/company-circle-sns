@@ -50,8 +50,7 @@ export default function Message() {
     }
   }, [imageUrl]);
 
-
-  const fetchPosts = async (messagesPosteBy) => {    
+  const fetchPosts = async (messagesPosteBy) => {
     const { data: posts, error: postsError } = await supabase
       .from("posts")
       .select("id, userID, islandID, eventID")
@@ -183,7 +182,7 @@ export default function Message() {
       },
     ]);
 
-    console.log(posts[0].id)
+    console.log(posts[0].id);
 
     if (messageError) {
       console.error("メッセージの送信中にエラーが発生しました:", error);
@@ -319,6 +318,7 @@ export default function Message() {
                 className={styles.textArea}
                 id="message-text"
                 placeholder="返信メッセージを入力してください"
+                maxLength={200}
               />
             </div>
           )}

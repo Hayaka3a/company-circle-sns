@@ -37,15 +37,28 @@ export async function fetchMembers({
       if (entryError || !entryData) {
         console.log(entryError, "entryError");
       } else {
+        //userIDが存在するデータのみに絞り込み、各島民と難民を一つの配列にしまう
         const userData = entryData.filter(
           (user) => user.userID,
         ) as Entryusers[];
-        //各島民と難民を一つの配列にしまう
-        const conbined = tmpArry.concat(userData);
-        const updatedData = conbined.map((item) => {
+        const combined = tmpArry.concat(userData);
+
+        // 同じuserIDを持つデータを除外するための処理
+        const uniqueCombined = [];
+        const seenUserIDs = new Set(); // 既に追加されたuserIDを保持するSet
+
+        for (const item of combined) {
+          if (!seenUserIDs.has(item.userID)) {
+            uniqueCombined.push(item);
+            seenUserIDs.add(item.userID);
+          }
+        }
+
+        const updatedData = uniqueCombined.map((item) => {
           if (item.userID === displayData.ownerID) {
             item.users.firstName += "(オーナー)";
           }
+
           return item;
         });
         setEntryUsers(updatedData);

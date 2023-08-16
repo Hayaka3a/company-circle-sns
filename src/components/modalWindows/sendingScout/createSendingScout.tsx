@@ -38,25 +38,18 @@ export default function CreateSendingScout({
   const getPost = async () => {
     const { data: posts, error: postError } = await supabase
       .from("posts")
-      .select(`id,islands(islandName)`)
+      .select(`id`)
       .eq(`${table}ID`, paramsID)
       .eq("status", false);
 
     if (postError) {
-      console.log(postError, "エラー");
+      console.log(postError, "postsエラー");
     }
-
     if (!posts || posts.length === 0) {
-      console.log("postが見つかりません");
+      console.log("postByに格納するpostIDが見つかりません", posts);
     } else {
       const post = posts[0];
       setPostBy(post.id);
-      if (post.islands && post.islands.length > 0) {
-        const islandN = post.islands[0] as { islandName: string };
-        setIslandName(islandN.islandName);
-      } else {
-        console.log("islandNameが見つかりません");
-      }
     }
   };
 
@@ -68,7 +61,7 @@ export default function CreateSendingScout({
       .eq(`${table}ID`, paramsID)
       .eq("status", false);
     if (entryError) {
-      console.log(entryError, "エラー");
+      console.log(entryError, "entryエラー");
     }
     if (!entryUser) {
       console.log("ユーザーが見つかりません");
@@ -81,7 +74,7 @@ export default function CreateSendingScout({
         .select(`id,familyName,firstName,familyNameKana,firstNameKana`)
         .eq("status", false);
       if (usersError) {
-        console.log(usersError, "エラー");
+        console.log(usersError, "usersエラー");
       }
       if (!users) {
         console.log("全ユーザーが見つかりません");
@@ -126,7 +119,7 @@ export default function CreateSendingScout({
             .eq("userID", islandMembers[0].id)
             .eq("status", false);
           if (postError) {
-            console.log(postError, "エラー");
+            console.log(postError, "post2エラー");
           }
           setPost(posts[0].id);
         }
