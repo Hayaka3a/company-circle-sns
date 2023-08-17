@@ -42,7 +42,7 @@ export default function EventMembers() {
         <div className={styles.display}>
           <MenubarEvent />
           <MembersList
-            table="event"
+            table={table}
             displayData={eventData}
             open={openModal}
             close={closeModal}
