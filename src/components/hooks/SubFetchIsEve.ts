@@ -32,8 +32,6 @@ export default function SubFetchIsEve({
         .filter((island) => island !== null || undefined)
         .map((island) => island.id);
 
-      console.log(joinIsArray);
-
       let { data: eveData, error: eveError } = await supabase
         .from("userEntryStatus")
         .select("events(*)")
