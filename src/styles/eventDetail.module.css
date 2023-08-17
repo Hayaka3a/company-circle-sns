@@ -78,6 +78,13 @@
   margin-top: 2vh;
 }
 
+.edit_btn:disabled {
+  background-color: rgb(189 187 187);
+  color: white;
+  border: none;
+  box-shadow: none;
+}
+
 .delete_btn {
   margin-top: 15px;
   font-weight: bold;
@@ -92,4 +99,9 @@
 .delete_btn:hover {
   background-color: white;
   color: gray;
+}
+
+.errorText {
+  color: red;
+  font-weight: bold;
 }
