@@ -4,22 +4,21 @@ import GetCookieID from "../../components/cookie/getCookieId";
 import { format } from "date-fns";
 import classNames from "classnames";
 import LogSt from "../../components/cookie/logSt";
-import { useReadHandler } from "./readHandler";
 import FetchMsg from "./fetchMsg";
+import { readHandler } from "../../components/post/readHandler";
+import { useNavigate } from "react-router-dom";
 
 export default function UserPost() {
   LogSt();
-  const [messages, setMessages] = useState([]);
 
+  const [messages, setMessages] = useState([]);
+  const navigate = useNavigate();
   const userID = GetCookieID();
 
   useEffect(() => {
     //メッセージ受信
     FetchMsg(userID, setMessages);
   }, []);
-
-  // 既読に変更し、メッセージ全文確認ページへ遷移
-  const handleRead = useReadHandler();
 
   return (
     <>
@@ -80,7 +79,7 @@ export default function UserPost() {
                   </div>
 
                   <button
-                    onClick={() => handleRead(message.id)}
+                    onClick={() => readHandler(message.id, navigate)}
                     className={styles.displayButton}
                   >
                     表示

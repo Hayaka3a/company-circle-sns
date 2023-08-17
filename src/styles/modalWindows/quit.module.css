@@ -15,6 +15,10 @@
   justify-content: center;
 }
 
+.main {
+  padding-top: 19vh;
+}
+
 .modal {
   z-index: 2;
   width: 50%;
@@ -40,4 +44,9 @@
 
 .spanB {
   color: blue;
+}
+
+.title {
+  padding-bottom: 5vh;
+  font-size: 4vh;
 }

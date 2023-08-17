@@ -17,7 +17,8 @@ export const fetchMsg = async ({ paramsID, setMessages }) => {
       .from("messages")
       .select("*, applications(*)")
       .eq("postID", postID)
-      .eq("status", false);
+      .eq("status", false)
+      .order("sendingDate", { ascending: false });
 
     // applicationsにデータがある場合は排除（住民許可申請は表示させない）
     let msgs = msgsUnfil.filter(function (ms) {
