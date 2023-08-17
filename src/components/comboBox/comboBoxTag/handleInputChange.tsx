@@ -31,11 +31,11 @@ export default function HandleInputChange({
   };
 
   // 追加ボタンだけでなく、enterキーでもaddHandlerを発動させる
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      addHandler();
-    }
-  };
+  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (event.key === "Enter") {
+  //     addHandler();
+  //   }
+  // };
 
   return (
     <div>
@@ -45,7 +45,7 @@ export default function HandleInputChange({
         maxLength={20}
         onChange={handleInputChange}
         className={styles.comboBoxUser}
-        onKeyDown={handleKeyDown}
+        // onKeyDown={handleKeyDown}
         id={htmlFor}
       />
     </div>
