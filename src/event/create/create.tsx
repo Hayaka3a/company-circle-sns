@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import LogSt from "../../components/cookie/logSt";
 import styles from "../../styles/event/create.module.css";
 import EventName from "../../components/createEvent/eventName/eventName";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import EventDetail from "../../components/createEvent/detail/detail";
 import Daytime from "../../components/createEvent/daytime/daytime";
 import SelectIsland from "../../components/selectIsland";
