@@ -14,7 +14,10 @@ export async function fetchData({ table, paramsID, setMessage }) {
   } else {
     //applicationsが取得できたものだけで新たな配列を作成
     const selectApp = data[0].messages.filter(
-      (message) => message.applications.length > 0 && !message.isAnswered,
+      (message) =>
+        message.applications.length > 0 &&
+        !message.isAnswered &&
+        message.status === false,
     );
     setMessage(selectApp);
   }

@@ -1,3 +1,4 @@
+import { tab } from "@testing-library/user-event/dist/tab";
 import styles from "../../styles/membersList.module.css";
 import DeleteComfirmation from "../modalWindows/deleteConfirmation/deleteConfirmation";
 
@@ -16,6 +17,26 @@ export function ButtonSwitching({
   entryUsers,
   close,
 }) {
+  const name = table === "island" ? "島" : "イベント";
+
+  const swichingOwnerButton = (user: number) => {
+    if (table === "island") {
+      return (
+        <button onClick={open2} className={styles.exileBtn}>
+          島から追放
+        </button>
+      );
+    } else if (table === "event" && user === 0) {
+      return (
+        <button onClick={open2} className={styles.exileBtn}>
+          イベントから追放
+        </button>
+      );
+    } else {
+      return <button className={styles.notExileBtn}>追放できません</button>;
+    }
+  };
+
   if (loginUser && displayData.ownerID === loginID) {
     //オーナーの場合のデータ表示
     return (
@@ -37,7 +58,7 @@ export function ButtonSwitching({
                 {anotherUser(user)}
                 <td className={styles.td2}>
                   <button onClick={open} className={styles.ownerBtn}>
-                    島主権限を譲渡
+                    オーナー権限を譲渡
                   </button>
                   {modal && (
                     <DeleteComfirmation
@@ -49,9 +70,7 @@ export function ButtonSwitching({
                       user={user.userID}
                     />
                   )}
-                  <button onClick={open2} className={styles.exileBtn}>
-                    島追放
-                  </button>
+                  {swichingOwnerButton(user.islandID)}
                   {modal2 && (
                     <DeleteComfirmation
                       closeModal={close2}
@@ -88,13 +107,13 @@ export function ButtonSwitching({
               className={styles.unsubBtn}
               name="島を抜ける"
             >
-              島を抜ける
+              {name}を抜ける
             </button>
             {modal && (
               <DeleteComfirmation
                 closeModal={close}
                 category={"脱退する"}
-                text={`本当に島を抜けますか？`}
+                text={`本当に${name}を抜けますか？`}
                 table={table}
                 params={displayData.id}
                 user={loginID}

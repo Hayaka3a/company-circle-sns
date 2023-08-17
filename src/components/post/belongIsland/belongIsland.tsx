@@ -8,7 +8,11 @@ export default function BelongIsland() {
   const [hasNewMessage, setHasNewMessage] = useState(false);
 
   useEffect(() => {
-    FetchData(userID, setHasNewMessage);
+    async function fetchData() {
+      const newMessage = await FetchData(userID);
+      setHasNewMessage(newMessage);
+    }
+    fetchData();
   }, [userID]);
 
   return (
