@@ -33,7 +33,6 @@ export default function FetchEventDataIsland({ paramsID, setEvents, events }) {
       if (eventData && eventData.length > 0) {
         return eventData[0];
       } else {
-        console.log("イベント無し");
         return null;
       }
     };
