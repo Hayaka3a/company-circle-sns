@@ -83,7 +83,11 @@ export default function CreateResidentApplication({
                 </div>
               </div>
               <div>
-                <button onClick={saveMessageData} className={styles.btn}>
+                <button
+                  onClick={saveMessageData}
+                  className={styles.btn}
+                  disabled={!message}
+                >
                   送信する
                 </button>
               </div>

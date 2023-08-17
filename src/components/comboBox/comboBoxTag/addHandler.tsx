@@ -62,6 +62,7 @@ export default function AddHandler({
             setError("送信先は1人のみ選択可能です。");
           } else {
             setIslandMembers(members);
+            console.log(members);
           }
 
           setInputValue("");
