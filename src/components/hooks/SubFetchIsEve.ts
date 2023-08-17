@@ -41,17 +41,23 @@ export default function SubFetchIsEve({
       if (eveError) {
         console.log(eveError, "eveError");
       } else if (eveData.length > 0) {
+        eveData as { events: Event[] }[];
         //取得した２つのデータを１つの配列にする
         const tmpEve = eveData
           .flatMap((data) => data.events)
-          .filter((event) => event !== null || undefined)
-          .map((data) => ({
-            events: data,
-            islands: null,
-          })) as {
-          events: Event | null;
-          islands: null;
-        }[];
+          .filter((event) => event !== null && event !== undefined)
+          .reduce((accumulator, currentEvent) => {
+            const isDuplicate = accumulator.some(
+              (existingEvent) => existingEvent.events.id === currentEvent.id,
+            );
+            if (!isDuplicate) {
+              accumulator.push({
+                events: currentEvent,
+                islands: null,
+              });
+            }
+            return accumulator;
+          }, []);
 
         tmpEve.map((data) => tmpIs.push(data));
 
