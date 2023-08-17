@@ -1,6 +1,6 @@
 import { supabase } from "../../../createClient";
 
-export default async function FetchData(userID, setHasNewMessage) {
+export default async function FetchData(userID) {
   try {
     const { data: entrys, error: entrysError } = await supabase
       .from("userEntryStatus")
@@ -10,12 +10,12 @@ export default async function FetchData(userID, setHasNewMessage) {
 
     if (entrysError) {
       console.error("データ1取得失敗", entrysError.message);
-      return;
+      return false;
     }
 
     // データがnullまたは空の場合は何も行わずにreturnする
     if (!entrys || entrys.length === 0) {
-      return;
+      return false;
     }
 
     for (const entry of entrys) {
@@ -29,10 +29,10 @@ export default async function FetchData(userID, setHasNewMessage) {
 
         if (postsError) {
           console.error("データ2取得失敗", postsError.message);
-          return;
+          return false;
         }
 
-        posts.map(async (post) => {
+        for (const post of posts) {
           const { data: messages, error: messagesError } = await supabase
             .from("messages")
             .select("*")
@@ -40,27 +40,23 @@ export default async function FetchData(userID, setHasNewMessage) {
             .eq("isRead", "false")
             .eq("status", false);
 
-          // データがnullまたは空の場合は何も行わずにreturnする
+          // データがnullまたは空の場合は何も行わずにcontinueする
           if (!messages || messages.length === 0) {
-            return;
+            continue;
           }
 
           if (messagesError) {
             console.error("データ3取得失敗", messagesError.message);
           }
           if (messages.length > 0) {
-            setHasNewMessage(true);
-            console.log("メッセージを見つけました");
+            return true;
           }
-        });
-      } else {
-        // islandIDがnullの場合はスキップ
-        return;
+        }
       }
     }
-    // 最初の未読メッセージが見つからなかった場合は false を設定する
-    setHasNewMessage(false);
+    return false;
   } catch (error) {
     console.error("メッセージ情報取得失敗", error.message);
+    return false;
   }
 }
