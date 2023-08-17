@@ -12,6 +12,8 @@ import ComboBoxTag from "../components/comboBox/comboBoxTag/comboBoxTag";
 import FetchUsers from "../components/fetchUsers";
 import IslandDone from "../components/islandDone";
 import FetchIslandEdit from "../components/fetchIslandEdit";
+import IslandName from "../components/createIsland/islandName/islandName";
+import Detail from "../components/createIsland/detail/detail";
 
 export default function IslandEdit() {
   LogSt();
@@ -30,8 +32,9 @@ export default function IslandEdit() {
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
   const [tagName, setTagName] = useState([]);
-  const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandID, setIslandID] = useState<number>(); // islandIDステートを追加
+
+  const [nameAlreadyError, setNameAlreadyError] = useState("");
 
   const [tagOptions, setTagOptions] =
     useState<{ id: number; Name: string; NameKana: string }[]>();
@@ -94,6 +97,12 @@ export default function IslandEdit() {
     );
   };
 
+  //ひとつ前のページに戻る
+  const navi = useNavigate();
+  const pageBack = () => {
+    navi(-1);
+  };
+
   // 画像ファイル選択したら、表示画像に反映
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -134,11 +143,33 @@ export default function IslandEdit() {
 
   // 保存処理の実装
   const handleSaveClick = (e: SyntheticEvent) => {
-    setEditMode((prev) => !prev);
-    if (!editMode) {
+    const maxIslandNameLength = 100;
+    const maxIslandDetailLength = 300;
+
+    if (islandName.trim() === "" || detail.trim() === "") {
+      setNameAlreadyError("必須項目です。");
       return;
     }
+
+    if (islandName.length > maxIslandNameLength) {
+      setNameAlreadyError(
+        `島名は${maxIslandNameLength}文字以内で入力してください。`,
+      );
+      return;
+    }
+
+    if (detail.length > maxIslandDetailLength) {
+      setNameAlreadyError(
+        `活動内容は${maxIslandDetailLength}文字以内で入力してください。`,
+      );
+      return;
+    }
+
     createHandler();
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   const createHandler = async () => {
@@ -281,28 +312,18 @@ export default function IslandEdit() {
             <tr className={styles.tr}>
               <th className={styles.th}>島名</th>
               <td className={styles.td}>
-                <input
-                  type="text"
-                  id="islandName"
-                  className={styles.input}
-                  value={islandName}
-                  onChange={handleIslandNameChange}
-                  readOnly={!editMode}
-                  maxLength={100}
+                <IslandName
+                  islandName={islandName}
+                  setName={setIslandName}
+                  nameAlreadyError={nameAlreadyError}
+                  setNameAlreadyError={setNameAlreadyError}
                 />
               </td>
             </tr>
             <tr className={styles.tr}>
               <th className={styles.th}>活動内容</th>
               <td className={styles.td}>
-                <textarea
-                  id="detail"
-                  className={styles.detail}
-                  value={detail}
-                  maxLength={300}
-                  onChange={(event) => handleDetailChange(event.target.value)} // 修正: テキストエリアの値が変更されたら handleDetailChange 関数を呼び出す
-                  readOnly={!editMode} // 編集モードでない場合は無効化する
-                />
+                <Detail detail={detail} setDetail={setDetail} />
               </td>
             </tr>
             <tr className={styles.tr}>
@@ -326,36 +347,41 @@ export default function IslandEdit() {
             <tr className={styles.tr}>
               <th className={styles.th}>タグ</th>
               <td className={styles.td}>
-                {!editMode &&
-                  tagName.map((tag) => (
-                    <div key={tag.tagName}>{tag.tagName}</div>
-                  ))}
+                {tagName.map((tag) => (
+                  <div key={tag.tagName}>{tag.tagName}</div>
+                ))}
 
-                {editMode && (
-                  <ComboBoxTag
-                    tagOptions={tagOptions}
-                    htmlFor="tag"
-                    chosenTag={null}
-                    setIslandTags={setIslandTags}
-                  />
-                )}
+                <ComboBoxTag
+                  tagOptions={tagOptions}
+                  htmlFor="tag"
+                  chosenTag={null}
+                  setIslandTags={setIslandTags}
+                />
               </td>
             </tr>
-
-            {editMode && (
-              <>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>タグ追加</th>
-                  <td className={styles.td}>
-                    <AddTag setTagNames={setTagNames} />
-                  </td>
-                </tr>
-              </>
-            )}
+            <tr className={styles.tr}>
+              <th className={styles.th}>タグ追加</th>
+              <td className={styles.td}>
+                <AddTag setTagNames={setTagNames} />
+              </td>
+            </tr>
           </tbody>
         </table>
-        <button className={styles.edit_btn} onClick={handleSaveClick}>
-          {editMode ? "保存" : "編集"}
+        <button
+          className={styles.edit_btn}
+          onClick={handleSaveClick}
+          disabled={!islandName || !detail || nameAlreadyError ? true : false}
+        >
+          保存
+        </button>
+        <button
+          type="button"
+          className={styles.noEdit}
+          onClick={() => {
+            pageBack();
+          }}
+        >
+          編集せずに戻る
         </button>
 
         <div className={styles.delete}>

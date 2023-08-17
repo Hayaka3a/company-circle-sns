@@ -100,16 +100,32 @@
   background-color: white;
 }
 .edit_btn:disabled {
-  color: rgba(212, 212, 212, 1);
-  border: 3px solid rgba(212, 212, 212, 1);
-  box-shadow: 0.7vh 0.7vh rgba(212, 212, 212, 1);
+  color: white;
+  width: 22vh;
+  border: 3px solid gray;
+  border-radius: 3vh;
+  font-weight: bold;
+  box-shadow: none;
+  transition: none;
+  background-color: gray;
+  margin-top: 2vh;
+}
+
+.noEdit {
+  color: rgba(94, 70, 44, 1);
+  background-color: white;
+  border: 3px solid #27acd9;
+  box-shadow: 0.7vh 0.7vh #27acd9;
   height: 7vh;
   width: 22vh;
   border-radius: 3vh;
   font-weight: bold;
   transition: 0.3s ease-in-out;
-  background-color: white;
-  margin-top: 2vh;
+}
+
+.noEdit:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
 }
 
 .delete {

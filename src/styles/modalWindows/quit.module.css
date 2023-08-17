@@ -25,21 +25,23 @@
 
 .modal {
   z-index: 2;
-  width: 50%;
+  width: 104vh;
   padding: 1em;
   background: #fff;
   text-align: center;
   justify-content: center; /* 水平方向の中央揃え */
   align-items: center; /* 垂直方向の中央揃え */
   flex-direction: column; /* 縦方向に並べる */
-  height: 50%;
+  height: 44vh;
   position: relative;
+  padding-top: 10vh;
 }
 
 .close {
   position: absolute;
   top: 10px;
   right: 10px;
+  height: 6vh;
 }
 
 .span {
@@ -53,4 +55,8 @@
 .title {
   padding-bottom: 5vh;
   font-size: 4vh;
+}
+
+.deleteBtn {
+  margin-top: 2vh;
 }

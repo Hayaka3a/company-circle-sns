@@ -68,6 +68,7 @@ export default function QuitConf({
 
             <div className={styles.btn}>
               <button
+                className={styles.deleteBtn}
                 onClick={() => {
                   NextHandler({
                     inputValue,

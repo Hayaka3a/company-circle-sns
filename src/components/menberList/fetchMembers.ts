@@ -24,6 +24,9 @@ export async function fetchMembers({
     } else {
       //島ID・難民データをそれぞれ配列にしまう
       const tmpArry = data.filter((user) => user.userID) as Entryusers[];
+      tmpArry.forEach((item) => {
+        item.islandID = 0;
+      });
       const islandArry = data
         .filter((ent) => ent.islandID)
         .map((is) => is.islandID);
