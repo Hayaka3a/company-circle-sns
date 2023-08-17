@@ -33,6 +33,8 @@ export default function IslandEdit() {
   const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandID, setIslandID] = useState<number>(); // islandIDステートを追加
 
+  const [nameAlreadyError, setNameAlreadyError] = useState("");
+
   const [tagOptions, setTagOptions] =
     useState<{ id: number; Name: string; NameKana: string }[]>();
   const [islandTags, setIslandTags] = useState<
@@ -138,7 +140,34 @@ export default function IslandEdit() {
     if (!editMode) {
       return;
     }
+
+    const maxIslandNameLength = 100;
+    const maxIslandDetailLength = 300;   
+        
+    if (
+      islandName.trim() === "" ||
+      detail.trim() === ""
+    ) {
+      setNameAlreadyError("必須項目です。");
+      return;
+    }
+
+
+    if (islandName.length > maxIslandNameLength) {
+      setNameAlreadyError(`島名は${maxIslandNameLength}文字以内で入力してください。`);
+      return;
+    }
+  
+    if (detail.length > maxIslandDetailLength) {
+      setNameAlreadyError(`活動内容は${maxIslandDetailLength}文字以内で入力してください。`);
+      return;
+    }
+
     createHandler();
+
+     setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   const createHandler = async () => {
@@ -354,7 +383,15 @@ export default function IslandEdit() {
             )}
           </tbody>
         </table>
-        <button className={styles.edit_btn} onClick={handleSaveClick}>
+        <button 
+          className={styles.edit_btn} 
+          onClick={handleSaveClick}
+          disabled={
+            !islandName.trim() ||
+            !detail.trim() ||
+            !!nameAlreadyError
+          }
+        >
           {editMode ? "保存" : "編集"}
         </button>
 
