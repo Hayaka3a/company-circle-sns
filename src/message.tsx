@@ -194,8 +194,6 @@ export default function Message() {
       },
     ]);
 
-    console.log(posts[0].id);
-
     if (messageError) {
       console.error("メッセージの送信中にエラーが発生しました:", error);
       return;

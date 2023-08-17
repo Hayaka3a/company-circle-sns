@@ -4,7 +4,7 @@ export default function NextEventHandler(
   inputValue,
   id,
   nextOpen2,
-  setNotExist
+  setNotExist,
 ) {
   return async () => {
     if (inputValue) {
@@ -23,8 +23,6 @@ export default function NextEventHandler(
 
       if (data && data.length > 0) {
         const eventName = data[0].eventName;
-
-        console.log(eventName);
 
         if (eventName !== inputValue) {
           setNotExist("入力されたイベント名が間違っています");

@@ -42,8 +42,6 @@ export default function CreateSendingScout({
       .eq(`${table}ID`, paramsID)
       .eq("status", false);
 
-    console.log(posts);
-
     if (postError) {
       console.log(postError, "postsエラー");
     }
