@@ -147,20 +147,20 @@ export default function IslandEdit() {
     const maxIslandDetailLength = 300;
 
     if (islandName.trim() === "" || detail.trim() === "") {
-      setNameAlreadyError("必須項目です。");
+      setNameAlreadyError("必須項目です");
       return;
     }
 
     if (islandName.length > maxIslandNameLength) {
       setNameAlreadyError(
-        `島名は${maxIslandNameLength}文字以内で入力してください。`,
+        `島名は${maxIslandNameLength}文字以内で入力してください`,
       );
       return;
     }
 
     if (detail.length > maxIslandDetailLength) {
       setNameAlreadyError(
-        `活動内容は${maxIslandDetailLength}文字以内で入力してください。`,
+        `活動内容は${maxIslandDetailLength}文字以内で入力してください`,
       );
       return;
     }
@@ -174,7 +174,7 @@ export default function IslandEdit() {
 
   const createHandler = async () => {
     if (islandName.trim() === "" || detail.trim() === "") {
-      alert("島の名前と活動内容は入力必須項目です。");
+      alert("島の名前と活動内容は入力必須項目です");
       return;
     }
 

@@ -106,11 +106,11 @@ export default function CreateSendingScout({
           .eq("postedBy", postBy);
 
         if (sentUserError) {
-          console.error("ユーザー情報取得に失敗しました。");
+          console.error("ユーザー情報取得に失敗しました");
         }
 
         if (sentUser.length > 0) {
-          setError("このユーザーには既に送信済みです。");
+          setError("このユーザーには既に送信済みです");
         } else {
           // コンボボックスから返されたUserIDから該当のPostIDを割り出す
           const { data: posts, error: postError } = await supabase

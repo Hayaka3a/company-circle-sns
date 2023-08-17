@@ -157,25 +157,29 @@ export default function EventEdit() {
     }
 
     const maxEventNameLength = 100;
-    const maxEventDetailLength = 300;   
-        
+    const maxEventDetailLength = 300;
+
     if (
       eventName.trim() === "" ||
       startDate.trim() === "" ||
       endDate.trim() === "" ||
       eventDetail.trim() === ""
     ) {
-      setNameAlreadyError("必須項目です。");
+      setNameAlreadyError("必須項目です");
       return;
     }
 
     if (eventName.length > maxEventNameLength) {
-      setNameAlreadyError(`イベント名は${maxEventNameLength}文字以内で入力してください。`);
+      setNameAlreadyError(
+        `イベント名は${maxEventNameLength}文字以内で入力してください`,
+      );
       return;
     }
-  
+
     if (eventDetail.length > maxEventDetailLength) {
-      setNameAlreadyError(`イベント詳細は${maxEventDetailLength}文字以内で入力してください。`);
+      setNameAlreadyError(
+        `イベント詳細は${maxEventDetailLength}文字以内で入力してください`,
+      );
       return;
     }
 
@@ -187,7 +191,6 @@ export default function EventEdit() {
       window.location.reload();
     }, 2000);
   };
-  
 
   const handleSaveData = async () => {
     await HandleSave(
@@ -200,12 +203,10 @@ export default function EventEdit() {
     );
   };
 
-
   // 保存ボタンを押した後に表示を切り替えるための変数
   const saveButtonContent = editMode ? "保存" : "編集";
 
-
-  const createHandler = async () => {  
+  const createHandler = async () => {
     const eventData = {
       eventName: eventName,
       startDate: startDate,
@@ -216,7 +217,7 @@ export default function EventEdit() {
   };
 
   useEffect(() => {
-    if (errorMessage) {      
+    if (errorMessage) {
       const timer = setTimeout(() => {
         setErrorMessage("");
       }, 3000);
@@ -224,8 +225,6 @@ export default function EventEdit() {
       return () => clearTimeout(timer);
     }
   }, [errorMessage]);
-
-
 
   // 参加サークルをuserEntryStatusテーブルに追加
   const addIsland = async () => {
@@ -273,8 +272,8 @@ export default function EventEdit() {
                     readOnly={!editMode}
                   />
                   {!eventName.trim() && (
-                  <p className={styles.errorText}>イベント名は必須です。</p>
-                )}
+                    <p className={styles.errorText}>イベント名は必須です</p>
+                  )}
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -288,9 +287,9 @@ export default function EventEdit() {
                     onChange={handleEventDetailChange}
                     readOnly={!editMode}
                   />
-                 {!eventDetail.trim() && (
-                  <p className={styles.errorText}>イベント詳細は必須です。</p>
-                )}
+                  {!eventDetail.trim() && (
+                    <p className={styles.errorText}>イベント詳細は必須です</p>
+                  )}
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -353,21 +352,21 @@ export default function EventEdit() {
               </tr>
             </tbody>
           </table>
-             <button
-             id={styles.edit_btn}
-             onClick={handleSaveClick}
-             className={styles.edit_btn} 
-             disabled={
+          <button
+            id={styles.edit_btn}
+            onClick={handleSaveClick}
+            className={styles.edit_btn}
+            disabled={
               !eventName.trim() ||
               !startDate.trim() ||
               !endDate.trim() ||
               !eventDetail.trim() ||
               !!nameAlreadyError
-             }
-             >
-              {saveButtonContent}
-             </button>
-         
+            }
+          >
+            {saveButtonContent}
+          </button>
+
           <div className={styles.delete}>
             <button onClick={openDeleteModal} className={styles.delete_btn}>
               削除
