@@ -148,8 +148,21 @@ export default function Message() {
       "message-text",
     ) as HTMLInputElement;
     const messageText = messageInput.value.trim();
+    
+    // メッセージが送信された後に画面をリロードする
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+
     if (messageText === "") {
       setErrorMessage("メッセージを入力してください。");
+      return;
+    }
+
+    const maxMessageLength = 200; //文字数の上限を200文字に設定
+
+    if (messageText.length > maxMessageLength) {
+      setErrorMessage(`メッセージは${maxMessageLength}文字以内で入力してください。`);
       return;
     }
 
@@ -196,7 +209,7 @@ export default function Message() {
   };
 
   useEffect(() => {
-    if (errorMessage) {
+    if (errorMessage) {      
       const timer = setTimeout(() => {
         setErrorMessage("");
       }, 3000);

@@ -1,50 +1,53 @@
 import { supabase } from "../createClient";
 
 export default async function EntryIsland(fetchEventID, setIslandJoinID, setEventJoin) {
-    const { data, error } = await supabase
-      .from("userEntryStatus")
-      .select("islandID, status")
-      .eq("eventID", fetchEventID);
+  const { data, error } = await supabase
+    .from("userEntryStatus")
+    .select("islandID, status")
+    .eq("eventID", fetchEventID)
+    .eq("status", false);
 
-    if (error) {
-      console.log("参加サークル取得に失敗しました", error);
-      return;
-    }
+  if (error) {
+    console.log("参加サークル取得に失敗しました", error);
+    return;
+  }
 
-    if (!data || data.length === 0) {
-      console.log("該当する参加サークルが見つかりませんでした");
-      return;
-    }
+  if (!data || data.length === 0) {
+    console.log("該当する参加サークルが見つかりませんでした");
+    return;
+  }
 
-    const joinIslandIDs = data
-      .filter((entry) => entry.status === false) // statusがfalseのデータのみフィルタリング
-      .map((entry) => entry.islandID); // フィルタリングされたデータの島IDを抽出
+  const joinIslandIDs = data
+    .filter((entry) => entry.status === false)
+    .map((entry) => entry.islandID);
 
-    if (joinIslandIDs.length === 0) {
-      console.log("該当する参加サークルが見つかりませんでした");
-      return;
-    }
+  if (joinIslandIDs.length === 0) {
+    console.log("該当する参加サークルが見つかりませんでした");
+    return;
+  }
 
-    setIslandJoinID(joinIslandIDs[0]);
+  setIslandJoinID(joinIslandIDs);
 
-    // islandsテーブルからislandNameを取得
-    const { data: islandData, error: islandError } = await supabase
-      .from("islands")
-      .select("islandName, id")
-      .in("id", joinIslandIDs);
+  const filteredJoinIslandIDs = joinIslandIDs.filter(id => id !== null);
 
-    if (islandError) {
-      console.log("島名取得に失敗しました", islandError);
-      return;
-    }
+  const { data: islandData, error: islandError } = await supabase
+    .from("islands")
+    .select("islandName, id")
+    .in("id", filteredJoinIslandIDs)
+    .eq("status", false);
 
-    if (!islandData || islandData.length === 0) {
-      console.log("該当する島が見つかりませんでした");
-      return;
-    }
 
-    const islandNames = islandData.map((island) => island.islandName);
-    const joinedNames = islandNames.join(", "); // 配列の要素を結合した文字列を作成
+  if (islandError) {
+    console.log("島名取得に失敗しました", islandError);
+    return;
+  }
 
-    setEventJoin(joinedNames); // 参加サークルをeventJoinステートにセット
-};
+  if (!islandData || islandData.length === 0) {
+    console.log("該当する島が見つかりませんでした");
+    return;
+  }
+  const islandNames = islandData.map((island) => island.islandName);
+  const joinedNames = islandNames.join(", ");
+  
+  setEventJoin(joinedNames);
+}
