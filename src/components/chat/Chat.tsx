@@ -46,35 +46,35 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    // firestore
-    //   .collection("chats")
-    //   .where("threadID", "==", threadID)
-    //   .orderBy("postedAt", "desc")
-    //   .limit(20)
-    //   .onSnapshot((snapShot) => {
-    //     const snapShots = snapShot.docs.map((doc) => {
-    //       // データを追加した直後はpostedAtがnullになるため仮のtimeStampを仮置きするオプション
-    //       let data = doc.data({ serverTimestamps: "estimate" });
-    //       data = { ...data, chatID: doc.id };
-    //       // timeStampをDate型に変換
-    //       const tmp = {
-    //         ...data,
-    //         postedAt: data.postedAt.toDate(),
-    //       };
-    //       // Date型をyy/mm/dd hh:mmの形に変換
-    //       return {
-    //         ...tmp,
-    //         postedAt: tmp.postedAt.toLocaleString([], {
-    //           year: "2-digit",
-    //           month: "2-digit",
-    //           day: "2-digit",
-    //           hour: "2-digit",
-    //           minute: "2-digit",
-    //         }),
-    //       };
-    //     });
-    //     setMessages(snapShots as chat[]);
-    //   });
+    firestore
+      .collection("chats")
+      .where("threadID", "==", threadID)
+      .orderBy("postedAt", "desc")
+      .limit(20)
+      .onSnapshot((snapShot) => {
+        const snapShots = snapShot.docs.map((doc) => {
+          // データを追加した直後はpostedAtがnullになるため仮のtimeStampを仮置きするオプション
+          let data = doc.data({ serverTimestamps: "estimate" });
+          data = { ...data, chatID: doc.id };
+          // timeStampをDate型に変換
+          const tmp = {
+            ...data,
+            postedAt: data.postedAt.toDate(),
+          };
+          // Date型をyy/mm/dd hh:mmの形に変換
+          return {
+            ...tmp,
+            postedAt: tmp.postedAt.toLocaleString([], {
+              year: "2-digit",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+          };
+        });
+        setMessages(snapShots as chat[]);
+      });
   }, []);
 
   const handleNameBlur = async () => {

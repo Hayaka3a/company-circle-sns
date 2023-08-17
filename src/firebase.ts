@@ -2,12 +2,12 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 
 const firebaseApp = firebase.initializeApp({
-  apiKey: "AIzaSyBhFLvUIvsaxsw6q0PH2TlKu_WLk9ZXhMs",
-  authDomain: "company-sircle-sns.firebaseapp.com",
-  projectId: "company-sircle-sns",
-  storageBucket: "company-sircle-sns.appspot.com",
-  messagingSenderId: "593130588816",
-  appId: "1:593130588816:web:e2d349f5521cc77ae7e615",
+  apiKey: "AIzaSyCpuR5z_VsgYrcsP0TCGm7bhYCEFfixNJo",
+  authDomain: "company-circle-sns.firebaseapp.com",
+  projectId: "company-circle-sns",
+  storageBucket: "company-circle-sns.appspot.com",
+  messagingSenderId: "37177227012",
+  appId: "1:37177227012:web:ff5afad0b208101d788251",
 });
 
 const firestore = firebaseApp.firestore();
