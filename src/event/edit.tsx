@@ -48,8 +48,8 @@ export default function EventEdit() {
   const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandJoinID, setIslandJoinID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
+  const [nameAlreadyError, setNameAlreadyError] = useState("");
 
   // イベントを削除してもよろしいですか？モーダルウィンドウを表示
   const openDeleteModal = () => {
@@ -165,17 +165,17 @@ export default function EventEdit() {
       endDate.trim() === "" ||
       eventDetail.trim() === ""
     ) {
-      setErrorMessage("必須項目です。");
+      setNameAlreadyError("必須項目です。");
       return;
     }
 
     if (eventName.length > maxEventNameLength) {
-      setErrorMessage(`イベント名は${maxEventNameLength}文字以内で入力してください。`);
+      setNameAlreadyError(`イベント名は${maxEventNameLength}文字以内で入力してください。`);
       return;
     }
   
     if (eventDetail.length > maxEventDetailLength) {
-      setErrorMessage(`イベント詳細は${maxEventDetailLength}文字以内で入力してください。`);
+      setNameAlreadyError(`イベント詳細は${maxEventDetailLength}文字以内で入力してください。`);
       return;
     }
 
@@ -187,6 +187,7 @@ export default function EventEdit() {
       window.location.reload();
     }, 2000);
   };
+  
 
   const handleSaveData = async () => {
     await HandleSave(
@@ -199,32 +200,6 @@ export default function EventEdit() {
     );
   };
 
-  const showSaveButton = (
-    eventName.trim() !== "" &&
-    startDate.trim() !== "" &&
-    endDate.trim() !== "" &&
-    eventDetail.trim() !== "" &&
-    errorMessage === ""
-  );
-
-  const isRequiredFieldsEmpty =
-    eventName.trim() === "" ||
-    startDate.trim() === "" ||
-    endDate.trim() === "" ||
-    eventDetail.trim() === "";
-
-  const handleInputBlur = () => {
-    if (isRequiredFieldsEmpty && editMode) {
-      setErrorMessage("必須項目です。");
-      setShowErrorMessage(true);
-    } else {
-      setErrorMessage("");
-      setShowErrorMessage(false);
-    }
-  };
-
-
-  const saveButtonDisabledClass = editMode && errorMessage ? styles.disabled : '';
 
   // 保存ボタンを押した後に表示を切り替えるための変数
   const saveButtonContent = editMode ? "保存" : "編集";
@@ -295,9 +270,11 @@ export default function EventEdit() {
                     id="eventName"
                     value={eventName}
                     onChange={handleEventNameChange}
-                    onBlur={handleInputBlur}
                     readOnly={!editMode}
                   />
+                  {!eventName.trim() && (
+                  <p className={styles.errorText}>イベント名は必須です。</p>
+                )}
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -311,6 +288,9 @@ export default function EventEdit() {
                     onChange={handleEventDetailChange}
                     readOnly={!editMode}
                   />
+                 {!eventDetail.trim() && (
+                  <p className={styles.errorText}>イベント詳細は必須です。</p>
+                )}
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -373,15 +353,20 @@ export default function EventEdit() {
               </tr>
             </tbody>
           </table>
-          {showSaveButton && (
              <button
              id={styles.edit_btn}
              onClick={handleSaveClick}
-             className={`${styles.edit_btn} ${saveButtonDisabledClass}`}
+             className={styles.edit_btn} 
+             disabled={
+              !eventName.trim() ||
+              !startDate.trim() ||
+              !endDate.trim() ||
+              !eventDetail.trim() ||
+              !!nameAlreadyError
+             }
              >
               {saveButtonContent}
              </button>
-          )}
          
           <div className={styles.delete}>
             <button onClick={openDeleteModal} className={styles.delete_btn}>
