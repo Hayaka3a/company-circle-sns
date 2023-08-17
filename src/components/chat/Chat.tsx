@@ -77,6 +77,9 @@ const Chat = () => {
       });
   }, []);
 
+  console.log()
+
+
   const handleNameBlur = async () => {
     if (newTitle.trim() === "") {
       setNameError("※スレッド名は1文字から入力可能です");
