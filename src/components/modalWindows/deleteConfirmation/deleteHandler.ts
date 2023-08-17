@@ -28,8 +28,9 @@ export const deleteHandler = async ({
       .update({ status: true })
       .eq(`userID`, user)
       .eq(`${table}ID`, params);
+
     if (error) {
-      console.error(error.message);
+      console.error(error.message, "追放エラー");
     } else {
       closeModal();
       window.location.reload();

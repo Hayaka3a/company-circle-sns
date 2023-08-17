@@ -23,7 +23,7 @@
 }
 .td {
   height: 12vh;
-  padding-left: 8vh;
+  padding-left: 4vh;
   background-color: rgba(255, 254, 245, 1);
   font-weight: bold;
   text-align: left;
@@ -88,7 +88,7 @@
 .exileBtn {
   font-weight: bold;
   height: 7vh;
-  width: 19vh;
+  width: 25vh;
   margin-left: 3vh;
   border-radius: 3vh;
   color: rgba(94, 70, 44, 1);
@@ -100,4 +100,16 @@
 .exileBtn:hover {
   box-shadow: none;
   transform: translate(5px, 5px);
+}
+
+.notExileBtn {
+  font-weight: bold;
+  height: 7vh;
+  width: 25vh;
+  margin-left: 3vh;
+  border-radius: 3vh;
+  color: white;
+  border: 3px solid gray;
+
+  background-color: gray;
 }

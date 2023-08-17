@@ -1,3 +1,4 @@
+import { tab } from "@testing-library/user-event/dist/tab";
 import styles from "../../styles/membersList.module.css";
 import DeleteComfirmation from "../modalWindows/deleteConfirmation/deleteConfirmation";
 
@@ -17,6 +18,24 @@ export function ButtonSwitching({
   close,
 }) {
   const name = table === "island" ? "島" : "イベント";
+
+  const swichingOwnerButton = (user: number) => {
+    if (table === "island") {
+      return (
+        <button onClick={open2} className={styles.exileBtn}>
+          島から追放
+        </button>
+      );
+    } else if (table === "event" && user === 0) {
+      return (
+        <button onClick={open2} className={styles.exileBtn}>
+          イベントから追放
+        </button>
+      );
+    } else {
+      return <button className={styles.notExileBtn}>追放できません</button>;
+    }
+  };
 
   if (loginUser && displayData.ownerID === loginID) {
     //オーナーの場合のデータ表示
@@ -51,9 +70,7 @@ export function ButtonSwitching({
                       user={user.userID}
                     />
                   )}
-                  <button onClick={open2} className={styles.exileBtn}>
-                    {name}追放
-                  </button>
+                  {swichingOwnerButton(user.islandID)}
                   {modal2 && (
                     <DeleteComfirmation
                       closeModal={close2}
