@@ -73,7 +73,10 @@ const Chat = () => {
             }),
           };
         });
-        setMessages(snapShots as chat[]);
+        // メッセージを設定する前に1秒待つ
+        setTimeout(() => {
+          setMessages(snapShots as chat[]);
+        }, 400);
       });
   }, []);
 
