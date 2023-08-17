@@ -27,8 +27,6 @@ export default function CreateSendingMessage({
     fetchIslandNameData();
   }, []);
 
-  
-
   // posts, postedByに入れるため、送信する側のpostIDを取得する
   const fetchPostData = async () => {
     await FetchPostIslands(table, paramsID, setPostID, userID, setPostedID);
@@ -39,13 +37,11 @@ export default function CreateSendingMessage({
     await FetchIslandName(supabase, paramsID, setIslandName);
   };
 
-
   // messagesテーブルにメッセージを保存
   const sendMessageData = async () => {
     await SendMessage(postID, message, postedID, closeModal);
-    console.log(postID, message, postedID, closeModal)
+    console.log(postID, message, postedID, closeModal);
   };
-
 
   // メッセージを送信するための処理を実行
   const addHandler = () => {
@@ -66,7 +62,7 @@ export default function CreateSendingMessage({
               />
               <div className={styles.main}>
                 <div className={styles.title}>
-                  <h3 className={styles.h3}>{islandName}島</h3>
+                  <h3 className={styles.h3}>{islandName}</h3>
                   <p className={styles.messageName}>メッセージを送る</p>
                 </div>
                 <div className={styles.input}>
@@ -80,7 +76,11 @@ export default function CreateSendingMessage({
                 </div>
               </div>
               <div>
-                <button onClick={addHandler} className={styles.btn}>
+                <button
+                  onClick={addHandler}
+                  className={styles.btn}
+                  disabled={!message}
+                >
                   送信する
                 </button>
               </div>
@@ -91,8 +91,3 @@ export default function CreateSendingMessage({
     </>
   );
 }
-
-function FetchPostIsland(table: string, paramsID: number, setPostID: React.Dispatch<(prevState: undefined) => undefined>, userID: any, setPostedID: React.Dispatch<(prevState: undefined) => undefined>) {
-  throw new Error("Function not implemented.");
-}
-
