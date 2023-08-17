@@ -16,6 +16,8 @@ export function ButtonSwitching({
   entryUsers,
   close,
 }) {
+  const name = table === "island" ? "島" : "イベント";
+
   if (loginUser && displayData.ownerID === loginID) {
     //オーナーの場合のデータ表示
     return (
@@ -37,7 +39,7 @@ export function ButtonSwitching({
                 {anotherUser(user)}
                 <td className={styles.td2}>
                   <button onClick={open} className={styles.ownerBtn}>
-                    島主権限を譲渡
+                    オーナー権限を譲渡
                   </button>
                   {modal && (
                     <DeleteComfirmation
@@ -50,7 +52,7 @@ export function ButtonSwitching({
                     />
                   )}
                   <button onClick={open2} className={styles.exileBtn}>
-                    島追放
+                    {name}追放
                   </button>
                   {modal2 && (
                     <DeleteComfirmation
@@ -88,13 +90,13 @@ export function ButtonSwitching({
               className={styles.unsubBtn}
               name="島を抜ける"
             >
-              島を抜ける
+              {name}を抜ける
             </button>
             {modal && (
               <DeleteComfirmation
                 closeModal={close}
                 category={"脱退する"}
-                text={`本当に島を抜けますか？`}
+                text={`本当に${name}を抜けますか？`}
                 table={table}
                 params={displayData.id}
                 user={loginID}

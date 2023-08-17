@@ -7,7 +7,6 @@
   padding: 3vh 0;
   height: 100%;
   text-align: center;
-
   background-color: rgba(255, 254, 245, 1);
   border: dashed 0.5vh rgba(138, 121, 98, 1);
   box-shadow: 0 0 0 1vh rgba(250, 248, 242, 1), 0 0 0 2vh rgba(138, 121, 98, 1);
@@ -31,9 +30,9 @@
   display: flex;
 }
 .td2 {
-  width: 60%;
+  width: 100%;
   height: 15%;
-  padding-right: 8vh;
+
   background-color: rgba(255, 254, 245, 1);
 }
 
@@ -55,7 +54,7 @@
 .unsubBtn {
   margin-left: 14vh;
   height: 7vh;
-  width: 22vh;
+  width: 25vh;
   border-radius: 3vh;
   color: rgba(94, 70, 44, 1);
   border: 3px solid #27acd9;
@@ -71,9 +70,9 @@
 
 .ownerBtn {
   font-weight: bold;
-  margin-left: 3vh;
+
   height: 7vh;
-  width: 22vh;
+  width: 28vh;
   border-radius: 3vh;
   color: rgba(94, 70, 44, 1);
   border: 3px solid #27acd9;
@@ -89,7 +88,7 @@
 .exileBtn {
   font-weight: bold;
   height: 7vh;
-  width: 15vh;
+  width: 19vh;
   margin-left: 3vh;
   border-radius: 3vh;
   color: rgba(94, 70, 44, 1);
