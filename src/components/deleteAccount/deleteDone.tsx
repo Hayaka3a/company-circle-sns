@@ -14,7 +14,7 @@ export default function DeleteDone({ userId, inputValue }) {
     // posts・users・userEntryStatusテーブルのstatusをtrueに変更
     const { data, error } = await supabase
       .from("users")
-      .select("familyName, firstName")
+      .select("familyName, firstName,posts(id)")
       .eq("id", userId)
       .eq("status", false);
 
@@ -24,6 +24,7 @@ export default function DeleteDone({ userId, inputValue }) {
     if (data && data.length > 0) {
       const familyName = data[0].familyName;
       const firstName = data[0].firstName;
+      const postID = data[0].posts[0].id;
 
       const fullName = familyName + firstName;
 
@@ -43,10 +44,15 @@ export default function DeleteDone({ userId, inputValue }) {
           .update({ status: "true" })
           .eq("userID", userId);
 
-        if (usersError || userEnError || postsError) {
+        const { error: messageError } = await supabase
+          .from("messages")
+          .update({ status: "true" })
+          .eq("postedBy", postID);
+
+        if (usersError || userEnError || postsError || messageError) {
           console.error(
             "Error changing status :",
-            usersError || userEnError || postsError,
+            usersError || userEnError || postsError || messageError,
           );
         }
         // cookie情報の削除
