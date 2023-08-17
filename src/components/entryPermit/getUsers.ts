@@ -14,15 +14,17 @@ export const getUsers = async ({
       const { data: userData, error: userError } = await supabase
         .from("posts")
         .select("*,users!posts_userID_fkey(*)")
-        .eq("id", message.postedBy);
+        .eq("id", message.postedBy)
+        .eq("status", false);
 
       if (userError) {
         console.log(userError, "ユーザー取得エラー");
       }
 
-      let arr = { ...message, users: userData[0].users };
-
-      return arr;
+      if (userData && userData.length > 0 && userData[0].users) {
+        let arr = { ...message, users: userData[0].users };
+        return arr;
+      }
     });
     // Promise.all でまとめて待つ
     let ret = await Promise.all(promises);
