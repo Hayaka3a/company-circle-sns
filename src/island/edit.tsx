@@ -12,6 +12,8 @@ import ComboBoxTag from "../components/comboBox/comboBoxTag/comboBoxTag";
 import FetchUsers from "../components/fetchUsers";
 import IslandDone from "../components/islandDone";
 import FetchIslandEdit from "../components/fetchIslandEdit";
+import IslandName from "../components/createIsland/islandName/islandName";
+import Detail from "../components/createIsland/detail/detail";
 
 export default function IslandEdit() {
   LogSt();
@@ -310,26 +312,18 @@ export default function IslandEdit() {
             <tr className={styles.tr}>
               <th className={styles.th}>島名</th>
               <td className={styles.td}>
-                <input
-                  type="text"
-                  id="islandName"
-                  className={styles.input}
-                  value={islandName}
-                  onChange={handleIslandNameChange}
-                  maxLength={100}
+                <IslandName
+                  islandName={islandName}
+                  setName={setIslandName}
+                  nameAlreadyError={nameAlreadyError}
+                  setNameAlreadyError={setNameAlreadyError}
                 />
               </td>
             </tr>
             <tr className={styles.tr}>
               <th className={styles.th}>活動内容</th>
               <td className={styles.td}>
-                <textarea
-                  id="detail"
-                  className={styles.detail}
-                  value={detail}
-                  maxLength={300}
-                  onChange={(event) => handleDetailChange(event.target.value)} // 修正: テキストエリアの値が変更されたら handleDetailChange 関数を呼び出す
-                />
+                <Detail detail={detail} setDetail={setDetail} />
               </td>
             </tr>
             <tr className={styles.tr}>
