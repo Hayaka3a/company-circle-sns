@@ -8,7 +8,6 @@ import styles from "../src/styles/message.module.css";
 import ScoutPostEvent from "./components/scoutPostEvent";
 import ScoutPostIsland from "./components/scoutPostIsland";
 import FetchUserMessages from "./components/fetchUserMessages";
-import markMessageAsRead from "./components/markMessageAsRead";
 
 export default function Message() {
   LogSt();
@@ -148,7 +147,7 @@ export default function Message() {
       "message-text",
     ) as HTMLInputElement;
     const messageText = messageInput.value.trim();
-    
+
     // メッセージが送信された後に画面をリロードする
     setTimeout(() => {
       window.location.reload();
@@ -162,7 +161,9 @@ export default function Message() {
     const maxMessageLength = 200; //文字数の上限を200文字に設定
 
     if (messageText.length > maxMessageLength) {
-      setErrorMessage(`メッセージは${maxMessageLength}文字以内で入力してください。`);
+      setErrorMessage(
+        `メッセージは${maxMessageLength}文字以内で入力してください。`,
+      );
       return;
     }
 
@@ -176,8 +177,6 @@ export default function Message() {
       console.error("エラー:", error);
       return;
     }
-
-    const userId = data?.id;
 
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString();
@@ -209,7 +208,7 @@ export default function Message() {
   };
 
   useEffect(() => {
-    if (errorMessage) {      
+    if (errorMessage) {
       const timer = setTimeout(() => {
         setErrorMessage("");
       }, 3000);
@@ -217,10 +216,6 @@ export default function Message() {
       return () => clearTimeout(timer);
     }
   }, [errorMessage]);
-
-  useEffect(() => {
-    markMessageAsRead(id);
-  }, [id]);
 
   return (
     <div className={styles.back}>

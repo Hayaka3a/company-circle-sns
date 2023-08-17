@@ -10,5 +10,6 @@ export const readHandler = async (message, navigate) => {
     console.error("Failed to update 'isRead' field:", error);
   } else {
     navigate(`/message/${message}`);
+    window.location.reload();
   }
 };
