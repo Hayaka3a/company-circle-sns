@@ -40,6 +40,7 @@ export default function ComboBoxUser({
             inputValue={inputValue}
             setInputValue={setInputValue}
             htmlFor={htmlFor}
+            userError={null}
           />
           {/* サジェストオプションを表示 */}
           {inputValue !== "" && suggestedOptions.length > 0 && (

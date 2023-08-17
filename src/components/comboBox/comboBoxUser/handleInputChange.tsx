@@ -7,6 +7,7 @@ export default function HandleInputChange({
   selectedValue,
   setSuggestedOptions,
   addHandler,
+  userError,
   htmlFor,
   inputValue,
   setInputValue,
@@ -40,7 +41,9 @@ export default function HandleInputChange({
         value={inputValue}
         onChange={handleInputChange}
         id={htmlFor}
-        className={styles.comboBoxUser}
+        className={`${styles.comboBoxUser} ${
+          userError ? styles.errorInput : ""
+        }`}
       />
     </div>
   );

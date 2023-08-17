@@ -240,11 +240,11 @@ export default function UserRegistration() {
                               );
                             },
                           },
-                          required: "メールアドレスは必須項目です。",
+                          required: "メールアドレスは必須項目です",
                           pattern: {
                             value:
                               /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                            message: "正しいメールアドレスを入力してください。",
+                            message: "正しいメールアドレスを入力してください",
                           },
                         })}
                       />
@@ -265,7 +265,7 @@ export default function UserRegistration() {
                         maxLength={16}
                         onSubmit={onSubmit}
                         {...register("password", {
-                          required: "パスワードは必須項目です。",
+                          required: "パスワードは必須項目です",
                           minLength: {
                             value: 8,
                             message: "8文字以上で入力してください。",
@@ -274,7 +274,7 @@ export default function UserRegistration() {
                             value:
                               /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]+$/,
                             message:
-                              "半角英大文字、半角英小文字、数字をそれぞれ1種類以上含んでください。",
+                              "半角英大文字、半角英小文字、数字をそれぞれ1種類以上含んでください",
                           },
                         })}
                       />
@@ -299,12 +299,11 @@ export default function UserRegistration() {
                             matchesPreviousPassword: (value) => {
                               const { password } = getValues();
                               return (
-                                password === value ||
-                                "パスワードと一致しません。"
+                                password === value || "パスワードと一致しません"
                               );
                             },
                           },
-                          required: "確認パスワードは必須項目です。",
+                          required: "確認パスワードは必須項目です",
                         })}
                       />
                       <p className={styles.error}>
@@ -352,14 +351,14 @@ export default function UserRegistration() {
                               );
                             },
                           },
-                          required: "社員番号は必須項目です。",
+                          required: "社員番号は必須項目です",
                           pattern: {
                             value: /[0-9]/,
-                            message: "数字で入力してください。",
+                            message: "半角数字で入力してください",
                           },
                           maxLength: {
                             value: 10,
-                            message: "10文字以下で入力してください。",
+                            message: "10文字以下で入力してください",
                           },
                         })}
                       />

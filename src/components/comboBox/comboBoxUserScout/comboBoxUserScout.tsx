@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "../../../styles/island/createIsland.module.css";
 import HandleInputChange from "../comboBoxUser/handleInputChange";
 import AddHandler from "../comboBoxTag/addHandler";
@@ -27,6 +27,16 @@ export default function ComboBoxUserScout({
     { id: number; Name: string; NameKana: string; NameKanaJ: string }[]
   >([]);
   const [error, setError] = useState("");
+  const [userError, setUserError] = useState("");
+
+  // selectedValueが空の場合にエラーメッセージを表示する処理
+  useEffect(() => {
+    if (selectedValue.length === 0) {
+      setUserError("送信先は必須項目です。");
+    } else {
+      setUserError(""); // エラーメッセージをクリア
+    }
+  }, [selectedValue]);
 
   return (
     <div>
@@ -38,6 +48,7 @@ export default function ComboBoxUserScout({
             selectedValue={selectedValue}
             setSuggestedOptions={setSuggestedOptions}
             addHandler={AddHandler}
+            userError={userError}
             inputValue={inputValue}
             setInputValue={setInputValue}
             htmlFor={htmlFor}
@@ -102,6 +113,8 @@ export default function ComboBoxUserScout({
           <span className={styles.span}>{error}</span>
         </div>
       )}
+
+      {userError && <span className={styles.span}>{userError}</span>}
     </div>
   );
 }
