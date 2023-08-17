@@ -30,7 +30,6 @@ export default function IslandEdit() {
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
   const [tagName, setTagName] = useState([]);
-  const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandID, setIslandID] = useState<number>(); // islandIDステートを追加
 
   const [nameAlreadyError, setNameAlreadyError] = useState("");
@@ -96,6 +95,12 @@ export default function IslandEdit() {
     );
   };
 
+  //ひとつ前のページに戻る
+  const navi = useNavigate();
+  const pageBack = () => {
+    navi(-1);
+  };
+
   // 画像ファイル選択したら、表示画像に反映
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -136,36 +141,31 @@ export default function IslandEdit() {
 
   // 保存処理の実装
   const handleSaveClick = (e: SyntheticEvent) => {
-    setEditMode((prev) => !prev);
-    if (!editMode) {
-      return;
-    }
-
     const maxIslandNameLength = 100;
-    const maxIslandDetailLength = 300;   
-        
-    if (
-      islandName.trim() === "" ||
-      detail.trim() === ""
-    ) {
+    const maxIslandDetailLength = 300;
+
+    if (islandName.trim() === "" || detail.trim() === "") {
       setNameAlreadyError("必須項目です。");
       return;
     }
 
-
     if (islandName.length > maxIslandNameLength) {
-      setNameAlreadyError(`島名は${maxIslandNameLength}文字以内で入力してください。`);
+      setNameAlreadyError(
+        `島名は${maxIslandNameLength}文字以内で入力してください。`,
+      );
       return;
     }
-  
+
     if (detail.length > maxIslandDetailLength) {
-      setNameAlreadyError(`活動内容は${maxIslandDetailLength}文字以内で入力してください。`);
+      setNameAlreadyError(
+        `活動内容は${maxIslandDetailLength}文字以内で入力してください。`,
+      );
       return;
     }
 
     createHandler();
 
-     setTimeout(() => {
+    setTimeout(() => {
       window.location.reload();
     }, 2000);
   };
@@ -316,7 +316,6 @@ export default function IslandEdit() {
                   className={styles.input}
                   value={islandName}
                   onChange={handleIslandNameChange}
-                  readOnly={!editMode}
                   maxLength={100}
                 />
               </td>
@@ -330,7 +329,6 @@ export default function IslandEdit() {
                   value={detail}
                   maxLength={300}
                   onChange={(event) => handleDetailChange(event.target.value)} // 修正: テキストエリアの値が変更されたら handleDetailChange 関数を呼び出す
-                  readOnly={!editMode} // 編集モードでない場合は無効化する
                 />
               </td>
             </tr>
@@ -355,44 +353,41 @@ export default function IslandEdit() {
             <tr className={styles.tr}>
               <th className={styles.th}>タグ</th>
               <td className={styles.td}>
-                {!editMode &&
-                  tagName.map((tag) => (
-                    <div key={tag.tagName}>{tag.tagName}</div>
-                  ))}
+                {tagName.map((tag) => (
+                  <div key={tag.tagName}>{tag.tagName}</div>
+                ))}
 
-                {editMode && (
-                  <ComboBoxTag
-                    tagOptions={tagOptions}
-                    htmlFor="tag"
-                    chosenTag={null}
-                    setIslandTags={setIslandTags}
-                  />
-                )}
+                <ComboBoxTag
+                  tagOptions={tagOptions}
+                  htmlFor="tag"
+                  chosenTag={null}
+                  setIslandTags={setIslandTags}
+                />
               </td>
             </tr>
-
-            {editMode && (
-              <>
-                <tr className={styles.tr}>
-                  <th className={styles.th}>タグ追加</th>
-                  <td className={styles.td}>
-                    <AddTag setTagNames={setTagNames} />
-                  </td>
-                </tr>
-              </>
-            )}
+            <tr className={styles.tr}>
+              <th className={styles.th}>タグ追加</th>
+              <td className={styles.td}>
+                <AddTag setTagNames={setTagNames} />
+              </td>
+            </tr>
           </tbody>
         </table>
-        <button 
-          className={styles.edit_btn} 
+        <button
+          className={styles.edit_btn}
           onClick={handleSaveClick}
-          disabled={
-            !islandName.trim() ||
-            !detail.trim() ||
-            !!nameAlreadyError
-          }
+          disabled={!islandName || !detail || nameAlreadyError ? true : false}
         >
-          {editMode ? "保存" : "編集"}
+          保存
+        </button>
+        <button
+          type="button"
+          className={styles.noEdit}
+          onClick={() => {
+            pageBack();
+          }}
+        >
+          編集せずに戻る
         </button>
 
         <div className={styles.delete}>
