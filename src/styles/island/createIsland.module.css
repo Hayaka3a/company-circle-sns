@@ -279,6 +279,11 @@
   color: white;
 }
 
+.btn:disabled {
+  background-color: rgb(189 187 187);
+  color: white;
+}
+
 .add {
   background-color: rgb(166 153 131);
   padding-right: 0.7vw;

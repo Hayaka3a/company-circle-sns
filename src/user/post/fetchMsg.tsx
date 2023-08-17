@@ -21,7 +21,8 @@ export default function FetchMsg(userID, setMessages) {
         .from("messages")
         .select("*")
         .eq("postID", postID)
-        .eq("status", false);
+        .eq("status", false)
+        .order("sendingDate", { ascending: false });
 
       if (msgError) {
         console.error("msg情報取得失敗");
@@ -29,6 +30,7 @@ export default function FetchMsg(userID, setMessages) {
         if (msgs.length > 0) {
           // 受信しているメッセージがあるときのみ実行
           //msgsのオブジェクトデータごとにpostedByの検索をかける
+
           const promises = msgs.map(async (msg) => {
             const postID = msg.postedBy;
             const { data: by, error: byError } = await supabase

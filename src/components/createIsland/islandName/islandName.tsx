@@ -8,18 +8,23 @@ import HandleNameChange from "./handleNameChange";
 export default function IslandName({
   islandName,
   setName,
+  setNameAlreadyError,
+  nameAlreadyError,
 }: {
   islandName: string;
   setName: Dispatch<SetStateAction<string>>;
+  setNameAlreadyError: Dispatch<SetStateAction<string>>;
+  nameAlreadyError: string;
 }) {
   const [NameError, setNameError] = useState("");
-  const [nameAlreadyError, setNameAlreadyError] = useState("");
 
   return (
     <>
       <input
         type="text"
-        className={`${styles.islandName} ${NameError ? styles.errorInput : ""}`}
+        className={`${styles.islandName} ${
+          NameError || nameAlreadyError ? styles.errorInput : ""
+        }`}
         maxLength={100}
         value={islandName}
         onChange={HandleNameChange({

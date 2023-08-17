@@ -14,6 +14,7 @@ import useCreateIslandHandler from "./createHandler";
 
 export default function IslandCreate() {
   LogSt();
+  const [nameAlreadyError, setNameAlreadyError] = useState("");
 
   useEffect(() => {
     // データベースから全ユーザー名前取得
@@ -59,6 +60,8 @@ export default function IslandCreate() {
                     <IslandName
                       islandName={islandName}
                       setName={setIslandName}
+                      nameAlreadyError={nameAlreadyError}
+                      setNameAlreadyError={setNameAlreadyError}
                     />
                   </td>
                 </tr>
@@ -126,7 +129,9 @@ export default function IslandCreate() {
 
           <button
             onClick={createHandler}
-            disabled={!islandName.trim() || !detail.trim()}
+            disabled={
+              !islandName.trim() || !detail.trim() || !!nameAlreadyError
+            }
             className={styles.btn}
           >
             新しい島生活を始める

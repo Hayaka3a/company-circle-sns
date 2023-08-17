@@ -7,6 +7,7 @@ import styles from "../styles/island/island_post.module.css";
 import { format } from "date-fns";
 import classNames from "classnames";
 import CreateSendingScout from "../components/modalWindows/sendingScout/createSendingScout";
+import { readHandler } from "../components/post/readHandler";
 
 export default function EventPost() {
   LogSt();
@@ -37,7 +38,8 @@ export default function EventPost() {
         .from("messages")
         .select("*, applications(*)")
         .eq("postID", postID)
-        .eq("status", false);
+        .eq("status", false)
+        .order("sendingDate", { ascending: false });
 
       // applicationsにデータがある場合は排除（住民許可申請は表示させない）
       let msgs = msgsUnfil.filter(function (ms) {
@@ -80,18 +82,6 @@ export default function EventPost() {
     fetchMsg();
   }, []);
 
-  // 既読に変更し、メッセージ全文確認ページへ遷移
-  const readHandler = async (messageId) => {
-    const { error } = await supabase
-      .from("messages")
-      .update({ isRead: true })
-      .eq("id", messageId);
-    if (error) {
-      console.error("Failed to update 'isRead' field:", error);
-    } else {
-      navigate(`/message/${messageId}`);
-    }
-  };
   return (
     <>
       <div className={styles.all}>
@@ -152,7 +142,7 @@ export default function EventPost() {
                     </div>
                   </div>
                   <button
-                    onClick={() => readHandler(message.id)}
+                    onClick={() => readHandler(message.id, navigate)}
                     className={styles.displayButton}
                   >
                     表示
