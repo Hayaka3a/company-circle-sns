@@ -13,6 +13,7 @@ import { useCreateEventHandler } from "./createHandler";
 export default function EventCreate() {
   LogSt();
 
+  const [nameAlreadyError, setNameAlreadyError] = useState("");
   const params = useParams();
   const islandID = params.id;
 
@@ -45,7 +46,12 @@ export default function EventCreate() {
                   イベント名<span className={styles.span}>【必須】</span>
                 </th>
                 <td className={styles.td}>
-                  <EventName eventName={eventName} setName={setEventName} />
+                  <EventName
+                    eventName={eventName}
+                    setName={setEventName}
+                    nameAlreadyError={nameAlreadyError}
+                    setNameAlreadyError={setNameAlreadyError}
+                  />
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -113,7 +119,8 @@ export default function EventCreate() {
             !eventName.trim() ||
             !detail.trim() ||
             !startDate.trim() ||
-            !endDate.trim()
+            !endDate.trim() ||
+            !!nameAlreadyError
           }
         >
           新しいイベントを開催する
