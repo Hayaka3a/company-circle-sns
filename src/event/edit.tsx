@@ -45,7 +45,6 @@ export default function EventEdit() {
   const [eventDetail, setEventDetail] = useState(""); // 取得したイベントの詳細情報を保持する状態変数
   const [eventJoin, setEventJoin] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandJoinID, setIslandJoinID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -109,6 +108,13 @@ export default function EventEdit() {
     await HandleHideEventJoin(fetchEventID, setEventJoin);
   };
 
+  //ひとつ前のページに戻る
+  const navi = useNavigate();
+  const pageBack = () => {
+    navi(-1);
+  };
+  
+
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
     let circleElement = document.getElementById("img");
@@ -151,31 +157,25 @@ export default function EventEdit() {
 
   // 保存処理の実装
   const handleSaveClick = () => {
-    setEditMode((prev) => !prev);
-    if (!editMode) {
-      return;
-    }
-
     const maxEventNameLength = 100;
     const maxEventDetailLength = 300;   
         
-    if (
-      eventName.trim() === "" ||
-      startDate.trim() === "" ||
-      endDate.trim() === "" ||
-      eventDetail.trim() === ""
-    ) {
+    if (eventName.trim() === "" || eventDetail.trim() === "" || startDate.trim() === "" || endDate.trim() === "") {
       setNameAlreadyError("必須項目です。");
       return;
     }
 
     if (eventName.length > maxEventNameLength) {
-      setNameAlreadyError(`イベント名は${maxEventNameLength}文字以内で入力してください。`);
+      setNameAlreadyError(
+        `イベント名は${maxEventNameLength}文字以内で入力してください。`,
+      );
       return;
     }
-  
+
     if (eventDetail.length > maxEventDetailLength) {
-      setNameAlreadyError(`イベント詳細は${maxEventDetailLength}文字以内で入力してください。`);
+      setNameAlreadyError(
+        `イベント詳細は${maxEventDetailLength}文字以内で入力してください。`,
+      );
       return;
     }
 
@@ -199,11 +199,6 @@ export default function EventEdit() {
       fetchEventID,
     );
   };
-
-
-  // 保存ボタンを押した後に表示を切り替えるための変数
-  const saveButtonContent = editMode ? "保存" : "編集";
-
 
   const createHandler = async () => {  
     const eventData = {
@@ -270,7 +265,6 @@ export default function EventEdit() {
                     id="eventName"
                     value={eventName}
                     onChange={handleEventNameChange}
-                    readOnly={!editMode}
                   />
                   {!eventName.trim() && (
                   <p className={styles.errorText}>イベント名は必須です。</p>
@@ -286,7 +280,6 @@ export default function EventEdit() {
                     className={styles.center}
                     value={eventDetail}
                     onChange={handleEventDetailChange}
-                    readOnly={!editMode}
                   />
                  {!eventDetail.trim() && (
                   <p className={styles.errorText}>イベント詳細は必須です。</p>
@@ -306,7 +299,6 @@ export default function EventEdit() {
                     id="thumbnail"
                     className={styles.eventIcon}
                     onChange={handleFileChangeData}
-                    disabled={!editMode}
                   />
                 </td>
               </tr>
@@ -319,7 +311,6 @@ export default function EventEdit() {
                     className={styles.center}
                     value={startDate}
                     onChange={handleStartDateChange}
-                    readOnly={!editMode}
                   />
                   <input
                     type="text"
@@ -327,7 +318,6 @@ export default function EventEdit() {
                     className={styles.center}
                     value={endDate}
                     onChange={handleEndDateChange}
-                    readOnly={!editMode}
                   />
                 </td>
               </tr>
@@ -338,17 +328,13 @@ export default function EventEdit() {
                   {eventJoin && (
                     <div>
                       <p>{eventJoin}</p>
-                      {editMode && (
                         <button onClick={handleHideEventJoinData}>×</button>
-                      )}
                     </div>
                   )}
-                  {editMode && (
                     <IslandSelected
                       islandIDs={[islandJoinID]} // islandIDsを配列として初期化する
                       setIslandTags={setIslandTags}
                     />
-                  )}
                 </td>
               </tr>
             </tbody>
@@ -362,16 +348,26 @@ export default function EventEdit() {
               !startDate.trim() ||
               !endDate.trim() ||
               !eventDetail.trim() ||
-              !!nameAlreadyError
+              !!nameAlreadyError ? true : false
              }
              >
-              {saveButtonContent}
+              保存
+             </button>
+             <button
+              type="button"
+              className={styles.noEdit}
+              onClick={() => {
+                pageBack();
+              }}
+             >
+              編集せずに戻る
              </button>
          
           <div className={styles.delete}>
             <button onClick={openDeleteModal} className={styles.delete_btn}>
               削除
             </button>
+
           </div>
           {isDeleteOpen && (
             <CreateDeletePage
