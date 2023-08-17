@@ -41,6 +41,7 @@ import Search from "./search";
 // chat
 import Chat from "./components/chat/Chat";
 import Index from ".";
+import ScrollToTop from "./ScrollToTop";
 
 function App() {
   // ログインページのみヘッダーを非表示
@@ -50,6 +51,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ScrollToTop />
         {showHeader && showNewUser && <Header />}
         <Routes>
           <Route path="/" element={<Index />} />

@@ -270,10 +270,6 @@ export default function UserRegistration() {
                             value: 8,
                             message: "8文字以上で入力してください。",
                           },
-                          maxLength: {
-                            value: 16,
-                            message: "16文字以下で入力してください。",
-                          },
                           pattern: {
                             value:
                               /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]+$/,
@@ -385,9 +381,7 @@ export default function UserRegistration() {
                                 id={item.id}
                                 type="radio"
                                 value={item.id}
-                                {...register("department", {
-                                  required: "職種は必須項目です",
-                                })}
+                                {...register("department", {})}
                               />
                               <label htmlFor={item.id} className="label">
                                 {item.name}
