@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
 import styles from "../styles/eventDetail.module.css";
 import LogSt from "../components/cookie/logSt";
@@ -14,6 +14,11 @@ import EntryIsland from "../components/entryIsland";
 import HandleHideEventJoin from "../components/handleHideEventJoin";
 import HandleFileChange from "../components/handleFileChange";
 import HandleSave from "../components/handleSave";
+import EventName from "../components/createEvent/eventName/eventName";
+import EventDetail from "../components/createEvent/detail/detail";
+import Daytime from "../components/createEvent/daytime/daytime";
+import SelectIsland from "../components/selectIsland";
+import IslandValueOption from "../components/islandValueOption";
 
 export default function EventEdit() {
   LogSt();
@@ -104,9 +109,9 @@ export default function EventEdit() {
     await EntryIsland(fetchEventID, setIslandJoinID, setEventJoin);
   };
 
-  const handleHideEventJoinData = async () => {
-    await HandleHideEventJoin(fetchEventID, setEventJoin);
-  };
+  // const handleHideEventJoinData = async () => {
+  //   await HandleHideEventJoin(fetchEventID, setEventJoin);
+  // };
 
   //ひとつ前のページに戻る
   const navi = useNavigate();
@@ -156,7 +161,7 @@ export default function EventEdit() {
   };
 
   // 保存処理の実装
-  const handleSaveClick = () => {
+  const handleSaveClick = (e: SyntheticEvent) => {
     const maxEventNameLength = 100;
     const maxEventDetailLength = 300;   
         
@@ -183,9 +188,11 @@ export default function EventEdit() {
     createHandler();
     addIsland();
 
+    pageBack();
+
     setTimeout(() => {
       window.location.reload();
-    }, 2000);
+    }, 100);
   };
   
 
@@ -260,30 +267,21 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>イベント名</th>
                 <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="eventName"
-                    value={eventName}
-                    onChange={handleEventNameChange}
-                  />
-                  {!eventName.trim() && (
-                  <p className={styles.errorText}>イベント名は必須です。</p>
-                )}
+                 <EventName
+                  eventName={eventName}
+                  setName={setEventName}
+                  nameAlreadyError={nameAlreadyError}
+                  setNameAlreadyError={setNameAlreadyError}
+                 />
                 </td>
               </tr>
               <tr className={styles.tr}>
                 <th className={styles.th}>イベント詳細</th>
                 <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="eventDetail"
-                    className={styles.center}
-                    value={eventDetail}
-                    onChange={handleEventDetailChange}
-                  />
-                 {!eventDetail.trim() && (
-                  <p className={styles.errorText}>イベント詳細は必須です。</p>
-                )}
+                <EventDetail
+                  detail={eventDetail}
+                  setDetail={setEventDetail}
+                />
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -305,7 +303,7 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>開催日時</th>
                 <td className={styles.td}>
-                  <input
+                  {/* <input
                     type="text"
                     id="startDate"
                     className={styles.center}
@@ -318,6 +316,12 @@ export default function EventEdit() {
                     className={styles.center}
                     value={endDate}
                     onChange={handleEndDateChange}
+                  /> */}
+                  <Daytime
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
                   />
                 </td>
               </tr>
@@ -325,15 +329,19 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>参加島（サークル）</th>
                 <td className={styles.td}>
-                  {eventJoin && (
+                  {/* {eventJoin && (
                     <div>
                       <p>{eventJoin}</p>
                         <button onClick={handleHideEventJoinData}>×</button>
                     </div>
-                  )}
-                    <IslandSelected
-                      islandIDs={[islandJoinID]} // islandIDsを配列として初期化する
+                  )} */}
+                    <IslandValueOption
+                      islandJoinID={islandJoinID}
                       setIslandTags={setIslandTags}
+                      fetchEventID={fetchEventID}
+                      setEventJoin={setEventJoin}
+                      eventJoin={eventJoin}
+                      setIslandJoinID={setIslandJoinID}
                     />
                 </td>
               </tr>

@@ -48,14 +48,15 @@
 }
 
 .edit_btn {
+  margin: 3vh;
+  height: 7vh;
+  width: 22vh;
+  border-radius: 3vh;
+  margin-top: 15px;
   font-weight: bold;
   color: rgba(94, 70, 44, 1);
-  border: 3px solid rgba(209, 182, 204, 1);
-  box-shadow: 0.7vh 0.7vh rgba(209, 182, 204, 1);
-  height: 7vh;
-  width: 20vh;
-  margin-top: 5vh;
-  border-radius: 10vh;
+  border: 3px solid rgba(255, 182, 112, 1);
+  box-shadow: 0.7vh 0.7vh rgba(255, 182, 112, 1);
   transition: 0.3s ease-in-out;
   background-color: white;
 }
@@ -104,4 +105,21 @@
 .errorText {
   color: red;
   font-weight: bold;
+}
+
+.noEdit {
+  color: rgba(94, 70, 44, 1);
+  background-color: white;
+  border: 3px solid #27acd9;
+  box-shadow: 0.7vh 0.7vh #27acd9;
+  height: 7vh;
+  width: 22vh;
+  border-radius: 3vh;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+}
+
+.noEdit:hover {
+  box-shadow: none;
+  transform: translate(5px, 5px);
 }
