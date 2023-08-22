@@ -66,7 +66,7 @@ export default function QuitConf({
               </div>
             </div>
 
-            <div>
+            <div className={styles.btn}>
               <button
                 className={styles.deleteBtn}
                 onClick={() => {
