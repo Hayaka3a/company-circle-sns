@@ -2,7 +2,7 @@
   "name": "atumori",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/user/login",
+  "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@supabase/supabase-js": "^2.26.0",
