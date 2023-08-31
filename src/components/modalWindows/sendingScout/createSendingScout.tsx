@@ -17,11 +17,10 @@ export default function CreateSendingScout({
 }) {
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState<newUsersData>();
-  const [post, setPost] = useState(0);
+  const [post, setPost] = useState();
   const [postBy, setPostBy] = useState(0);
   const [islandName, setIslandName] = useState("");
   const [islandMembers, setIslandMembers] = useState<newUsersData>([]);
-  const [error, setError] = useState("");
   const [empty, setEmpty] = useState("");
   const [messageError, setmessageError] = useState("");
 
@@ -29,13 +28,10 @@ export default function CreateSendingScout({
   const paramsID = parseInt(params.id);
 
   useEffect(() => {
-    getPost();
     comboBoxData();
-    fetchPost();
   }, [islandMembers]);
 
-  //island(event)のポストIDを取得
-  const getPost = async () => {
+  const comboBoxData = async () => {
     const { data: posts, error: postError } = await supabase
       .from("posts")
       .select(`id`)
@@ -48,89 +44,87 @@ export default function CreateSendingScout({
     if (!posts || posts.length === 0) {
       console.log("postByに格納するpostIDが見つかりません", posts);
     } else {
-      const post = posts[0];
-      setPostBy(post.id);
-    }
-  };
-
-  const comboBoxData = async () => {
-    //島またはイベントに既に参加している人のIDを取得
-    const { data: entryUser, error: entryError } = await supabase
-      .from("userEntryStatus")
-      .select(`userID`)
-      .eq(`${table}ID`, paramsID)
-      .eq("status", false);
-    if (entryError) {
-      console.log(entryError, "entryエラー");
-    }
-    if (!entryUser) {
-      console.log("ユーザーが見つかりません");
-    } else {
-      const entryArray = entryUser.map((user) => user.userID);
-
-      //コンボボックス用の全ユーザデータ取得
-      const { data: users, error: usersError } = await supabase
-        .from("users")
-        .select(`id,familyName,firstName,familyNameKana,firstNameKana`)
+      //島またはイベントに既に参加している人のIDを取得
+      const { data: entryUser, error: entryError } = await supabase
+        .from("userEntryStatus")
+        .select(`userID`)
+        .eq(`${table}ID`, paramsID)
         .eq("status", false);
-      if (usersError) {
-        console.log(usersError, "usersエラー");
+      if (entryError) {
+        console.log(entryError, "entryエラー");
       }
-      if (!users) {
-        console.log("全ユーザーが見つかりません");
+      if (!entryUser) {
+        console.log("ユーザーが見つかりません");
       } else {
-        //全ユーザデータからすでに参加している人は抜き出して新たな配列を作る
-        const newUsersData = users
-          .map((user) => ({
-            id: user.id,
-            Name: user.familyName + user.firstName,
-            NameKana: user.familyNameKana + user.firstNameKana,
-            NameKanaJ: `${ConvertKanaJ(user.familyNameKana)}+ ${ConvertKanaJ(
-              user.firstNameKana,
-            )}`,
-          }))
-          .filter((user) => !entryArray.includes(user.id));
-        setUsers(newUsersData);
-      }
-    }
-  };
+        const entryArray = entryUser.map((user) => user.userID);
 
-  const fetchPost = async () => {
-    try {
-      if (islandMembers && islandMembers.length > 0) {
-        const { data: sentUser, error: sentUserError } = await supabase
-          .from("messages")
-          .select("*")
-          .eq("postID", post)
-          .eq("scout", true)
-          .eq("postedBy", postBy);
-
-        if (sentUserError) {
-          console.error("ユーザー情報取得に失敗しました");
+        //コンボボックス用の全ユーザデータ取得
+        const { data: users, error: usersError } = await supabase
+          .from("users")
+          .select(`id,familyName,firstName,familyNameKana,firstNameKana`)
+          .eq("status", false);
+        if (usersError) {
+          console.log(usersError, "usersエラー");
         }
-
-        if (sentUser.length > 0) {
-          setError("このユーザーには既に送信済みです");
+        if (!users) {
+          console.log("全ユーザーが見つかりません");
         } else {
-          // コンボボックスから返されたUserIDから該当のPostIDを割り出す
-          const { data: posts, error: postError } = await supabase
-            .from("posts")
-            .select("id")
-            .eq("userID", islandMembers[0].id)
-            .eq("status", false);
-          if (postError) {
-            console.log(postError, "post2エラー");
-          }
-          setPost(posts[0].id);
+          // メッセージでここからスカウトを既に送っているものを取得
+          const { data: fetchedSentUser, error: sentUserError } = await supabase
+            .from("messages")
+            .select("*")
+            .eq("scout", true)
+            .eq("postedBy", posts[0].id);
+
+          // 既に送っているメッセージのポストの情報を取得
+          const postDtArray = [];
+          await Promise.all(
+            fetchedSentUser.map(async (post) => {
+              const { data: postDt } = await supabase
+                .from("posts")
+                .select("*")
+                .eq("id", post.postID);
+
+              postDtArray.push(postDt[0]);
+            }),
+          );
+
+          // 既に送っているユーザーの情報を取得
+          const userDtArray = [];
+          await Promise.all(
+            postDtArray.map(async (user) => {
+              const { data: userDt } = await supabase
+                .from("users")
+                .select("*")
+                .eq("id", user.userID);
+
+              userDtArray.push(userDt[0]);
+            }),
+          );
+
+          //全ユーザデータからすでに参加している人・スカウトを既にしたことがある人は抜き出して新たな配列を作る
+          const newUsersData = users
+            .map((user) => ({
+              id: user.id,
+              Name: user.familyName + user.firstName,
+              NameKana: user.familyNameKana + user.firstNameKana,
+              NameKanaJ: `${ConvertKanaJ(user.familyNameKana)}+ ${ConvertKanaJ(
+                user.firstNameKana,
+              )}`,
+            }))
+            .filter(
+              (user) =>
+                !entryArray.includes(user.id) &&
+                !userDtArray.some((u) => u.id === user.id),
+            );
+
+          setUsers(newUsersData);
         }
-      } else {
-        setError("");
       }
-    } catch (error) {
-      console.error("エラー発生");
     }
   };
-  const click = () => {
+
+  const click = async () => {
     scoutHandler({
       islandMembers,
       setEmpty,
@@ -173,11 +167,6 @@ export default function CreateSendingScout({
                 {empty && (
                   <div>
                     <span className={styles.span}>{empty}</span>
-                  </div>
-                )}
-                {error && (
-                  <div>
-                    <span className={styles.span}>{error}</span>
                   </div>
                 )}
               </div>

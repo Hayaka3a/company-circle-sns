@@ -16,6 +16,11 @@
 }
 
 .main {
+  padding-top: 12vh;
+}
+
+.btn {
+  padding-top: 2vh;
 }
 
 .modal {
