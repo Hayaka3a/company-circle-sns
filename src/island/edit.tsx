@@ -126,16 +126,6 @@ export default function IslandEdit() {
     setImageUrl(data.publicUrl);
   };
 
-  // 編集ボタンを押下、島名を変更
-  const handleIslandNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIslandName(e.target.value);
-  };
-
-  // 編集ボタンを押下、活動内容を変更
-  const handleDetailChange = (newDetail) => {
-    setDetail(newDetail); // 修正: 新しい値を detail ステートに設定する
-  };
-
   // データベースから全タグ名取得
   const fetchData = async () => {
     await FetchUsers(setTagOptions);
