@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
 import styles from "../styles/eventDetail.module.css";
 import LogSt from "../components/cookie/logSt";
@@ -14,6 +14,11 @@ import EntryIsland from "../components/entryIsland";
 import HandleHideEventJoin from "../components/handleHideEventJoin";
 import HandleFileChange from "../components/handleFileChange";
 import HandleSave from "../components/handleSave";
+import EventName from "../components/createEvent/eventName/eventName";
+import EventDetail from "../components/createEvent/detail/detail";
+import Daytime from "../components/createEvent/daytime/daytime";
+import SelectIsland from "../components/selectIsland";
+import IslandValueOption from "../components/islandValueOption";
 
 export default function EventEdit() {
   LogSt();
@@ -45,7 +50,6 @@ export default function EventEdit() {
   const [eventDetail, setEventDetail] = useState(""); // 取得したイベントの詳細情報を保持する状態変数
   const [eventJoin, setEventJoin] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [editMode, setEditMode] = useState(false); //editMode 状態変数を追加
   const [islandJoinID, setIslandJoinID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -105,9 +109,16 @@ export default function EventEdit() {
     await EntryIsland(fetchEventID, setIslandJoinID, setEventJoin);
   };
 
-  const handleHideEventJoinData = async () => {
-    await HandleHideEventJoin(fetchEventID, setEventJoin);
+  // const handleHideEventJoinData = async () => {
+  //   await HandleHideEventJoin(fetchEventID, setEventJoin);
+  // };
+
+  //ひとつ前のページに戻る
+  const navi = useNavigate();
+  const pageBack = () => {
+    navi(-1);
   };
+  
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
@@ -150,32 +161,26 @@ export default function EventEdit() {
   };
 
   // 保存処理の実装
-  const handleSaveClick = () => {
-    setEditMode((prev) => !prev);
-    if (!editMode) {
-      return;
-    }
-
+  const handleSaveClick = (e: SyntheticEvent) => {
     const maxEventNameLength = 100;
     const maxEventDetailLength = 300;   
         
-    if (
-      eventName.trim() === "" ||
-      startDate.trim() === "" ||
-      endDate.trim() === "" ||
-      eventDetail.trim() === ""
-    ) {
+    if (eventName.trim() === "" || eventDetail.trim() === "" || startDate.trim() === "" || endDate.trim() === "") {
       setNameAlreadyError("必須項目です。");
       return;
     }
 
     if (eventName.length > maxEventNameLength) {
-      setNameAlreadyError(`イベント名は${maxEventNameLength}文字以内で入力してください。`);
+      setNameAlreadyError(
+        `イベント名は${maxEventNameLength}文字以内で入力してください。`,
+      );
       return;
     }
-  
+
     if (eventDetail.length > maxEventDetailLength) {
-      setNameAlreadyError(`イベント詳細は${maxEventDetailLength}文字以内で入力してください。`);
+      setNameAlreadyError(
+        `イベント詳細は${maxEventDetailLength}文字以内で入力してください。`,
+      );
       return;
     }
 
@@ -183,9 +188,11 @@ export default function EventEdit() {
     createHandler();
     addIsland();
 
+    pageBack();
+
     setTimeout(() => {
       window.location.reload();
-    }, 2000);
+    }, 100);
   };
   
 
@@ -199,11 +206,6 @@ export default function EventEdit() {
       fetchEventID,
     );
   };
-
-
-  // 保存ボタンを押した後に表示を切り替えるための変数
-  const saveButtonContent = editMode ? "保存" : "編集";
-
 
   const createHandler = async () => {  
     const eventData = {
@@ -265,32 +267,21 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>イベント名</th>
                 <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="eventName"
-                    value={eventName}
-                    onChange={handleEventNameChange}
-                    readOnly={!editMode}
-                  />
-                  {!eventName.trim() && (
-                  <p className={styles.errorText}>イベント名は必須です。</p>
-                )}
+                 <EventName
+                  eventName={eventName}
+                  setName={setEventName}
+                  nameAlreadyError={nameAlreadyError}
+                  setNameAlreadyError={setNameAlreadyError}
+                 />
                 </td>
               </tr>
               <tr className={styles.tr}>
                 <th className={styles.th}>イベント詳細</th>
                 <td className={styles.td}>
-                  <input
-                    type="text"
-                    id="eventDetail"
-                    className={styles.center}
-                    value={eventDetail}
-                    onChange={handleEventDetailChange}
-                    readOnly={!editMode}
-                  />
-                 {!eventDetail.trim() && (
-                  <p className={styles.errorText}>イベント詳細は必須です。</p>
-                )}
+                <EventDetail
+                  detail={eventDetail}
+                  setDetail={setEventDetail}
+                />
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -306,20 +297,18 @@ export default function EventEdit() {
                     id="thumbnail"
                     className={styles.eventIcon}
                     onChange={handleFileChangeData}
-                    disabled={!editMode}
                   />
                 </td>
               </tr>
               <tr className={styles.tr}>
                 <th className={styles.th}>開催日時</th>
                 <td className={styles.td}>
-                  <input
+                  {/* <input
                     type="text"
                     id="startDate"
                     className={styles.center}
                     value={startDate}
                     onChange={handleStartDateChange}
-                    readOnly={!editMode}
                   />
                   <input
                     type="text"
@@ -327,7 +316,12 @@ export default function EventEdit() {
                     className={styles.center}
                     value={endDate}
                     onChange={handleEndDateChange}
-                    readOnly={!editMode}
+                  /> */}
+                  <Daytime
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
                   />
                 </td>
               </tr>
@@ -335,20 +329,20 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>参加島（サークル）</th>
                 <td className={styles.td}>
-                  {eventJoin && (
+                  {/* {eventJoin && (
                     <div>
                       <p>{eventJoin}</p>
-                      {editMode && (
                         <button onClick={handleHideEventJoinData}>×</button>
-                      )}
                     </div>
-                  )}
-                  {editMode && (
-                    <IslandSelected
-                      islandIDs={[islandJoinID]} // islandIDsを配列として初期化する
+                  )} */}
+                    <IslandValueOption
+                      islandJoinID={islandJoinID}
                       setIslandTags={setIslandTags}
+                      fetchEventID={fetchEventID}
+                      setEventJoin={setEventJoin}
+                      eventJoin={eventJoin}
+                      setIslandJoinID={setIslandJoinID}
                     />
-                  )}
                 </td>
               </tr>
             </tbody>
@@ -362,16 +356,26 @@ export default function EventEdit() {
               !startDate.trim() ||
               !endDate.trim() ||
               !eventDetail.trim() ||
-              !!nameAlreadyError
+              !!nameAlreadyError ? true : false
              }
              >
-              {saveButtonContent}
+              保存
+             </button>
+             <button
+              type="button"
+              className={styles.noEdit}
+              onClick={() => {
+                pageBack();
+              }}
+             >
+              編集せずに戻る
              </button>
          
           <div className={styles.delete}>
             <button onClick={openDeleteModal} className={styles.delete_btn}>
               削除
             </button>
+
           </div>
           {isDeleteOpen && (
             <CreateDeletePage
