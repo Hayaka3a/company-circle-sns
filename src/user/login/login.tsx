@@ -61,7 +61,7 @@ export default function Login() {
             style={{ display: visible ? "block" : "none" }}
             className={styles.errorMessage}
           >
-            ユーザーが見つかりません。もう一度入力してください。
+            ユーザーが見つかりませんもう一度入力してください
           </h3>
           <button
             onClick={() =>

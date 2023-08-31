@@ -18,6 +18,7 @@ export function ButtonSwitching({
 }) {
   const name = table === "island" ? "島" : "イベント";
 
+  //アカウントがオーナーのときの追放ボタンの表示切替
   const swichingOwnerButton = (user: number) => {
     if (table === "island") {
       return (
@@ -26,18 +27,20 @@ export function ButtonSwitching({
         </button>
       );
     } else if (table === "event" && user === 0) {
+      //難民からイベントに参加した場合のみ追放可能
       return (
         <button onClick={open2} className={styles.exileBtn}>
           イベントから追放
         </button>
       );
     } else {
+      //参加島に所属している人はイベントから追放はできない
       return <button className={styles.notExileBtn}>追放できません</button>;
     }
   };
 
   if (loginUser && displayData.ownerID === loginID) {
-    //オーナーの場合のデータ表示
+    //アカウントがオーナーのときの参加者リスト表示
     return (
       <>
         <tr key={loginID} className={styles.tr}>
@@ -90,6 +93,7 @@ export function ButtonSwitching({
     loginUser &&
     entryUsers.some((item) => item.users.id === loginID)
   ) {
+    //アカウントが一般参加者のときの参加者リスト表示
     return (
       <>
         <tr key={loginID} className={styles.tr}>
@@ -132,6 +136,7 @@ export function ButtonSwitching({
       </>
     );
   } else {
+    //未参加者の場合の参加者リスト表示
     return (
       <>
         {loginUser &&

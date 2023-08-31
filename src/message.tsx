@@ -154,7 +154,7 @@ export default function Message() {
     }, 3000);
 
     if (messageText === "") {
-      setErrorMessage("メッセージを入力してください。");
+      setErrorMessage("メッセージを入力してください");
       return;
     }
 
@@ -162,7 +162,7 @@ export default function Message() {
 
     if (messageText.length > maxMessageLength) {
       setErrorMessage(
-        `メッセージは${maxMessageLength}文字以内で入力してください。`,
+        `メッセージは${maxMessageLength}文字以内で入力してください`,
       );
       return;
     }
