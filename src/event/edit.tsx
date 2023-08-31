@@ -304,20 +304,6 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>開催日時</th>
                 <td className={styles.td}>
-                  {/* <input
-                    type="text"
-                    id="startDate"
-                    className={styles.center}
-                    value={startDate}
-                    onChange={handleStartDateChange}
-                  />
-                  <input
-                    type="text"
-                    id="endDate"
-                    className={styles.center}
-                    value={endDate}
-                    onChange={handleEndDateChange}
-                  /> */}
                   <Daytime
                     startDate={startDate}
                     setStartDate={setStartDate}
@@ -330,20 +316,14 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>参加島（サークル）</th>
                 <td className={styles.td}>
-                  {/* {eventJoin && (
-                    <div>
-                      <p>{eventJoin}</p>
-                        <button onClick={handleHideEventJoinData}>×</button>
-                    </div>
-                  )} */}
-                  <IslandValueOption
-                    islandJoinID={islandJoinID}
-                    setIslandTags={setIslandTags}
-                    fetchEventID={fetchEventID}
-                    setEventJoin={setEventJoin}
-                    eventJoin={eventJoin}
-                    setIslandJoinID={setIslandJoinID}
-                  />
+                    <IslandValueOption
+                      islandJoinID={islandJoinID}
+                      setIslandTags={setIslandTags}
+                      fetchEventID={fetchEventID}
+                      setEventJoin={setEventJoin}
+                      eventJoin={eventJoin}
+                      setIslandJoinID={setIslandJoinID}
+                    />
                 </td>
               </tr>
             </tbody>

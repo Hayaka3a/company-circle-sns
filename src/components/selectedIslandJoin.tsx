@@ -101,10 +101,12 @@ const deletedIslandName = joinIslandData[index]; // 参加島の名前を取得�
               islandName !== null ? (
                 <div className={styles.nameFlex}>
                     <div key={index} className={styles.selectedValue}>
+                    <div className={styles.nameFlex}>
                         <span className={styles.nowrap}>                  
                                 {islandName}
                         </span>
                         <button onClick={() => handleIslandDelete(index)}>×</button>
+                    </div>
                     </div>
                 </div>
               ) : null
