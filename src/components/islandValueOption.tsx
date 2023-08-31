@@ -27,6 +27,7 @@ export default function IslandValueOption({
   const [selectedValues, setSelectedValues] = useState([]);
   const [tempSelectedValues, setTempSelectedValues] = useState([]); // 一時的な選択値を格納する配列
   const [selectError, setSelectError] = useState("");
+  const [selectedIslandNames, setSelectedIslandNames] = useState([]); // 既に選択されている島の名前を保持
 
   const islandID_N = Number(islandJoinID);
 
@@ -42,12 +43,12 @@ export default function IslandValueOption({
 
   // 選択項目
   const handleSelectChangeData = (e) => {
-    handleSelectChange(e, setTempSelectedValues); // handleSelectChange関数を呼び出す
+    handleSelectChange(e, setTempSelectedValues); 
   } ;
 
 // 追加ボタン押されたらタグを追加
-const addNameHandlerData = () => {
-  addNameHandler(
+const addNameHandlerData =  async () => {
+    addNameHandler(
     tempSelectedValues,
     selectedValues,
     islands,
@@ -66,10 +67,6 @@ const addNameHandlerData = () => {
       islands,
       setIslandTags
     ); // deleteNameHandler関数を呼び出す
-  };
-
-  const handleHideEventJoinData = async () => {
-    await HandleHideEventJoin(fetchEventID, setEventJoin);
   };
 
   return (
@@ -127,19 +124,6 @@ const addNameHandlerData = () => {
             {row}
             </div>
       ))}
-      {/* {selectedValues.map((selectedIsland, index) => (
-      <div key={index} className={styles.selectedValue}>
-        <div className={styles.nameFlex}>
-          <span className={styles.nowrap}>{selectedIsland}</span>
-          &nbsp;&nbsp;
-          <button
-            onClick={() => deleteNameHandlerData(index)}
-            className={styles.delBtn}
-          >
-            ×
-          </button>
-        </div>
-      </div> */}
       <SelectedIslandJoin 
         fetchEventID={fetchEventID}
         setIslandJoinID={setIslandJoinID}
