@@ -19,11 +19,12 @@ export default function EntryPermit({ table }: { table: string }) {
     navi(-1);
   };
 
-  //  データを取得
+  //  ポストに届いている参加申請を取得
   useEffect(() => {
     fetchData({ table: table, paramsID: paramsID, setMessage: setMessage });
   }, []);
 
+  //参加申請を送ってきたユーザーの情報を取得
   useEffect(() => {
     getUsers({ message, setUser });
   }, [message]);

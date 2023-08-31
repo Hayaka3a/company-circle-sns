@@ -156,7 +156,7 @@ export default function UserRegistration() {
                         maxLength={12}
                         onSubmit={onSubmit}
                         {...register("familyName", {
-                          required: "氏名(姓)は必須項目です。",
+                          required: "氏名(姓)は必須項目です",
                         })}
                       />
                       <input
@@ -167,7 +167,7 @@ export default function UserRegistration() {
                         maxLength={12}
                         onSubmit={onSubmit}
                         {...register("firstName", {
-                          required: "氏名(名)は必須項目です。",
+                          required: "氏名(名)は必須項目です",
                         })}
                       />
                       <p className={styles.error}>
@@ -189,7 +189,7 @@ export default function UserRegistration() {
                         maxLength={12}
                         onSubmit={onSubmit}
                         {...register("familyNameKana", {
-                          required: "カナ(姓)は必須項目です。",
+                          required: "カナ(姓)は必須項目です",
                           pattern: {
                             value: /^[ァ-ヶー]*$/,
                             message: "カタカナのみで入力してください",
@@ -203,7 +203,7 @@ export default function UserRegistration() {
                         maxLength={12}
                         onSubmit={onSubmit}
                         {...register("firstNameKana", {
-                          required: "カナ(名)は必須項目です。",
+                          required: "カナ(名)は必須項目です",
                           pattern: {
                             value: /^[ァ-ヶー]*$/,
                             message: "カタカナのみで入力してください",
@@ -268,7 +268,7 @@ export default function UserRegistration() {
                           required: "パスワードは必須項目です",
                           minLength: {
                             value: 8,
-                            message: "8文字以上で入力してください。",
+                            message: "8文字以上で入力してください",
                           },
                           pattern: {
                             value:
@@ -354,7 +354,7 @@ export default function UserRegistration() {
                           required: "社員番号は必須項目です",
                           pattern: {
                             value: /[0-9]/,
-                            message: "半角数字で入力してください",
+                            message: "数字で入力してください。",
                           },
                           maxLength: {
                             value: 10,

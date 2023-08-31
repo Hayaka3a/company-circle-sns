@@ -13,7 +13,7 @@ export async function fetchMembers({
 }) {
   //イベントの場合
   if (table === "event") {
-    //イベントに参加しているサークル・難民を取り出す
+    //イベントに参加している島IDと難民のIDを取得
     const { data, error } = await supabase
       .from("userEntryStatus")
       .select(`*,users(*)`)
@@ -31,7 +31,7 @@ export async function fetchMembers({
         .filter((ent) => ent.islandID)
         .map((is) => is.islandID);
 
-      //各島のメンバーを取得
+      //参加島の所属メンバーを取得
       const { data: entryData, error: entryError } = await supabase
         .from("userEntryStatus")
         .select(`*,users(*)`)
@@ -40,7 +40,7 @@ export async function fetchMembers({
       if (entryError || !entryData) {
         console.log(entryError, "entryError");
       } else {
-        //userIDが存在するデータのみに絞り込み、各島民と難民を一つの配列にしまう
+        //userIDが存在するデータのみに絞り込み、各島民と難民を一つの配列に統合
         const userData = entryData.filter(
           (user) => user.userID,
         ) as Entryusers[];

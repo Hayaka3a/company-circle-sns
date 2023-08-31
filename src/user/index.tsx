@@ -191,7 +191,7 @@ export default function UserEdit() {
     if (editMode && WatchConPw === undefined) {
       return setError("conPw", {
         type: "custom",
-        message: "確認パスワードは必須項目です。",
+        message: "確認パスワードは必須項目です",
       });
     }
   };
@@ -222,7 +222,7 @@ export default function UserEdit() {
                             maxLength={12}
                             onSubmit={onSubmit}
                             {...register("familyName", {
-                              required: "氏名(姓)は必須項目です。",
+                              required: "氏名(姓)は必須項目です",
                             })}
                           />
                           <input
@@ -232,7 +232,7 @@ export default function UserEdit() {
                             maxLength={12}
                             onSubmit={onSubmit}
                             {...register("firstName", {
-                              required: "氏名(名)は必須項目です。",
+                              required: "氏名(名)は必須項目です",
                             })}
                           />
                           <p className={styles.error}>
@@ -251,7 +251,7 @@ export default function UserEdit() {
                             maxLength={12}
                             onSubmit={onSubmit}
                             {...register("familyNameKana", {
-                              required: "カナ(姓)は必須項目です。",
+                              required: "カナ(姓)は必須項目です",
                               pattern: {
                                 value: /^[ァ-ヶー]*$/,
                                 message: "カタカナのみで入力してください",
@@ -265,7 +265,7 @@ export default function UserEdit() {
                             maxLength={12}
                             onSubmit={onSubmit}
                             {...register("firstNameKana", {
-                              required: "カナ(名)は必須項目です。",
+                              required: "カナ(名)は必須項目です",
                               pattern: {
                                 value: /^[ァ-ヶー]*$/,
                                 message: "カタカナのみで入力してください",
@@ -299,12 +299,12 @@ export default function UserEdit() {
                                   );
                                 },
                               },
-                              required: "メールアドレスは必須項目です。",
+                              required: "メールアドレスは必須項目です",
                               pattern: {
                                 value:
                                   /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
                                 message:
-                                  "正しいメールアドレスを入力してください。",
+                                  "正しいメールアドレスを入力してください",
                               },
                             })}
                           />
@@ -323,20 +323,20 @@ export default function UserEdit() {
                             maxLength={16}
                             onSubmit={onSubmit}
                             {...register("password", {
-                              required: "パスワードは必須項目です。",
+                              required: "パスワードは必須項目です",
                               minLength: {
                                 value: 8,
-                                message: "8文字以上で入力してください。",
+                                message: "8文字以上で入力してください",
                               },
                               maxLength: {
                                 value: 16,
-                                message: "16文字以下で入力してください。",
+                                message: "16文字以下で入力してください",
                               },
                               pattern: {
                                 value:
                                   /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]+$/,
                                 message:
-                                  "半角英大文字、半角英小文字、数字をそれぞれ1種類以上含んでください。",
+                                  "半角英大文字、半角英小文字、数字をそれぞれ1種類以上含んでください",
                               },
                             })}
                           />
@@ -359,11 +359,11 @@ export default function UserEdit() {
                                   const { password } = getValues();
                                   return (
                                     password === value ||
-                                    "パスワードと一致しません。"
+                                    "パスワードと一致しません"
                                   );
                                 },
                               },
-                              required: "確認パスワードは必須項目です。",
+                              required: "確認パスワードは必須項目です",
                             })}
                           />
                           <p className={styles.error}>

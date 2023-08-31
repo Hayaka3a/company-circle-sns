@@ -118,7 +118,6 @@ export default function EventEdit() {
   const pageBack = () => {
     navi(-1);
   };
-  
 
   // CSS部分で画像URLを変更（imgタグ以外で挿入すれば、円形にしても画像が収縮表示されない）
   useEffect(() => {
@@ -163,9 +162,14 @@ export default function EventEdit() {
   // 保存処理の実装
   const handleSaveClick = (e: SyntheticEvent) => {
     const maxEventNameLength = 100;
-    const maxEventDetailLength = 300;   
-        
-    if (eventName.trim() === "" || eventDetail.trim() === "" || startDate.trim() === "" || endDate.trim() === "") {
+    const maxEventDetailLength = 300;
+
+    if (
+      eventName.trim() === "" ||
+      eventDetail.trim() === "" ||
+      startDate.trim() === "" ||
+      endDate.trim() === ""
+    ) {
       setNameAlreadyError("必須項目です。");
       return;
     }
@@ -194,7 +198,6 @@ export default function EventEdit() {
       window.location.reload();
     }, 100);
   };
-  
 
   const handleSaveData = async () => {
     await HandleSave(
@@ -207,7 +210,7 @@ export default function EventEdit() {
     );
   };
 
-  const createHandler = async () => {  
+  const createHandler = async () => {
     const eventData = {
       eventName: eventName,
       startDate: startDate,
@@ -218,7 +221,7 @@ export default function EventEdit() {
   };
 
   useEffect(() => {
-    if (errorMessage) {      
+    if (errorMessage) {
       const timer = setTimeout(() => {
         setErrorMessage("");
       }, 3000);
@@ -226,8 +229,6 @@ export default function EventEdit() {
       return () => clearTimeout(timer);
     }
   }, [errorMessage]);
-
-
 
   // 参加サークルをuserEntryStatusテーブルに追加
   const addIsland = async () => {
@@ -267,21 +268,21 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>イベント名</th>
                 <td className={styles.td}>
-                 <EventName
-                  eventName={eventName}
-                  setName={setEventName}
-                  nameAlreadyError={nameAlreadyError}
-                  setNameAlreadyError={setNameAlreadyError}
-                 />
+                  <EventName
+                    eventName={eventName}
+                    setName={setEventName}
+                    nameAlreadyError={nameAlreadyError}
+                    setNameAlreadyError={setNameAlreadyError}
+                  />
                 </td>
               </tr>
               <tr className={styles.tr}>
                 <th className={styles.th}>イベント詳細</th>
                 <td className={styles.td}>
-                <EventDetail
-                  detail={eventDetail}
-                  setDetail={setEventDetail}
-                />
+                  <EventDetail
+                    detail={eventDetail}
+                    setDetail={setEventDetail}
+                  />
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -327,35 +328,36 @@ export default function EventEdit() {
               </tr>
             </tbody>
           </table>
-             <button
-             id={styles.edit_btn}
-             onClick={handleSaveClick}
-             className={styles.edit_btn} 
-             disabled={
+          <button
+            id={styles.edit_btn}
+            onClick={handleSaveClick}
+            className={styles.edit_btn}
+            disabled={
               !eventName.trim() ||
               !startDate.trim() ||
               !endDate.trim() ||
               !eventDetail.trim() ||
-              !!nameAlreadyError ? true : false
-             }
-             >
-              保存
-             </button>
-             <button
-              type="button"
-              className={styles.noEdit}
-              onClick={() => {
-                pageBack();
-              }}
-             >
-              編集せずに戻る
-             </button>
-         
+              !!nameAlreadyError
+                ? true
+                : false
+            }
+          >
+            保存
+          </button>
+          <button
+            type="button"
+            className={styles.noEdit}
+            onClick={() => {
+              pageBack();
+            }}
+          >
+            編集せずに戻る
+          </button>
+
           <div className={styles.delete}>
             <button onClick={openDeleteModal} className={styles.delete_btn}>
               削除
             </button>
-
           </div>
           {isDeleteOpen && (
             <CreateDeletePage

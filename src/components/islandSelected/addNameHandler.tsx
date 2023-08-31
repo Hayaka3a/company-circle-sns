@@ -14,7 +14,7 @@ export default function AddNameHandler({
     );
 
     if (duplicates.length > 0) {
-      setSelectError("選択された値は既に追加されています。");
+      setSelectError("選択された値は既に追加されています");
       return;
     }
 

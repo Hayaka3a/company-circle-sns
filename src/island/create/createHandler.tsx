@@ -31,7 +31,7 @@ export default function useCreateIslandHandler() {
 
   const createHandler = async () => {
     if (islandName.trim() === "" || detail.trim() === "") {
-      alert("島の名前と活動内容は入力必須項目です。");
+      alert("島の名前と活動内容は入力必須項目です");
       return;
     }
 
