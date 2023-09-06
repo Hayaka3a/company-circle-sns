@@ -49,7 +49,7 @@ export default function UserPost() {
                     ></img>
                     <div className={styles.right}>
                       <div className={styles.upper}>
-                        <p
+                        <div
                           className={classNames(styles.username, {
                             [styles.unreadName]: !message.isRead,
                           })}
@@ -60,7 +60,7 @@ export default function UserPost() {
                           {(message.by.islands &&
                             message.by.islands.islandName) ||
                             (message.by.events && message.by.events.eventName)}
-                        </p>
+                        </div>
                         <p className={styles.date}>
                           {format(
                             new Date(message.sendingDate),
