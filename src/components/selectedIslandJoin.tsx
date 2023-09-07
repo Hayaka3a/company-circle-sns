@@ -29,7 +29,7 @@ export default function SelectedIslandJoin({
       }
 
       const joinIslandIDs = data.map((entry) => entry.islandID);
-      setIslandJoinID(joinIslandIDs); 
+      setIslandJoinID(joinIslandIDs);
 
       // 島の名前を取得して設定
       const islandNamesPromises = joinIslandIDs.map(async (islandID) => {
@@ -56,61 +56,56 @@ export default function SelectedIslandJoin({
     fetchData();
   }, [fetchEventID, setIslandJoinID]);
 
-const handleIslandDelete = async (index) => {
-const deletedIslandName = joinIslandData[index]; // 参加島の名前を取得する
-  
+  const handleIslandDelete = async (index) => {
+    const deletedIslandName = joinIslandData[index]; // 参加島の名前を取得する
+
     // islandsテーブルから参加島の名前に対応するデータのidを取得
     const { data: islandData, error: islandError } = await supabase
       .from("islands")
       .select("id")
       .eq("islandName", deletedIslandName)
       .single();
-  
+
     if (islandError) {
       console.log("参加島のデータの取得に失敗しました。", islandError);
       return;
     }
-  
+
     const islandID = islandData.id;
-    console.log("島のid", islandID)
-  
+    console.log("島のid", islandID);
+
     // userEntryStatusテーブルの該当参加島のstatusをtrueに変更
     const { error: updateError } = await supabase
       .from("userEntryStatus")
       .update({ status: true })
       .eq("islandID", islandID)
       .eq("eventID", fetchEventID);
-  
+
     if (updateError) {
       console.log("データの更新に失敗しました。", updateError);
     } else {
       // 参加島の島名をnullに設定して非表示にする
       setJoinIslandData((prevData) =>
-        prevData.map((islandName, i) =>
-          i === index ? null : islandName
-        )
+        prevData.map((islandName, i) => (i === index ? null : islandName)),
       );
     }
   };
-        
 
-    return (
-        <div>
-          {dataLoaded &&
-            joinIslandData.map((islandName, index) =>
-              islandName !== null ? (
+  return (
+    <div>
+      {dataLoaded &&
+        joinIslandData.map((islandName, index) =>
+          islandName !== null ? (
+            <div className={styles.nameFlex} key={index}>
+              <div className={styles.selectedValue}>
                 <div className={styles.nameFlex}>
-                    <div key={index} className={styles.selectedValue}>
-                    <div className={styles.nameFlex}>
-                        <span className={styles.nowrap}>                  
-                                {islandName}
-                        </span>
-                        <button onClick={() => handleIslandDelete(index)}>×</button>
-                    </div>
-                    </div>
+                  <span className={styles.nowrap}>{islandName}</span>
+                  <button onClick={() => handleIslandDelete(index)}>×</button>
                 </div>
-              ) : null
-            )}
-        </div>
-      );
+              </div>
+            </div>
+          ) : null,
+        )}
+    </div>
+  );
 }
