@@ -1,6 +1,10 @@
 import { supabase } from "../createClient";
 
-export default async function EntryIsland(fetchEventID, setIslandJoinID, setEventJoin) {
+export default async function EntryIsland(
+  fetchEventID,
+  setIslandJoinID,
+  setEventJoin,
+) {
   const { data, error } = await supabase
     .from("userEntryStatus")
     .select("islandID, status")
@@ -28,14 +32,13 @@ export default async function EntryIsland(fetchEventID, setIslandJoinID, setEven
 
   setIslandJoinID(joinIslandIDs);
 
-  const filteredJoinIslandIDs = joinIslandIDs.filter(id => id !== null);
+  const filteredJoinIslandIDs = joinIslandIDs.filter((id) => id !== null);
 
   const { data: islandData, error: islandError } = await supabase
     .from("islands")
     .select("islandName, id")
     .in("id", filteredJoinIslandIDs)
     .eq("status", false);
-
 
   if (islandError) {
     console.log("島名取得に失敗しました", islandError);
@@ -49,7 +52,5 @@ export default async function EntryIsland(fetchEventID, setIslandJoinID, setEven
   const islandNames = islandData.map((island) => island.islandName);
   const joinedNames = islandNames.join(", ");
 
-  const islandJoinName = islandNames.map((islandName, i) => islandName.islandName)
-  
   setEventJoin(joinedNames);
 }

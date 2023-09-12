@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "../../styles/createThread.module.css";
 
 // closeDeleteModalは×ボタンを押下したときの関数、nextOpenは完了系ボタン（島を沈没（削除）させる）を押したときの関数

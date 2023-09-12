@@ -19,10 +19,12 @@ export default function CreateThread({
   useEffect(() => {
     // スレッド名の入力状態に応じてisThreadTitleEmptyの値を更新
     setIsThreadTitleEmpty(threadTitle.trim().length === 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [threadTitle]);
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [islandID, eventID]);
 
   const fetchData = async () => {

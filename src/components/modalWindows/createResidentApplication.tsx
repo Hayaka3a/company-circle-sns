@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
@@ -32,6 +32,7 @@ export default function CreateResidentApplication({
     fetchPostData();
     fetchislnadNameData();
     fetchIslandPostData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //ログインユーザーのポストIDを取得し、postByに格納

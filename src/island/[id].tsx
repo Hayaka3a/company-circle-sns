@@ -4,7 +4,6 @@ import styles from "../styles/island/islandDetail.module.css";
 import CreateSendingMessage from "../components/modalWindows/createSendingMessage";
 import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
 import { useNavigate, useParams } from "react-router-dom";
-import { supabase } from "../createClient";
 import LogSt from "../components/cookie/logSt";
 import GetCookieID from "../components/cookie/getCookieId";
 import FetchIslandDetail from "../components/fetchIslandDetail";
@@ -30,10 +29,17 @@ export default function IslandDetail() {
     fetchIslandDetailData();
     fetchIslandPostData();
     fetchTagsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchIslandDetailData = async () => {
-    await FetchIslandDetail(islandId, userId, setButton, setIslandDetail, setIslandImage);
+    await FetchIslandDetail(
+      islandId,
+      userId,
+      setButton,
+      setIslandDetail,
+      setIslandImage,
+    );
   };
 
   // すでに住民申請を送っているか確認確認

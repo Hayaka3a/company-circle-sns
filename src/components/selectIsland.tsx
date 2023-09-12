@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { supabase } from "../createClient";
 import styles from "../styles/island/createIsland.module.css";
 import FetchIsland from "./fetchIsland";
 import { handleSelectChange } from "./handleSelectChange";
@@ -18,8 +17,6 @@ export default function SelectIsland({
   const [tempSelectedValues, setTempSelectedValues] = useState([]); // 一時的な選択値を格納する配列
   const [selectError, setSelectError] = useState("");
 
-  const islandID_N = Number(islandID);
-
   // selectタグの選択項目を取得
   const fetchIslandData = async () => {
     await FetchIsland(setIslands, islandID);
@@ -27,24 +24,25 @@ export default function SelectIsland({
 
   useEffect(() => {
     fetchIslandData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 選択項目
   const handleSelectChangeData = (e) => {
     handleSelectChange(e, setTempSelectedValues); // handleSelectChange関数を呼び出す
-  } ;
+  };
 
-// 追加ボタン押されたらタグを追加
-const addNameHandlerData = () => {
-  addNameHandler(
-    tempSelectedValues,
-    selectedValues,
-    islands,
-    setIslandTags,
-    setSelectedValues,
-    setSelectError
-  ); // addNameHandler関数を呼び出す
-};
+  // 追加ボタン押されたらタグを追加
+  const addNameHandlerData = () => {
+    addNameHandler(
+      tempSelectedValues,
+      selectedValues,
+      islands,
+      setIslandTags,
+      setSelectedValues,
+      setSelectError,
+    ); // addNameHandler関数を呼び出す
+  };
 
   // タグの削除
   const deleteNameHandlerData = (index) => {
@@ -53,7 +51,7 @@ const addNameHandlerData = () => {
       selectedValues,
       setSelectedValues,
       islands,
-      setIslandTags
+      setIslandTags,
     ); // deleteNameHandler関数を呼び出す
   };
 

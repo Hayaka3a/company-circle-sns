@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LogSt from "../../components/cookie/logSt";
 import styles from "../../styles/island/all.module.css";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ export default function IslandAll() {
   useEffect(() => {
     // 島のデータを取得する関数
     FetchIslandsData(islands, setIslands);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

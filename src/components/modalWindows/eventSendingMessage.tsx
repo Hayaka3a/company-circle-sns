@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
@@ -28,6 +28,7 @@ export default function EventSendingMessage({
     fetchPostData();
     fetchEventNameData();
     fetchEventPostData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // postedByに入れるため、送信する側のpostIDを取得する
@@ -94,4 +95,3 @@ export default function EventSendingMessage({
     </>
   );
 }
-

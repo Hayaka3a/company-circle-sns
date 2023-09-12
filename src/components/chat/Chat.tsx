@@ -33,6 +33,7 @@ const Chat = () => {
       userID,
       setUser,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const userName = `${user?.familyName}${user?.firstName}`;
@@ -78,6 +79,7 @@ const Chat = () => {
           setMessages(snapShots as chat[]);
         }, 400);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNameBlur = async () => {
@@ -138,9 +140,9 @@ const Chat = () => {
           </div>
         ) : (
           <div className={styles.flex}>
-            <a onClick={pageBack} className={styles.link}>
+            <div onClick={pageBack} className={styles.link}>
               <p>＜</p>
-            </a>
+            </div>
             <p className={styles.title}>{threadTitle}</p>
             <button
               onClick={handleEditClick}

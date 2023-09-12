@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LogSt from "../../components/cookie/logSt";
 import styles from "../../styles/island/all.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -26,6 +26,8 @@ export default function EventAll() {
     FetchIslandName(islandName, setIslandName, paramsID);
     // 島のイベントを取得
     FetchEventDataIsland({ paramsID, setEvents, events });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paramsID]);
 
   return (

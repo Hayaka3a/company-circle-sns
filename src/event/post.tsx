@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LogSt from "../components/cookie/logSt";
 import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
 import { Link, useNavigate, useParams } from "react-router-dom";

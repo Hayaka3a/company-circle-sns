@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function DeleteButton({ index, setSelectedValue }) {
   const deleteNameHandler = () => {
     setSelectedValue((value) => {

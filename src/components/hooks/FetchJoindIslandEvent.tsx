@@ -17,10 +17,12 @@ function FetchJoindIslandEvent() {
   useEffect(() => {
     //参加している島とイベントを取得して格納
     SubFetchIsEve({ userID, setCombi });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     fetchUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [combi]);
 
   const fetchUserInfo = async () => {

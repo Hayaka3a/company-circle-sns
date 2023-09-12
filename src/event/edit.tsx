@@ -7,17 +7,14 @@ import { supabase } from "../createClient";
 import CreateDeletePage from "../components/modalWindows/deleteEvent";
 import CreateDeleteCheck from "../components/modalWindows/deleteEventCheck";
 import CreateAfterDelete from "../components/modalWindows/deleteEventAfter";
-import IslandSelected from "../components/islandSelected/islandSelected";
 import EventDone from "../components/eventDone";
 import FetchEvent from "../components/fetchEvent";
 import EntryIsland from "../components/entryIsland";
-import HandleHideEventJoin from "../components/handleHideEventJoin";
 import HandleFileChange from "../components/handleFileChange";
 import HandleSave from "../components/handleSave";
 import EventName from "../components/createEvent/eventName/eventName";
 import EventDetail from "../components/createEvent/detail/detail";
 import Daytime from "../components/createEvent/daytime/daytime";
-import SelectIsland from "../components/selectIsland";
 import IslandValueOption from "../components/islandValueOption";
 
 export default function EventEdit() {
@@ -28,6 +25,7 @@ export default function EventEdit() {
   useEffect(() => {
     fetchEventData();
     entryIslandData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     // addIsland();
   }, []);
 
@@ -132,31 +130,6 @@ export default function EventEdit() {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     await HandleFileChange(event, setImageUrl);
-  };
-
-  // 編集ボタンを押下、イベント名を変更
-  const handleEventNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventName(e.target.value);
-  };
-
-  // 編集ボタンを押下、開催日時(startDate)を変更
-  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStartDate(e.target.value);
-  };
-
-  // 編集ボタンを押下、開催日時(endDate)を変更
-  const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEndDate(e.target.value);
-  };
-
-  // 編集ボタンを押下、イベント詳細内容を変更
-  const handleEventDetailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventDetail(e.target.value);
-  };
-
-  // 編集ボタンを押下、参加サークルの変更
-  const handleEventJoinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventJoin(e.target.value);
   };
 
   // 保存処理の実装
@@ -316,14 +289,14 @@ export default function EventEdit() {
               <tr className={styles.tr}>
                 <th className={styles.th}>参加島（サークル）</th>
                 <td className={styles.td}>
-                    <IslandValueOption
-                      islandJoinID={islandJoinID}
-                      setIslandTags={setIslandTags}
-                      fetchEventID={fetchEventID}
-                      setEventJoin={setEventJoin}
-                      eventJoin={eventJoin}
-                      setIslandJoinID={setIslandJoinID}
-                    />
+                  <IslandValueOption
+                    islandJoinID={islandJoinID}
+                    setIslandTags={setIslandTags}
+                    fetchEventID={fetchEventID}
+                    setEventJoin={setEventJoin}
+                    eventJoin={eventJoin}
+                    setIslandJoinID={setIslandJoinID}
+                  />
                 </td>
               </tr>
             </tbody>

@@ -1,7 +1,6 @@
 import { thread } from "../types/thread";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/thread.module.css";
-import { supabase } from "../createClient";
 import { deleteThread } from "./deleteThread";
 
 function Thread({ thread }: { thread: thread[] }) {

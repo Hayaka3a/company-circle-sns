@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import styles from "../../styles/modalWindows/quit.module.css";
 
 export default function QuitDone({ done }: { done: () => void }) {

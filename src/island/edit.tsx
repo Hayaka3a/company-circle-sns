@@ -27,7 +27,7 @@ export default function IslandEdit() {
   const [isDeleteCheckOpen, setIsDeleteCheckOpen] = useState(false);
   const [isAfterDeleteOpen, setIsAfterDeleteOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [chosenTag, setChosenTag] = useState([]);
+  const [, setChosenTag] = useState([]);
 
   const [islandName, setIslandName] = useState("");
   const [detail, setDetail] = useState("");
@@ -47,6 +47,7 @@ export default function IslandEdit() {
 
   useEffect(() => {
     setChosenTag(islandTags);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [islandTags]);
 
   // 島を沈没させてもよろしいですか？モーダルウィンドウを表示
@@ -83,6 +84,7 @@ export default function IslandEdit() {
   useEffect(() => {
     fetchIslandEditData();
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // データベースからislands情報を取得

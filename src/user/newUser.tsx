@@ -14,6 +14,7 @@ export default function NewUser() {
       navigate("/");
       window.location.reload();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

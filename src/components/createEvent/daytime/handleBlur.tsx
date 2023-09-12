@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function HandleBlur({ startDate, endDate, setError }) {
   useEffect(() => {
