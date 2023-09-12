@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/island/island_post.module.css";
 import GetCookieID from "../../components/cookie/getCookieId";
 import { format } from "date-fns";
@@ -18,6 +18,7 @@ export default function UserPost() {
   useEffect(() => {
     //メッセージ受信
     FetchMsg(userID, setMessages);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,7 +1,6 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LogSt from "../../components/cookie/logSt";
 import styles from "../../styles/island/all.module.css";
-import { supabase } from "../../createClient";
 
 import { useEffect, useState } from "react";
 import TruncateString from "../../island/islandAll/truncateString";
@@ -15,6 +14,7 @@ export default function EventEverything() {
   useEffect(() => {
     // イベントのデータを取得する関数
     FetchEventsData(events, setEvents);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

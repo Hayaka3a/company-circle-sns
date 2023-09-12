@@ -17,9 +17,9 @@ export default function CreateSendingScout({
 }) {
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState<newUsersData>();
-  const [post, setPost] = useState();
-  const [postBy, setPostBy] = useState(0);
-  const [islandName, setIslandName] = useState("");
+  const [post] = useState();
+  const [postBy] = useState(0);
+  const [islandName] = useState("");
   const [islandMembers, setIslandMembers] = useState<newUsersData>([]);
   const [empty, setEmpty] = useState("");
   const [messageError, setmessageError] = useState("");
@@ -29,6 +29,7 @@ export default function CreateSendingScout({
 
   useEffect(() => {
     comboBoxData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [islandMembers]);
 
   const comboBoxData = async () => {

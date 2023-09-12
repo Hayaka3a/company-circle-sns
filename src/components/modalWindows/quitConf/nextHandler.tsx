@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { supabase } from "../../../createClient";
 
 export default function NextHandler({

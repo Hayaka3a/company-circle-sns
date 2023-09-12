@@ -4,7 +4,6 @@ import firebase from "firebase/compat/app";
 import styles from "../../styles/Chat.module.css";
 import GetCookieID from "../cookie/getCookieId";
 import { supabase } from "../../createClient";
-import { set } from "date-fns";
 
 const SendMessages = ({ threadID }: { threadID: number }) => {
   const [text, setText] = useState("");
@@ -30,6 +29,7 @@ const SendMessages = ({ threadID }: { threadID: number }) => {
       setUser(userData[0]);
     };
     fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // userがundefinedの場合エラーを回避

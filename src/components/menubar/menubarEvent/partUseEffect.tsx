@@ -37,6 +37,7 @@ export default function PartUseEffect() {
     });
 
     fetchEventData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paramsID]);
 
   return { isJoined, event, eventImage, uniqueEvents };

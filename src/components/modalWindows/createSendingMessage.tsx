@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/createSendingMessage.module.css";
 import { supabase } from "../../createClient";
 import { useParams } from "react-router-dom";
@@ -25,6 +25,7 @@ export default function CreateSendingMessage({
   useEffect(() => {
     fetchPostData();
     fetchIslandNameData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // posts, postedByに入れるため、送信する側のpostIDを取得する

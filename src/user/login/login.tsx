@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/user/login.module.css";
 import { Link } from "react-router-dom";
-import { supabase } from "../../createClient";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import LoginHandler from "./loginHandler";
@@ -20,6 +19,7 @@ export default function Login() {
       navigate("/");
       window.location.reload();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -132,11 +132,7 @@ export default function UserRegistration() {
           <button>ログインページへ戻る</button>
         </Link>
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={styles.form}
-        role="form"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={styles.box}>
           <div className={styles.allContents}>
             <h2>新規登録</h2>
@@ -149,7 +145,6 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
-                        role="textbox"
                         name="name"
                         type="text"
                         className={`${styles.inputA}`}
@@ -160,7 +155,6 @@ export default function UserRegistration() {
                         })}
                       />
                       <input
-                        role="textbox"
                         name="name"
                         type="text"
                         className={`${styles.inputB} `}
@@ -182,7 +176,6 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
-                        role="textbox"
                         name="kana"
                         type="text"
                         className={`${styles.inputA}`}
@@ -197,7 +190,6 @@ export default function UserRegistration() {
                         })}
                       />
                       <input
-                        role="textbox"
                         type="text"
                         className={`${styles.inputB} `}
                         maxLength={12}
@@ -223,7 +215,6 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
-                        role="textbox"
                         type="text"
                         className={styles.address}
                         maxLength={250}
@@ -259,7 +250,6 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
-                        role="textbox"
                         type="password"
                         className={`${styles.inputA} `}
                         maxLength={16}
@@ -290,7 +280,6 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
-                        role="textbox"
                         type="password"
                         className={`${styles.inputA} `}
                         maxLength={16}
@@ -334,7 +323,6 @@ export default function UserRegistration() {
                     </th>
                     <td className={styles.td}>
                       <input
-                        role="textbox"
                         type="text"
                         className={`${styles.inputA} `}
                         maxLength={10}

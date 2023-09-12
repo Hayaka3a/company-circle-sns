@@ -25,6 +25,7 @@ export default function IslandPost() {
   //メッセージ受信
   useEffect(() => {
     fetchMsg({ paramsID, setMessages });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

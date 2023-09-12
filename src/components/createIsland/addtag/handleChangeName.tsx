@@ -1,5 +1,5 @@
 // タグ名： 一文字でも入力されたら、エラー表示を解除
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export default function HandleChangeName({
   tagNameError,

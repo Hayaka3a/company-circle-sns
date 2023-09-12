@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../../../styles/modalWindows/quit.module.css";
 import HandleIslandNameChange from "./handleInputChange";
 import NextHandler from "./nextHandler";

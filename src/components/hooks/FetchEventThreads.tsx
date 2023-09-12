@@ -13,6 +13,7 @@ function FetchEventThreads(id: number, eqName: string) {
       setThreads(threads);
     };
     fetchThread();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return threads;
 }

@@ -45,6 +45,7 @@ export default function MembersList({
         setNewEntryUsers,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entryUsers, newEntryUsers]);
 
   // 自分以外のユーザーの一覧表示

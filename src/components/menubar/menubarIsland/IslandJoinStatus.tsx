@@ -1,6 +1,6 @@
 // ユーザーが表示している島に参加しているかどうかチェック
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "../../../createClient";
 
 export default function IslandJoinStatus({ userID, paramsID, setIsJoined }) {
@@ -20,6 +20,7 @@ export default function IslandJoinStatus({ userID, paramsID, setIsJoined }) {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userID, paramsID, setIsJoined]);
 
   return null;

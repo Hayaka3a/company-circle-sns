@@ -30,6 +30,7 @@ export default function Index() {
   useEffect(() => {
     fetchIslands(setIslands);
     fetchEvents(setEvents);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 島とイベント表示タブ切り替え
@@ -43,7 +44,7 @@ export default function Index() {
         {/* ロゴ */}
 
         <div className={styles.displayAll}>
-          <img src="/images/logo.png" className={styles.logo} />
+          <img src="/images/logo.png" className={styles.logo} alt="logo" />
 
           <div className={styles.information}>
             <h3 className={styles.news}>お知らせ</h3>

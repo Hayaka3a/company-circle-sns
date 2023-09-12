@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "../../styles/createDeletePage.module.css";
 
 // closeDeleteModalは×ボタンを押下したときの関数、nextOpenは完了系ボタン（イベントを削除する）を押したときの関数
@@ -9,7 +8,6 @@ export default function CreateDeletePage({
   closeDeleteModal: () => void;
   nextOpen: () => void;
 }) {
-
   // 現在のウィンドウを非表示にし、入力ボックスウィンドウを表示する
   const nextHandler = () => {
     nextOpen();
@@ -28,11 +26,15 @@ export default function CreateDeletePage({
             />
             <div className={styles.main}>
               <div className={styles.title}>
-                <h3 className={styles.h3}>イベントを削除してもよろしいですか？</h3>
+                <h3 className={styles.h3}>
+                  イベントを削除してもよろしいですか？
+                </h3>
               </div>
             </div>
             <div>
-              <button onClick={nextHandler} id={styles.delete_btn}>イベントを削除する</button>
+              <button onClick={nextHandler} id={styles.delete_btn}>
+                イベントを削除する
+              </button>
             </div>
           </div>
         </div>

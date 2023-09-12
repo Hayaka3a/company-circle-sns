@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../../../styles/menubar.module.css";
 import { Link, useParams } from "react-router-dom";
 import GetCookieID from "../../cookie/getCookieId";

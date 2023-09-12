@@ -3,7 +3,6 @@ import MenubarEvent from "../components/menubar/menubarEvent/menubarEvent";
 import styles from "../styles/island/islandDetail.module.css";
 import CreateResidentApplication from "../components/modalWindows/createResidentApplication";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { supabase } from "../createClient";
 import LogSt from "../components/cookie/logSt";
 import { Event } from "../types/members";
 import EventSendingMessage from "../components/modalWindows/eventSendingMessage";
@@ -29,14 +28,20 @@ export default function EventDetail() {
   const [islandArray, setIslandArray] = useState([]);
 
   useEffect(() => {
-    fetchEventDetailData(); 
+    fetchEventDetailData();
     fetchIslandData(eventId);
     fetchEventPostData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId, userId]);
 
-
   const fetchEventDetailData = async () => {
-    await FetchEventDetail(eventId, userId, setButton, setEventDetail, setEventImage);
+    await FetchEventDetail(
+      eventId,
+      userId,
+      setButton,
+      setEventDetail,
+      setEventImage,
+    );
   };
 
   const fetchIslandData = async (eventId) => {

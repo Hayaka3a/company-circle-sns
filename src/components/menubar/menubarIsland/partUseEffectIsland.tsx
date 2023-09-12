@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import FetchIslandData from "./fetchIslandData";
 
 export default function PartUseEffectIsland({ paramsID, onIslandDataFetched }) {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../createClient";
 import styles from "../styles/message.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LogSt from "./cookie/logSt";
@@ -10,12 +9,6 @@ import HandleEventJoin from "./handleEventJoin";
 
 export default function ScoutPostEvent({ table }: { table: string }) {
   LogSt();
-
-  // メッセージの型定義
-  interface Message {
-    id: number;
-    postedBy: number;
-  }
 
   const params = useParams();
   const paramsID = parseInt(params.id);
