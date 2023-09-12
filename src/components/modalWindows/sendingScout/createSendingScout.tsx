@@ -71,7 +71,7 @@ export default function CreateSendingScout({
           console.log("全ユーザーが見つかりません");
         } else {
           // メッセージでここからスカウトを既に送っているものを取得
-          const { data: fetchedSentUser, error: sentUserError } = await supabase
+          const { data: fetchedSentUser } = await supabase
             .from("messages")
             .select("*")
             .eq("scout", true)

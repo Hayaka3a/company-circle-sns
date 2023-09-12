@@ -123,6 +123,7 @@ export default function EventEdit() {
     if (circleElement) {
       circleElement.style.backgroundImage = `url('${imageUrl}')`;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageUrl]);
 
   // 画像ファイル選択したら、表示画像に反映
@@ -162,7 +163,6 @@ export default function EventEdit() {
     }
 
     handleSaveData();
-    createHandler();
     addIsland();
 
     pageBack();
@@ -183,16 +183,6 @@ export default function EventEdit() {
     );
   };
 
-  const createHandler = async () => {
-    const eventData = {
-      eventName: eventName,
-      startDate: startDate,
-      endDate: endDate,
-      detail: eventDetail,
-      status: "false",
-    };
-  };
-
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
@@ -201,6 +191,7 @@ export default function EventEdit() {
 
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorMessage]);
 
   // 参加サークルをuserEntryStatusテーブルに追加
