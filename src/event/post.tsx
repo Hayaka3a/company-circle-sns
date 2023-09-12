@@ -80,6 +80,7 @@ export default function EventPost() {
 
   useEffect(() => {
     fetchMsg();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
