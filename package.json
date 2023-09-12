@@ -5,6 +5,7 @@
   "homepage": "./",
   "dependencies": {
     "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-syntax-flow": "^7.14.5",
     "@babel/plugin-transform-react-jsx": "^7.14.9",
     "@reduxjs/toolkit": "^1.9.5",
@@ -65,8 +66,9 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/react-hooks": "8.0.1",
     "@testing-library/user-event": "^14.4.3",
-    "@types/js-cookie": "^3.0.3"
+    "@types/js-cookie": "^3.0.3",
+    "webpack-cli": "^5.1.4"
   }
 }
