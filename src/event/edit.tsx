@@ -24,9 +24,9 @@ export default function EventEdit() {
 
   useEffect(() => {
     fetchEventData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     entryIslandData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // addIsland();
   }, []);
 
   const navigate = useNavigate();
