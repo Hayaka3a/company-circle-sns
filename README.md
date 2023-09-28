@@ -8,5 +8,8 @@
   classnames  
   supabase/supabase-js  
   react-hook-form  
-  date-fns
+  date-fns  
   npm-check-updates
+  classnames
+  react-cookie
+  
