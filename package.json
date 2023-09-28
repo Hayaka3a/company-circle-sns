@@ -73,6 +73,6 @@
     "webpack-cli": "^5.1.4"
   },
   "resolutions": {
-    "workbox-webpack-plugin": "6.3.0"
+    "workbox-webpack-plugin": "6.4.1"
   }
 }
