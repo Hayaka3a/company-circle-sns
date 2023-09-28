@@ -1,11 +1,11 @@
-# 社内コミュニティSNS
+# 社内コミュニティ SNS
 
-* インストールライブラリ  
-ReduxToolkit  
-ReactRouter  
-Firebase  
-FireStore  
-classnames  
-supabase/supabase-js  
-react-hook-form  
-date-fns  
+- インストールライブラリ  
+  ReduxToolkit  
+  ReactRouter  
+  FireStore  
+  Firebase
+  classnames  
+  supabase/supabase-js  
+  react-hook-form  
+  date-fns
