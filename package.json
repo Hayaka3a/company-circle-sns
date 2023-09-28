@@ -24,6 +24,7 @@
     "classnames": "^2.3.2",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.30.0",
+    "es-abstract": "^1.22.2",
     "firebase": "^9.22.0",
     "jest": "^29.6.1",
     "js-cookie": "^3.0.5",
@@ -46,7 +47,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --verbose ",
     "eject": "react-scripts eject",
-    "dev": "webpack-dev-server --mode development",
+    "dev": "npm run build:dev -- --watch",
     "webpack": "webpack --watch"
   },
   "eslintConfig": {
