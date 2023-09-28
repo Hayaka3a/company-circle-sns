@@ -69,9 +69,11 @@
     ]
   },
   "devDependencies": {
-
     "@testing-library/user-event": "^14.4.3",
     "@types/js-cookie": "^3.0.3",
     "webpack-cli": "^5.1.4"
+  },
+  "resolutions": {
+    "workbox-webpack-plugin": "6.3.0"
   }
 }
