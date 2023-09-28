@@ -9,3 +9,4 @@
   supabase/supabase-js  
   react-hook-form  
   date-fns
+  npm-check-updates
